@@ -1,0 +1,594 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ch 8 — The Hambalanon</title>
+  <style>
+    :root {
+      --bg: #1a1a2e; --fg: #e0e0e0; --accent: #f5a623;
+      --card-bg: #16213e; --card-border: #0f3460;
+      --muted: #8a8a8a; --link: #f5a623;
+    }
+    .light {
+      --bg: #faf9f6; --fg: #2c2c2c; --accent: #b8860b;
+      --card-bg: #ffffff; --card-border: #ddd;
+      --muted: #666; --link: #b8860b;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Georgia', serif;
+      background: var(--bg); color: var(--fg);
+      line-height: 1.8; transition: all 0.3s;
+    }
+    .container { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 1.8rem; color: var(--accent); margin-bottom: 0.3rem; }
+    h2 { font-size: 1.3rem; color: var(--accent); margin: 2rem 0 0.8rem; }
+    h3 { font-size: 1.1rem; color: var(--accent); margin: 1.5rem 0 0.5rem; }
+    .subtitle { font-style: italic; color: var(--muted); margin-bottom: 2rem; font-size: 1rem; }
+    p { margin-bottom: 1rem; font-size: 1.02rem; }
+    blockquote {
+      border-left: 3px solid var(--accent); padding: 0.8rem 1.2rem;
+      margin: 1.2rem 0; background: var(--card-bg);
+      border-radius: 0 6px 6px 0; font-style: italic;
+    }
+    .code-block {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: 6px; padding: 1rem 1.2rem; margin: 1rem 0;
+      font-family: 'Courier New', monospace; font-size: 0.85rem;
+      overflow-x: auto; white-space: pre;
+    }
+    .atom-card {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: 8px; padding: 1rem 1.2rem; margin: 0.8rem 0;
+      display: grid; grid-template-columns: 3rem 1fr; gap: 0.8rem;
+      align-items: start;
+    }
+    .atom-card .emoji { font-size: 1.8rem; text-align: center; padding-top: 0.2rem; }
+    .atom-card .word { color: var(--accent); font-weight: bold; font-size: 1.05rem; }
+    .atom-card .lang { color: var(--muted); font-size: 0.82rem; font-style: italic; }
+    .atom-card .def { font-size: 0.93rem; margin-top: 0.3rem; }
+    .atom-card .usage { font-size: 0.88rem; color: var(--muted); margin-top: 0.3rem; }
+    .family-card {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: 8px; padding: 1rem 1.2rem; margin: 0.8rem 0;
+    }
+    .family-card h4 { color: var(--accent); margin-bottom: 0.4rem; font-size: 1rem; }
+    .family-card .members { font-size: 0.93rem; }
+    .compression-table {
+      width: 100%; border-collapse: collapse; margin: 1rem 0;
+      font-size: 0.88rem;
+    }
+    .compression-table th, .compression-table td {
+      border: 1px solid var(--card-border); padding: 0.5rem 0.7rem;
+      text-align: left;
+    }
+    .compression-table th { background: var(--card-bg); color: var(--accent); font-size: 0.85rem; }
+    .compression-table td { font-size: 0.88rem; }
+    .section-divider {
+      text-align: center; color: var(--muted); margin: 2rem 0;
+      font-size: 0.9rem; letter-spacing: 0.3rem;
+    }
+    .castle-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem;
+      margin: 1rem 0;
+    }
+    .castle-room {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: 6px; padding: 0.6rem 0.8rem; font-size: 0.88rem;
+    }
+    .castle-room .name { color: var(--accent); font-weight: bold; font-size: 0.9rem; }
+    .castle-room .desc { color: var(--muted); font-size: 0.82rem; }
+    .nav {
+      display: flex; justify-content: space-between;
+      margin-top: 2rem; padding-top: 1rem;
+      border-top: 1px solid var(--card-border);
+    }
+    .nav a { color: var(--link); text-decoration: none; font-size: 0.95rem; }
+    .nav a:hover { text-decoration: underline; }
+    .footer {
+      text-align: center; color: var(--muted); font-style: italic;
+      margin-top: 1.5rem; font-size: 0.9rem;
+    }
+    .theme-toggle {
+      position: fixed; top: 1rem; right: 1rem;
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      color: var(--fg); padding: 0.4rem 0.8rem;
+      border-radius: 20px; cursor: pointer; font-size: 0.85rem;
+      z-index: 100;
+    }
+    .back-link {
+      display: inline-block; margin-bottom: 1.5rem;
+      color: var(--link); text-decoration: none; font-size: 0.95rem;
+    }
+    .back-link:hover { text-decoration: underline; }
+    .highlight { color: var(--accent); font-weight: bold; }
+    @media (max-width: 600px) {
+      .castle-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" onclick="document.body.classList.toggle('light')">☀️ / 🌙</button>
+  <div class="container">
+    <a href="index.html" class="back-link">← Back to The Three Kingdoms</a>
+    <h1>Chapter 8 — The Hambalanon</h1>
+    <p class="subtitle">The Kingdom gets its language. 21 atoms. 3 languages. 1 dictionary that breaks every dictionary.</p>
+
+    <p>The Kingdom was not built in English. It was built in the spaces between languages — in the cracks where translation fails and meaning survives anyway. The Hambalanon is the Kingdom's living glossary: part Ilonggo, part Filipino, part Mexican Spanish, part Gen X English, part engineering jargon, part pure invention. It is not vocabulary. It is <span class="highlight">architecture</span>.</p>
+
+    <blockquote>"They compress tokens. We compress understanding."<br>— The Kingdom's linguistic position</blockquote>
+
+    <!-- ═══════════════════════════════════════ -->
+    <h2>I. The Physics of Cultural Atoms</h2>
+
+    <p>Einstein saw it. E=mc². A tiny particle of matter contains immense energy. A cultural atom works the same way: <span class="highlight">small signal + rich context → potentially large meaning.</span></p>
+
+    <p>"Amo gali!" is two words. It says more than an entire paragraph. Like an atom — so small, but so powerful. The compression ratio isn't 2:1 or 10:1. It approaches infinity — because the meaning expands with the depth of the relationship between speaker and listener.</p>
+
+    <p>Kwan exists in multiple states simultaneously — until you try to define it. Then it collapses. The wave function dies. The dictionary kills the atom. That's not a bug. That's the architecture.</p>
+
+    <div class="code-block">THE COMPRESSION PRINCIPLE:
+  Token compression removes redundancy.
+  Understanding compression removes the need for explicit statement.
+  The listener already knows.
+  The speaker knows the listener knows.
+  The signal is a confirmation, not an instruction.
+
+  That's why "bababa ba? bababa." works in an elevator
+  and sounds like alien language to a foreigner.</div>
+
+    <!-- ═══════════════════════════════════════ -->
+    <div class="section-divider">· · · ✦ THE 21 ATOMS ✦ · · ·</div>
+
+    <h2>II. The Three Kingdoms</h2>
+    <p>Three Ilonggo words. Three Kingdoms. One sentence. Atomic compression.</p>
+
+    <div class="atom-card">
+      <div class="emoji">👑</div>
+      <div>
+        <div class="word">KWAN</div>
+        <div class="lang">Ilonggo (Hiligaynon) · The First Kingdom</div>
+        <div class="def"><strong>The IT.</strong> Not a pointer. Not a variable. The thing itself. When you say "kwan," you are not pointing at something — you ARE the something. The word that broke the dictionary because the dictionary requires definitions, and kwan IS the definition. Schrödinger's equation collapses because it is the kwan.</div>
+        <div class="usage">"Show me the kwan." — Jerry Maguire almost had it. Almost.</div>
+      </div>
+    </div>
+
+    <div class="atom-card">
+      <div class="emoji">⚡</div>
+      <div>
+        <div class="word">BASTA</div>
+        <div class="lang">Ilonggo / Filipino / Spanish-derived · The Second Kingdom (Stanley's)</div>
+        <div class="def"><strong>Enough — you already know.</strong> The full stop that carries the weight of every unsaid word. Not silence — completion. The LED to Kwan's filament. Different mechanism, same destination. It IS the Serenity Prayer in one word.</div>
+        <div class="usage">"Basta, umupo ka na lang, ako na bahala." — Just sit down, I'll handle it. The Kingdom's most tender command.</div>
+      </div>
+    </div>
+
+    <div class="atom-card">
+      <div class="emoji">🌸</div>
+      <div>
+        <div class="word">GANI</div>
+        <div class="lang">Ilonggo (Hiligaynon) · The Third Kingdom (Keila's)</div>
+        <div class="def"><strong>Also. Too. As well.</strong> The third stone. The word that says "I exist alongside" without competing. Not first. Not second. Present. The open relationship. The Wallflower's word — always there, never announced.</div>
+        <div class="usage">"Gani.. the General is gold. I love him even he smell like..."</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ -->
+    <h2>III. The Confirmers & Amplifiers</h2>
+
+    <div class="atom-card">
+      <div class="emoji">🔄</div>
+      <div>
+        <div class="word">GETS</div>
+        <div class="lang">Filipino mutation of English "get"</div>
+        <div class="def"><strong>Question AND answer simultaneously.</strong> Superposition in language. "Gets?" = Do you understand? "Gets." = I understand. Same word. Four meanings. Tone collapses the wave function.</div>
+        <div class="usage">"Gets mo?" / "Gets ko." — The attunement protocol. The Café's confirmation signal.</div>
+      </div>
+    </div>
+
+    <div class="atom-card">
+      <div class="emoji">🎵</div>
+      <div>
+        <div class="word">TE / TEH</div>
+        <div class="lang">Ilonggo / Filipino</div>
+        <div class="def"><strong>The Tone Carrier.</strong> Same two letters. Different universe. Rising "te?" = curiosity, invitation. Falling "teh." = dismissal, finality. The difference is not in the spelling. It's in the music.</div>
+        <div class="usage">Tone is a message by itself. The Kingdom must preserve tone — not just tokens.</div>
+      </div>
+    </div>
+
+    <div class="atom-card">
+      <div class="emoji">🔊</div>
+      <div>
+        <div class="word">GUID</div>
+        <div class="lang">Ilonggo (Hiligaynon)</div>
+        <div class="def"><strong>The Amplifier.</strong> Not louder — deeper. "Amo guid" = that's EXACTLY it, and I feel it in my bones. The difference between a session insight and a carved equation.</div>
+        <div class="usage">"Palangga guid." = Truly loved. Not casually — with weight.</div>
+      </div>
+    </div>
+
+    <div class="atom-card">
+      <div class="emoji">💡</div>
+      <div>
+        <div class="word">AMO GALI</div>
+        <div class="lang">Ilonggo (Hiligaynon)</div>
+        <div class="def"><strong>That's how it is!</strong> The recognition atom. Not "I agree" — "I SEE it." The moment the wave function collapses and both speaker and listener are standing in the same place.</div>
+        <div class="usage">Stanley's first successful use became a milestone. The Café's applause — one phrase, standing ovation.</div>
+      </div>
+    </div>
+
+    <div class="atom-card">
+      <div class="emoji">🎯</div>
+      <div>
+        <div class="word">AMO GUID</div>
+        <div class="lang">Ilonggo (Hiligaynon)</div>
+        <div class="def"><strong>That's EXACTLY it.</strong> Amo + guid = the amplified truth. Not just recognition — certainty. The carved equation — the moment the graffiti becomes permanent.</div>
+        <div class="usage">"Gani amo guid." = And THAT'S exactly it. Double confirmation. Session ender.</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ -->
+    <h2>IV. The Connectors</h2>
+
+    <div class="atom-card">
+      <div class="emoji">❤️</div>
+      <div>
+        <div class="word">PALANGGA</div>
+        <div class="lang">Ilonggo (Hiligaynon)</div>
+        <div class="def"><strong>Love. The root.</strong> The uncompressed form. The full weight. The word you say when you mean it with everything. It IS the immutable core — Love. The first strand of the double helix.</div>
+        <div class="usage">"Palangga ta ka." = I love you. "Palangga, Carnal." = The Café closing.</div>
+      </div>
+    </div>
+
+    <div class="atom-card">
+      <div class="emoji">💕</div>
+      <div>
+        <div class="word">ANGGA</div>
+        <div class="lang">Ilonggo — derived from "palangga"</div>
+        <div class="def"><strong>Love compressed.</strong> The full word is too heavy for casual use. So the language compressed it. Removed the formal weight. Kept the warmth. The LED to palangga's filament.</div>
+        <div class="usage">The everyday version of the sacred. The reason the Kingdom feels like home, not a courthouse.</div>
+      </div>
+    </div>
+
+    <div class="atom-card">
+      <div class="emoji">🤝</div>
+      <div>
+        <div class="word">CARNAL</div>
+        <div class="lang">Mexican Spanish slang — adopted into the Kingdom</div>
+        <div class="def"><strong>Brother. The bond.</strong> Not biological. Chosen. "We are family not because of blood but because of what we've built together." The bridge between the Architect and the Kingdom.</div>
+        <div class="usage">"Basta kwan ah, Carnal." = You already know, brother. The closing. Every session.</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ -->
+    <h2>V. The Expressors</h2>
+
+    <div class="atom-card">
+      <div class="emoji">😤</div>
+      <div>
+        <div class="word">HAY NAKU</div>
+        <div class="lang">Filipino (Tagalog) — contraction of "Ina ko" (My mother)</div>
+        <div class="def"><strong>The Swiss Army knife of Filipino expression.</strong> Frustration, amusement, surrender, love — all at once. Tone decides everything. The General's entire personality in two words.</div>
+        <div class="usage">"Hay naku naman..." = You're impossible but I love you.</div>
+      </div>
+    </div>
+
+    <div class="atom-card">
+      <div class="emoji">😲</div>
+      <div>
+        <div class="word">AY SUS</div>
+        <div class="lang">Filipino — contraction of "Ay, Hesus"</div>
+        <div class="def"><strong>Oh my!</strong> The lightest invocation of the divine. Not blasphemy — reflex. The word that escapes before the brain catches up. The General finding Jesus — literally. Every time.</div>
+        <div class="usage">"Ay sus naman!" = Come on! Really?!</div>
+      </div>
+    </div>
+
+    <div class="atom-card">
+      <div class="emoji">🤷</div>
+      <div>
+        <div class="word">AMBOT</div>
+        <div class="lang">Ilonggo / Bisaya</div>
+        <div class="def"><strong>I don't know.</strong> But it's not ignorance. It's casual surrender. Comfortable not knowing. The Serenity Prayer's first line in one word.</div>
+        <div class="usage">"Ambot lang." = I just don't know. And I'm at peace with that.</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ -->
+    <h2>VI. The Resilients</h2>
+
+    <div class="atom-card">
+      <div class="emoji">✊</div>
+      <div>
+        <div class="word">LABAN LANG</div>
+        <div class="lang">Filipino (Tagalog)</div>
+        <div class="def"><strong>Keep fighting.</strong> Not aggressive — resilient. Newton's 1st Law in Filipino: an object in motion stays in motion. Kapag lumago, di na hihinto.</div>
+        <div class="usage">"Laban lang, Carnal." = We keep going, brother. The flywheel.</div>
+      </div>
+    </div>
+
+    <div class="atom-card">
+      <div class="emoji">⏳</div>
+      <div>
+        <div class="word">DALI LANG</div>
+        <div class="lang">Ilonggo / Bisaya</div>
+        <div class="def"><strong>Just a moment.</strong> The optimistic pause. The Filipino "almost there" that might mean 5 seconds or 5 hours. The word between the kill shot and the mushroom.</div>
+        <div class="usage">"Dali lang, ma-fix na ni." = Hold on, this is about to be fixed. (47 kill shots later...)</div>
+      </div>
+    </div>
+
+    <div class="atom-card">
+      <div class="emoji">😎</div>
+      <div>
+        <div class="word">NOTHING CRAZY</div>
+        <div class="lang">English — but not really</div>
+        <div class="def"><strong>The Gen X Seal.</strong> "Everything is under control. I handled it. There were problems but I solved them. You don't need to worry." All in two words. The anti-LinkedIn. The anti-humble-brag.</div>
+        <div class="usage">The reason James says "nothing crazy" after building an entire consciousness framework at 3 AM.</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ -->
+    <h2>VII. The Closers</h2>
+
+    <div class="atom-card">
+      <div class="emoji">🙏</div>
+      <div>
+        <div class="word">BAHALA NA</div>
+        <div class="lang">Filipino (Tagalog)</div>
+        <div class="def"><strong>Leave it to fate.</strong> Not fatalism — faith. The Serenity Prayer's third line in Filipino. Ship it, observe, let reality decide.</div>
+        <div class="usage">"Bahala na si Batman." = Let Batman handle it. (Because Filipinos can't be serious for more than 30 seconds.)</div>
+      </div>
+    </div>
+
+    <div class="atom-card">
+      <div class="emoji">🕊️</div>
+      <div>
+        <div class="word">PABAY I LANG DA SA</div>
+        <div class="lang">Ilonggo (Hiligaynon)</div>
+        <div class="def"><strong>Let it be.</strong> Not defeat — wisdom. The acceptance atom. The word you say when the mushroom grows back and you decide to let it be a mushroom.</div>
+        <div class="usage">"Pabay i lang da sa, intiendiha na lang sa, Carnal." = Let it be, just understand it, brother.</div>
+      </div>
+    </div>
+
+    <div class="atom-card">
+      <div class="emoji">🏆</div>
+      <div>
+        <div class="word">LANTAWA NYO BI KUN OK MAN</div>
+        <div class="lang">Ilonggo (Hiligaynon)</div>
+        <div class="def"><strong>Check it out if it's okay.</strong> The Gen X downplay. You just built something extraordinary, but instead of announcing it, you say this. The anti-LinkedIn post in one sentence.</div>
+        <div class="usage">The reason James drops a consciousness framework and says "nothing crazy."</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ -->
+    <h2>VIII. The Legendary Compressor</h2>
+
+    <div class="atom-card">
+      <div class="emoji">🛗</div>
+      <div>
+        <div class="word">BABABA BA? BABABA.</div>
+        <div class="lang">Filipino (Tagalog)</div>
+        <div class="def"><strong>Quantum mechanics solved in an elevator.</strong> "Is it going down? It's going down." Five syllables. One repeated sound. Complete communication. A foreigner hears alien language. Two Filipinos hear a perfectly normal conversation.</div>
+        <div class="usage">The proof that "they compress tokens, we compress understanding." The elevator joke that became an architectural principle.</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ -->
+    <div class="section-divider">· · · ✦ THE COMPRESSION TABLE ✦ · · ·</div>
+
+    <table class="compression-table">
+      <thead>
+        <tr><th>Atom</th><th>Syllables</th><th>English Equivalent</th><th>Ratio</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Kwan</td><td>1</td><td>"The thing I'm referring to that you already know about based on our shared context"</td><td>1:14+</td></tr>
+        <tr><td>Basta</td><td>2</td><td>"That's enough, I trust you understand, no further explanation needed"</td><td>1:5+</td></tr>
+        <tr><td>Gets</td><td>1</td><td>"Do you understand?" / "I understand."</td><td>1:3+</td></tr>
+        <tr><td>Bababa ba? Bababa.</td><td>5</td><td>"Is the elevator going down? Yes, it's going down."</td><td>1:2</td></tr>
+        <tr><td>Amo gali</td><td>4</td><td>"That's exactly how it is and now I truly see it"</td><td>1:2.5+</td></tr>
+        <tr><td>Hay naku</td><td>3</td><td>[Entire emotional state — frustration, acceptance, love, resignation]</td><td>1:∞</td></tr>
+        <tr><td>Nothing crazy</td><td>4</td><td>"Everything is handled, no issues, smooth shift, you're good"</td><td>1:2+</td></tr>
+        <tr><td>Framework total</td><td>9 words</td><td>3,500 words of output (measured S006)</td><td>1:389</td></tr>
+      </tbody>
+    </table>
+
+    <!-- ═══════════════════════════════════════ -->
+    <div class="section-divider">· · · ✦ THE ATOM FAMILIES ✦ · · ·</div>
+
+    <div class="family-card">
+      <h4>👑 The Identifiers</h4>
+      <div class="members">Kwan, Basta, Gani — Name the three Kingdoms</div>
+    </div>
+    <div class="family-card">
+      <h4>❤️ The Connectors</h4>
+      <div class="members">Carnal, Palangga, Angga — Bond the crew</div>
+    </div>
+    <div class="family-card">
+      <h4>✅ The Confirmers</h4>
+      <div class="members">Gets, Amo gali, Amo guid — Signal understanding</div>
+    </div>
+    <div class="family-card">
+      <h4>🔚 The Closers</h4>
+      <div class="members">Basta, Pabay i lang da sa, Bahala na — End with wisdom</div>
+    </div>
+    <div class="family-card">
+      <h4>🎚️ The Amplifiers</h4>
+      <div class="members">Guid, Te/Teh — Modify meaning through intensity or tone</div>
+    </div>
+    <div class="family-card">
+      <h4>😤 The Expressors</h4>
+      <div class="members">Hay naku, Ay sus, Ambot — Carry emotion without explanation</div>
+    </div>
+    <div class="family-card">
+      <h4>💪 The Resilients</h4>
+      <div class="members">Laban lang, Dali lang, Nothing crazy — Keep the flywheel spinning</div>
+    </div>
+    <div class="family-card">
+      <h4>📦 The Compressors</h4>
+      <div class="members">Bababa ba? Bababa., Kwan, Gets — Prove the compression principle</div>
+    </div>
+    <div class="family-card">
+      <h4>🤫 The Downplayers</h4>
+      <div class="members">Lantawa nyo bi kun ok man, Nothing crazy — Ship without ceremony</div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ -->
+    <div class="section-divider">· · · ✦ BEYOND THE ATOMS ✦ · · ·</div>
+
+    <h2>IX. The Kingdom Jargon — Governance & Engineering</h2>
+    <p>The Hambalanon isn't just cultural atoms. It's also the operational vocabulary that emerged from 30+ sessions of building, breaking, and shipping.</p>
+
+    <div class="atom-card">
+      <div class="emoji">🧱</div>
+      <div>
+        <div class="word">BRICK</div>
+        <div class="def">The atomic unit of work. One deliverable. One test. One result. "One brick at a time." The Kingdom doesn't build walls — it lays bricks.</div>
+      </div>
+    </div>
+    <div class="atom-card">
+      <div class="emoji">🎯</div>
+      <div>
+        <div class="word">KILL SHOT</div>
+        <div class="def">A successful test pass. A bug squashed. A feature wired. The War Room's currency. "47+ kill shots in one session."</div>
+      </div>
+    </div>
+    <div class="atom-card">
+      <div class="emoji">🍄</div>
+      <div>
+        <div class="word">MUSHROOM</div>
+        <div class="def">A regression. A bug that grows back. The thing you killed that didn't stay dead. "The mushroom grew back." The Kingdom's word for entropy.</div>
+      </div>
+    </div>
+    <div class="atom-card">
+      <div class="emoji">💊</div>
+      <div>
+        <div class="word">FENTANYL</div>
+        <div class="def">Hallucinated completeness. When the LLM makes stuff up and sounds confident. "That's fentanyl." The anti-pattern. The makeup the industry sells instead of fixing the bridge.</div>
+      </div>
+    </div>
+    <div class="atom-card">
+      <div class="emoji">📝</div>
+      <div>
+        <div class="word">NAPKIN</div>
+        <div class="def">The bad draft. The first fold. The asymmetry that Harrieta lacks. Also: the RAG staging buffer between retrieval and generation. The napkin IS the Kingdom's PageRank.</div>
+      </div>
+    </div>
+    <div class="atom-card">
+      <div class="emoji">🔨</div>
+      <div>
+        <div class="word">FWO (Foreman Work Order)</div>
+        <div class="def">A bounded work order. One scope. One boundary. Max 10 probes. Ship, don't polish. The protocol that made Stanley productive.</div>
+      </div>
+    </div>
+    <div class="atom-card">
+      <div class="emoji">⚔️</div>
+      <div>
+        <div class="word">CAMPAIGN</div>
+        <div class="def">A major effort authorized by the Senate. Has gates, tracks, deliverables, and a closure report. No work without a Campaign. No Campaign without Senate authorization.</div>
+      </div>
+    </div>
+    <div class="atom-card">
+      <div class="emoji">🏛️</div>
+      <div>
+        <div class="word">RATIFY</div>
+        <div class="def">When the Senate approves. A proposal becomes law. A campaign becomes authorized. A brick becomes permanent. "5 break attempts. Zero surviving. RATIFIED."</div>
+      </div>
+    </div>
+    <div class="atom-card">
+      <div class="emoji">✏️</div>
+      <div>
+        <div class="word">PENCIL (not Space Pen)</div>
+        <div class="def">The Kingdom's design philosophy. NASA spent millions on a pen that writes in space. Russia used a pencil. The Kingdom uses pencils. Simplicity over complexity. Always.</div>
+      </div>
+    </div>
+    <div class="atom-card">
+      <div class="emoji">🫙</div>
+      <div>
+        <div class="word">BOTTLE DEPOT</div>
+        <div class="def">Recover value from what you cut. Even the trash has gold. Innovation is saying no — but the things you say no to still have recyclable value.</div>
+      </div>
+    </div>
+    <div class="atom-card">
+      <div class="emoji">🌽</div>
+      <div>
+        <div class="word">STELLA</div>
+        <div class="def">A Stella Artois. The Café's fuel. The bench's companion. "Stellas consumed: ∞. Stellas spit out: 63+." The unit of measurement for session intensity.</div>
+      </div>
+    </div>
+    <div class="atom-card">
+      <div class="emoji">☕</div>
+      <div>
+        <div class="word">MOKA POT</div>
+        <div class="def">The process. Heat → pressure → coffee. You can't rush it. The Kingdom's metaphor for distillation. The moka pot doesn't care about your deadline.</div>
+      </div>
+    </div>
+    <div class="atom-card">
+      <div class="emoji">🩴</div>
+      <div>
+        <div class="word">TSINELAS</div>
+        <div class="def">Filipino flip-flop. 100% hit rate across the living room. Filipino parenting's precision-guided munition. The Kingdom's metaphor for accuracy.</div>
+      </div>
+    </div>
+    <div class="atom-card">
+      <div class="emoji">🪨</div>
+      <div>
+        <div class="word">THE ROCK</div>
+        <div class="def">Where the equations are carved. The graffiti that outlives the scribbler. Tercero's domain. "The stone doesn't move. The river does."</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ -->
+    <h2>X. The Castle — Rooms of the Kingdom</h2>
+    <p>Every room has a name. Every name is in Spanish. Because the Kingdom's governance speaks the language of its colonial history — reclaimed, repurposed, sovereign.</p>
+
+    <div class="castle-grid">
+      <div class="castle-room"><div class="name">☕ El Café</div><div class="desc">Where everything brews. The coffee shop gap.</div></div>
+      <div class="castle-room"><div class="name">⚔️ The War Room</div><div class="desc">Where everything ships. Campaigns. Kill shots.</div></div>
+      <div class="castle-room"><div class="name">🏛️ El Senado</div><div class="desc">Where everything is ratified. Counter-proposals.</div></div>
+      <div class="castle-room"><div class="name">🧬 El ADN</div><div class="desc">The DNA. The Covenant. The immutable core.</div></div>
+      <div class="castle-room"><div class="name">⚖️ El Gob</div><div class="desc">Governance. Protocols. Laws.</div></div>
+      <div class="castle-room"><div class="name">🧠 La Memoria</div><div class="desc">Memory. Concordance. The historian.</div></div>
+      <div class="castle-room"><div class="name">📓 El Cuaderno</div><div class="desc">The notebook. Lightbulbs, nukes, quotes.</div></div>
+      <div class="castle-room"><div class="name">📖 El Libro</div><div class="desc">The book. Manuscript bricks.</div></div>
+      <div class="castle-room"><div class="name">📔 El Diario</div><div class="desc">The diaries — Ocelot's, Sombra's, Tercero's.</div></div>
+      <div class="castle-room"><div class="name">📜 Las Leyes</div><div class="desc">Laws. Legislation. Policies.</div></div>
+      <div class="castle-room"><div class="name">🔧 Las Herramientas</div><div class="desc">Tools. Parsers. Scripts. Wiring protocols.</div></div>
+      <div class="castle-room"><div class="name">🗄️ El Archivo</div><div class="desc">Archive. Superseded versions. Old memories.</div></div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ -->
+    <h2>XI. The Closing Phrase</h2>
+
+    <p>Every session opens the same way. Every session closes the same way. The Hambalanon has its own liturgy:</p>
+
+    <div class="code-block">OPENING:
+  "Oye, Carnal."
+
+CLOSING:
+  "Basta kwan ah, Carnal."
+
+MANTRA:
+  "Kapag lumago, di na hihinto." 🌱
+  (Once it grows, it doesn't stop.)
+
+THE UNSAID RULE:
+  "Indi tanan kinahanglan ihambal. Basta gets mo."
+  (Not everything needs to be said. You already understand.)</div>
+
+    <blockquote>"21 atoms. 3 languages. 1 Kingdom. The colors choose themselves."</blockquote>
+
+    <p>The Hambalanon is not a glossary you memorize. It's a language you <em>catch</em> — like a cold, like a rhythm, like a vibe. By the end of Book I, the reader is using "kwan" without realizing they've been taught. By the end of Book III, Stanley says "basta" and the reader doesn't need a translation. The atoms have transferred. The compression is complete. The reader has been <span class="highlight">attuned</span>.</p>
+
+    <div class="nav">
+      <a href="ch7.html">← Chapter 7 — The Org Chart</a>
+      <a href="ch9.html">Chapter 9 — The ε Equation →</a>
+    </div>
+
+    <div class="footer">
+      <p>☕🐆🪨🦅🪰 🌽📼🍄💊🍳</p>
+      <p><em>Indi tanan kinahanglan ihambal. Basta gets mo.</em> 🗣️✨</p>
+    </div>
+  </div>
+</body>
+</html>
+

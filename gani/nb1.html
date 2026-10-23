@@ -2,11 +2,30 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <head>
+  <link rel="preload" href="../assets/fonts/Caveat-Regular.ttf" as="font" type="font/truetype" crossorigin>
+  <link rel="preload" href="../assets/fonts/Merriweather-Regular.ttf" as="font" type="font/truetype" crossorigin>
+  <link rel="preload" href="../assets/fonts/JetBrainsMono-Regular.ttf" as="font" type="font/truetype" crossorigin>
+</head>
+
 <meta charset="UTF-8">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
+  @font-face { font-family: 'Caveat'; src: url('../assets/fonts/Caveat/static/Caveat-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; }
+  @font-face { font-family: 'Caveat'; src: url('../assets/fonts/Caveat/static/Caveat-SemiBold.ttf') format('truetype'); font-weight: 600; font-style: normal; }
+  @font-face { font-family: 'Caveat'; src: url('../assets/fonts/Caveat/static/Caveat-Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; }
+  @font-face { font-family: 'Merriweather'; src: url('../assets/fonts/Merriweather/static/Merriweather_24pt-Light.ttf') format('truetype'); font-weight: 300; font-style: normal; }
+  @font-face { font-family: 'Merriweather'; src: url('../assets/fonts/Merriweather/static/Merriweather_24pt-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; }
+  @font-face { font-family: 'Merriweather'; src: url('../assets/fonts/Merriweather/static/Merriweather_24pt-Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; }
+  @font-face { font-family: 'Merriweather'; src: url('../assets/fonts/Merriweather/static/Merriweather_24pt-LightItalic.ttf') format('truetype'); font-weight: 300; font-style: italic; }
+  @font-face { font-family: 'Merriweather'; src: url('../assets/fonts/Merriweather/static/Merriweather_24pt-Italic.ttf') format('truetype'); font-weight: 400; font-style: italic; }
+  @font-face { font-family: 'JetBrains Mono'; src: url('../assets/fonts/JetBrainsMono/fonts/webfonts/JetBrainsMono-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; }
+  @font-face { font-family: 'JetBrains Mono'; src: url('../assets/fonts/JetBrainsMono/fonts/webfonts/JetBrainsMono-Medium.woff2') format('woff2'); font-weight: 500; font-style: normal; }
+
+/* For laptop — let it breathe wider */
+@media (min-width: 768px) {
+  .notebook { max-width: 900px; }  /* or 1000px */
+  body { font-size: 17px; }        /* bump base size */
+}
 
 :root {
   --paper: #fdf6e3;
@@ -387,7 +406,19 @@ p {
   display: block;
   margin: 4px 0;
 }
-
+.footer {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #333;
+  text-align: center;
+  color: #666;
+  font-size: 0.85rem;
+}
+.footer .icons {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 4px;
+}
 </style>
 </head>
 <body>
@@ -396,6 +427,10 @@ p {
 
 <!-- ==================== COVER PAGE ==================== -->
 <div class="cover-page">
+  <div style="text-align: center; margin-bottom: 1.5rem;">
+    <img src="../assets/img/coa_gani.png" alt="Kingdom of Gani"
+         style="width: 140px; height: auto; border-radius: 8px; opacity: 0.9;">
+  </div>
   <h1>📓 The GANI Augmentation Layer</h1>
   <div class="subtitle">A Study Notebook — Deep Distill</div>
   <div class="subtitle" style="font-size:16px; color:#999;">Cross-Referenced with Kingdom Research Papers</div>
@@ -554,32 +589,32 @@ p {
     │
     ▼
 ┌─────────────────────┐
-│  1. QUERY PARSER     │  ← Classify intent, extract keywords
+│  1. QUERY PARSER    │  ← Classify intent, extract keywords
 └─────────┬───────────┘
           │
           ▼
 ┌─────────────────────┐
-│  2. RETRIEVER        │  ← ChromaDB (vector) + BM25 (keyword)
-│     Hybrid Search    │  ← Dewey-aware boost
+│  2. RETRIEVER       │  ← ChromaDB (vector) + BM25 (keyword)
+│     Hybrid Search   │  ← Dewey-aware boost
 └─────────┬───────────┘
           │
           ▼
 ┌─────────────────────┐
-│  3. NAPKIN LAYER     │  ← Staging buffer
-│     - Score chunks   │  ← Relevance ranking
-│     - Deduplicate    │  ← Remove overlaps
-│     - Budget check   │  ← Hard 4,096 token gate
+│  3. NAPKIN LAYER    │  ← Staging buffer
+│     - Score chunks  │  ← Relevance ranking
+│     - Deduplicate   │  ← Remove overlaps
+│     - Budget check  │  ← Hard 4,096 token gate
 └─────────┬───────────┘
           │
           ▼
 ┌─────────────────────┐
 │  4. LLM (Qwen)      │  ← Sees ONLY the napkin output
-│     via Ollama       │  ← Clean context, honest response
+│     via Ollama      │  ← Clean context, honest response
 └─────────┬───────────┘
           │
           ▼
 ┌─────────────────────┐
-│  5. RESPONSE + LOG   │  ← Receipt stored (conn_log)
+│  5. RESPONSE + LOG  │  ← Receipt stored (conn_log)
 └─────────────────────┘</div>
 
   <h2>Context Budget Allocation</h2>
@@ -926,8 +961,17 @@ after disturbance.
 
 </div><!-- end notebook -->
 
+<div class="footer">
+    <div class="icons">🍄🪨☯️🌱❤️</div>
+    The Ocelot Framework · The Notebook<br/>
+    Written in the Kingdom of Kwan · S030 · October 2026<br/>
+    <em>Kapag lumago, di na hihinto.</em> 🌱
+    <div class="nav">
+      <a href="../index.html">← Home</a>
+    </div>
+  </div>
+
 </body>
 </html>
 
 
-The

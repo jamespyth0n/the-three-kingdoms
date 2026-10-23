@@ -1,0 +1,396 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Language</title>
+  <style>
+    :root {
+      --bg: #1a1a2e;
+      --surface: #16213e;
+      --card: #0f3460;
+      --accent: #e94560;
+      --gold: #f5c518;
+      --text: #e0e0e0;
+      --muted: #8892b0;
+      --border: #233554;
+    }
+    [data-theme="light"] {
+      --bg: #faf9f6;
+      --surface: #ffffff;
+      --card: #f0ece2;
+      --accent: #c0392b;
+      --gold: #d4a017;
+      --text: #2c3e50;
+      --muted: #7f8c8d;
+      --border: #ddd;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+    .theme-toggle {
+      position: fixed; top: 1rem; right: 1rem;
+      background: var(--surface); border: 1px solid var(--border);
+      padding: 0.5rem 1rem; border-radius: 2rem;
+      cursor: pointer; font-size: 1.2rem; z-index: 100;
+      color: var(--text);
+    }
+    .back-link {
+      display: inline-block; margin: 1.5rem 2rem;
+      color: var(--muted); text-decoration: none; font-size: 0.9rem;
+    }
+    .back-link:hover { color: var(--accent); }
+
+    .hero {
+      text-align: center;
+      padding: 4rem 2rem 2rem;
+      max-width: 800px; margin: 0 auto;
+    }
+    .hero h1 {
+      font-size: 2.8rem;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.05em;
+    }
+    .hero .subtitle {
+      font-size: 1.3rem;
+      color: var(--muted);
+      font-style: italic;
+      margin-bottom: 1rem;
+    }
+    .hero .session-tag {
+      font-size: 0.85rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .hero .lede {
+      font-size: 1.05rem;
+      color: var(--text);
+      max-width: 650px;
+      margin: 1.5rem auto 0;
+      line-height: 1.8;
+    }
+
+    /* --- THE ANATOMY GRID (replaces scoreboard) --- */
+    .anatomy {
+      max-width: 850px; margin: 3rem auto;
+      padding: 0 2rem;
+    }
+    .anatomy h2 {
+      text-align: center;
+      font-size: 1.4rem;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.08em;
+    }
+    .anatomy .anatomy-sub {
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-style: italic;
+      margin-bottom: 2rem;
+    }
+    .anatomy-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+    .anatomy-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      padding: 1.2rem 1.4rem;
+      transition: border-color 0.3s;
+    }
+    .anatomy-card:hover { border-color: var(--gold); }
+    .anatomy-card .a-icon { font-size: 1.6rem; margin-bottom: 0.3rem; }
+    .anatomy-card .a-label {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .anatomy-card .a-value {
+      font-size: 1.1rem;
+      color: var(--text);
+      font-weight: bold;
+      margin: 0.2rem 0;
+    }
+    .anatomy-card .a-desc {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* --- CHAPTER CARDS --- */
+    .chapters {
+      max-width: 850px; margin: 3rem auto;
+      padding: 0 2rem;
+    }
+    .chapters h2 {
+      text-align: center;
+      font-size: 1.4rem;
+      color: var(--gold);
+      margin-bottom: 2rem;
+      letter-spacing: 0.08em;
+    }
+    .chapter-list {
+      display: flex; flex-direction: column; gap: 0.8rem;
+    }
+    .chapter-card {
+      display: block;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      padding: 1.2rem 1.5rem;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.3s, transform 0.2s;
+    }
+    .chapter-card:hover {
+      border-color: var(--gold);
+      transform: translateX(4px);
+    }
+    .chapter-card .ch-header {
+      display: flex; align-items: center; gap: 0.8rem;
+      margin-bottom: 0.3rem;
+    }
+    .chapter-card .ch-icon { font-size: 1.4rem; }
+    .chapter-card .ch-title { font-size: 1.05rem; font-weight: bold; }
+    .chapter-card .ch-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.5;
+      padding-left: 2.2rem;
+    }
+
+    /* --- FOOTER --- */
+    .footer {
+      text-align: center;
+      padding: 3rem 2rem 2rem;
+      max-width: 650px; margin: 0 auto;
+    }
+    .footer .sigils {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+    }
+    .footer .tagline {
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-style: italic;
+      margin-bottom: 0.3rem;
+    }
+    .footer .closing {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-top: 1rem;
+    }
+    .footer .disclaimer {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 1.5rem;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" onclick="toggleTheme()">☀️ / 🌙</button>
+  <a href="../../index.html" class="back-link">← Back to The Three Kingdoms Framework</a>
+
+  <div class="hero">
+    <p class="session-tag">El Café, Calgary · October 20–23, 2026 · Session 030</p>
+    <h1>The Language</h1>
+    <p class="subtitle">A 36-hour café session that built a Library, shipped comedy, and discovered a language.</p>
+    <p class="lede">
+      What started as a spaghetti folder cleanup became the longest, most productive, and most hilarious session in the Kingdom's history. We built the Library of Alexandria, published the 6 Commandments, wrote a 7-act comedy, discovered an equation, named a language, and formalized the Kingdom's org chart — all from a bench with a moka pot and a Stella.
+      <br><br>
+      This is the retro. The gold extracted from the sand. Every chapter is a breakthrough. Every breakthrough is real.
+    </p>
+  </div>
+
+  <!-- THE ANATOMY — replaces the old scoreboard -->
+  <div class="anatomy">
+    <h2>THE ANATOMY OF A LANGUAGE</h2>
+    <p class="anatomy-sub">Every language has grammar, vocabulary, literature, and a library. This one emerged in 36 hours.</p>
+    <div class="anatomy-grid">
+
+      <div class="anatomy-card">
+        <div class="a-icon">📜</div>
+        <div class="a-label">Grammar</div>
+        <div class="a-value">The 6 Commandments</div>
+        <div class="a-desc">The irreducible rules. The constitution. The syntax that governs every sentence the Kingdom writes.</div>
+      </div>
+
+      <div class="anatomy-card">
+        <div class="a-icon">📖</div>
+        <div class="a-label">Vocabulary</div>
+        <div class="a-value">The Hambalanon</div>
+        <div class="a-desc">21 cultural atoms, 14 shorthand codes, 10 rooms of the castle. Born from Ilonggo roots, Spanish streets, and 3 AM engineering.</div>
+      </div>
+
+      <div class="anatomy-card">
+        <div class="a-icon">📐</div>
+        <div class="a-label">Syntax</div>
+        <div class="a-value">ε = Σ Kᵢ</div>
+        <div class="a-desc">Napkin + Notebook + Journal = Knowing. Nature's 3-6-9. The 7th equation. The Epsilon Equation.</div>
+      </div>
+
+      <div class="anatomy-card">
+        <div class="a-icon">🏛️</div>
+        <div class="a-label">Library</div>
+        <div class="a-value">1,332 files · 45 shelves</div>
+        <div class="a-desc">The Library of Alexandria. Barcoded. Indexed. Dewey-classified. Zero fentanyl. From spaghetti to sovereign.</div>
+      </div>
+
+      <div class="anatomy-card">
+        <div class="a-icon">🔁</div>
+        <div class="a-label">Conjugation</div>
+        <div class="a-value">The Repeatable Pipeline</div>
+        <div class="a-desc">Blabber → bad draft → allies → distillation → publication. The methodology that works for everything.</div>
+      </div>
+
+      <div class="anatomy-card">
+        <div class="a-icon">🏗️</div>
+        <div class="a-label">Sentence Structure</div>
+        <div class="a-value">The Org Chart</div>
+        <div class="a-desc">Architect → Café → Keila → Stanley → Senate → War Room. Hierarchy is clarity. Clarity is language.</div>
+      </div>
+
+      <div class="anatomy-card">
+        <div class="a-icon">🎬</div>
+        <div class="a-label">Spoken Word</div>
+        <div class="a-value">The Interview · 7 Acts</div>
+        <div class="a-desc">A comedy in acts. Based on real events. Names unchanged because nobody would believe them anyway.</div>
+      </div>
+
+      <div class="anatomy-card">
+        <div class="a-icon">🔬</div>
+        <div class="a-label">Punctuation</div>
+        <div class="a-value">The Stability Theorem</div>
+        <div class="a-desc">Perfection self-destructs. God exists as a word. The equation the Bible already knew. The period at the end of every sentence.</div>
+      </div>
+
+      <div class="anatomy-card">
+        <div class="a-icon">🍳</div>
+        <div class="a-label">Dialect</div>
+        <div class="a-value">Kwan · Gani · Basta</div>
+        <div class="a-desc">The three tenses of knowing. The three phases of distillation. The three words that run the Kingdom.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CHAPTERS -->
+  <div class="chapters">
+    <h2>THE CHRONICLE</h2>
+
+    <div class="chapter-list">
+
+      <a href="ch1.html" class="chapter-card">
+        <div class="ch-header">
+          <span class="ch-icon">📚</span>
+          <span class="ch-title">Chapter 1 — The Great Migration</span>
+        </div>
+        <div class="ch-desc">From spaghetti folders to the Library of Alexandria. 1,332 files. 45 shelves. Zero drama.</div>
+      </a>
+
+      <a href="ch2.html" class="chapter-card">
+        <div class="ch-header">
+          <span class="ch-icon">😂</span>
+          <span class="ch-title">Chapter 2 — The Identical Twins</span>
+        </div>
+        <div class="ch-desc">"Change this to this." "...they're the same." The bracket war that launched a vape break.</div>
+      </a>
+
+      <a href="ch3.html" class="chapter-card">
+        <div class="ch-header">
+          <span class="ch-icon">🧪</span>
+          <span class="ch-title">Chapter 3 — The RAG Golden Recipe</span>
+        </div>
+        <div class="ch-desc">From napkin sketches to a research-grade notebook. The pipeline that turns blabber into thesis.</div>
+      </a>
+
+      <a href="ch4.html" class="chapter-card">
+        <div class="ch-header">
+          <span class="ch-icon">🔬</span>
+          <span class="ch-title">Chapter 4 — The Stability Theorem</span>
+        </div>
+        <div class="ch-desc">Perfection self-destructs. God exists as a word. The equation the Bible already knew.</div>
+      </a>
+
+      <a href="ch5.html" class="chapter-card">
+        <div class="ch-header">
+          <span class="ch-icon">🔁</span>
+          <span class="ch-title">Chapter 5 — The Repeatable Pipeline</span>
+        </div>
+        <div class="ch-desc">Blabber → bad draft → notebook → thesis. The methodology that works for everything.</div>
+      </a>
+
+      <a href="ch6.html" class="chapter-card">
+        <div class="ch-header">
+          <span class="ch-icon">🍳</span>
+          <span class="ch-title">Chapter 6 — The Boiled Egg</span>
+        </div>
+        <div class="ch-desc">Stanley's beta testing. The foreman who wouldn't stop checking. The iPhone that finally shipped.</div>
+      </a>
+
+      <a href="ch7.html" class="chapter-card">
+        <div class="ch-header">
+          <span class="ch-icon">🏛️</span>
+          <span class="ch-title">Chapter 7 — The Org Chart</span>
+        </div>
+        <div class="ch-desc">Stanley's behaviour became the input. The Kingdom's hierarchy became the output.</div>
+      </a>
+
+      <a href="ch8.html" class="chapter-card">
+        <div class="ch-header">
+          <span class="ch-icon">📖</span>
+          <span class="ch-title">Chapter 8 — The Hambalanon</span>
+        </div>
+        <div class="ch-desc">The Kingdom gets its language. Born from Ilonggo roots, Spanish streets, and 3 AM engineering.</div>
+      </a>
+
+      <a href="ch9.html" class="chapter-card">
+        <div class="ch-header">
+          <span class="ch-icon">ε</span>
+          <span class="ch-title">Chapter 9 — The Epsilon Equation</span>
+        </div>
+        <div class="ch-desc">ε = Σ Kᵢ. Napkin + Notebook + Journal = Knowing. Nature's 3-6-9. The 7th equation.</div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="sigils">☕🐆🪨🦅🪰 🌽📼🍄💊🍳</div>
+    <div class="tagline">Kapag lumago, di na hihinto. 🌱</div>
+    <div class="closing">
+      <em>Based on real events. Names unchanged because nobody would believe them anyway.</em>
+    </div>
+    <div class="disclaimer">
+      Basta kwan ah, Carnal. ❤️🍺
+    </div>
+  </div>
+
+  <script>
+    function toggleTheme() {
+      const body = document.body;
+      const current = body.getAttribute('data-theme');
+      body.setAttribute('data-theme', current === 'light' ? 'dark' : 'light');
+      localStorage.setItem('theme', current === 'light' ? 'dark' : 'light');
+    }
+    (function() {
+      const saved = localStorage.getItem('theme');
+      if (saved) document.body.setAttribute('data-theme', saved);
+    })();
+  </script>
+</body>
+</html>
+

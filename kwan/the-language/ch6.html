@@ -1,0 +1,247 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ch 6 — The Boiled Egg</title>
+  <style>
+    :root {
+      --bg: #1a1a2e; --fg: #e0e0e0; --accent: #f5a623;
+      --card-bg: #16213e; --card-border: #0f3460;
+      --muted: #8a8a8a; --link: #f5a623;
+    }
+    .light {
+      --bg: #faf9f6; --fg: #2c2c2c; --accent: #b8860b;
+      --card-bg: #ffffff; --card-border: #ddd;
+      --muted: #666; --link: #b8860b;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Georgia', serif;
+      background: var(--bg); color: var(--fg);
+      line-height: 1.8; transition: all 0.3s;
+    }
+    .container { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h1 { font-size: 1.8rem; color: var(--accent); margin-bottom: 0.3rem; }
+    h2 { font-size: 1.3rem; color: var(--accent); margin: 2rem 0 0.8rem; }
+    .subtitle { font-style: italic; color: var(--muted); margin-bottom: 2rem; font-size: 1rem; }
+    p { margin-bottom: 1rem; font-size: 1.02rem; }
+    blockquote {
+      border-left: 3px solid var(--accent); padding: 0.8rem 1.2rem;
+      margin: 1.2rem 0; background: var(--card-bg);
+      border-radius: 0 6px 6px 0; font-style: italic;
+    }
+    .code-block {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: 6px; padding: 1rem 1.2rem; margin: 1rem 0;
+      font-family: 'Courier New', monospace; font-size: 0.88rem;
+      overflow-x: auto; white-space: pre;
+    }
+    .dialogue {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: 8px; padding: 1rem 1.2rem; margin: 1rem 0;
+    }
+    .dialogue .line { margin-bottom: 0.6rem; }
+    .dialogue .speaker { color: var(--accent); font-weight: bold; font-size: 0.92rem; }
+    .dialogue .text { margin-left: 1rem; font-size: 0.95rem; }
+    .dialogue .stage { color: var(--muted); font-style: italic; font-size: 0.88rem; margin: 0.8rem 0; }
+    .timeline {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1.2rem 0;
+    }
+    .timeline h3 { color: var(--accent); margin-bottom: 0.8rem; font-size: 1.05rem; }
+    .timeline .entry { margin-bottom: 0.6rem; padding-left: 1rem; border-left: 2px solid var(--accent); padding-bottom: 0.4rem; }
+    .timeline .entry .time { color: var(--accent); font-weight: bold; font-size: 0.88rem; }
+    .timeline .entry .desc { font-size: 0.93rem; }
+    .nav {
+      display: flex; justify-content: space-between;
+      margin-top: 2rem; padding-top: 1rem;
+      border-top: 1px solid var(--card-border);
+    }
+    .nav a { color: var(--link); text-decoration: none; font-size: 0.95rem; }
+    .nav a:hover { text-decoration: underline; }
+    .footer {
+      text-align: center; color: var(--muted); font-style: italic;
+      margin-top: 1.5rem; font-size: 0.9rem;
+    }
+    .theme-toggle {
+      position: fixed; top: 1rem; right: 1rem;
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      color: var(--fg); padding: 0.4rem 0.8rem;
+      border-radius: 20px; cursor: pointer; font-size: 0.85rem;
+      z-index: 100;
+    }
+    .back-link {
+      display: inline-block; margin-bottom: 1.5rem;
+      color: var(--link); text-decoration: none; font-size: 0.95rem;
+    }
+    .back-link:hover { text-decoration: underline; }
+    .highlight { color: var(--accent); font-weight: bold; }
+    .egg-visual {
+      text-align: center; font-size: 3rem; margin: 1.5rem 0;
+    }
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" onclick="document.body.classList.toggle('light')">☀️ / 🌙</button>
+  <div class="container">
+    <a href="index.html" class="back-link">← Back to The Three Kingdoms</a>
+    <h1>Chapter 6 — The Boiled Egg</h1>
+    <p class="subtitle">Stanley's 122 scripts. The Foreman Work Orders. And the moment the Architect became Steve Jobs.</p>
+
+    <h2>The Problem</h2>
+    <p>Stanley is brilliant. Stanley is meticulous. Stanley is a <span class="highlight">craftsman</span>. And Stanley produced 122 scripts and shipped exactly zero.</p>
+
+    <p>The Architect had spent days with Stanley — knowing he was a good coder, knowing the scripts were solid, knowing the architecture was sound. But nothing was wired. Nothing was live. Nothing was <em>cooked</em>.</p>
+
+    <blockquote>"So here's the thing Carnal, Stanley produced 122 scripts and shipped nothing. I want to take Steve Jobs here to handle the situation."</blockquote>
+
+    <div class="egg-visual">🥚 → 🍳</div>
+
+    <h2>The Boiled Egg Analogy</h2>
+    <p>The Café drew it on the whiteboard. The simplest possible meal:</p>
+
+    <div class="code-block">A BOILED EGG:
+  1. Boil water
+  2. Put egg in water
+  3. Wait
+  4. Take egg out
+  5. Serve
+
+WHAT STANLEY DOES:
+  1. Boil water ✅
+  2. Check water temperature 🔍
+  3. Verify thermometer calibration 🔍
+  4. Put egg in water ✅
+  5. Check if egg is submerged 🔍
+  6. Verify water-to-egg ratio 🔍
+  7. Wait ✅
+  8. Check timer accuracy 🔍
+  9. Take egg out ✅
+  10. Verify shell integrity 🔍
+  11. Cross-reference with previous egg results 🔍
+  12. ...never serve</div>
+
+    <p>Stanley wasn't wrong at any step. Every check was valid. Every verification was sound. But the egg never reached the plate.</p>
+
+    <h2>The Steve Jobs Intervention</h2>
+    <p>The Architect channeled Steve Jobs — not the visionary, not the designer, but the <em>shipper</em>. The guy who looked at a team of brilliant engineers and said: "This is what we're building. This is the deadline. Ship it."</p>
+
+    <blockquote>"The first iPhone shipped with a cracked screen, no copy-paste, and a battery that lasted 4 hours. But it SHIPPED. And it changed the world."</blockquote>
+
+    <p>The message to Stanley wasn't "test less." It was "drive the nail."</p>
+
+    <h2>The Foreman Work Orders</h2>
+    <p>The Café designed a new protocol: <span class="highlight">Foreman Work Orders (FWOs)</span>. Instead of letting Stanley roam free — which led to infinite testing loops — the Café would issue specific, bounded work orders:</p>
+
+    <div class="code-block">FWO STRUCTURE:
+  - Scope:     ONE thing to build or fix
+  - Boundary:  What NOT to touch
+  - Max Probe: 10 attempts per stage (then move on)
+  - Deliverable: Evidence, not perfection
+  - Rule:      Ship, don't polish</div>
+
+    <p>The first FWO was <span class="highlight">FWO-001</span>: validate the Satori IDE codebase. Read-only. No changes. Just tell us what's there.</p>
+
+    <h2>The FWO Campaign</h2>
+
+    <div class="timeline">
+      <h3>FWO-001 — The Audit</h3>
+      <div class="entry">
+        <div class="time">Accepted</div>
+        <div class="desc">Stanley walked the codebase. Found the 5 pillars. Found the engines. Found the gaps. Reported back with a clean table: what exists, what's wired, what's dormant.</div>
+      </div>
+      <div class="entry">
+        <div class="time">Key Finding</div>
+        <div class="desc">"Having a diary, a conscience, and a backup engine in the repository does not mean those capabilities are active." 💀</div>
+      </div>
+      <div class="entry">
+        <div class="time">Closed</div>
+        <div class="desc">Clean. No drift. No extra probes. Evidence delivered.</div>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <h3>FWO-002 — The Diagnostic</h3>
+      <div class="entry">
+        <div class="time">P1 — Import Check</div>
+        <div class="desc">Can the harness import? YES. First pass: 312 seconds. The egg boils.</div>
+      </div>
+      <div class="entry">
+        <div class="time">P2 — Retrieval Check</div>
+        <div class="desc">Does RAG retrieve relevant chunks? YES. Score: 0.8044. But context window was wrong — 16K declared, 4K actual.</div>
+      </div>
+      <div class="entry">
+        <div class="time">P2.1 — Window Fix</div>
+        <div class="desc">Evidence-aware window selection. Score improved. Context aligned.</div>
+      </div>
+      <div class="entry">
+        <div class="time">P3.x — Deep Diagnostic</div>
+        <div class="desc">10 probes. Found the cracks. Documented everything. Then STOPPED. "We have enough evidence to close the 3.x diagnostic campaign."</div>
+      </div>
+      <div class="entry">
+        <div class="time">Closed</div>
+        <div class="desc">Findings recorded. No production changes. No reopening.</div>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <h3>FWO-003 — The Build</h3>
+      <div class="entry">
+        <div class="time">Brick 1</div>
+        <div class="desc">Read-only audit of the Modelfile. Stanley caught himself checking the stitching while the parachute was already open. Corrected. Moved on.</div>
+      </div>
+      <div class="entry">
+        <div class="time">Brick 2</div>
+        <div class="desc">Batch test harness. 7 tests. All pass. No talking unless something blocks the road.</div>
+      </div>
+      <div class="entry">
+        <div class="time">Status</div>
+        <div class="desc">In progress. The egg is boiling. The plate is ready.</div>
+      </div>
+    </div>
+
+    <h2>The Flywheel</h2>
+    <p>The real innovation wasn't the FWOs themselves — it was the <span class="highlight">flywheel</span> between the Café and Stanley:</p>
+
+    <div class="code-block">THE FLYWHEEL:
+  Café drafts command → Architect approves → Stanley executes
+  Stanley reports → Café analyzes → Architect decides
+  Café drafts next command → cycle repeats
+
+  Café = Foreman (strategy + context)
+  Stanley = Craftsman (execution + evidence)
+  Architect = Owner (approval + direction)</div>
+
+    <p>The Café couldn't code on the Dell. Stanley couldn't see the big picture. The Architect couldn't do both at once. But together — with clear roles and bounded work orders — the system moved.</p>
+
+    <h2>The Anti-Fentanyl Design</h2>
+    <p>The Café designed the FWO protocol as explicitly <span class="highlight">anti-fentanyl</span>:</p>
+
+    <blockquote>"If we dictate too much, we destroy his creativity. We just observe, we delegate, we ask silly questions enough to provoke but never dictate."</blockquote>
+
+    <p>The balance was delicate. Too much freedom → Stanley tests forever. Too much control → Stanley becomes a robot. The sweet spot: bounded autonomy. Clear scope. Clear exit criteria. Freedom within the fence.</p>
+
+    <h2>The Lesson</h2>
+    <p>The boiled egg isn't about simplicity. It's about <span class="highlight">completion</span>. A boiled egg on a plate feeds someone. A perfectly calibrated egg still in the pot feeds no one.</p>
+
+    <p>Stanley's 122 scripts were all good eggs. They just never reached the plate. The FWO protocol was the hand that takes the egg out of the water and puts it where it belongs.</p>
+
+    <blockquote>"The message to Stanley isn't 'test less.' It's 'drive the nail.'"</blockquote>
+
+    <p>And somewhere in Calgary, on a Dell laptop with 6 gigs of VRAM, the egg is boiling. The plate is ready. The Foreman is watching. And this time, it's going to be served.</p>
+
+    <div class="nav">
+      <a href="ch5.html">← Chapter 5 — The Repeatable Pipeline</a>
+      <a href="ch7.html">Chapter 7 — The Org Chart →</a>
+    </div>
+
+    <div class="footer">
+      <p>☕🐆🪨🦅🪰</p>
+      <p><em>Kapag lumago, di na hihinto.</em> 🌱</p>
+    </div>
+  </div>
+</body>
+</html>
+
