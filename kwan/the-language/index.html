@@ -170,33 +170,30 @@
       padding-left: 2.2rem;
     }
 
-    /* --- FOOTER --- */
+    .nav {
+      display: flex; justify-content: space-between;
+      margin-top: 2rem; padding-top: 1rem;
+      border-top: 1px solid var(--card-border);
+    }
+    .nav a { color: var(--link); text-decoration: none; font-size: 0.95rem; }
+    .nav a:hover { text-decoration: underline; }
     .footer {
-      text-align: center;
-      padding: 3rem 2rem 2rem;
-      max-width: 650px; margin: 0 auto;
+      text-align: center; color: var(--muted); font-style: italic;
+      margin-top: 1.5rem; font-size: 0.9rem;
     }
-    .footer .sigils {
-      font-size: 1.4rem;
-      margin-bottom: 0.5rem;
+    .theme-toggle {
+      position: fixed; top: 1rem; right: 1rem;
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      color: var(--fg); padding: 0.4rem 0.8rem;
+      border-radius: 20px; cursor: pointer; font-size: 0.85rem;
+      z-index: 100;
     }
-    .footer .tagline {
-      font-size: 0.85rem;
-      color: var(--muted);
-      font-style: italic;
-      margin-bottom: 0.3rem;
+    .back-link {
+      display: inline-block; margin-bottom: 1.5rem;
+      color: var(--link); text-decoration: none; font-size: 0.95rem;
     }
-    .footer .closing {
-      font-size: 0.9rem;
-      color: var(--muted);
-      margin-top: 1rem;
-    }
-    .footer .disclaimer {
-      font-size: 0.75rem;
-      color: var(--muted);
-      margin-top: 1.5rem;
-      font-style: italic;
-    }
+    .back-link:hover { text-decoration: underline; }
+    .highlight { color: var(--accent); font-weight: bold; }
   </style>
 </head>
 <body>
@@ -365,6 +362,12 @@
       </a>
 
     </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="nav">
+    <a href="../index.html">← Back to The Kingdom of Kwan</a>
+    <a href="ch2.html">Chapter 1 — The Great Migration →</a>
   </div>
 
   <!-- FOOTER -->
