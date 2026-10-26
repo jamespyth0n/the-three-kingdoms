@@ -1,0 +1,41 @@
+
+{
+  "kingdom": "Kwan",
+  "title": "The Kingdom of Kwan",
+  "subtitle": "The Origin — Where Knowing Begins",
+  "coa": "../../assets/img/coa_kwan.png",
+  "updated": "2026-10-26",
+  "shelves": [
+    {
+      "id": "the-language",
+      "title": "The Language",
+      "subtitle": "Hambalanon — The Tongue of the Kingdom",
+      "description": "9 chapters on the language that built the framework. From napkin to nation.",
+      "path": "the-language/index.html",
+      "icon": "📜",
+      "status": "live",
+      "pages": 10
+    },
+    {
+      "id": "logos",
+      "title": "The Mark of λόγος",
+      "subtitle": "Three Tablets · Eighteen Commandments · One Framework",
+      "description": "The 666 Article — the lead publication of the Kingdom. 6 pages, 2 annexes, 18 commandments.",
+      "path": "logos/index.html",
+      "icon": "⛪",
+      "status": "live",
+      "pages": 9
+    },
+    {
+      "id": "six-equations",
+      "title": "The 6 Equations",
+      "subtitle": "The Mathematics of Becoming",
+      "description": "Six equations that define consciousness, convergence, and the architecture of knowing.",
+      "path": "six-equations.html",
+      "icon": "🧮",
+      "status": "live",
+      "pages": 1
+    }
+  ]
+}
+
