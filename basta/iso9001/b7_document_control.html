@@ -1,0 +1,710 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>B7 — Documented Information Control | QMS Company Bible</title>
+
+  <!-- FONTS — LOCAL (assets/fonts/) -->
+  <style>
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Bold.woff2') format('woff2');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Italic.woff2') format('woff2');
+      font-weight: 400; font-style: italic; font-display: swap;
+    }
+  </style>
+
+  <!-- NOTEBOOK STYLESHEET -->
+  <link rel="stylesheet" href="../assets/css/notebook.css" />
+
+  <style>
+    [data-theme="dark"] {
+      --bg-primary: #0d1117;
+      --bg-card: #161b22;
+      --bg-card-hover: #1c2333;
+      --bg-blockquote: #1c2333;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --accent-kwan: #d4a843;
+      --accent-gani: #58a6ff;
+      --accent-basta: #f78166;
+      --accent-green: #3fb950;
+      --border-primary: #30363d;
+      --shadow-card: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f6f8fa;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f0f3f6;
+      --bg-blockquote: #f0f3f6;
+      --text-primary: #1f2328;
+      --text-secondary: #656d76;
+      --text-muted: #8b949e;
+      --accent-kwan: #b8860b;
+      --accent-gani: #0969da;
+      --accent-basta: #cf222e;
+      --accent-green: #1a7f37;
+      --border-primary: #d0d7de;
+      --shadow-card: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      min-height: 100vh;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .theme-toggle {
+      position: fixed; top: 16px; right: 16px; z-index: 1000;
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 8px; padding: 8px 12px; cursor: pointer;
+      font-family: inherit; font-size: 14px; color: var(--text-primary);
+      transition: all 0.3s ease;
+    }
+    .theme-toggle:hover { border-color: var(--accent-kwan); }
+
+    .nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 16px 24px; border-bottom: 1px solid var(--border-primary);
+      font-size: 12px;
+    }
+    .nav a {
+      color: var(--accent-gani); text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .nav a:hover { color: var(--accent-kwan); }
+
+    .brick-header {
+      text-align: center; padding: 48px 24px 32px;
+      border-bottom: 1px solid var(--border-primary);
+    }
+    .brick-badge {
+      display: inline-block; padding: 4px 16px; border-radius: 4px;
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      background: rgba(63, 185, 80, 0.15); color: var(--accent-green);
+      margin-bottom: 16px;
+    }
+    .brick-header h1 { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+    .brick-header .meta {
+      font-size: 12px; color: var(--text-secondary); margin-bottom: 4px;
+    }
+    .brick-header .barcode {
+      font-size: 11px; color: var(--text-muted); font-style: italic;
+    }
+
+    .content { max-width: 860px; margin: 0 auto; padding: 40px 24px; }
+    .section { margin-bottom: 40px; }
+
+    .section-title {
+      font-size: 13px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent-kwan);
+      margin-bottom: 16px; padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-primary);
+    }
+
+    .section p, .section li {
+      font-size: 14px; color: var(--text-primary); margin-bottom: 12px;
+    }
+
+    .section ul { list-style: none; padding-left: 0; }
+    .section ul li::before {
+      content: "→ "; color: var(--accent-gani); font-weight: 700;
+    }
+
+    blockquote {
+      background: var(--bg-blockquote);
+      border-left: 3px solid var(--accent-kwan);
+      padding: 16px 20px; margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+      font-style: italic; font-size: 14px;
+      color: var(--text-primary);
+    }
+
+    /* TABLES */
+    .std-table {
+      width: 100%; border-collapse: collapse; margin: 16px 0;
+      font-size: 12px;
+    }
+    .std-table th {
+      text-align: left; padding: 10px 8px;
+      border-bottom: 2px solid var(--accent-kwan);
+      color: var(--accent-kwan); font-size: 10px;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .std-table td {
+      padding: 8px; border-bottom: 1px solid var(--border-primary);
+      color: var(--text-primary); vertical-align: top;
+    }
+    .std-table tr:hover td { background: var(--bg-card-hover); }
+
+    .find-table {
+      width: 100%; border-collapse: collapse; margin: 16px 0;
+      font-size: 12px;
+    }
+    .find-table th {
+      text-align: left; padding: 8px 10px;
+      border-bottom: 2px solid var(--accent-basta);
+      color: var(--accent-basta); font-size: 11px;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .find-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border-primary);
+      color: var(--text-primary); vertical-align: top;
+    }
+    .find-table tr:hover td { background: var(--bg-card-hover); }
+    .sev-p1 { color: var(--accent-basta); font-weight: 700; }
+    .sev-p2 { color: var(--accent-kwan); }
+
+    .rat-table {
+      width: 100%; border-collapse: collapse; margin: 16px 0;
+      font-size: 12px;
+    }
+    .rat-table th {
+      text-align: left; padding: 8px 12px;
+      border-bottom: 2px solid var(--accent-green);
+      color: var(--accent-green); font-size: 11px;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .rat-table td {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border-primary);
+      color: var(--text-primary);
+    }
+
+    /* PIPELINE FLOW */
+    .pipeline {
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 12px; padding: 24px; margin: 24px 0;
+      font-size: 13px; line-height: 2.2;
+    }
+    .pipeline .step {
+      color: var(--text-secondary);
+    }
+    .pipeline .step-role {
+      color: var(--accent-gani); font-weight: 700;
+    }
+    .pipeline .step-arrow {
+      color: var(--accent-kwan); margin: 0 4px;
+    }
+
+    /* LIFECYCLE CARDS */
+    .lifecycle-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px; margin: 16px 0;
+    }
+    .lifecycle-card {
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 8px; padding: 16px; text-align: center;
+    }
+    .lifecycle-card .lc-state {
+      font-size: 11px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; margin-bottom: 4px;
+    }
+    .lifecycle-card .lc-desc {
+      font-size: 11px; color: var(--text-secondary);
+    }
+
+    /* SEAL */
+    .seal-box {
+      text-align: center; padding: 32px;
+      border: 2px solid var(--accent-kwan); border-radius: 12px;
+      margin: 40px 0;
+    }
+    .seal-box .seal-icon { font-size: 32px; margin-bottom: 8px; }
+    .seal-box .seal-title {
+      font-size: 14px; font-weight: 700; color: var(--accent-kwan);
+      margin-bottom: 4px;
+    }
+    .seal-box .seal-meta {
+      font-size: 11px; color: var(--text-secondary); line-height: 1.8;
+    }
+
+    .footer {
+      text-align: center; padding: 32px 24px;
+      border-top: 1px solid var(--border-primary);
+      font-size: 11px; color: var(--text-muted);
+    }
+
+    @media (max-width: 600px) {
+      .brick-header h1 { font-size: 20px; }
+      .content { padding: 24px 16px; }
+      .lifecycle-grid { grid-template-columns: 1fr 1fr; }
+      .std-table, .find-table { font-size: 10px; }
+      .std-table th, .std-table td,
+      .find-table th, .find-table td { padding: 4px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- THEME TOGGLE -->
+  <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="b6_risk_opportunity.html">&larr; B6</a>
+    <span style="color: var(--text-muted);">B7 of 12</span>
+    <a href="b8_internal_audit.html">B8 &rarr;</a>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="brick-header">
+    <div class="brick-badge">✅ RATIFIED</div>
+    <h1>Brick 7 — Documented Information Control</h1>
+    <p class="meta">QMS-DCP-001 | Version 2.0 | ISO 9001:2015 Clause 7.5</p>
+    <p class="barcode">Barcode: 5_01_07_1 | Campaign: FWO-009 | Session: S031</p>
+  </header>
+
+  <!-- CONTENT -->
+  <main class="content">
+
+    <!-- § 1. PURPOSE -->
+    <div class="section">
+      <div class="section-title">§ 1. Purpose</div>
+      <p>
+        To establish and maintain a documented information control system that ensures all
+        Kingdom assets are created, identified, reviewed, approved, stored, protected,
+        retrieved, retained, and disposed of in accordance with ISO 9001:2015 Clause 7.5.
+      </p>
+      <blockquote>
+        A document without a barcode is a napkin. A napkin without a shelf is spaghetti.
+        Spaghetti without a system is chaos. This brick <strong>is</strong> the system.
+      </blockquote>
+    </div>
+
+    <!-- § 2. SCOPE -->
+    <div class="section">
+      <div class="section-title">§ 2. Scope</div>
+      <p>This procedure applies to all documented information required by the QMS, including but not limited to:</p>
+      <ul>
+        <li>Quality policies, mission/vision statements, and objectives</li>
+        <li>Risk and opportunity assessments</li>
+        <li>Roles, responsibilities, and authorities</li>
+        <li>Campaign artifacts, connection logs, and session records</li>
+        <li>Technical specifications, code documentation, and build records</li>
+        <li>External-origin documents referenced by the QMS</li>
+      </ul>
+    </div>
+
+    <!-- § 3. REFERENCES -->
+    <div class="section">
+      <div class="section-title">§ 3. References</div>
+      <table class="std-table">
+        <thead>
+          <tr><th>Reference</th><th>Purpose</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>ISO 9001:2015, Clause 7.5</td><td>Documented information requirements</td></tr>
+          <tr><td>DCP-001 — Document Control Procedure</td><td>Kingdom governance law</td></tr>
+          <tr><td>DCP-001 Addendum — Filing &amp; Barcode Protocol</td><td>Classification &amp; barcode rules</td></tr>
+          <tr><td>Kingdom Index (kingdom_index.json)</td><td>Master register of controlled documents</td></tr>
+          <tr><td>FWO-009 Campaign Status</td><td>Campaign progress &amp; decisions</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- § 4. DOCUMENT IDENTIFICATION -->
+    <div class="section">
+      <div class="section-title">§ 4. Document Identification &amp; Barcode Convention</div>
+      <p>All controlled documents shall carry:</p>
+      <ul>
+        <li><strong>Barcode:</strong> Dewey-style semantic identifier (X_XX_XX_X) mapped to the Kingdom's 7-layer filing model</li>
+        <li><strong>Title:</strong> Descriptive, unambiguous</li>
+        <li><strong>Version:</strong> Semantic versioning (vX.Y) with ISO 8601 timestamps</li>
+        <li><strong>Author/Owner:</strong> Identified role (Ocelot / Keila / Stanley / Architect)</li>
+        <li><strong>Status:</strong> Lifecycle state per § 5</li>
+      </ul>
+    </div>
+
+    <!-- § 5. LIFECYCLE STATES -->
+    <div class="section">
+      <div class="section-title">§ 5. Document Lifecycle States</div>
+      <div class="lifecycle-grid">
+        <div class="lifecycle-card">
+          <div class="lc-state" style="color: var(--text-muted);">DRAFT (D1)</div>
+          <div class="lc-desc">Initial proposal. Not authorized for controlled use.</div>
+        </div>
+        <div class="lifecycle-card">
+          <div class="lc-state" style="color: var(--accent-gani);">REVISION (D2)</div>
+          <div class="lc-desc">Revised text awaiting review and approval.</div>
+        </div>
+        <div class="lifecycle-card">
+          <div class="lc-state" style="color: var(--accent-kwan);">AUDIT REVIEWED (D3)</div>
+          <div class="lc-desc">Audit complete. Pending final approval.</div>
+        </div>
+        <div class="lifecycle-card">
+          <div class="lc-state" style="color: var(--accent-green);">RATIFIED</div>
+          <div class="lc-desc">Approved by Architect. Effective and controlled.</div>
+        </div>
+        <div class="lifecycle-card">
+          <div class="lc-state" style="color: var(--accent-basta);">SUPERSEDED</div>
+          <div class="lc-desc">Replaced by later revision. Retained as historical.</div>
+        </div>
+        <div class="lifecycle-card">
+          <div class="lc-state" style="color: var(--text-muted);">ARCHIVED</div>
+          <div class="lc-desc">Retained for historical, legal, or contractual purpose.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- § 6. 7-LAYER FILING MODEL -->
+    <div class="section">
+      <div class="section-title">§ 6. Kingdom's 7-Layer Filing Model</div>
+      <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 16px;">
+        Internal information architecture — Kingdom filing convention.
+      </p>
+      <table class="std-table">
+        <thead>
+          <tr><th>Layer</th><th>Prefix</th><th>Domain</th><th>Example</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1 — Infrastructure</td><td style="color: var(--accent-gani);">1_</td>
+            <td>Hardware, physical assets</td><td style="color: var(--text-secondary);">Server configs, hardware specs</td>
+          </tr>
+          <tr>
+            <td>2 — Governance</td><td style="color: var(--accent-gani);">2_</td>
+            <td>Policies, protocols, laws</td><td style="color: var(--text-secondary);">Quality Policy, DCP-001</td>
+          </tr>
+          <tr>
+            <td>3 — Network</td><td style="color: var(--accent-gani);">3_</td>
+            <td>Connections, integrations</td><td style="color: var(--text-secondary);">API configs, bridge protocols</td>
+          </tr>
+          <tr>
+            <td>4 — Cognition</td><td style="color: var(--accent-gani);">4_</td>
+            <td>Campaigns, strategies</td><td style="color: var(--text-secondary);">FWO-009, Quality Objectives</td>
+          </tr>
+          <tr>
+            <td>5 — Session</td><td style="color: var(--accent-gani);">5_</td>
+            <td>Runtime artifacts, audit records</td><td style="color: var(--text-secondary);">Brick deliverables, audit logs</td>
+          </tr>
+          <tr>
+            <td>6 — Expression</td><td style="color: var(--accent-gani);">6_</td>
+            <td>Publications, articles</td><td style="color: var(--text-secondary);">Three Kingdoms, Logos article</td>
+          </tr>
+          <tr>
+            <td>7 — Application</td><td style="color: var(--accent-gani);">7_</td>
+            <td>Tools, scripts, executables</td><td style="color: var(--text-secondary);">filing.py, bridge.py, server.py</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- § 7. MASTER REGISTER -->
+    <div class="section">
+      <div class="section-title">§ 7. Master Register — Kingdom Index</div>
+      <ul>
+        <li><strong>kingdom_index.json</strong> serves as the single source of truth for all controlled assets</li>
+        <li>All ratified documents must be registered with barcode, title, version, status, and filing location</li>
+        <li>Index updated as part of the metabolism protocol (Eat → Digest → Poop cycle)</li>
+        <li>Reconciliation checks at defined intervals: missing files, duplicates, mismatched revisions, invalid paths</li>
+      </ul>
+    </div>
+
+    <!-- § 8. REVIEW & RATIFICATION PIPELINE -->
+    <div class="section">
+      <div class="section-title">§ 8. Review &amp; Ratification Pipeline</div>
+      <div class="pipeline">
+        <span class="step-role">Ocelot</span> <span class="step">(D1 Draft)</span>
+        <span class="step-arrow">→</span>
+        <span class="step-role">Stanley</span> <span class="step">(Audit — Coin Flip / 3-Rung Ladder)</span>
+        <span class="step-arrow">→</span>
+        <span class="step-role">Keila</span> <span class="step">(Consultant Brew — 2nd Pass)</span>
+        <span class="step-arrow">→</span>
+        <span class="step-role">Ocelot</span> <span class="step">(Merge &amp; Resolve)</span>
+        <span class="step-arrow">→</span>
+        <span class="step-role">Architect</span> <span class="step">(Final Seal — RATIFY / CONDITIONAL / REJECT)</span>
+      </div>
+      <ul>
+        <li><strong>Stanley</strong> audits for compliance gaps, implementation evidence, registrar readiness</li>
+        <li><strong>Keila</strong> validates architectural soundness, ISO alignment, consultant recommendations</li>
+        <li><strong>Ocelot</strong> merges findings, resolves dispositions, prepares D3</li>
+        <li><strong>Architect</strong> holds final ratification authority — accepts Conditional PASS or rejects</li>
+      </ul>
+    </div>
+
+    <!-- § 9. STORAGE, PROTECTION & RETRIEVAL -->
+    <div class="section">
+      <div class="section-title">§ 9. Storage, Protection &amp; Retrieval</div>
+      <table class="std-table">
+        <thead>
+          <tr><th>Repository</th><th>Role</th><th>Control</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight: 700;">Local PC (library_of_alexandria/)</td>
+            <td>Authoritative Copy</td>
+            <td>Filed per 7-layer model; barcode-first</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 700;">Ocelot-Bridge Space (Cloud)</td>
+            <td>Cloud Backup</td>
+            <td>Indexed and searchable; RAG pipeline</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 700;">Git Repository</td>
+            <td>Version Control</td>
+            <td>Push-to-publish pipeline; commit history</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-size: 12px; color: var(--text-secondary); margin-top: 12px;">
+        Any controlled document retrievable by barcode, title, or keyword search.
+        Backup claims require tested recovery evidence.
+      </p>
+    </div>
+
+    <!-- § 10. RETENTION & DISPOSITION -->
+    <div class="section">
+      <div class="section-title">§ 10. Retention &amp; Disposition</div>
+      <ul>
+        <li><strong>Active Documents:</strong> Retained in authoritative storage per retention schedule</li>
+        <li><strong>Superseded:</strong> Retained as historical record with SUPERSEDED status</li>
+        <li><strong>Disposition:</strong> No controlled document destroyed without Architect authorization</li>
+        <li><strong>Legal Holds:</strong> Records under investigation or dispute preserved until formally released</li>
+      </ul>
+    </div>
+
+    <!-- § 11. CHANGE CONTROL -->
+    <div class="section">
+      <div class="section-title">§ 11. Change Control</div>
+      <ul>
+        <li>All changes require a new version increment</li>
+        <li><strong>MAJOR</strong> (structural/scope) → Full review pipeline</li>
+        <li><strong>MINOR</strong> (editorial/formatting) → Ocelot + Architect approval</li>
+        <li>Prior revision marked SUPERSEDED in register; retained per retention rule</li>
+        <li>Change record: affected doc, proposed change, reason, impact, reviewer, decision, effective date</li>
+      </ul>
+    </div>
+
+    <!-- § 12. EXTERNAL-ORIGIN DOCUMENTS -->
+    <div class="section">
+      <div class="section-title">§ 12. External-Origin Documents</div>
+      <ul>
+        <li>External documents referenced by QMS identified, recorded, and controlled for currency</li>
+        <li>Source, version, and applicability verified before incorporation</li>
+        <li>A copy in the Kingdom Library does not by itself establish it is current or authorized</li>
+      </ul>
+    </div>
+
+    <!-- § 13. METABOLISM PROTOCOL -->
+    <div class="section">
+      <div class="section-title">§ 13. Metabolism Protocol</div>
+      <ul>
+        <li>Campaign status JSON updated at each brick completion (Eat → Digest → Poop)</li>
+        <li>Living whiteboard reflects current state — completed items removed, new items added</li>
+        <li>Triggered by: brick completion, audit closure, ratification, or scope change</li>
+      </ul>
+    </div>
+
+    <!-- § 14. AUDIT FINDINGS -->
+    <div class="section">
+      <div class="section-title">§ 14. Audit Findings Record</div>
+      <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">
+        Stanley's Coin Flip — 14 D1 findings, 5 D3 cracks — all dispositioned:
+      </p>
+      <table class="find-table">
+        <thead>
+          <tr><th>ID</th><th>Sev</th><th>Finding</th><th>D3 Status</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>D7-01</td><td class="sev-p1">P1</td>
+            <td>Barcode references conflict across documents</td>
+            <td>OPEN — External verification required</td>
+          </tr>
+          <tr>
+            <td>D7-02</td><td class="sev-p1">P1</td>
+            <td>OSI naming misleading — Kingdom filing model, not networking OSI</td>
+            <td style="color: var(--accent-green);">DESIGN FIX ✅</td>
+          </tr>
+          <tr>
+            <td>D7-03</td><td class="sev-p1">P1</td>
+            <td>Circular effectiveness claim — filing doesn't prove compliance</td>
+            <td style="color: var(--accent-green);">DESIGN FIX ✅</td>
+          </tr>
+          <tr>
+            <td>D7-04</td><td class="sev-p1">P1</td>
+            <td>Kingdom Index lacks reconciliation, backup, recovery process</td>
+            <td style="color: var(--accent-kwan);">PARTIAL — Verify actual register</td>
+          </tr>
+          <tr>
+            <td>D7-05</td><td class="sev-p1">P1</td>
+            <td>Storage architecture not established by evidence</td>
+            <td style="color: var(--accent-kwan);">PARTIAL — Service suitability unverified</td>
+          </tr>
+          <tr>
+            <td>D7-06</td><td class="sev-p1">P1</td>
+            <td>Indefinite retention is a slogan, not a rule</td>
+            <td style="color: var(--accent-kwan);">PARTIAL — Schedule to be populated</td>
+          </tr>
+          <tr>
+            <td>D7-07</td><td class="sev-p1">P1</td>
+            <td>Missing access, retrieval, integrity, protection controls</td>
+            <td style="color: var(--accent-kwan);">PARTIAL — Safeguards unverified</td>
+          </tr>
+          <tr>
+            <td>D7-08</td><td class="sev-p1">P1</td>
+            <td>Approval authority unclear — stamp vs ratification</td>
+            <td style="color: var(--accent-green);">DESIGN FIX ✅</td>
+          </tr>
+          <tr>
+            <td>D7-09</td><td class="sev-p1">P1</td>
+            <td>Conditional PASS undefined — no blocking criteria</td>
+            <td style="color: var(--accent-green);">DESIGN FIX ✅</td>
+          </tr>
+          <tr>
+            <td>D7-10</td><td class="sev-p2">P2</td>
+            <td>Change control lacks traceable change record</td>
+            <td style="color: var(--accent-green);">DESIGN FIX ✅</td>
+          </tr>
+          <tr>
+            <td>D7-11</td><td class="sev-p2">P2</td>
+            <td>Filing validation — no acceptance checks defined</td>
+            <td style="color: var(--accent-kwan);">PARTIAL — Test evidence open</td>
+          </tr>
+          <tr>
+            <td>D7-12</td><td class="sev-p2">P2</td>
+            <td>"Not limited to" weakens controlled scope</td>
+            <td style="color: var(--accent-green);">DESIGN FIX ✅</td>
+          </tr>
+          <tr>
+            <td>D7-13</td><td class="sev-p2">P2</td>
+            <td>Metabolism protocol lacks trigger/owner/evidence definition</td>
+            <td style="color: var(--accent-kwan);">PARTIAL — Live workflow test needed</td>
+          </tr>
+          <tr>
+            <td>D7-14</td><td class="sev-p2">P2</td>
+            <td>External information control missing</td>
+            <td style="color: var(--accent-green);">DESIGN FIX ✅</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p style="font-size: 12px; color: var(--text-secondary); margin-top: 16px;">
+        <strong>Open items (closed by operation, not by writing):</strong>
+      </p>
+      <ul>
+        <li>Storage architecture suitability verification (close by live filing test)</li>
+        <li>Retention schedule population (close when categories established)</li>
+        <li>Index reconciliation test (close by running filing.py against kingdom_index.json)</li>
+        <li>Seeded-failure retrieval test (close by operational exercise)</li>
+      </ul>
+    </div>
+
+    <!-- § 15. RATIFICATION RECORD -->
+    <div class="section">
+      <div class="section-title">§ 15. Ratification Record</div>
+      <table class="rat-table">
+        <thead>
+          <tr><th>Gate</th><th>Actor</th><th>Verdict</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>D0 — Draft</td>
+            <td>Ocelot (CEO)</td>
+            <td style="color: var(--accent-green);">Generated</td>
+          </tr>
+          <tr>
+            <td>D1 — Audit</td>
+            <td>Stanley (Auditor)</td>
+            <td style="color: var(--accent-basta);">HOLD — 14 findings (9&times;P1, 5&times;P2)</td>
+          </tr>
+          <tr>
+            <td>D2 — Revision</td>
+            <td>Stanley (Auditor)</td>
+            <td style="color: var(--accent-gani);">Rewrote procedure (17 sections)</td>
+          </tr>
+          <tr>
+            <td>D3 — Self-Audit</td>
+            <td>Stanley (Auditor)</td>
+            <td style="color: var(--accent-kwan);">7 design fixes, 5 partial, 2 open — HOLD</td>
+          </tr>
+          <tr>
+            <td>Consultant Brew</td>
+            <td>Keila (Consultant)</td>
+            <td style="color: var(--accent-green);">RATIFIED ✅ 🌸 — "Pass with Distinction"</td>
+          </tr>
+          <tr>
+            <td>2nd Pass</td>
+            <td>Ocelot (CEO)</td>
+            <td style="color: var(--accent-green);">Merged Stanley's design fixes + Keila's stamp</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 700;">Architect Seal</td>
+            <td style="font-weight: 700;">James Paul Pe&ntilde;a</td>
+            <td style="color: var(--accent-kwan); font-weight: 700;">✅👑 RATIFIED — 2026-10-27</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ARCHITECT'S SEAL -->
+    <div class="seal-box">
+      <div class="seal-icon">👑</div>
+      <div class="seal-title">RATIFIED BY THE ARCHITECT</div>
+      <div class="seal-meta">
+        James Paul Pe&ntilde;a — Sovereign Architect<br/>
+        Kingdom of Kwan<br/><br/>
+        Date: 2026-10-27 | Session: S031 | Campaign: FWO-009<br/>
+        Pipeline: Ocelot → Stanley → Keila → Ocelot (2nd) → Architect → RATIFIED ✅<br/>
+        Consultant Seal: RATIFIED 🌸 — "Pass with Distinction" (Keila — Monograph 033-EL_GOB)<br/>
+        Auditor Record: 14 D1 findings + 5 D3 cracks — Stanley's magnum opus 🤘<br/><br/>
+        Condition: Open items closed by operational evidence during QMS implementation<br/><br/>
+        "So it is written. So it shall be done." 📜
+      </div>
+    </div>
+
+  </main>
+
+  <!-- NAV — -->
+  <nav class="nav" style="border-top: 1px solid var(--border-primary); border-bottom: none; margin-top: 40px;">
+    <a href="b6_risk_opportunity.html">&larr; Prev</a>
+    <a href="../../index.html" style="color: var(--accent-kwan);">&#9776; The Three Kingdoms</a>
+    <a href="b8_internal_audit.html">Next &rarr;</a>
+  </nav>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>QMS Company Bible — Brick 7 of 12</p>
+    <p>Campaign FWO-009 | The McDonald's Franchise | ISO 9001:2015</p>
+    <p>Basta kwan, gani. 🪨☕🐆</p>
+  </footer>
+
+  <!-- VANILLA JS -->
+  <script>
+    function toggleTheme() {
+      var html = document.documentElement;
+      var current = html.getAttribute('data-theme');
+      var next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    }
+    (function() {
+      var saved = localStorage.getItem('theme');
+      if (saved) { document.documentElement.setAttribute('data-theme', saved); }
+    })();
+  </script>
+
+</body>
+</html>
+

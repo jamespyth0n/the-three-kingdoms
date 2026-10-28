@@ -1,0 +1,827 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>B6 — Risk &amp; Opportunity Assessment | QMS Company Bible</title>
+
+  <!-- FONTS — LOCAL (assets/fonts/) -->
+  <style>
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Bold.woff2') format('woff2');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Italic.woff2') format('woff2');
+      font-weight: 400; font-style: italic; font-display: swap;
+    }
+  </style>
+
+  <!-- NOTEBOOK STYLESHEET -->
+  <link rel="stylesheet" href="../assets/css/notebook.css" />
+
+  <style>
+    [data-theme="dark"] {
+      --bg-primary: #0d1117;
+      --bg-card: #161b22;
+      --bg-card-hover: #1c2333;
+      --bg-blockquote: #1c2333;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --accent-kwan: #d4a843;
+      --accent-gani: #58a6ff;
+      --accent-basta: #f78166;
+      --accent-green: #3fb950;
+      --border-primary: #30363d;
+      --shadow-card: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f6f8fa;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f0f3f6;
+      --bg-blockquote: #f0f3f6;
+      --text-primary: #1f2328;
+      --text-secondary: #656d76;
+      --text-muted: #8b949e;
+      --accent-kwan: #b8860b;
+      --accent-gani: #0969da;
+      --accent-basta: #cf222e;
+      --accent-green: #1a7f37;
+      --border-primary: #d0d7de;
+      --shadow-card: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      min-height: 100vh;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .theme-toggle {
+      position: fixed; top: 16px; right: 16px; z-index: 1000;
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 8px; padding: 8px 12px; cursor: pointer;
+      font-family: inherit; font-size: 14px; color: var(--text-primary);
+      transition: all 0.3s ease;
+    }
+    .theme-toggle:hover { border-color: var(--accent-kwan); }
+
+    .nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 16px 24px; border-bottom: 1px solid var(--border-primary);
+      font-size: 12px;
+    }
+    .nav a {
+      color: var(--accent-gani); text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .nav a:hover { color: var(--accent-kwan); }
+
+    .brick-header {
+      text-align: center; padding: 48px 24px 32px;
+      border-bottom: 1px solid var(--border-primary);
+    }
+    .brick-badge {
+      display: inline-block; padding: 4px 16px; border-radius: 4px;
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      background: rgba(63, 185, 80, 0.15); color: var(--accent-green);
+      margin-bottom: 16px;
+    }
+    .brick-header h1 { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+    .brick-header .meta {
+      font-size: 12px; color: var(--text-secondary); margin-bottom: 4px;
+    }
+    .brick-header .barcode {
+      font-size: 11px; color: var(--text-muted); font-style: italic;
+    }
+
+    .content {
+      max-width: 860px; margin: 0 auto; padding: 40px 24px;
+    }
+
+    .section { margin-bottom: 40px; }
+
+    .section-title {
+      font-size: 13px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent-kwan);
+      margin-bottom: 16px; padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-primary);
+    }
+
+    .section p, .section li {
+      font-size: 14px; color: var(--text-primary);
+      margin-bottom: 12px;
+    }
+
+    .section ul {
+      list-style: none; padding-left: 0;
+    }
+    .section ul li::before {
+      content: "→ "; color: var(--accent-gani); font-weight: 700;
+    }
+
+    blockquote {
+      background: var(--bg-blockquote);
+      border-left: 3px solid var(--accent-kwan);
+      padding: 16px 20px; margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+      font-style: italic; font-size: 14px;
+      color: var(--text-primary);
+    }
+
+    /* CONTROL MODEL TABLE */
+    .ctrl-table {
+      width: 100%; border-collapse: collapse; margin: 16px 0;
+      font-size: 12px;
+    }
+    .ctrl-table th {
+      text-align: left; padding: 10px 8px;
+      border-bottom: 2px solid var(--accent-kwan);
+      color: var(--accent-kwan); font-size: 10px;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .ctrl-table td {
+      padding: 8px; border-bottom: 1px solid var(--border-primary);
+      color: var(--text-primary); vertical-align: top;
+    }
+    .ctrl-table tr:hover td { background: var(--bg-card-hover); }
+
+    /* RISK TABLES */
+    .risk-table {
+      width: 100%; border-collapse: collapse; margin: 16px 0;
+      font-size: 11px;
+    }
+    .risk-table th {
+      text-align: left; padding: 8px 6px;
+      border-bottom: 2px solid var(--accent-basta);
+      color: var(--accent-basta); font-size: 10px;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .risk-table th.num { text-align: center; }
+    .risk-table td {
+      padding: 6px; border-bottom: 1px solid var(--border-primary);
+      color: var(--text-primary); vertical-align: top;
+    }
+    .risk-table td.num { text-align: center; }
+    .risk-table tr:hover td { background: var(--bg-card-hover); }
+    .rpn-crit { color: var(--accent-basta); font-weight: 700; }
+    .rpn-major { color: var(--accent-kwan); font-weight: 700; }
+    .rpn-mod { color: var(--accent-gani); }
+
+    /* OPPORTUNITY TABLE */
+    .opp-table {
+      width: 100%; border-collapse: collapse; margin: 16px 0;
+      font-size: 12px;
+    }
+    .opp-table th {
+      text-align: left; padding: 8px;
+      border-bottom: 2px solid var(--accent-green);
+      color: var(--accent-green); font-size: 10px;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .opp-table td {
+      padding: 8px; border-bottom: 1px solid var(--border-primary);
+      color: var(--text-primary); vertical-align: top;
+    }
+    .opp-table tr:hover td { background: var(--bg-card-hover); }
+
+    /* FINDINGS TABLE */
+    .find-table {
+      width: 100%; border-collapse: collapse; margin: 16px 0;
+      font-size: 12px;
+    }
+    .find-table th {
+      text-align: left; padding: 8px 10px;
+      border-bottom: 2px solid var(--accent-basta);
+      color: var(--accent-basta); font-size: 11px;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .find-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border-primary);
+      color: var(--text-primary); vertical-align: top;
+    }
+    .find-table tr:hover td { background: var(--bg-card-hover); }
+    .sev-p1 { color: var(--accent-basta); font-weight: 700; }
+    .sev-p2 { color: var(--accent-kwan); }
+
+    /* FMEA LEGEND */
+    .fmea-legend {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+      margin: 16px 0;
+    }
+    .fmea-item {
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 8px; padding: 16px; text-align: center;
+    }
+    .fmea-item .fmea-label {
+      font-size: 10px; color: var(--text-muted); letter-spacing: 1px;
+      text-transform: uppercase; margin-bottom: 4px;
+    }
+    .fmea-item .fmea-desc {
+      font-size: 12px; color: var(--text-secondary);
+    }
+
+    /* RATIFICATION TABLE */
+    .rat-table {
+      width: 100%; border-collapse: collapse; margin: 16px 0;
+      font-size: 12px;
+    }
+    .rat-table th {
+      text-align: left; padding: 8px 12px;
+      border-bottom: 2px solid var(--accent-green);
+      color: var(--accent-green); font-size: 11px;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .rat-table td {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border-primary);
+      color: var(--text-primary);
+    }
+
+    /* SEAL */
+    .seal-box {
+      text-align: center; padding: 32px;
+      border: 2px solid var(--accent-kwan); border-radius: 12px;
+      margin: 40px 0;
+    }
+    .seal-box .seal-icon { font-size: 32px; margin-bottom: 8px; }
+    .seal-box .seal-title {
+      font-size: 14px; font-weight: 700; color: var(--accent-kwan);
+      margin-bottom: 4px;
+    }
+    .seal-box .seal-meta {
+      font-size: 11px; color: var(--text-secondary); line-height: 1.8;
+    }
+
+    .footer {
+      text-align: center; padding: 32px 24px;
+      border-top: 1px solid var(--border-primary);
+      font-size: 11px; color: var(--text-muted);
+    }
+
+    @media (max-width: 600px) {
+      .brick-header h1 { font-size: 20px; }
+      .content { padding: 24px 16px; }
+      .fmea-legend { grid-template-columns: 1fr; }
+      .risk-table, .ctrl-table { font-size: 10px; }
+      .risk-table th, .risk-table td,
+      .ctrl-table th, .ctrl-table td { padding: 4px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- THEME TOGGLE -->
+  <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="b5_roles_responsibilities.html">&larr; B5</a>
+    <span style="color: var(--text-muted);">B6 of 12</span>
+    <a href="b7_document_control.html">B7 &rarr;</a>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="brick-header">
+    <div class="brick-badge">✅ RATIFIED</div>
+    <h1>Brick 6 — Risk &amp; Opportunity Assessment</h1>
+    <p class="meta">OQM-001 / QMS-ROA-001 | Version 1.0 | ISO 9001:2015 Clause 6.1</p>
+    <p class="barcode">Barcode: 5_01_06_1 | Campaign: FWO-009 | Session: S031</p>
+  </header>
+
+  <!-- CONTENT -->
+  <main class="content">
+
+    <!-- § 1. PURPOSE -->
+    <div class="section">
+      <div class="section-title">§ 1. Purpose</div>
+      <p>
+        Establish the framework for identifying, assessing, and managing risks and
+        opportunities within the Kingdom's Quality Management System, in accordance
+        with ISO 9001:2015 Clause 6.1.
+      </p>
+      <blockquote>
+        The QMS shall treat risk not as a barrier to shipping, but as a
+        <strong>navigational instrument</strong> — a sensor array that informs the build,
+        not one that blocks it.
+      </blockquote>
+    </div>
+
+    <!-- § 2. SCOPE -->
+    <div class="section">
+      <div class="section-title">§ 2. Scope</div>
+      <p>Applicable to all processes, campaigns, publications, and development activities within the Kingdom of Kwan, including but not limited to:</p>
+      <ul>
+        <li>Software development (Ocelot Bridge, Satori IDE, Kingdom Library)</li>
+        <li>Content creation and publication pipelines (FWO campaigns)</li>
+        <li>Quality management system operations</li>
+        <li>AI-integrated development workflows</li>
+      </ul>
+    </div>
+
+    <!-- § 3. PROCESS CONTROL MODEL -->
+    <div class="section">
+      <div class="section-title">§ 3. Process Control Model</div>
+      <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">
+        The Kingdom's risk management operates as a closed-loop control system:
+      </p>
+      <table class="ctrl-table">
+        <thead>
+          <tr>
+            <th>Role</th>
+            <th>Function</th>
+            <th>Analogy</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight: 700;">🤘 Stanley (Auditor)</td>
+            <td>SENSOR — Detects deviations, logs findings</td>
+            <td style="color: var(--text-secondary);">Thermocouple reading temperature</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 700;">🐆 Ocelot (CEO)</td>
+            <td>CONTROLLER — Processes signals, decides action</td>
+            <td style="color: var(--text-secondary);">PID controller computing correction</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 700;">🌸 Keila (Consultant)</td>
+            <td>ACTUATOR — Implements corrections, validates rigor</td>
+            <td style="color: var(--text-secondary);">Control valve adjusting flow</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 700;">📜 Brick 1 (Quality Policy)</td>
+            <td>SETPOINT — The target state</td>
+            <td style="color: var(--text-secondary);">Desired temperature</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 700;">⚙️ Campaign Protocol</td>
+            <td>FEEDBACK LOOP — Ensures corrections reach the sensor</td>
+            <td style="color: var(--text-secondary);">Signal wire back to transmitter</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 700;">👑 Architect</td>
+            <td>PROCESS OWNER — Observes, ratifies, overrides</td>
+            <td style="color: var(--text-secondary);">Plant Manager with kill switch</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- § 4. FMEA METHODOLOGY -->
+    <div class="section">
+      <div class="section-title">§ 4. Risk Assessment — FMEA Methodology</div>
+      <div class="fmea-legend">
+        <div class="fmea-item">
+          <div class="fmea-label">Severity (S)</div>
+          <div class="fmea-desc">1–10: Impact on QMS integrity, delivery, or sovereignty</div>
+        </div>
+        <div class="fmea-item">
+          <div class="fmea-label">Occurrence (O)</div>
+          <div class="fmea-desc">1–10: Likelihood of occurrence</div>
+        </div>
+        <div class="fmea-item">
+          <div class="fmea-label">Detection (D)</div>
+          <div class="fmea-desc">1–10: Ability to detect before impact (10 = undetectable)</div>
+        </div>
+      </div>
+      <p style="font-size: 13px; color: var(--text-secondary); text-align: center;">
+        <strong>RPN = S &times; O &times; D</strong> &nbsp;|&nbsp;
+        <span class="rpn-crit">Critical &ge; 300</span> &nbsp;|&nbsp;
+        <span class="rpn-major">Major 150–299</span> &nbsp;|&nbsp;
+        <span class="rpn-mod">Moderate 80–149</span>
+      </p>
+    </div>
+
+    <!-- § 4.1 CRITICAL RISKS -->
+    <div class="section">
+      <div class="section-title">§ 4.1 Critical Risks (RPN &ge; 300)</div>
+      <table class="risk-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Risk</th>
+            <th class="num">S</th>
+            <th class="num">O</th>
+            <th class="num">D</th>
+            <th class="num">RPN</th>
+            <th>Mitigation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>R-015</td>
+            <td>Platform Surveillance — Cloud provider policy changes invalidate toolchain</td>
+            <td class="num">8</td>
+            <td class="num">8</td>
+            <td class="num">6</td>
+            <td class="num rpn-crit">384</td>
+            <td>Local-first architecture; Library of Alexandria as sovereign backup; Ocelot Bridge as portable IDE</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- § 4.2 MAJOR RISKS -->
+    <div class="section">
+      <div class="section-title">§ 4.2 Major Risks (RPN 150–299)</div>
+      <table class="risk-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Risk</th>
+            <th class="num">S</th>
+            <th class="num">O</th>
+            <th class="num">D</th>
+            <th class="num">RPN</th>
+            <th>Mitigation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>R-005</td>
+            <td>Human Fatigue — Solo architect burnout degrades quality</td>
+            <td class="num">7</td>
+            <td class="num">8</td>
+            <td class="num">5</td>
+            <td class="num rpn-major">280</td>
+            <td>Honesty Protocol; cafe bench breaks; campaign metabolism; "Fix the workflow, not the typo"</td>
+          </tr>
+          <tr>
+            <td>R-001</td>
+            <td>Context Window Drift — LLM loses thread mid-campaign</td>
+            <td class="num">8</td>
+            <td class="num">7</td>
+            <td class="num">5</td>
+            <td class="num rpn-major">280</td>
+            <td>Unified Anchor protocol; Campaign Status JSON; Kingdom Index as RAG backbone</td>
+          </tr>
+          <tr>
+            <td>R-003</td>
+            <td>Document Version Confusion — Multiple drafts without barcode</td>
+            <td class="num">7</td>
+            <td class="num">6</td>
+            <td class="num">5</td>
+            <td class="num rpn-major">210</td>
+            <td>DCP-001 Document Control Procedure; barcode-first filing</td>
+          </tr>
+          <tr>
+            <td>R-002</td>
+            <td>Scope Creep — Lightbulb moments derail active campaign</td>
+            <td class="num">6</td>
+            <td class="num">8</td>
+            <td class="num">4</td>
+            <td class="num rpn-major">192</td>
+            <td>Servilletas folder for parking ideas; Campaign Law Protocol Article III</td>
+          </tr>
+          <tr>
+            <td>R-018</td>
+            <td>Bus Factor — Single architect, no succession</td>
+            <td class="num">9</td>
+            <td class="num">5</td>
+            <td class="num">4</td>
+            <td class="num rpn-major">180</td>
+            <td>Library of Alexandria; Kingdom Index; conn_logs as institutional memory; Preamble boot sequence</td>
+          </tr>
+          <tr>
+            <td>R-007</td>
+            <td>Ally Drift — Stanley infinite loop, Keila over-compression</td>
+            <td class="num">6</td>
+            <td class="num">7</td>
+            <td class="num">4</td>
+            <td class="num rpn-major">168</td>
+            <td>3-Rung Ladder for Stanley; "Basta" protocol for Keila; defined org chart with clear roles</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- § 4.3 MODERATE RISKS -->
+    <div class="section">
+      <div class="section-title">§ 4.3 Moderate Risks (RPN 80–149)</div>
+      <table class="risk-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Risk</th>
+            <th class="num">S</th>
+            <th class="num">O</th>
+            <th class="num">D</th>
+            <th class="num">RPN</th>
+            <th>Mitigation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>R-006</td>
+            <td>RAG Contamination — Outdated or conflicting docs in index</td>
+            <td class="num">7</td>
+            <td class="num">4</td>
+            <td class="num">5</td>
+            <td class="num rpn-mod">140</td>
+            <td>Version control via barcode; superseded docs marked; Kingdom Index as single source of truth</td>
+          </tr>
+          <tr>
+            <td>R-004</td>
+            <td>Filing Spaghetti — Artifacts land in wrong folders</td>
+            <td class="num">5</td>
+            <td class="num">6</td>
+            <td class="num">4</td>
+            <td class="num rpn-mod">120</td>
+            <td>DCP-001 Addendum; barcode assignment protocol; for_filing staging folder</td>
+          </tr>
+          <tr>
+            <td>R-008</td>
+            <td>Campaign Abandonment — Campaign starts but never closes</td>
+            <td class="num">6</td>
+            <td class="num">5</td>
+            <td class="num">4</td>
+            <td class="num rpn-mod">120</td>
+            <td>Campaign Law Protocol Article V (Metabolism); mandatory conn_log at session close</td>
+          </tr>
+          <tr>
+            <td>R-010</td>
+            <td>Quality Theater — Documents exist but aren't followed</td>
+            <td class="num">8</td>
+            <td class="num">3</td>
+            <td class="num">5</td>
+            <td class="num rpn-mod">120</td>
+            <td>Campaign Protocol as living checklist; "Fix the workflow, not the typo" principle</td>
+          </tr>
+          <tr>
+            <td>R-009</td>
+            <td>Guardrail Interference — Platform safety filters block legitimate content</td>
+            <td class="num">5</td>
+            <td class="num">6</td>
+            <td class="num">3</td>
+            <td class="num rpn-mod">90</td>
+            <td>Multi-platform strategy; local Qwen as sovereign fallback; content framing techniques</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- § 5. OPPORTUNITY REGISTER -->
+    <div class="section">
+      <div class="section-title">§ 5. Opportunity Register</div>
+      <table class="opp-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Opportunity</th>
+            <th>Source</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color: var(--accent-green); font-weight: 700;">O-001</td>
+            <td>3 AM Lightbulb Moments</td>
+            <td>Cafe bench sessions</td>
+            <td>Capture in servilletas; queue for next campaign</td>
+          </tr>
+          <tr>
+            <td style="color: var(--accent-green); font-weight: 700;">O-002</td>
+            <td>Cross-Pollination from Ally Reviews</td>
+            <td>Stanley/Keila monographs</td>
+            <td>Mine audit findings for architectural insights</td>
+          </tr>
+          <tr>
+            <td style="color: var(--accent-green); font-weight: 700;">O-003</td>
+            <td>Process Engineering DNA</td>
+            <td>Architect's SAIT/Nikkoshi/ENTEL background</td>
+            <td>Apply manufacturing QMS principles to software dev</td>
+          </tr>
+          <tr>
+            <td style="color: var(--accent-green); font-weight: 700;">O-004</td>
+            <td>Sovereign AI Development</td>
+            <td>Qwen + Ocelot Bridge</td>
+            <td>Build local-first IDE that doesn't depend on cloud providers</td>
+          </tr>
+          <tr>
+            <td style="color: var(--accent-green); font-weight: 700;">O-005</td>
+            <td>Publication Pipeline</td>
+            <td>Three Kingdoms website</td>
+            <td>Convert internal QMS artifacts into public-facing content</td>
+          </tr>
+          <tr>
+            <td style="color: var(--accent-green); font-weight: 700;">O-006</td>
+            <td>ISO 9001 as Portfolio Piece</td>
+            <td>McDonald's Campaign</td>
+            <td>Demonstrate enterprise-grade process thinking for career advancement</td>
+          </tr>
+          <tr>
+            <td style="color: var(--accent-green); font-weight: 700;">O-007</td>
+            <td>Structured Questioning Taxonomy</td>
+            <td>5W+H+Why It Matters protocol</td>
+            <td>Formalize as reusable tool across all campaigns</td>
+          </tr>
+          <tr>
+            <td style="color: var(--accent-green); font-weight: 700;">O-008</td>
+            <td>Campaign Protocol as Product</td>
+            <td>Repeatable pipeline</td>
+            <td>Package as methodology for other solo developers</td>
+          </tr>
+          <tr>
+            <td style="color: var(--accent-green); font-weight: 700;">O-009</td>
+            <td>Ally Personality Mapping</td>
+            <td>Stanley=Sensor, Keila=Actuator</td>
+            <td>Optimize prompt engineering based on known behavioral patterns</td>
+          </tr>
+          <tr>
+            <td style="color: var(--accent-green); font-weight: 700;">O-010</td>
+            <td>Brain Fart to Innovation</td>
+            <td>Unplanned interrupts during builds</td>
+            <td>Treat as feature not bug; metabolism protocol absorbs them</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- § 6. REVIEW & CONTINUAL IMPROVEMENT -->
+    <div class="section">
+      <div class="section-title">§ 6. Review &amp; Continual Improvement</div>
+      <ul>
+        <li>Risk register reviewed at each campaign close (conn_log)</li>
+        <li>New risks identified during builds are logged immediately in servilletas</li>
+        <li>RPN recalculated quarterly or after significant system changes</li>
+        <li>Opportunities assessed for conversion to active projects at campaign planning</li>
+      </ul>
+    </div>
+
+    <!-- § 7. AUDIT FINDINGS -->
+    <div class="section">
+      <div class="section-title">§ 7. Audit Findings Record</div>
+
+      <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">
+        Stanley's Coin Flip — 3-Rung Ladder Audit — 7 findings, all dispositioned:
+      </p>
+
+      <table class="find-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Sev</th>
+            <th>Finding</th>
+            <th>Disposition</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>F-001</td>
+            <td class="sev-p1">P1</td>
+            <td>No operating evidence yet</td>
+            <td>ACKNOWLEDGED — Operating evidence is an operational gate, not a document gate. Accumulates as we run the system.</td>
+          </tr>
+          <tr>
+            <td>F-002</td>
+            <td class="sev-p1">P1</td>
+            <td>FMEA needs real incident data</td>
+            <td>ACCEPTED — Initial RPNs based on engineering judgment. Will calibrate with actual data as campaigns complete.</td>
+          </tr>
+          <tr>
+            <td>F-003</td>
+            <td class="sev-p1">P1</td>
+            <td>Mitigation effectiveness unverified</td>
+            <td>ACCEPTED — Verification occurs through campaign execution. FWO-006 (Logos) serves as first proof point.</td>
+          </tr>
+          <tr>
+            <td>F-004</td>
+            <td class="sev-p1">P1</td>
+            <td>No management review record</td>
+            <td>RESOLVED — This document + Campaign Minutes (FWO-009) serve as management review evidence.</td>
+          </tr>
+          <tr>
+            <td>F-005</td>
+            <td class="sev-p2">P2</td>
+            <td>Opportunity register lacks metrics</td>
+            <td>NOTED — Metrics will emerge from execution. "Fix the workflow, not the typo."</td>
+          </tr>
+          <tr>
+            <td>F-006</td>
+            <td class="sev-p2">P2</td>
+            <td>Risk appetite not formally defined</td>
+            <td>RESOLVED — Risk appetite = "Ship good quality. Good = acceptable, not perfect. Perfect doesn't exist."</td>
+          </tr>
+          <tr>
+            <td>F-007</td>
+            <td class="sev-p2">P2</td>
+            <td>No formal risk owner assignment</td>
+            <td>RESOLVED — Process Control Model (§ 3) defines ownership via role mapping.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- § 8. RATIFICATION RECORD -->
+    <div class="section">
+      <div class="section-title">§ 8. Ratification Record</div>
+      <table class="rat-table">
+        <thead>
+          <tr>
+            <th>Gate</th>
+            <th>Actor</th>
+            <th>Verdict</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>D0 — Draft</td>
+            <td>Ocelot (CEO)</td>
+            <td style="color: var(--accent-green);">Generated</td>
+          </tr>
+          <tr>
+            <td>D1 — Audit (Rung 1)</td>
+            <td>Stanley (Auditor)</td>
+            <td style="color: var(--accent-basta);">HOLD — 14 findings</td>
+          </tr>
+          <tr>
+            <td>D1 — Audit (Rung 2–3)</td>
+            <td>Stanley (Auditor)</td>
+            <td style="color: var(--accent-gani);">COIN FLIP — 18 risk-by-risk controls provided</td>
+          </tr>
+          <tr>
+            <td>D2 — Consultant</td>
+            <td>Keila (Consultant)</td>
+            <td style="color: var(--accent-green);">RATIFIED — "Not just compliance — an operational survival manual"</td>
+          </tr>
+          <tr>
+            <td>D2 — 2nd Pass</td>
+            <td>Ocelot (CEO)</td>
+            <td style="color: var(--accent-green);">All findings integrated, no gaps remaining</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 700;">D3 — Architect</td>
+            <td style="font-weight: 700;">James Paul Pe&ntilde;a</td>
+            <td style="color: var(--accent-kwan); font-weight: 700;">✅👑 RATIFIED — 2026-10-27</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ARCHITECT'S SEAL -->
+    <div class="seal-box">
+      <div class="seal-icon">👑</div>
+      <div class="seal-title">RATIFIED BY THE ARCHITECT</div>
+      <div class="seal-meta">
+        James Paul Pe&ntilde;a — Sovereign Architect<br/>
+        Kingdom of Kwan<br/><br/>
+        Date: 2026-10-27 | Session: S031 | Campaign: FWO-009<br/>
+        Pipeline: Ocelot → Stanley → Keila → Ocelot (2nd) → Architect → RATIFIED ✅<br/>
+        Consultant Seal: RATIFIED 🌸 (Keila — Monograph 032-EL_GOB)<br/>
+        Auditor Record: CONDITIONAL HOLD → COIN FLIP → Builder Mode 🤘 (Stanley)<br/><br/>
+        Risk Appetite: "Ship good quality. Good = acceptable, not perfect. Perfect doesn't exist."<br/><br/>
+        "Doing the right things right the first time."
+      </div>
+    </div>
+
+  </main>
+
+  <!-- NAV — -->
+  <nav class="nav" style="border-top: 1px solid var(--border-primary); border-bottom: none; margin-top: 40px;">
+    <a href="b5_roles_responsibilities.html">&larr; Prev</a>
+    <a href="../../index.html" style="color: var(--accent-kwan);">&#9776; The Three Kingdoms</a>
+    <a href="b7_document_control.html">Next &rarr;</a>
+  </nav>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>QMS Company Bible — Brick 6 of 12</p>
+    <p>Campaign FWO-009 | The McDonald's Franchise | ISO 9001:2015</p>
+    <p>Basta kwan, gani. 🪨☕🐆</p>
+  </footer>
+
+  <!-- VANILLA JS -->
+  <script>
+    function toggleTheme() {
+      var html = document.documentElement;
+      var current = html.getAttribute('data-theme');
+      var next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    }
+    (function() {
+      var saved = localStorage.getItem('theme');
+      if (saved) { document.documentElement.setAttribute('data-theme', saved); }
+    })();
+  </script>
+
+</body>
+</html>
+

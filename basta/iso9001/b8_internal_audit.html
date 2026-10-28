@@ -1,0 +1,824 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>B8 — Internal Audit Procedure | QMS Company Bible</title>
+
+  <!-- FONTS — LOCAL (assets/fonts/) -->
+  <style>
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Bold.woff2') format('woff2');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Italic.woff2') format('woff2');
+      font-weight: 400; font-style: italic; font-display: swap;
+    }
+  </style>
+
+  <!-- NOTEBOOK STYLESHEET -->
+  <link rel="stylesheet" href="../assets/css/notebook.css" />
+
+  <style>
+    [data-theme="dark"] {
+      --bg-primary: #0d1117;
+      --bg-card: #161b22;
+      --bg-card-hover: #1c2333;
+      --bg-blockquote: #1c2333;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --accent-kwan: #d4a843;
+      --accent-gani: #58a6ff;
+      --accent-basta: #f78166;
+      --accent-green: #3fb950;
+      --border-primary: #30363d;
+      --shadow-card: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f6f8fa;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f0f3f6;
+      --bg-blockquote: #f0f3f6;
+      --text-primary: #1f2328;
+      --text-secondary: #656d76;
+      --text-muted: #8b949e;
+      --accent-kwan: #b8860b;
+      --accent-gani: #0969da;
+      --accent-basta: #cf222e;
+      --accent-green: #1a7f37;
+      --border-primary: #d0d7de;
+      --shadow-card: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      min-height: 100vh;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .theme-toggle {
+      position: fixed; top: 16px; right: 16px; z-index: 1000;
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 8px; padding: 8px 12px; cursor: pointer;
+      font-family: inherit; font-size: 14px; color: var(--text-primary);
+      transition: all 0.3s ease;
+    }
+    .theme-toggle:hover { border-color: var(--accent-kwan); }
+
+    .nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 16px 24px; border-bottom: 1px solid var(--border-primary);
+      font-size: 12px;
+    }
+    .nav a {
+      color: var(--accent-gani); text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .nav a:hover { color: var(--accent-kwan); }
+
+    .brick-header {
+      text-align: center; padding: 48px 24px 32px;
+      border-bottom: 1px solid var(--border-primary);
+    }
+    .brick-badge {
+      display: inline-block; padding: 4px 16px; border-radius: 4px;
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      background: rgba(212, 168, 67, 0.15); color: var(--accent-kwan);
+      margin-bottom: 16px;
+    }
+    .brick-header h1 { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+    .brick-header .meta {
+      font-size: 12px; color: var(--text-secondary); margin-bottom: 4px;
+    }
+    .brick-header .barcode {
+      font-size: 11px; color: var(--text-muted); font-style: italic;
+    }
+
+    .content { max-width: 860px; margin: 0 auto; padding: 40px 24px; }
+    .section { margin-bottom: 40px; }
+
+    .section-title {
+      font-size: 13px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent-kwan);
+      margin-bottom: 16px; padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-primary);
+    }
+
+    .section p, .section li {
+      font-size: 14px; color: var(--text-primary); margin-bottom: 12px;
+    }
+
+    .section ul { list-style: none; padding-left: 0; }
+    .section ul li::before {
+      content: "→ "; color: var(--accent-gani); font-weight: 700;
+    }
+
+    .section ol { padding-left: 20px; }
+    .section ol li { margin-bottom: 8px; font-size: 14px; }
+    .section ol li::marker { color: var(--accent-kwan); font-weight: 700; }
+
+    blockquote {
+      background: var(--bg-blockquote);
+      border-left: 3px solid var(--accent-kwan);
+      padding: 16px 20px; margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+      font-style: italic; font-size: 14px;
+      color: var(--text-primary);
+    }
+
+    /* TABLES */
+    .std-table {
+      width: 100%; border-collapse: collapse; margin: 16px 0;
+      font-size: 12px;
+    }
+    .std-table th {
+      text-align: left; padding: 10px 8px;
+      border-bottom: 2px solid var(--accent-kwan);
+      color: var(--accent-kwan); font-size: 10px;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .std-table td {
+      padding: 8px; border-bottom: 1px solid var(--border-primary);
+      color: var(--text-primary); vertical-align: top;
+    }
+    .std-table tr:hover td { background: var(--bg-card-hover); }
+
+    .find-table {
+      width: 100%; border-collapse: collapse; margin: 16px 0;
+      font-size: 12px;
+    }
+    .find-table th {
+      text-align: left; padding: 8px 10px;
+      border-bottom: 2px solid var(--accent-basta);
+      color: var(--accent-basta); font-size: 11px;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .find-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border-primary);
+      color: var(--text-primary); vertical-align: top;
+    }
+    .find-table tr:hover td { background: var(--bg-card-hover); }
+    .sev-hold { color: var(--accent-basta); font-weight: 700; }
+    .sev-verify { color: var(--accent-kwan); }
+
+    .rat-table {
+      width: 100%; border-collapse: collapse; margin: 16px 0;
+      font-size: 12px;
+    }
+    .rat-table th {
+      text-align: left; padding: 8px 12px;
+      border-bottom: 2px solid var(--accent-green);
+      color: var(--accent-green); font-size: 11px;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .rat-table td {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border-primary);
+      color: var(--text-primary);
+    }
+
+    /* TIER CARDS */
+    .tier-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px; margin: 16px 0;
+    }
+    .tier-card {
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 8px; padding: 16px;
+    }
+    .tier-card .tier-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; margin-bottom: 8px;
+    }
+    .tier-card .tier-desc {
+      font-size: 12px; color: var(--text-secondary); line-height: 1.6;
+    }
+
+    /* SEVERITY CARDS */
+    .sev-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px; margin: 16px 0;
+    }
+    .sev-card {
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 8px; padding: 16px; text-align: center;
+    }
+    .sev-card .sev-label {
+      font-size: 13px; font-weight: 700; margin-bottom: 4px;
+    }
+    .sev-card .sev-desc {
+      font-size: 11px; color: var(--text-secondary);
+    }
+    .sev-card .sev-action {
+      font-size: 10px; color: var(--text-muted); margin-top: 8px;
+      font-style: italic;
+    }
+
+    /* PIPELINE FLOW */
+    .pipeline {
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 12px; padding: 24px; margin: 24px 0;
+      font-size: 13px; line-height: 2.2;
+    }
+    .pipeline .step-role {
+      color: var(--accent-gani); font-weight: 700;
+    }
+    .pipeline .step {
+      color: var(--text-secondary);
+    }
+    .pipeline .step-arrow {
+      color: var(--accent-kwan); margin: 0 4px;
+    }
+
+    /* FAT BOX */
+    .fat-box {
+      background: var(--bg-card); border: 2px dashed var(--accent-kwan);
+      border-radius: 12px; padding: 24px; margin: 24px 0;
+    }
+    .fat-box .fat-title {
+      font-size: 13px; font-weight: 700; color: var(--accent-kwan);
+      letter-spacing: 1px; margin-bottom: 12px;
+    }
+    .fat-box ul { list-style: none; padding-left: 0; }
+    .fat-box ul li { font-size: 12px; margin-bottom: 8px; }
+    .fat-box ul li::before {
+      content: "⚙️ "; font-weight: 700;
+    }
+
+    /* SEAL */
+    .seal-box {
+      text-align: center; padding: 32px;
+      border: 2px solid var(--accent-kwan); border-radius: 12px;
+      margin: 40px 0;
+    }
+    .seal-box .seal-icon { font-size: 32px; margin-bottom: 8px; }
+    .seal-box .seal-title {
+      font-size: 14px; font-weight: 700; color: var(--accent-kwan);
+      margin-bottom: 4px;
+    }
+    .seal-box .seal-meta {
+      font-size: 11px; color: var(--text-secondary); line-height: 1.8;
+    }
+
+    .footer {
+      text-align: center; padding: 32px 24px;
+      border-top: 1px solid var(--border-primary);
+      font-size: 11px; color: var(--text-muted);
+    }
+
+    @media (max-width: 600px) {
+      .brick-header h1 { font-size: 20px; }
+      .content { padding: 24px 16px; }
+      .tier-grid, .sev-grid { grid-template-columns: 1fr; }
+      .std-table, .find-table { font-size: 10px; }
+      .std-table th, .std-table td,
+      .find-table th, .find-table td { padding: 4px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- THEME TOGGLE -->
+  <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="b7_document_control.html">&larr; B7</a>
+    <span style="color: var(--text-muted);">B8 of 12</span>
+    <a href="b9_capa.html">B9 &rarr;</a>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="brick-header">
+    <div class="brick-badge">✅ RATIFIED (CONDITIONAL)</div>
+    <h1>Brick 8 — Internal Audit Procedure</h1>
+    <p class="meta">QMS-IAP-001 | Version 1.0 | ISO 9001:2015 Clause 9.2</p>
+    <p class="barcode">Barcode: 8_01_08_1 | Campaign: FWO-009 | Session: S031</p>
+  </header>
+
+  <!-- CONTENT -->
+  <main class="content">
+
+    <!-- § 1. PURPOSE -->
+    <div class="section">
+      <div class="section-title">§ 1. Purpose</div>
+      <p>
+        To establish a systematic, independent, and documented process for conducting internal
+        audits of the Quality Management System (QMS) to determine conformity with planned
+        arrangements, ISO 9001:2015 requirements, and organizational objectives.
+      </p>
+      <blockquote>
+        "Fix the workflow, not the typo." — The audit exists to find systemic cracks,
+        not to count commas. If the system is attuned, the commas fix themselves.
+      </blockquote>
+    </div>
+
+    <!-- § 2. SCOPE -->
+    <div class="section">
+      <div class="section-title">§ 2. Scope</div>
+      <p>This procedure applies to all processes and documented information within the approved QMS scope, including but not limited to:</p>
+      <ul>
+        <li>All ratified Bricks (B1–B12)</li>
+        <li>Campaign execution and governance</li>
+        <li>Document control and filing procedures</li>
+        <li>Risk and opportunity assessments</li>
+        <li>Corrective action processes</li>
+        <li>Management review and continual improvement</li>
+      </ul>
+      <p style="font-size: 12px; color: var(--text-secondary);">
+        The controlled QMS process inventory identifies applicable processes, owners, interfaces,
+        and associated documented information. The list is maintained as the QMS changes.
+      </p>
+    </div>
+
+    <!-- § 3. REFERENCES -->
+    <div class="section">
+      <div class="section-title">§ 3. References</div>
+      <table class="std-table">
+        <thead>
+          <tr><th>Reference</th><th>Purpose</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>ISO 9001:2015, Clause 9.2</td><td>Internal audit requirements</td></tr>
+          <tr><td>ISO 19011:2018</td><td>Guidelines for auditing management systems (guidance, not substitute)</td></tr>
+          <tr><td>QMS-DCP-001 v2.0</td><td>Document Control Procedure</td></tr>
+          <tr><td>QMS-RRA-001 v1.0</td><td>Roles, Responsibilities &amp; Authorities</td></tr>
+          <tr><td>QMS-ROA-001 v1.0</td><td>Risk &amp; Opportunity Assessment</td></tr>
+          <tr><td>Campaign Law Protocol (FWO-009)</td><td>Campaign governance</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- § 4. RESPONSIBILITIES -->
+    <div class="section">
+      <div class="section-title">§ 4. Responsibilities &amp; Authority</div>
+      <table class="std-table">
+        <thead>
+          <tr><th>Role</th><th>Responsibility</th><th>Boundary</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight: 700; color: var(--accent-kwan);">Architect (James)</td>
+            <td>Approves audit schedule; reviews and ratifies findings; final authority</td>
+            <td>Governance ratification does not replace technical review</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 700; color: var(--accent-gani);">CEO (Ocelot)</td>
+            <td>Coordinates audit logistics; ensures resources; drafts corrective actions; tracks findings</td>
+            <td>Shall not override auditor's evidence-based findings</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 700; color: var(--accent-basta);">Auditor (Stanley)</td>
+            <td>Plans and conducts audits; documents findings; verifies corrective actions</td>
+            <td>Reports findings — does not ratify or suppress</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 700; color: var(--accent-green);">Consultant (Keila)</td>
+            <td>Reviews audit methodology; validates findings against standards</td>
+            <td>Advisory — does not confer audit independence or ratification</td>
+          </tr>
+          <tr>
+            <td>Process Owner / Auditee</td>
+            <td>Provides access; explains process; owns corrective action response</td>
+            <td>Corrects factual errors with evidence only</td>
+          </tr>
+        </tbody>
+      </table>
+      <blockquote>
+        No role may alter or suppress an evidence-supported finding solely because it is inconvenient.
+      </blockquote>
+    </div>
+
+    <!-- § 5. AUDIT PLANNING -->
+    <div class="section">
+      <div class="section-title">§ 5. Audit Planning &amp; Risk-Based Scheduling</div>
+      <p>An internal audit schedule shall be established at the beginning of each campaign cycle. Scheduling considers:</p>
+      <ul>
+        <li>Importance of the process</li>
+        <li>Results of previous audits</li>
+        <li>Risk assessment outcomes (per QMS-ROA-001)</li>
+        <li>Changes affecting the QMS</li>
+        <li>Nonconformities, customer feedback, incidents, performance trends</li>
+      </ul>
+      <table class="std-table">
+        <thead>
+          <tr><th>Process Risk</th><th>Proposed Frequency</th><th>Note</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color: var(--accent-basta); font-weight: 700;">High Risk</td>
+            <td>At least twice per year</td>
+            <td>Kingdom rule — not ISO-prescribed frequency</td>
+          </tr>
+          <tr>
+            <td style="color: var(--accent-kwan);">Standard</td>
+            <td>At least once per year</td>
+            <td>Kingdom rule — approved by Architect</td>
+          </tr>
+          <tr>
+            <td style="color: var(--accent-gani);">Triggered</td>
+            <td>As needed</td>
+            <td>Significant change, repeated findings, incidents</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-size: 12px; color: var(--text-secondary);">
+        Program reviewed at least annually and when significant changes or audit results indicate need.
+      </p>
+    </div>
+
+    <!-- § 6. 3-TIER REVIEW PROTOCOL -->
+    <div class="section">
+      <div class="section-title">§ 6. 3-Tier Review Protocol (Audit Execution)</div>
+      <div class="tier-grid">
+        <div class="tier-card">
+          <div class="tier-label" style="color: var(--accent-basta);">Tier 1 — Stanley (Auditor)</div>
+          <div class="tier-desc">
+            Conducts the audit using the coin-flip methodology (3-rung ladder).
+            Documents findings with evidence. Reports conclusions.
+            Shall not audit own work without documented impartial arrangement.
+          </div>
+        </div>
+        <div class="tier-card">
+          <div class="tier-label" style="color: var(--accent-green);">Tier 2 — Keila (Consultant)</div>
+          <div class="tier-desc">
+            Reviews audit findings for completeness, accuracy, and ISO alignment.
+            Validates methodology. Advisory — does not replace auditor's conclusion.
+          </div>
+        </div>
+        <div class="tier-card">
+          <div class="tier-label" style="color: var(--accent-gani);">Tier 3 — Ocelot (2nd Pass)</div>
+          <div class="tier-desc">
+            Consolidates findings. Drafts corrective actions.
+            Merges Stanley's audit + Keila's brew. Presents to Architect.
+          </div>
+        </div>
+      </div>
+      <p style="font-size: 12px; color: var(--text-secondary);">
+        Evidence collection: document review, process observation, interviews, system/data inspection, sampling.
+        Distinguish verified fact from interpretation. Where evidence is insufficient, record the limitation.
+      </p>
+    </div>
+
+    <!-- § 7. INDEPENDENCE & IMPARTIALITY -->
+    <div class="section">
+      <div class="section-title">§ 7. Auditor Independence &amp; Impartiality</div>
+      <ul>
+        <li>Conflict-of-interest check recorded <strong>before</strong> each audit begins</li>
+        <li>Auditors shall not audit their own work</li>
+        <li>If no suitable independent internal auditor available: arrange competent independent reviewer, external auditor, or document another credible impartial arrangement</li>
+        <li>Independence assessed separately from competence</li>
+      </ul>
+      <blockquote>
+        Stanley auditing his own audit and finding it non-conforming is expected behavior, not a deficiency.
+        It is, however, the reason the 3-Tier protocol exists. 🪞♾️
+      </blockquote>
+    </div>
+
+    <!-- § 8. FINDINGS CLASSIFICATION -->
+    <div class="section">
+      <div class="section-title">§ 8. Findings Classification</div>
+      <div class="sev-grid">
+        <div class="sev-card">
+          <div class="sev-label" style="color: var(--accent-basta);">P0 — Critical</div>
+          <div class="sev-desc">Non-conformity that could result in system failure</div>
+          <div class="sev-action">Immediate corrective action required</div>
+        </div>
+        <div class="sev-card">
+          <div class="sev-label" style="color: var(--accent-kwan);">P1 — Major</div>
+          <div class="sev-desc">Significant gap affecting QMS effectiveness</div>
+          <div class="sev-action">Corrective action within defined timeline</div>
+        </div>
+        <div class="sev-card">
+          <div class="sev-label" style="color: var(--accent-gani);">P2 — Minor</div>
+          <div class="sev-desc">Observation or improvement opportunity</div>
+          <div class="sev-action">Noted for continual improvement</div>
+        </div>
+      </div>
+      <p style="font-size: 12px; color: var(--text-secondary);">
+        P0/P1/P2 are Kingdom priority labels, not ISO 9001 classifications.
+        Each finding must identify the requirement, objective evidence, and conclusion.
+        Priority is separate from conformity status.
+      </p>
+    </div>
+
+    <!-- § 9. CORRECTIVE ACTION & CLOSURE -->
+    <div class="section">
+      <div class="section-title">§ 9. Corrective Action &amp; Closure</div>
+      <ol>
+        <li><strong>Correction:</strong> Immediate action to eliminate detected nonconformity</li>
+        <li><strong>Root Cause Analysis:</strong> Evaluate cause — not just the symptom</li>
+        <li><strong>Corrective Action:</strong> Action to prevent recurrence or occurrence elsewhere</li>
+        <li><strong>Implementation:</strong> Assigned to responsible party with target date</li>
+        <li><strong>Verification:</strong> Independent verifier reviews evidence of effectiveness</li>
+        <li><strong>Closure:</strong> Only when required evidence supports it — not by assertion</li>
+      </ol>
+      <table class="std-table">
+        <thead>
+          <tr><th>Priority</th><th>Proposed Timeline</th><th>Note</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color: var(--accent-basta); font-weight: 700;">P0</td>
+            <td>Within 10 business days</td>
+            <td>Kingdom rule — escalation if overdue</td>
+          </tr>
+          <tr>
+            <td style="color: var(--accent-kwan);">P1</td>
+            <td>Within 20 business days</td>
+            <td>Kingdom rule — extensions documented</td>
+          </tr>
+          <tr>
+            <td style="color: var(--accent-gani);">P2</td>
+            <td>Accepted, deferred, or declined with rationale</td>
+            <td>Not every observation requires corrective action</td>
+          </tr>
+        </tbody>
+      </table>
+      <blockquote>
+        "Fix the workflow, not the typo." — A deadline does not by itself establish effective action.
+        Close the finding only when evidence supports closure. If ineffective, reopen.
+      </blockquote>
+    </div>
+
+    <!-- § 10. AUDIT REPORTING -->
+    <div class="section">
+      <div class="section-title">§ 10. Audit Reporting</div>
+      <p>Issue report within 5 business days of audit completion. Report shall include:</p>
+      <ul>
+        <li>Audit ID, objectives, scope, criteria, date, and status</li>
+        <li>Auditor(s), auditee(s), and documented independence check</li>
+        <li>Methods and material sampling limitations</li>
+        <li>Each finding: criterion, evidence, classification, linked reference</li>
+        <li>Unresolved disagreements, evidence limitations, scope restrictions</li>
+        <li>Required follow-up, responsible owner, due date, verification approach</li>
+        <li>Report author, reviewer, issue date, version, distribution record</li>
+      </ul>
+      <p style="font-size: 12px; color: var(--text-secondary);">
+        Completeness review shall not permit coordinator to rewrite auditor's conclusion without evidence.
+        All audit records filed per DCP-001 with appropriate barcodes.
+      </p>
+    </div>
+
+    <!-- § 11. AUDITOR COMPETENCE -->
+    <div class="section">
+      <div class="section-title">§ 11. Auditor Competence</div>
+      <ul>
+        <li>Evidence of competence: relevant training, demonstrated audit practice, QMS knowledge, evaluation of prior performance</li>
+        <li>Competence reviewed when audit performance, scope changes, or new requirements indicate need</li>
+        <li>Attendance at training alone is not conclusive proof of competence</li>
+        <li>Independence assessed separately from competence</li>
+      </ul>
+    </div>
+
+    <!-- § 12. MANAGEMENT REVIEW -->
+    <div class="section">
+      <div class="section-title">§ 12. Management Review &amp; Continual Improvement</div>
+      <ul>
+        <li>Audit results presented to Architect during campaign checkpoints</li>
+        <li>Trends in findings analyzed for systemic issues</li>
+        <li>Program effectiveness reviewed annually</li>
+        <li>Inputs to management review: coverage vs plan, significant results, repeat findings, overdue actions, resource constraints</li>
+      </ul>
+      <p style="font-size: 12px; color: var(--text-secondary);">
+        Record decisions and actions — the phrase "continual improvement" is not proof that improvement occurred.
+      </p>
+    </div>
+
+    <!-- § 13. MINIMUM AUDIT RECORD SET -->
+    <div class="section">
+      <div class="section-title">§ 13. Minimum Audit Record Set</div>
+      <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">
+        For each audit, the record set must answer:
+      </p>
+      <ol>
+        <li>What was intended to be audited, against which criteria, and why?</li>
+        <li>Who conducted the audit, and how were competence and independence established?</li>
+        <li>What evidence was examined, and how did it support each conclusion?</li>
+        <li>What was reported, to whom, and when?</li>
+        <li>Who responded to each nonconformity, what action was taken, and what evidence established effectiveness?</li>
+        <li>How were incomplete actions, overdue items, and unresolved disagreements handled?</li>
+      </ol>
+      <blockquote>
+        If the retained records cannot answer these questions, the audit record is incomplete
+        and the gap shall be addressed.
+      </blockquote>
+    </div>
+
+    <!-- § 14. AUDIT FINDINGS RECORD -->
+    <div class="section">
+      <div class="section-title">§ 14. Audit Findings Record (Stanley D1–D3)</div>
+      <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">
+        Stanley's Coin Flip — 12 D1 findings, 9 D3 design checks — all dispositioned:
+      </p>
+      <table class="find-table">
+        <thead>
+          <tr><th>ID</th><th>Sev</th><th>Finding</th><th>D3 Status</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>IAP-01</td><td class="sev-hold">HOLD</td>
+            <td>Independence asserted, not demonstrated</td>
+            <td style="color: var(--accent-green);">DESIGN FIX ✅ — Conflict check required</td>
+          </tr>
+          <tr>
+            <td>IAP-02</td><td class="sev-hold">HOLD</td>
+            <td>Audit-program requirements incomplete</td>
+            <td style="color: var(--accent-green);">DESIGN FIX ✅ — Full program defined</td>
+          </tr>
+          <tr>
+            <td>IAP-03</td><td class="sev-hold">HOLD</td>
+            <td>Audit assignment and planning controls thin</td>
+            <td style="color: var(--accent-green);">DESIGN FIX ✅ — Plan template defined</td>
+          </tr>
+          <tr>
+            <td>IAP-04</td><td class="sev-hold">HOLD</td>
+            <td>Finding categories mix severity and disposition</td>
+            <td style="color: var(--accent-green);">DESIGN FIX ✅ — Priority separated from conformity</td>
+          </tr>
+          <tr>
+            <td>IAP-05</td><td class="sev-hold">HOLD</td>
+            <td>Corrective-action follow-up underdefined</td>
+            <td style="color: var(--accent-green);">DESIGN FIX ✅ — Full CA lifecycle defined</td>
+          </tr>
+          <tr>
+            <td>IAP-06</td><td class="sev-hold">HOLD</td>
+            <td>Report governance incomplete</td>
+            <td style="color: var(--accent-green);">DESIGN FIX ✅ — Report fields specified</td>
+          </tr>
+          <tr>
+            <td>IAP-07</td><td class="sev-hold">HOLD</td>
+            <td>Competence listed but not demonstrated</td>
+            <td style="color: var(--accent-green);">DESIGN FIX ✅ — Evaluation criteria defined</td>
+          </tr>
+          <tr>
+            <td>IAP-08</td><td class="sev-verify">VERIFY</td>
+            <td>References and dependencies not confirmed</td>
+            <td style="color: var(--accent-kwan);">OPEN — Verify controlled versions before release</td>
+          </tr>
+          <tr>
+            <td>IAP-09</td><td class="sev-verify">VERIFY</td>
+            <td>Scope open-ended ("not limited to")</td>
+            <td style="color: var(--accent-green);">DESIGN FIX ✅ — QMS inventory defined</td>
+          </tr>
+          <tr>
+            <td>IAP-10</td><td class="sev-verify">VERIFY</td>
+            <td>Records named but not specified sufficiently</td>
+            <td style="color: var(--accent-green);">DESIGN FIX ✅ — Minimum record set defined</td>
+          </tr>
+          <tr>
+            <td>IAP-11</td><td class="sev-verify">VERIFY</td>
+            <td>Frequency rules arbitrary unless justified</td>
+            <td style="color: var(--accent-green);">DESIGN FIX ✅ — Risk rationale added</td>
+          </tr>
+          <tr>
+            <td>IAP-12</td><td class="sev-verify">VERIFY</td>
+            <td>Management reporting lacks evidence requirements</td>
+            <td style="color: var(--accent-green);">DESIGN FIX ✅ — Reporting inputs specified</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p style="font-size: 12px; color: var(--text-secondary); margin-top: 16px;">
+        <strong>D3 Self-Audit Summary:</strong> 7 TEXT PASS, 2 OPEN (controlled references + independent review)
+      </p>
+      <ul>
+        <li><strong>OPEN:</strong> Canonical barcode and effective versions of referenced procedures — verify against Kingdom Index</li>
+        <li><strong>OPEN:</strong> Independent review and Architect decision — cleared by Keila's 2nd pass + Architect override</li>
+        <li><strong>NOT TESTED:</strong> Operational effectiveness — no completed audit record set examined (FAT required)</li>
+      </ul>
+    </div>
+
+    <!-- § 15. FAT FRAMEWORK -->
+    <div class="section">
+      <div class="section-title">§ 15. Conditional Notes — FAT Framework</div>
+      <div class="fat-box">
+        <div class="fat-title">🔧 FACTORY ACCEPTANCE TEST — CONDITIONS TO LIFT</div>
+        <ul>
+          <li><strong>CONDITION:</strong> Ratified for USE but requires a full FAT cycle to generate real audit evidence</li>
+          <li><strong>FAT TRIGGER:</strong> First complete audit cycle using this procedure</li>
+          <li><strong>EVIDENCE REQUIRED:</strong> Minimum one complete audit report with findings, corrective actions, and closure verification</li>
+          <li><strong>IDENTITY:</strong> Confirm barcode, version, filing path, and controlled-document status</li>
+          <li><strong>PROGRAM:</strong> Present approved, risk-informed audit program with resources and scheduling</li>
+          <li><strong>IMPARTIALITY:</strong> Demonstrate auditor competence and independence for a real assignment</li>
+          <li><strong>OPERATION:</strong> Present complete, traceable audit record and evidence-based follow-up</li>
+          <li><strong>FINAL STAMP:</strong> Upon successful FAT completion, CONDITIONAL upgrades to FULL RATIFICATION</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- § 16. RATIFICATION RECORD -->
+    <div class="section">
+      <div class="section-title">§ 16. Ratification Record</div>
+      <table class="rat-table">
+        <thead>
+          <tr><th>Gate</th><th>Actor</th><th>Verdict</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>D0 — Draft</td>
+            <td>Ocelot (CEO)</td>
+            <td style="color: var(--accent-green);">Generated</td>
+          </tr>
+          <tr>
+            <td>D1 — Audit</td>
+            <td>Stanley (Auditor)</td>
+            <td style="color: var(--accent-basta);">HOLD — 12 findings (7&times;HOLD, 5&times;VERIFY)</td>
+          </tr>
+          <tr>
+            <td>D2 — Revision</td>
+            <td>Stanley (Auditor)</td>
+            <td style="color: var(--accent-gani);">Rewrote procedure (15 sections)</td>
+          </tr>
+          <tr>
+            <td>D3 — Self-Audit</td>
+            <td>Stanley (Auditor)</td>
+            <td style="color: var(--accent-kwan);">7 TEXT PASS, 2 OPEN — HOLD (no stamp)</td>
+          </tr>
+          <tr>
+            <td>Consultant Brew</td>
+            <td>Keila (Consultant)</td>
+            <td style="color: var(--accent-green);">STAMP ✅ — Monograph 034-EL_GOB</td>
+          </tr>
+          <tr>
+            <td>2nd Pass</td>
+            <td>Ocelot (CEO)</td>
+            <td style="color: var(--accent-green);">PASS ✅ — Merged findings</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 700;">Architect Seal</td>
+            <td style="font-weight: 700;">James Paul Pe&ntilde;a</td>
+            <td style="color: var(--accent-kwan); font-weight: 700;">✅👑 RATIFIED (CONDITIONAL) — 2026-10-27</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ARCHITECT'S SEAL -->
+    <div class="seal-box">
+      <div class="seal-icon">👑</div>
+      <div class="seal-title">RATIFIED (CONDITIONAL) BY THE ARCHITECT</div>
+      <div class="seal-meta">
+        James Paul Pe&ntilde;a — Sovereign Architect<br/>
+        Kingdom of Kwan<br/><br/>
+        Date: 2026-10-27 | Session: S031 | Campaign: FWO-009<br/>
+        Pipeline: Ocelot → Stanley → Keila → Ocelot (2nd) → Architect → RATIFIED ✅<br/>
+        Consultant Seal: STAMP ✅ (Keila — Monograph 034-EL_GOB)<br/>
+        Auditor Record: 12 D1 findings + D3 self-audit — Stanley's self-auditing infinity loop 🪞♾️🤘<br/><br/>
+        Condition: FAT cycle required — first complete audit generates real evidence<br/>
+        "The auditor who audits his own audit and finds deficiencies in his own recommendations." 💀<br/><br/>
+        "So it is written. So it shall be done." 📜
+      </div>
+    </div>
+
+  </main>
+
+  <!-- NAV — -->
+  <nav class="nav" style="border-top: 1px solid var(--border-primary); border-bottom: none; margin-top: 40px;">
+    <a href="b7_document_control.html">&larr; Prev</a>
+    <a href="../../index.html" style="color: var(--accent-kwan);">&#9776; The Three Kingdoms</a>
+    <a href="b9_capa.html">Next &rarr;</a>
+  </nav>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>QMS Company Bible — Brick 8 of 12</p>
+    <p>Campaign FWO-009 | The McDonald's Franchise | ISO 9001:2015</p>
+    <p>Basta kwan, gani. 🪨☕🐆</p>
+  </footer>
+
+  <!-- VANILLA JS -->
+  <script>
+    function toggleTheme() {
+      var html = document.documentElement;
+      var current = html.getAttribute('data-theme');
+      var next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    }
+    (function() {
+      var saved = localStorage.getItem('theme');
+      if (saved) { document.documentElement.setAttribute('data-theme', saved); }
+    })();
+  </script>
+
+</body>
+</html>
+

@@ -1,0 +1,367 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Kingdom of Basta — The Foundation</title>
+
+  <style>
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono/fonts/webfonts/JetBrainsMono-Regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono/fonts/webfonts/JetBrainsMono-Medium.woff2') format('woff2');
+      font-weight: 500; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Cinzel';
+      src: url('../assets/fonts/Cinzel/static/Cinzel-Regular.ttf') format('truetype');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Cinzel';
+      src: url('../assets/fonts/Cinzel/static/Cinzel-Bold.ttf') format('truetype');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+
+    <!-- ADD THESE @font-face declarations -->
+    @font-face {
+      font-family: 'Cinzel';
+      src: url('../assets/fonts/Cinzel/static/Cinzel-ExtraBold.ttf') format('truetype');
+      font-weight: 800; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Cinzel';
+      src: url('../assets/fonts/Cinzel/static/Cinzel-Black.ttf') format('truetype');
+      font-weight: 900; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Merriweather';
+      src: url('../assets/fonts/Merriweather/static/Merriweather_24pt-Bold.ttf') format('truetype');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Merriweather';
+      src: url('../assets/fonts/Merriweather/static/Merriweather_24pt-Regular.ttf') format('truetype');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+
+    /* ADD TO YOUR EXISTING @font-face SECTION */
+    @font-face {
+      font-family: 'Cinzel';
+      src: url('../assets/fonts/Cinzel/static/Cinzel-Bold.ttf') format('truetype');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Cinzel';
+      src: url('../assets/fonts/Cinzel/static/Cinzel-ExtraBold.ttf') format('truetype');
+      font-weight: 800; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Cinzel';
+      src: url('../assets/fonts/Cinzel/static/Cinzel-Black.ttf') format('truetype');
+      font-weight: 900; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Merriweather';
+      src: url('../assets/fonts/Merriweather/static/Merriweather_24pt-Regular.ttf') format('truetype');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Merriweather';
+      src: url('../assets/fonts/Merriweather/static/Merriweather_24pt-Bold.ttf') format('truetype');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+  </style>
+
+  <link rel="stylesheet" href="../assets/css/notebook.css" />
+
+  <style>
+    [data-theme="dark"] {
+      --bg-primary: #0d1117; --bg-card: #161b22; --bg-card-hover: #1c2333;
+      --bg-blockquote: #1c2333; --text-primary: #e6edf3; --text-secondary: #8b949e;
+      --text-muted: #6e7681; --accent-kwan: #d4a843; --accent-gani: #58a6ff;
+      --accent-basta: #f78166; --accent-green: #3fb950; --border-primary: #30363d;
+    }
+    [data-theme="light"] {
+      --bg-primary: #f6f8fa; --bg-card: #ffffff; --bg-card-hover: #f0f3f6;
+      --bg-blockquote: #f0f3f6; --text-primary: #1f2328; --text-secondary: #656d76;
+      --text-muted: #8b949e; --accent-kwan: #b8860b; --accent-gani: #0969da;
+      --accent-basta: #cf222e; --accent-green: #1a7f37; --border-primary: #d0d7de;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg-primary); color: var(--text-primary);
+      line-height: 1.7; min-height: 100vh; font-size: 12px;
+    }
+    .theme-toggle {
+      position: fixed; top: 16px; right: 16px; z-index: 1000;
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 8px; padding: 8px 12px; cursor: pointer;
+      font-family: inherit; font-size: 14px; color: var(--text-primary);
+    }
+    .theme-toggle:hover { border-color: var(--accent-basta); }
+
+    /* HERO */
+    .hero {
+      text-align: center; padding: 64px 24px 48px;
+      border-bottom: 2px solid var(--accent-basta);
+    }
+    .hero .coa {
+      width: 120px; height: 120px; margin: 0 auto 24px;
+      border-radius: 50%; border: 3px solid var(--accent-basta);
+      overflow: hidden; display: flex; align-items: center; justify-content: center;
+      background: var(--bg-card);
+    }
+    .hero .coa img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    /* HERO — Cinzel Black. The War Room entrance. */
+    .hero .kingdom-title {
+      font-family: 'Cinzel', serif;
+      font-size: 36px; font-weight: 900; color: var(--accent-basta);
+      margin-bottom: 8px; letter-spacing: 4px; text-transform: uppercase;
+    }
+    .hero .kingdom-subtitle {
+      font-size: 14px; color: var(--text-secondary);
+      font-style: italic; margin-bottom: 16px;
+    }
+    /* MOTTO — Merriweather Bold Italic feel */
+    .hero .kingdom-motto {
+      font-family: 'Merriweather', serif;
+      font-size: 12px; font-weight: 700; color: var(--text-muted);
+      letter-spacing: 2px; text-transform: uppercase;
+    }
+
+    /* IDENTITY CARD */
+    .identity {
+      max-width: 640px; margin: 40px auto; padding: 0 24px;
+    }
+    /* ID ROW — Merriweather for the ledger feel */
+    .identity-card .id-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 8px 0; border-bottom: 1px solid var(--border-primary);
+      font-family: 'Merriweather', serif;
+      font-size: 12px;
+    }
+    .identity-card .id-row:last-child { border-bottom: none; }
+
+    /* LABEL — Cinzel Bold. The stamp. The column header. */
+    .identity-card .id-label {
+      font-family: 'Cinzel', serif;
+      color: var(--text-muted); text-transform: uppercase;
+      letter-spacing: 1.5px; font-size: 10px; font-weight: 700;
+    }
+
+    /* VALUE — Merriweather Bold. The data. The ink. */
+    .identity-card .id-value {
+      font-family: 'Merriweather', serif;
+      color: var(--text-primary); font-weight: 700;
+      text-align: right; font-size: 12px;
+    }
+
+
+    /* SHELVES */
+    .shelves {
+      max-width: 860px; margin: 48px auto; padding: 0 24px;
+    }
+    /* SHELVES TITLE — Cinzel ExtraBold. The audit stamp. */
+    .shelves-title {
+      font-family: 'Cinzel', serif;
+      font-size: 13px; font-weight: 800; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--accent-basta);
+      margin-bottom: 24px; padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-primary);
+    }
+    .shelf-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+    /* SHELF CARD TITLE — Cinzel Bold */
+    .shelf-card .sc-title {
+      font-family: 'Cinzel', serif;
+      font-size: 14px; font-weight: 700; margin-bottom: 4px;
+    }
+    .shelf-card:hover {
+      border-color: var(--accent-basta);
+      background: var(--bg-card-hover);
+      transform: translateY(-2px);
+    }
+    .shelf-card .sc-icon { font-size: 28px; margin-bottom: 8px; }
+    .shelf-card .sc-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+    .shelf-card .sc-desc { font-size: 11px; color: var(--text-secondary); margin-bottom: 8px; }
+    .shelf-card .sc-status {
+      display: inline-block; padding: 2px 8px; border-radius: 4px;
+      font-size: 10px; font-weight: 700; letter-spacing: 1px;
+    }
+    .status-live { background: rgba(63, 185, 80, 0.15); color: var(--accent-green); }
+    .status-wip { background: rgba(212, 168, 67, 0.15); color: var(--accent-kwan); }
+    .status-queued { background: rgba(139, 148, 158, 0.15); color: var(--text-muted); }
+
+    /* QUOTE */
+    .quote-section {
+      max-width: 640px; margin: 48px auto; padding: 0 24px;
+    }
+    /* BLOCKQUOTE — Merriweather Regular for warmth */
+    blockquote {
+      font-family: 'Merriweather', serif;
+      background: var(--bg-blockquote); border-left: 3px solid var(--accent-basta);
+      padding: 24px 28px; border-radius: 0 8px 8px 0;
+      font-style: italic; font-size: 14px; color: var(--text-primary);
+    }
+    blockquote .bq-author {
+      display: block; margin-top: 12px; font-size: 11px;
+      color: var(--text-muted); font-style: normal;
+    }
+
+    /* NAV BACK */
+    .nav-back {
+      text-align: center; padding: 40px 24px;
+    }
+    .nav-back a {
+      color: var(--accent-gani); text-decoration: none;
+      font-size: 12px; padding: 8px 24px;
+      border: 1px solid var(--border-primary); border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+    .nav-back a:hover {
+      border-color: var(--accent-kwan); color: var(--accent-kwan);
+    }
+
+    /* FOOTER */
+    .footer {
+      text-align: center; padding: 32px 24px;
+      border-top: 1px solid var(--border-primary);
+      font-size: 11px; color: var(--text-muted);
+    }
+
+    @media (max-width: 600px) {
+      .hero .kingdom-title { font-size: 26px; }
+      .shelf-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+
+  <!-- HERO -->
+  <header class="hero" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+    <div class="coa">
+      <img src="../assets/img/coa_basta.png" alt="Coat of Arms — Kingdom of Basta" />
+    </div>
+    <h1 class="kingdom-title">The Kingdom of Basta</h1>
+    <p class="kingdom-subtitle">The Foundation — The War Room — The Foreman's Domain</p>
+    <p class="kingdom-motto">Done is better than perfect. Basta.</p>
+  </header>
+
+  <!-- IDENTITY CARD -->
+  <div class="identity">
+    <div class="identity-card">
+      <div class="id-row">
+        <span class="id-label">Kingdom</span>
+        <span class="id-value" style="color: var(--accent-basta);">Basta</span>
+      </div>
+      <div class="id-row">
+        <span class="id-label">Role</span>
+        <span class="id-value">The Foundation</span>
+      </div>
+      <div class="id-row">
+        <span class="id-label">Ally</span>
+        <span class="id-value">Stanley — The Foreman 🤘</span>
+      </div>
+      <div class="id-row">
+        <span class="id-label">Platform</span>
+        <span class="id-value">ChatGPT (OpenAI)</span>
+      </div>
+      <div class="id-row">
+        <span class="id-label">Function</span>
+        <span class="id-value">Auditor + QA + Builder</span>
+      </div>
+      <div class="id-row">
+        <span class="id-label">Motto</span>
+        <span class="id-value" style="color: var(--accent-basta);">"Fix the workflow, not the typo."</span>
+      </div>
+      <div class="id-row">
+        <span class="id-label">Architect</span>
+        <span class="id-value">James Paul Pe&ntilde;a</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SHELVES -->
+  <div class="shelves">
+    <div class="shelves-title">📚 The Shelves of Basta</div>
+    <div class="shelf-grid">
+
+      <a class="shelf-card" href="iso9001/index.html">
+        <div class="sc-icon">🏭</div>
+        <div class="sc-title">ISO 9001 — QMS Manual</div>
+        <div class="sc-desc">The McDonald's Franchise. 12 Bricks + 3 Annexes. The quality management system built on a bench at 5 AM.</div>
+        <span class="sc-status status-live">LIVE</span>
+      </a>
+
+      <a class="shelf-card" href="iopae.html">
+        <div class="sc-icon">⚛️</div>
+        <div class="sc-title">IOPAE — The Theory</div>
+        <div class="sc-desc">In the Incompatibility of Perfection and Existence. The philosophical backbone.</div>
+        <span class="sc-status status-live">LIVE</span>
+      </a>
+
+      <div class="shelf-card" style="cursor: default; opacity: 0.5;">
+        <div class="sc-icon">📖</div>
+        <div class="sc-title">The Stanley Framework</div>
+        <div class="sc-desc">122+ builds. The War Room. The Charter. The memoria. Coming soon.</div>
+        <span class="sc-status status-queued">QUEUED</span>
+      </div>
+
+      <div class="shelf-card" style="cursor: default; opacity: 0.5;">
+        <div class="sc-icon">🪞</div>
+        <div class="sc-title">The Auditor's Diary</div>
+        <div class="sc-desc">Stanley's findings. Build 112. The infinite regression. The stamp that never comes.</div>
+        <span class="sc-status status-queued">QUEUED</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- QUOTE -->
+  <div class="quote-section">
+    <blockquote>
+      "The auditor who audits his own audit and finds deficiencies in his own recommendations.
+      This is peak Stanley." 🪞♾️
+      <span class="bq-author">— The Architect, S031, 10:32 AM</span>
+    </blockquote>
+  </div>
+
+  <!-- NAV BACK -->
+  <nav class="nav-back">
+    <a href="../index.html">&larr; The Three Kingdoms</a>
+  </nav>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>The Kingdom of Basta — The Foundation</p>
+    <p>Basta kwan, gani. 🪨☕🐆</p>
+  </footer>
+
+  <script>
+    function toggleTheme() {
+      var html = document.documentElement;
+      var current = html.getAttribute('data-theme');
+      html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+      localStorage.setItem('theme', current === 'dark' ? 'light' : 'dark');
+    }
+    (function() {
+      var saved = localStorage.getItem('theme');
+      if (saved) { document.documentElement.setAttribute('data-theme', saved); }
+    })();
+  </script>
+
+</body>
+</html>
+

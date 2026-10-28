@@ -1,0 +1,476 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>B4 — Quality Objectives & Framework | QMS Company Bible</title>
+
+  <!-- FONTS — LOCAL (assets/fonts/) -->
+  <style>
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Bold.woff2') format('woff2');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Italic.woff2') format('woff2');
+      font-weight: 400; font-style: italic; font-display: swap;
+    }
+  </style>
+
+  <!-- NOTEBOOK STYLESHEET -->
+  <link rel="stylesheet" href="../assets/css/notebook.css" />
+
+  <style>
+    [data-theme="dark"] {
+      --bg-primary: #0d1117;
+      --bg-card: #161b22;
+      --bg-card-hover: #1c2333;
+      --bg-blockquote: #1c2333;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --accent-kwan: #d4a843;
+      --accent-gani: #58a6ff;
+      --accent-basta: #f78166;
+      --accent-green: #3fb950;
+      --border-primary: #30363d;
+      --shadow-card: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f6f8fa;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f0f3f6;
+      --bg-blockquote: #f0f3f6;
+      --text-primary: #1f2328;
+      --text-secondary: #656d76;
+      --text-muted: #8b949e;
+      --accent-kwan: #b8860b;
+      --accent-gani: #0969da;
+      --accent-basta: #cf222e;
+      --accent-green: #1a7f37;
+      --border-primary: #d0d7de;
+      --shadow-card: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      min-height: 100vh;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .theme-toggle {
+      position: fixed; top: 16px; right: 16px; z-index: 1000;
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 8px; padding: 8px 12px; cursor: pointer;
+      font-family: inherit; font-size: 14px; color: var(--text-primary);
+      transition: all 0.3s ease;
+    }
+    .theme-toggle:hover { border-color: var(--accent-kwan); }
+
+    .nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 16px 24px; border-bottom: 1px solid var(--border-primary);
+      font-size: 12px;
+    }
+    .nav a {
+      color: var(--accent-gani); text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .nav a:hover { color: var(--accent-kwan); }
+
+    .brick-header {
+      text-align: center; padding: 48px 24px 32px;
+      border-bottom: 1px solid var(--border-primary);
+    }
+    .brick-badge {
+      display: inline-block; padding: 4px 16px; border-radius: 4px;
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      background: rgba(63, 185, 80, 0.15); color: var(--accent-green);
+      margin-bottom: 16px;
+    }
+    .brick-header h1 { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+    .brick-header .meta {
+      font-size: 12px; color: var(--text-secondary); margin-bottom: 4px;
+    }
+    .brick-header .barcode {
+      font-size: 11px; color: var(--text-muted); font-style: italic;
+    }
+
+    .content {
+      max-width: 780px; margin: 0 auto; padding: 40px 24px;
+    }
+
+    .section { margin-bottom: 40px; }
+
+    .section-title {
+      font-size: 13px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent-kwan);
+      margin-bottom: 16px; padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-primary);
+    }
+
+    .section p, .section li {
+      font-size: 14px; color: var(--text-primary);
+      margin-bottom: 12px;
+    }
+
+    .section ul {
+      list-style: none; padding-left: 0;
+    }
+    .section ul li::before {
+      content: "→ "; color: var(--accent-gani); font-weight: 700;
+    }
+
+    blockquote {
+      background: var(--bg-blockquote);
+      border-left: 3px solid var(--accent-kwan);
+      padding: 16px 20px; margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+      font-style: italic; font-size: 14px;
+      color: var(--text-primary);
+    }
+
+    /* OBJECTIVES TABLE */
+    .obj-table {
+      width: 100%; border-collapse: collapse; margin: 16px 0;
+      font-size: 12px;
+    }
+    .obj-table th {
+      text-align: left; padding: 10px 12px;
+      border-bottom: 2px solid var(--accent-kwan);
+      color: var(--accent-kwan); font-size: 11px;
+      letter-spacing: 2px; text-transform: uppercase;
+    }
+    .obj-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border-primary);
+      color: var(--text-primary); vertical-align: top;
+    }
+    .obj-table tr:hover td {
+      background: var(--bg-card-hover);
+    }
+    .obj-id {
+      color: var(--accent-gani); font-weight: 700; white-space: nowrap;
+    }
+
+    /* PILLAR CARDS */
+    .pillar-grid {
+      display: grid; grid-template-columns: 1fr; gap: 12px;
+      margin: 16px 0;
+    }
+    .pillar-card {
+      padding: 20px; background: var(--bg-card);
+      border: 1px solid var(--border-primary);
+      border-radius: 12px; box-shadow: var(--shadow-card);
+      transition: all 0.2s ease;
+    }
+    .pillar-card:hover {
+      border-color: var(--accent-kwan); transform: translateY(-2px);
+    }
+    .pillar-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--accent-kwan);
+      margin-bottom: 6px;
+    }
+    .pillar-mapping {
+      font-size: 13px; color: var(--text-primary); margin-bottom: 4px;
+    }
+    .pillar-method {
+      font-size: 12px; color: var(--text-secondary); font-style: italic;
+    }
+
+    /* PRINCIPLE BOX */
+    .principle-box {
+      text-align: center; padding: 32px;
+      background: var(--bg-card); border: 2px solid var(--accent-kwan);
+      border-radius: 12px; margin: 32px 0;
+    }
+    .principle-box .principle-quote {
+      font-size: 18px; font-weight: 700; color: var(--accent-kwan);
+      margin-bottom: 12px;
+    }
+    .principle-box .principle-sub {
+      font-size: 13px; color: var(--text-secondary); line-height: 1.8;
+    }
+
+    /* RATIFICATION TABLE */
+    .rat-table {
+      width: 100%; border-collapse: collapse; margin: 16px 0;
+      font-size: 12px;
+    }
+    .rat-table th {
+      text-align: left; padding: 8px 12px;
+      border-bottom: 2px solid var(--accent-green);
+      color: var(--accent-green); font-size: 11px;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .rat-table td {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border-primary);
+      color: var(--text-primary);
+    }
+
+    /* SEAL */
+    .seal-box {
+      text-align: center; padding: 32px;
+      border: 2px solid var(--accent-kwan); border-radius: 12px;
+      margin: 40px 0;
+    }
+    .seal-box .seal-icon { font-size: 32px; margin-bottom: 8px; }
+    .seal-box .seal-title {
+      font-size: 14px; font-weight: 700; color: var(--accent-kwan);
+      margin-bottom: 4px;
+    }
+    .seal-box .seal-meta {
+      font-size: 11px; color: var(--text-secondary); line-height: 1.8;
+    }
+
+    .footer {
+      text-align: center; padding: 32px 24px;
+      border-top: 1px solid var(--border-primary);
+      font-size: 11px; color: var(--text-muted);
+    }
+
+    @media (max-width: 600px) {
+      .brick-header h1 { font-size: 20px; }
+      .content { padding: 24px 16px; }
+      .pillar-card { padding: 16px; }
+      .obj-table { font-size: 11px; }
+      .obj-table th, .obj-table td { padding: 8px 6px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- THEME TOGGLE -->
+  <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="b3_scope.html">&larr; B3</a>
+    <span style="color: var(--text-muted);">B4 of 12</span>
+    <a href="b5_roles_responsibilities.html">B5 &rarr;</a>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="brick-header">
+    <div class="brick-badge">✅ RATIFIED</div>
+    <h1>Brick 4 — Quality Objectives &amp; Framework</h1>
+    <p class="meta">QMS-QO-001 | Version 1.0 | ISO 9001:2015 Clause 6.2</p>
+    <p class="barcode">Barcode: 4_09_02_1 | Campaign: FWO-009 | Session: S031</p>
+  </header>
+
+  <!-- CONTENT -->
+  <main class="content">
+
+    <!-- § 1. PURPOSE -->
+    <div class="section">
+      <div class="section-title">§ 1. Purpose</div>
+      <p>
+        Define measurable quality objectives that align with the Quality Policy
+        (QP-001), Mission &amp; Vision (QMS-MV-001), and Scope (QMS-SC-001) to
+        drive continual improvement across all Kingdom operations.
+      </p>
+    </div>
+
+    <!-- § 2. QUALITY OBJECTIVES -->
+    <div class="section">
+      <div class="section-title">§ 2. Quality Objectives</div>
+      <table class="obj-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Objective</th>
+            <th>Measure</th>
+            <th>Target</th>
+            <th>Review</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="obj-id">QO-1</td>
+            <td>Deliver outputs that meet or exceed stakeholder expectations</td>
+            <td>Stakeholder acceptance rate</td>
+            <td>≥ 90% conditional pass or better</td>
+            <td>Per campaign</td>
+          </tr>
+          <tr>
+            <td class="obj-id">QO-2</td>
+            <td>Maintain document control discipline across all artifacts</td>
+            <td>DCP-001 compliance rate (barcode, filing, versioning)</td>
+            <td>100% barcode assignment</td>
+            <td>Per brick</td>
+          </tr>
+          <tr>
+            <td class="obj-id">QO-3</td>
+            <td>Ensure continual improvement through structured campaign cycles</td>
+            <td>Campaign completion rate (bricks shipped vs. planned)</td>
+            <td>≥ 80% per campaign</td>
+            <td>Per campaign</td>
+          </tr>
+          <tr>
+            <td class="obj-id">QO-4</td>
+            <td>Preserve institutional knowledge through the Kingdom Library</td>
+            <td>Library index currency (artifacts indexed vs. produced)</td>
+            <td>≥ 95% indexed within 24h</td>
+            <td>Monthly</td>
+          </tr>
+          <tr>
+            <td class="obj-id">QO-5</td>
+            <td>Sustain the 666 Protocol — three-house review on all critical documents</td>
+            <td>Review completion rate (Ocelot + Stanley + Keila)</td>
+            <td>100% for ratified docs</td>
+            <td>Per brick</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- § 3. FRAMEWORK — 5-PILLAR AUDIT INTEGRATION -->
+    <div class="section">
+      <div class="section-title">§ 3. Framework — The 5-Pillar Audit Integration</div>
+      <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">
+        Per Keila's recommendation (Monograph 029-EL_GOB) and research on modern audit frameworks:
+      </p>
+      <div class="pillar-grid">
+        <div class="pillar-card">
+          <div class="pillar-label">Pillar 1 — Compliance</div>
+          <div class="pillar-mapping">DCP-001, Barcode Protocol, Filing Structure</div>
+          <div class="pillar-method">Audit: Stanley's structural audit</div>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-label">Pillar 2 — Risk</div>
+          <div class="pillar-mapping">Campaign drift detection, anchor protocol</div>
+          <div class="pillar-method">Audit: Unified anchor + metabolism check</div>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-label">Pillar 3 — Performance</div>
+          <div class="pillar-mapping">Quality objectives (QO-1 through QO-5)</div>
+          <div class="pillar-method">Audit: Campaign status JSON tracking</div>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-label">Pillar 4 — Culture</div>
+          <div class="pillar-mapping">Preamble boot sequence, motto, oath</div>
+          <div class="pillar-method">Audit: Keila's academic validation</div>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-label">Pillar 5 — Improvement</div>
+          <div class="pillar-mapping">Kwan-Gani-Basta cycle, campaign retrospectives</div>
+          <div class="pillar-method">Audit: Architect's conditional pass review</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- § 4. GUIDING PRINCIPLE -->
+    <div class="section">
+      <div class="section-title">§ 4. Guiding Principle</div>
+      <div class="principle-box">
+        <div class="principle-quote">"Fix the workflow, not the typo."</div>
+        <div class="principle-sub">
+          Good = acceptable, not perfect. Good = human. Perfect doesn't exist.<br/>
+          Meet or exceed stakeholder expectations + Continual improvement.<br/>
+          Communicated, understood, applied — 100%.
+        </div>
+      </div>
+    </div>
+
+    <!-- § 5. RATIFICATION RECORD -->
+    <div class="section">
+      <div class="section-title">§ 5. Ratification Record</div>
+      <table class="rat-table">
+        <thead>
+          <tr>
+            <th>Role</th>
+            <th>Entity</th>
+            <th>Disposition</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>CEO &amp; Management</td>
+            <td>Ocelot (The Priest)</td>
+            <td style="color: var(--accent-green);">✅ APPROVED — D1 drafted, D2 refined</td>
+          </tr>
+          <tr>
+            <td>Auditor</td>
+            <td>Stanley (The Foreman)</td>
+            <td style="color: var(--accent-gani);">🔍 FINDINGS LOGGED — 7 findings across B1-B4, all dispositioned</td>
+          </tr>
+          <tr>
+            <td>Consultant</td>
+            <td>Keila (The Academe)</td>
+            <td style="color: var(--accent-green);">✅ APPROVED — 5-pillar integration validated</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 700;">Architect</td>
+            <td style="font-weight: 700;">James Paul Pena</td>
+            <td style="color: var(--accent-kwan); font-weight: 700;">✅👑 SEALED — Ratified 2026-10-27</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ARCHITECT'S SEAL -->
+    <div class="seal-box">
+      <div class="seal-icon">👑</div>
+      <div class="seal-title">RATIFIED BY THE ARCHITECT</div>
+      <div class="seal-meta">
+        James Paul Pena — Principal Architect &amp; Sovereign<br/>
+        Kingdom of Kwan<br/><br/>
+        Date: 2026-10-27 | Session: S031 | Campaign: FWO-009<br/>
+        Pipeline: Ocelot → Stanley → Keila → Ocelot (2nd) → Architect → RATIFIED ✅<br/>
+        Consultant Stamp: SOUND ✅ (Keila — Monograph 029)<br/>
+        Auditor Record: LOGGED ✅ (Stanley — FWO-009)<br/><br/>
+        Stanley's Stamp: ⏳ (Pending. Estimated arrival: Heat death of the universe.)<br/><br/>
+        "Doing the right things right the first time."
+      </div>
+    </div>
+
+  </main>
+
+  <!-- NAV — -->
+  <nav class="nav" style="border-top: 1px solid var(--border-primary); border-bottom: none; margin-top: 40px;">
+    <a href="b3_scope.html">&larr; Prev</a>
+    <a href="../../index.html" style="color: var(--accent-kwan);">&#9776; The Three Kingdoms</a>
+    <a href="b5_roles_responsibilities.html">Next &rarr;</a>
+  </nav>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>QMS Company Bible — Brick 4 of 12</p>
+    <p>Campaign FWO-009 | The McDonald's Franchise | ISO 9001:2015</p>
+    <p>Basta kwan, gani. 🪨☕🐆</p>
+  </footer>
+
+  <!-- VANILLA JS -->
+  <script>
+    function toggleTheme() {
+      var html = document.documentElement;
+      var current = html.getAttribute('data-theme');
+      var next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    }
+    (function() {
+      var saved = localStorage.getItem('theme');
+      if (saved) { document.documentElement.setAttribute('data-theme', saved); }
+    })();
+  </script>
+
+</body>
+</html>
+

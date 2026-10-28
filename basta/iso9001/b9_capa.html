@@ -1,0 +1,832 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>B9 — Corrective &amp; Preventive Action | QMS Company Bible</title>
+
+  <!-- FONTS — LOCAL (assets/fonts/) -->
+  <style>
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Bold.woff2') format('woff2');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Italic.woff2') format('woff2');
+      font-weight: 400; font-style: italic; font-display: swap;
+    }
+  </style>
+
+  <!-- NOTEBOOK STYLESHEET -->
+  <link rel="stylesheet" href="../assets/css/notebook.css" />
+
+  <style>
+    [data-theme="dark"] {
+      --bg-primary: #0d1117;
+      --bg-card: #161b22;
+      --bg-card-hover: #1c2333;
+      --bg-blockquote: #1c2333;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --accent-kwan: #d4a843;
+      --accent-gani: #58a6ff;
+      --accent-basta: #f78166;
+      --accent-green: #3fb950;
+      --border-primary: #30363d;
+      --shadow-card: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f6f8fa;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f0f3f6;
+      --bg-blockquote: #f0f3f6;
+      --text-primary: #1f2328;
+      --text-secondary: #656d76;
+      --text-muted: #8b949e;
+      --accent-kwan: #b8860b;
+      --accent-gani: #0969da;
+      --accent-basta: #cf222e;
+      --accent-green: #1a7f37;
+      --border-primary: #d0d7de;
+      --shadow-card: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      min-height: 100vh;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .theme-toggle {
+      position: fixed; top: 16px; right: 16px; z-index: 1000;
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 8px; padding: 8px 12px; cursor: pointer;
+      font-family: inherit; font-size: 14px; color: var(--text-primary);
+      transition: all 0.3s ease;
+    }
+    .theme-toggle:hover { border-color: var(--accent-kwan); }
+
+    .nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 16px 24px; border-bottom: 1px solid var(--border-primary);
+      font-size: 12px;
+    }
+    .nav a {
+      color: var(--accent-gani); text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .nav a:hover { color: var(--accent-kwan); }
+
+    .brick-header {
+      text-align: center; padding: 48px 24px 32px;
+      border-bottom: 1px solid var(--border-primary);
+    }
+    .brick-badge {
+      display: inline-block; padding: 4px 16px; border-radius: 4px;
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      background: rgba(212, 168, 67, 0.15); color: var(--accent-kwan);
+      margin-bottom: 16px;
+    }
+    .brick-header h1 { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+    .brick-header .meta {
+      font-size: 12px; color: var(--text-secondary); margin-bottom: 4px;
+    }
+    .brick-header .barcode {
+      font-size: 11px; color: var(--text-muted); font-style: italic;
+    }
+
+    .content { max-width: 860px; margin: 0 auto; padding: 40px 24px; }
+    .section { margin-bottom: 40px; }
+
+    .section-title {
+      font-size: 13px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent-kwan);
+      margin-bottom: 16px; padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-primary);
+    }
+
+    .section p, .section li {
+      font-size: 14px; color: var(--text-primary); margin-bottom: 12px;
+    }
+
+    .section ul { list-style: none; padding-left: 0; }
+    .section ul li::before {
+      content: "→ "; color: var(--accent-gani); font-weight: 700;
+    }
+
+    .section ol { padding-left: 20px; }
+    .section ol li { margin-bottom: 8px; font-size: 14px; }
+    .section ol li::marker { color: var(--accent-kwan); font-weight: 700; }
+
+    blockquote {
+      background: var(--bg-blockquote);
+      border-left: 3px solid var(--accent-kwan);
+      padding: 16px 20px; margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+      font-style: italic; font-size: 14px;
+      color: var(--text-primary);
+    }
+
+    /* TABLES */
+    .std-table {
+      width: 100%; border-collapse: collapse; margin: 16px 0;
+      font-size: 12px;
+    }
+    .std-table th {
+      text-align: left; padding: 10px 8px;
+      border-bottom: 2px solid var(--accent-kwan);
+      color: var(--accent-kwan); font-size: 10px;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .std-table td {
+      padding: 8px; border-bottom: 1px solid var(--border-primary);
+      color: var(--text-primary); vertical-align: top;
+    }
+    .std-table tr:hover td { background: var(--bg-card-hover); }
+
+    .find-table {
+      width: 100%; border-collapse: collapse; margin: 16px 0;
+      font-size: 12px;
+    }
+    .find-table th {
+      text-align: left; padding: 8px 10px;
+      border-bottom: 2px solid var(--accent-basta);
+      color: var(--accent-basta); font-size: 11px;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .find-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border-primary);
+      color: var(--text-primary); vertical-align: top;
+    }
+    .find-table tr:hover td { background: var(--bg-card-hover); }
+    .sev-hold { color: var(--accent-basta); font-weight: 700; }
+    .sev-verify { color: var(--accent-kwan); }
+
+    .rat-table {
+      width: 100%; border-collapse: collapse; margin: 16px 0;
+      font-size: 12px;
+    }
+    .rat-table th {
+      text-align: left; padding: 8px 12px;
+      border-bottom: 2px solid var(--accent-green);
+      color: var(--accent-green); font-size: 11px;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .rat-table td {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border-primary);
+      color: var(--text-primary);
+    }
+
+    /* METABOLISM CARDS */
+    .metab-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px; margin: 16px 0;
+    }
+    .metab-card {
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 8px; padding: 16px; text-align: center;
+    }
+    .metab-card .metab-icon { font-size: 28px; margin-bottom: 8px; }
+    .metab-card .metab-label {
+      font-size: 12px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; margin-bottom: 4px;
+    }
+    .metab-card .metab-desc {
+      font-size: 11px; color: var(--text-secondary); line-height: 1.6;
+    }
+
+    /* SEVERITY CARDS */
+    .sev-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px; margin: 16px 0;
+    }
+    .sev-card {
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 8px; padding: 16px; text-align: center;
+    }
+    .sev-card .sev-label {
+      font-size: 13px; font-weight: 700; margin-bottom: 4px;
+    }
+    .sev-card .sev-desc {
+      font-size: 11px; color: var(--text-secondary);
+    }
+    .sev-card .sev-action {
+      font-size: 10px; color: var(--text-muted); margin-top: 8px;
+      font-style: italic;
+    }
+
+    /* STATUS LIFECYCLE */
+    .status-flow {
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 12px; padding: 24px; margin: 24px 0;
+      font-size: 12px;
+    }
+    .status-row {
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 8px; flex-wrap: wrap;
+    }
+    .status-badge {
+      display: inline-block; padding: 4px 10px; border-radius: 4px;
+      font-size: 11px; font-weight: 700; letter-spacing: 1px;
+      min-width: 120px; text-align: center;
+    }
+    .status-open { background: rgba(247, 129, 102, 0.15); color: var(--accent-basta); }
+    .status-progress { background: rgba(88, 166, 255, 0.15); color: var(--accent-gani); }
+    .status-pending { background: rgba(212, 168, 67, 0.15); color: var(--accent-kwan); }
+    .status-verified { background: rgba(63, 185, 80, 0.15); color: var(--accent-green); }
+    .status-closed { background: rgba(63, 185, 80, 0.25); color: var(--accent-green); }
+    .status-reopen { background: rgba(247, 129, 102, 0.25); color: var(--accent-basta); }
+    .status-arrow { color: var(--accent-kwan); font-weight: 700; }
+
+    /* FAT BOX */
+    .fat-box {
+      background: var(--bg-card); border: 2px dashed var(--accent-kwan);
+      border-radius: 12px; padding: 24px; margin: 24px 0;
+    }
+    .fat-box .fat-title {
+      font-size: 13px; font-weight: 700; color: var(--accent-kwan);
+      letter-spacing: 1px; margin-bottom: 12px;
+    }
+    .fat-box ul { list-style: none; padding-left: 0; }
+    .fat-box ul li { font-size: 12px; margin-bottom: 8px; }
+    .fat-box ul li::before {
+      content: "⚙️ "; font-weight: 700;
+    }
+
+    /* SEAL */
+    .seal-box {
+      text-align: center; padding: 32px;
+      border: 2px solid var(--accent-kwan); border-radius: 12px;
+      margin: 40px 0;
+    }
+    .seal-box .seal-icon { font-size: 32px; margin-bottom: 8px; }
+    .seal-box .seal-title {
+      font-size: 14px; font-weight: 700; color: var(--accent-kwan);
+      margin-bottom: 4px;
+    }
+    .seal-box .seal-meta {
+      font-size: 11px; color: var(--text-secondary); line-height: 1.8;
+    }
+
+    .footer {
+      text-align: center; padding: 32px 24px;
+      border-top: 1px solid var(--border-primary);
+      font-size: 11px; color: var(--text-muted);
+    }
+
+    @media (max-width: 600px) {
+      .brick-header h1 { font-size: 20px; }
+      .content { padding: 24px 16px; }
+      .metab-grid, .sev-grid { grid-template-columns: 1fr; }
+      .std-table, .find-table { font-size: 10px; }
+      .std-table th, .std-table td,
+      .find-table th, .find-table td { padding: 4px; }
+      .status-row { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- THEME TOGGLE -->
+  <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="b8_internal_audit.html">&larr; B8</a>
+    <span style="color: var(--text-muted);">B9 of 12</span>
+    <a href="b10_continual_improvement.html">B10 &rarr;</a>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="brick-header">
+    <div class="brick-badge">✅ RATIFIED (CONDITIONAL)</div>
+    <h1>Brick 9 — Corrective &amp; Preventive Action</h1>
+    <p class="meta">QMS-CAPA-001 | Version 1.0 | ISO 9001:2015 Clause 10.2</p>
+    <p class="barcode">Barcode: 9_01_09_1 | Campaign: FWO-009 | Session: S031</p>
+  </header>
+
+  <!-- CONTENT -->
+  <main class="content">
+
+    <!-- § 1. PURPOSE -->
+    <div class="section">
+      <div class="section-title">§ 1. Purpose</div>
+      <p>
+        To establish a controlled process for identifying, recording, correcting, investigating,
+        and responding to nonconformities; evaluating their causes and potential recurrence;
+        implementing appropriate corrective action; and verifying whether the action was effective.
+      </p>
+      <blockquote>
+        "Fix the workflow, not the typo." — A simple correction may resolve the immediate defect,
+        but it does not establish that the cause of a recurring or systemic failure has been addressed.
+      </blockquote>
+    </div>
+
+    <!-- § 2. SCOPE -->
+    <div class="section">
+      <div class="section-title">§ 2. Scope</div>
+      <p>This procedure applies to nonconformities affecting the QMS and its intended results, including but not limited to those identified through:</p>
+      <ul>
+        <li>Internal audits (IAP-001)</li>
+        <li>Campaign execution and build reviews</li>
+        <li>Process monitoring and performance data</li>
+        <li>Stakeholder feedback and management review</li>
+        <li>Ally reconnaissance and document reviews</li>
+      </ul>
+      <p style="font-size: 12px; color: var(--text-secondary);">
+        A nonconformity shall not be excluded merely because it arose from a recurring finding,
+        an expected workflow, a draft, or an experimental activity.
+      </p>
+    </div>
+
+    <!-- § 3. DEFINITIONS -->
+    <div class="section">
+      <div class="section-title">§ 3. Definitions</div>
+      <table class="std-table">
+        <thead>
+          <tr><th>Term</th><th>Definition</th></tr>
+        </thead>
+        <tbody>
+          <tr><td style="font-weight: 700;">Nonconformity</td><td>Non-fulfilment of a requirement</td></tr>
+          <tr><td style="font-weight: 700;">Correction</td><td>Action to eliminate a detected nonconformity (the tourniquet)</td></tr>
+          <tr><td style="font-weight: 700;">Containment</td><td>Immediate action to control the issue or limit consequences while a longer-term response is determined</td></tr>
+          <tr><td style="font-weight: 700;">Corrective Action</td><td>Action to eliminate the cause and prevent recurrence or occurrence elsewhere (the surgery)</td></tr>
+          <tr><td style="font-weight: 700;">Preventive Action</td><td>Proactive action to eliminate potential causes before they manifest (the vaccine) — Kingdom workflow label</td></tr>
+          <tr><td style="font-weight: 700;">Cause Analysis</td><td>Evidence-based investigation of why the nonconformity occurred and which conditions allowed it</td></tr>
+          <tr><td style="font-weight: 700;">Effectiveness Verification</td><td>Evaluation of objective evidence against predefined acceptance criteria</td></tr>
+          <tr><td style="font-weight: 700;">FAT</td><td>First Acceptance Test — demonstrates one complete CAPA lifecycle; supports governance decision, does not automatically authorize status change</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- § 4. RESPONSIBILITIES -->
+    <div class="section">
+      <div class="section-title">§ 4. Responsibilities &amp; Authority</div>
+      <table class="std-table">
+        <thead>
+          <tr><th>Role</th><th>Responsibility</th><th>Boundary</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight: 700; color: var(--accent-kwan);">Architect (James)</td>
+            <td>Ensures resources; reviews escalated CAPA results; decides conditional upgrade</td>
+            <td>Final governance authority — seal alone does not establish effectiveness</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 700; color: var(--accent-gani);">CEO (Ocelot)</td>
+            <td>Opens/maintains CAPA records; coordinates cause analysis; tracks actions; escalates overdue items</td>
+            <td>Cannot close CAPA solely by declaration or suppress a supported finding</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 700; color: var(--accent-basta);">Auditor (Stanley)</td>
+            <td>Records findings; verifies implementation and effectiveness when competent and independent</td>
+            <td>Must disclose conflicts — if auditor designed the action, another verifier assigned</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 700; color: var(--accent-green);">Consultant (Keila)</td>
+            <td>Advises on cause-analysis methods; reviews adequacy of proposed measures</td>
+            <td>Advisory — does not replace objective evidence or Architect's authority</td>
+          </tr>
+          <tr>
+            <td>Process Owner</td>
+            <td>Contains and corrects; investigates causes; proposes and implements actions; provides evidence</td>
+            <td>Owns implementation — does not solely determine effectiveness of own action</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- § 5. SEVERITY CLASSIFICATION -->
+    <div class="section">
+      <div class="section-title">§ 5. Severity Classification</div>
+      <div class="sev-grid">
+        <div class="sev-card">
+          <div class="sev-label" style="color: var(--accent-basta);">P0 — Critical</div>
+          <div class="sev-desc">System down, data loss, campaign halt, serious or imminent impact</div>
+          <div class="sev-action">Prompt containment + immediate escalation</div>
+        </div>
+        <div class="sev-card">
+          <div class="sev-label" style="color: var(--accent-kwan);">P1 — Major</div>
+          <div class="sev-desc">Process gap, compliance risk, drift detected, recurrence potential</div>
+          <div class="sev-action">Assign owner + due date, monitor, escalate if overdue</div>
+        </div>
+        <div class="sev-card">
+          <div class="sev-label" style="color: var(--accent-gani);">P2 — Minor</div>
+          <div class="sev-desc">Observation, optimization, continual improvement opportunity</div>
+          <div class="sev-action">Documented evaluation + proportionate action</div>
+        </div>
+      </div>
+      <p style="font-size: 12px; color: var(--text-secondary);">
+        P0/P1/P2 are Kingdom priority labels, not ISO 9001 classifications.
+        Priority does not determine whether a requirement has been fulfilled.
+        A lower-priority nonconformity remains a nonconformity.
+      </p>
+    </div>
+
+    <!-- § 6. THE METABOLISM CYCLE -->
+    <div class="section">
+      <div class="section-title">§ 6. The Metabolism Cycle — CAPA Lifecycle</div>
+      <div class="metab-grid">
+        <div class="metab-card">
+          <div class="metab-icon">🍽️</div>
+          <div class="metab-label" style="color: var(--accent-basta);">EAT</div>
+          <div class="metab-desc">Identify &amp; Contain — Log nonconformity, apply immediate correction, assess consequences, notify per severity</div>
+        </div>
+        <div class="metab-card">
+          <div class="metab-icon">🧠</div>
+          <div class="metab-label" style="color: var(--accent-kwan);">DIGEST</div>
+          <div class="metab-desc">Analyze Root Cause — 5 Whys, 7th Question, Coin Flip, Fishbone — evidence-backed, not method-as-proof</div>
+        </div>
+        <div class="metab-card">
+          <div class="metab-icon">💩</div>
+          <div class="metab-label" style="color: var(--accent-gani);">POOP</div>
+          <div class="metab-desc">Implement &amp; Verify — Execute corrective action, FAT cycle, document evidence, update procedures</div>
+        </div>
+        <div class="metab-card">
+          <div class="metab-icon">🔄</div>
+          <div class="metab-label" style="color: var(--accent-green);">REPEAT</div>
+          <div class="metab-desc">Prevent &amp; Improve — Evaluate similar processes, update risk register, feed lessons back, close with evidence</div>
+        </div>
+      </div>
+      <blockquote>
+        The metaphor is not a substitute for the record, required decision, or evidence at any stage.
+        Unresolved findings remain visible and controlled until an authorized, evidence-based disposition is recorded.
+      </blockquote>
+    </div>
+
+    <!-- § 6.1 EAT -->
+    <div class="section">
+      <div class="section-title">§ 6.1. EAT — Identify, Contain &amp; Correct</div>
+      <ol>
+        <li>Any team member may raise a suspected nonconformity</li>
+        <li>Coordinator assigns unique CAPA ID — record date, source, affected process, requirement, description, evidence</li>
+        <li>Assess actual and potential consequences — effects on other processes, outputs, users, stakeholders</li>
+        <li>Take suitable containment and correction promptly — if not appropriate, record why and what alternative controls are in place</li>
+        <li>Determine escalation/notification based on risk and impact — record who was notified and when</li>
+        <li>Assign initial priority using Kingdom scale — if uncertain, apply cautious interim response</li>
+      </ol>
+    </div>
+
+    <!-- § 6.2 DIGEST -->
+    <div class="section">
+      <div class="section-title">§ 6.2. DIGEST — Cause Analysis</div>
+      <p>The governing principle: <strong>"Fix the workflow, not the typo."</strong></p>
+      <p>The record shall capture:</p>
+      <ul>
+        <li>Evidence and observations considered</li>
+        <li>Method used and why it was suitable</li>
+        <li>Proposed cause(s) and supporting/challenging evidence</li>
+        <li>Whether similar nonconformities exist or could occur elsewhere</li>
+        <li>Unresolved uncertainty, assumptions, and additional evidence needed</li>
+      </ul>
+      <p style="font-size: 12px; color: var(--text-secondary);">
+        Do not force a single root cause where evidence supports multiple contributing factors.
+        If the proposed cause is not supported, revise the analysis rather than treating completion
+        of a method as a successful outcome.
+      </p>
+    </div>
+
+    <!-- § 6.3 POOP -->
+    <div class="section">
+      <div class="section-title">§ 6.3. POOP — Corrective Action &amp; Implementation</div>
+      <p>For each nonconformity requiring corrective action, record:</p>
+      <ul>
+        <li>Actions to address the cause and prevent recurrence</li>
+        <li>Responsible owner, resources, target dates, dependencies</li>
+        <li>Acceptance criteria, verification method, verifier, observation period</li>
+        <li>Impacts on related processes, documents, risks, training, tools</li>
+        <li>How effectiveness and unintended consequences will be evaluated</li>
+      </ul>
+      <p style="font-size: 12px; color: var(--text-secondary);">
+        An action that only changes the visible symptom shall not be accepted as systemic corrective action
+        unless the cause assessment supports that conclusion.
+      </p>
+    </div>
+
+    <!-- § 6.4 EFFECTIVENESS VERIFICATION -->
+    <div class="section">
+      <div class="section-title">§ 6.4. Effectiveness Verification</div>
+      <ol>
+        <li>Define acceptance criteria <strong>before</strong> implementation begins</li>
+        <li>After implementation, a competent and sufficiently independent verifier reviews evidence</li>
+        <li>Confirm: action implemented as planned, cause addressed, acceptance criteria met</li>
+        <li>Use observation period and sampling appropriate to the issue</li>
+        <li>Evaluate unintended consequences and check similar failures elsewhere</li>
+        <li>Record: verifier, date, evidence, criteria, result, limitations, rationale</li>
+        <li>If ineffective or insufficient evidence — keep CAPA open or reopen, revisit cause analysis</li>
+      </ol>
+      <blockquote>
+        A completed checklist or passed build alone is not automatically proof of systemic effectiveness.
+      </blockquote>
+    </div>
+
+    <!-- § 7. STATUS LIFECYCLE -->
+    <div class="section">
+      <div class="section-title">§ 7. Status Lifecycle &amp; Closure</div>
+      <div class="status-flow">
+        <div class="status-row">
+          <span class="status-badge status-open">OPEN</span>
+          <span class="status-arrow">→</span>
+          <span class="status-badge status-progress">CONTAINED / IN PROGRESS</span>
+          <span class="status-arrow">→</span>
+          <span class="status-badge status-pending">IMPLEMENTED — VERIFICATION PENDING</span>
+        </div>
+        <div class="status-row">
+          <span class="status-badge status-pending">VERIFICATION PENDING</span>
+          <span class="status-arrow">→</span>
+          <span class="status-badge status-verified">VERIFIED EFFECTIVE</span>
+          <span class="status-arrow">→</span>
+          <span class="status-badge status-closed">CLOSED</span>
+        </div>
+        <div class="status-row" style="margin-top: 12px;">
+          <span style="color: var(--text-muted); font-size: 11px;">If ineffective:</span>
+          <span class="status-badge status-reopen">REOPENED</span>
+          <span class="status-arrow">→</span>
+          <span style="color: var(--text-secondary); font-size: 11px;">Resume investigation or action</span>
+        </div>
+      </div>
+      <table class="std-table">
+        <thead>
+          <tr><th>Status</th><th>Meaning</th><th>Transition Control</th></tr>
+        </thead>
+        <tbody>
+          <tr><td style="color: var(--accent-basta); font-weight: 700;">Open</td><td>Issue recorded; response incomplete</td><td>CAPA ID and owner assigned</td></tr>
+          <tr><td style="color: var(--accent-gani); font-weight: 700;">Contained / In Progress</td><td>Immediate controls and/or planned actions underway</td><td>Record action status, evidence, due dates</td></tr>
+          <tr><td style="color: var(--accent-kwan); font-weight: 700;">Implemented — Verification Pending</td><td>Implementation evidence exists but effectiveness not established</td><td>Do not mark effective solely on implementation</td></tr>
+          <tr><td style="color: var(--accent-green); font-weight: 700;">Verified Effective</td><td>Acceptance criteria met based on reviewed evidence</td><td>Record independent verification, evidence, rationale</td></tr>
+          <tr><td style="color: var(--accent-green); font-weight: 700;">Closed</td><td>Required response and effectiveness decision complete</td><td>Retain closure history — reopen if recurrence</td></tr>
+          <tr><td style="color: var(--accent-basta); font-weight: 700;">Reopened</td><td>Response ineffective, incomplete, or issue recurred</td><td>Record reason and resume investigation</td></tr>
+        </tbody>
+      </table>
+      <blockquote>
+        Closure shall never be achieved by deleting, relabelling, or hiding an unresolved finding.
+      </blockquote>
+    </div>
+
+    <!-- § 8. CAPA RECORD REQUIREMENTS -->
+    <div class="section">
+      <div class="section-title">§ 8. CAPA Record Requirements</div>
+      <table class="std-table">
+        <thead>
+          <tr><th>Field</th><th>Required Content</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>CAPA ID</td><td>Unique, stable identifier</td></tr>
+          <tr><td>Source &amp; Date</td><td>Audit, campaign, incident, review — detection date and record link</td></tr>
+          <tr><td>Requirement</td><td>Specific requirement not fulfilled and its controlled source/version</td></tr>
+          <tr><td>Nonconformity &amp; Evidence</td><td>What happened, where, when, affected outputs, objective evidence</td></tr>
+          <tr><td>Priority &amp; Rationale</td><td>Kingdom priority, classification rationale, escalation decisions</td></tr>
+          <tr><td>Containment / Correction</td><td>Immediate actions, consequences addressed, owner, date, evidence</td></tr>
+          <tr><td>Cause Analysis</td><td>Method, evidence, cause conclusion, contributing factors, similar-occurrence assessment</td></tr>
+          <tr><td>Corrective-Action Plan</td><td>Action, owner, resources, milestones, due date, acceptance criteria, verification plan</td></tr>
+          <tr><td>Implementation</td><td>Actions completed, dated evidence, deviations, changes, linked documents</td></tr>
+          <tr><td>Risk / QMS Update</td><td>Assessment and rationale; linked risk or process updates where required</td></tr>
+          <tr><td>Effectiveness Verification</td><td>Verifier, independence check, date, observation period, sampling, evidence, result, rationale</td></tr>
+          <tr><td>Status &amp; History</td><td>Status, owner, dates, overdue/escalation history, reopening, all material decisions</td></tr>
+          <tr><td>Closure Decision</td><td>Evidence-based closure rationale, authorized decision-maker, date</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- § 9. REFERENCES -->
+    <div class="section">
+      <div class="section-title">§ 9. References</div>
+      <table class="std-table">
+        <thead>
+          <tr><th>Reference</th><th>Purpose</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>ISO 9001:2015, Clause 10.2</td><td>Nonconformity and corrective action requirements</td></tr>
+          <tr><td>QMS-IAP-001 v1.0</td><td>Internal Audit Procedure</td></tr>
+          <tr><td>QMS-ROA-001 v1.0</td><td>Risk &amp; Opportunity Assessment</td></tr>
+          <tr><td>QMS-DCP-001 v2.0</td><td>Document Control Procedure</td></tr>
+          <tr><td>Campaign Law Protocol (FWO-009)</td><td>Campaign governance</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- § 10. AUDIT FINDINGS RECORD -->
+    <div class="section">
+      <div class="section-title">§ 10. Audit Findings Record (Stanley D1–D3)</div>
+      <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">
+        Stanley's Coin Flip — 14 D1 findings, 11 D3 checks — all dispositioned:
+      </p>
+      <table class="find-table">
+        <thead>
+          <tr><th>ID</th><th>Sev</th><th>Finding</th><th>D3 Status</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>CAPA-01</td><td class="sev-hold">HOLD</td>
+            <td>Required response to nonconformity incomplete — no containment/consequences</td>
+            <td style="color: var(--accent-green);">TEXT PASS ✅</td>
+          </tr>
+          <tr>
+            <td>CAPA-02</td><td class="sev-hold">HOLD</td>
+            <td>Root cause and recurrence evaluation not sufficiently defined</td>
+            <td style="color: var(--accent-green);">TEXT PASS ✅</td>
+          </tr>
+          <tr>
+            <td>CAPA-03</td><td class="sev-hold">HOLD</td>
+            <td>Effectiveness verification needs stronger independence and acceptance criteria</td>
+            <td style="color: var(--accent-green);">TEXT PASS ✅</td>
+          </tr>
+          <tr>
+            <td>CAPA-04</td><td class="sev-hold">HOLD</td>
+            <td>FAT-to-final-stamp rule logically incomplete</td>
+            <td style="color: var(--accent-green);">TEXT PASS ✅</td>
+          </tr>
+          <tr>
+            <td>CAPA-05</td><td class="sev-hold">HOLD</td>
+            <td>Severity and deadlines ambiguous — P0/P1/P2 not defined sufficiently</td>
+            <td style="color: var(--accent-green);">TEXT PASS ✅</td>
+          </tr>
+          <tr>
+            <td>CAPA-06</td><td class="sev-hold">HOLD</td>
+            <td>Record lifecycle inconsistent — Closed vs Verified interchangeable</td>
+            <td style="color: var(--accent-green);">TEXT PASS ✅</td>
+          </tr>
+          <tr>
+            <td>CAPA-07</td><td class="sev-verify">VERIFY</td>
+            <td>Risk and QMS updates not mandatory outcomes</td>
+            <td style="color: var(--accent-green);">TEXT PASS ✅</td>
+          </tr>
+          <tr>
+            <td>CAPA-08</td><td class="sev-verify">VERIFY</td>
+            <td>Preventive action terminology needs clarification</td>
+            <td style="color: var(--accent-green);">TEXT PASS ✅</td>
+          </tr>
+          <tr>
+            <td>CAPA-09</td><td class="sev-verify">VERIFY</td>
+            <td>References contain unresolved document-identity risk</td>
+            <td style="color: var(--accent-kwan);">OPEN — Verify canonical register</td>
+          </tr>
+          <tr>
+            <td>CAPA-10</td><td class="sev-verify">VERIFY</td>
+            <td>Filing path and barcode mapping unverified</td>
+            <td style="color: var(--accent-kwan);">OPEN — Verify Kingdom Index</td>
+          </tr>
+          <tr>
+            <td>CAPA-11</td><td class="sev-verify">VERIFY</td>
+            <td>"System does not accumulate unresolved findings" — not enforceable</td>
+            <td style="color: var(--accent-green);">TEXT PASS ✅</td>
+          </tr>
+          <tr>
+            <td>CAPA-12</td><td class="sev-verify">VERIFY</td>
+            <td>Metaphorical terminology not operational definitions</td>
+            <td style="color: var(--accent-green);">TEXT PASS ✅</td>
+          </tr>
+          <tr>
+            <td>CAPA-13</td><td class="sev-verify">VERIFY</td>
+            <td>CAPA record fields insufficient for full traceability</td>
+            <td style="color: var(--accent-green);">TEXT PASS ✅</td>
+          </tr>
+          <tr>
+            <td>CAPA-14</td><td class="sev-verify">VERIFY</td>
+            <td>Governance roles need clean separation</td>
+            <td style="color: var(--accent-green);">TEXT PASS ✅</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-size: 12px; color: var(--text-secondary); margin-top: 16px;">
+        <strong>D3 Self-Audit:</strong> 8 TEXT PASS, 3 OPEN (priority definitions, references, barcode), 1 NOT TESTED (real FAT cycle)
+      </p>
+    </div>
+
+    <!-- § 11. FAT FRAMEWORK -->
+    <div class="section">
+      <div class="section-title">§ 11. Conditional Notes — FAT Framework</div>
+      <div class="fat-box">
+        <div class="fat-title">🔧 FACTORY ACCEPTANCE TEST — CONDITIONS TO LIFT</div>
+        <ul>
+          <li><strong>SELECT:</strong> A real, bounded nonconformity with a clearly stated requirement and verifiable evidence</li>
+          <li><strong>CONTAIN:</strong> Record containment/correction and consequence assessment</li>
+          <li><strong>ANALYZE:</strong> Complete evidence-backed cause analysis and similar-occurrence assessment</li>
+          <li><strong>IMPLEMENT:</strong> Approve and implement corrective action with predefined acceptance criteria</li>
+          <li><strong>VERIFY:</strong> Verify effectiveness after justified observation period with independent verifier</li>
+          <li><strong>UPDATE:</strong> Update risk information, controlled documents, and QMS where necessary</li>
+          <li><strong>RECORD:</strong> Produce complete CAPA record with traceable closure or reopened status</li>
+          <li><strong>SUBMIT:</strong> Present FAT result and recommendation to Architect — only Architect may upgrade conditional status</li>
+        </ul>
+      </div>
+      <p style="font-size: 12px; color: var(--text-secondary);">
+        One successful FAT cycle is the minimum required evidence. It is not automatic proof of universal effectiveness.
+        The Architect may require additional cycles if the sample is unrepresentative or evidence is weak.
+      </p>
+    </div>
+
+    <!-- § 12. RATIFICATION RECORD -->
+    <div class="section">
+      <div class="section-title">§ 12. Ratification Record</div>
+      <table class="rat-table">
+        <thead>
+          <tr><th>Gate</th><th>Actor</th><th>Verdict</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>D0 — Draft</td>
+            <td>Ocelot (CEO)</td>
+            <td style="color: var(--accent-green);">Generated</td>
+          </tr>
+          <tr>
+            <td>D1 — Audit</td>
+            <td>Stanley (Auditor)</td>
+            <td style="color: var(--accent-basta);">HOLD — 14 findings (6&times;HOLD, 8&times;VERIFY)</td>
+          </tr>
+          <tr>
+            <td>D2 — Revision</td>
+            <td>Stanley (Auditor)</td>
+            <td style="color: var(--accent-gani);">Rewrote procedure (14 sections)</td>
+          </tr>
+          <tr>
+            <td>D3 — Self-Audit</td>
+            <td>Stanley (Auditor)</td>
+            <td style="color: var(--accent-kwan);">8 TEXT PASS, 3 OPEN — CONDITIONAL PRESERVED</td>
+          </tr>
+          <tr>
+            <td>Consultant Brew</td>
+            <td>Keila (Consultant)</td>
+            <td style="color: var(--accent-green);">STAMP ✅ — Monograph 035-EL_GOB</td>
+          </tr>
+          <tr>
+            <td>2nd Pass</td>
+            <td>Ocelot (CEO)</td>
+            <td style="color: var(--accent-green);">PASS ✅ — Merged findings</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 700;">Architect Seal</td>
+            <td style="font-weight: 700;">James Paul Pe&ntilde;a</td>
+            <td style="color: var(--accent-kwan); font-weight: 700;">✅👑 RATIFIED (CONDITIONAL) — 2026-10-28</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ARCHITECT'S SEAL -->
+    <div class="seal-box">
+      <div class="seal-icon">👑</div>
+      <div class="seal-title">RATIFIED (CONDITIONAL) BY THE ARCHITECT</div>
+      <div class="seal-meta">
+        James Paul Pe&ntilde;a — Sovereign Architect<br/>
+        Kingdom of Kwan<br/><br/>
+        Date: 2026-10-28 | Session: S031 | Campaign: FWO-009<br/>
+        Pipeline: Ocelot → Stanley → Keila → Ocelot (2nd) → Architect → RATIFIED ✅<br/>
+        Consultant Seal: STAMP ✅ (Keila — Monograph 035-EL_GOB)<br/>
+        Auditor Record: 14 D1 findings + D3 self-audit — CONDITIONAL PRESERVED 🤘<br/><br/>
+        Condition: FAT cycle required — first complete CAPA lifecycle generates real evidence<br/>
+        "Turns failures into high-value cognitive nutrients." — Keila 🌸<br/><br/>
+        "So it is written. So it shall be done." 📜
+      </div>
+    </div>
+
+  </main>
+
+  <!-- NAV — -->
+  <nav class="nav" style="border-top: 1px solid var(--border-primary); border-bottom: none; margin-top: 40px;">
+    <a href="b8_internal_audit.html">&larr; Prev</a>
+    <a href="../../index.html" style="color: var(--accent-kwan);">&#9776; The Three Kingdoms</a>
+    <a href="b10_continual_improvement.html">Next &rarr;</a>
+  </nav>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>QMS Company Bible — Brick 9 of 12</p>
+    <p>Campaign FWO-009 | The McDonald's Franchise | ISO 9001:2015</p>
+    <p>Basta kwan, gani. 🪨☕🐆</p>
+  </footer>
+
+  <!-- VANILLA JS -->
+  <script>
+    function toggleTheme() {
+      var html = document.documentElement;
+      var current = html.getAttribute('data-theme');
+      var next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    }
+    (function() {
+      var saved = localStorage.getItem('theme');
+      if (saved) { document.documentElement.setAttribute('data-theme', saved); }
+    })();
+  </script>
+
+</body>
+</html>
+

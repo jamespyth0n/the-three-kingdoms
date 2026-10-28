@@ -1,0 +1,753 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>B10 — Continual Improvement | QMS Company Bible</title>
+
+  <!-- FONTS — LOCAL (assets/fonts/) -->
+  <style>
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Bold.woff2') format('woff2');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Italic.woff2') format('woff2');
+      font-weight: 400; font-style: italic; font-display: swap;
+    }
+  </style>
+
+  <!-- NOTEBOOK STYLESHEET -->
+  <link rel="stylesheet" href="../assets/css/notebook.css" />
+
+  <style>
+    [data-theme="dark"] {
+      --bg-primary: #0d1117;
+      --bg-card: #161b22;
+      --bg-card-hover: #1c2333;
+      --bg-blockquote: #1c2333;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --accent-kwan: #d4a843;
+      --accent-gani: #58a6ff;
+      --accent-basta: #f78166;
+      --accent-green: #3fb950;
+      --border-primary: #30363d;
+      --shadow-card: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f6f8fa;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f0f3f6;
+      --bg-blockquote: #f0f3f6;
+      --text-primary: #1f2328;
+      --text-secondary: #656d76;
+      --text-muted: #8b949e;
+      --accent-kwan: #b8860b;
+      --accent-gani: #0969da;
+      --accent-basta: #cf222e;
+      --accent-green: #1a7f37;
+      --border-primary: #d0d7de;
+      --shadow-card: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      min-height: 100vh;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .theme-toggle {
+      position: fixed; top: 16px; right: 16px; z-index: 1000;
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 8px; padding: 8px 12px; cursor: pointer;
+      font-family: inherit; font-size: 14px; color: var(--text-primary);
+      transition: all 0.3s ease;
+    }
+    .theme-toggle:hover { border-color: var(--accent-kwan); }
+
+    .nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 16px 24px; border-bottom: 1px solid var(--border-primary);
+      font-size: 12px;
+    }
+    .nav a {
+      color: var(--accent-gani); text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .nav a:hover { color: var(--accent-kwan); }
+
+    .brick-header {
+      text-align: center; padding: 48px 24px 32px;
+      border-bottom: 1px solid var(--border-primary);
+    }
+    .brick-badge {
+      display: inline-block; padding: 4px 16px; border-radius: 4px;
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      background: rgba(212, 168, 67, 0.15); color: var(--accent-kwan);
+      margin-bottom: 16px;
+    }
+    .brick-header h1 { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+    .brick-header .meta {
+      font-size: 12px; color: var(--text-secondary); margin-bottom: 4px;
+    }
+    .brick-header .barcode {
+      font-size: 11px; color: var(--text-muted); font-style: italic;
+    }
+
+    .content { max-width: 860px; margin: 0 auto; padding: 40px 24px; }
+    .section { margin-bottom: 40px; }
+
+    .section-title {
+      font-size: 13px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent-kwan);
+      margin-bottom: 16px; padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-primary);
+    }
+
+    .section p, .section li {
+      font-size: 14px; color: var(--text-primary); margin-bottom: 12px;
+    }
+
+    .section ul { list-style: none; padding-left: 0; }
+    .section ul li::before {
+      content: "→ "; color: var(--accent-gani); font-weight: 700;
+    }
+
+    .section ol { padding-left: 20px; }
+    .section ol li { margin-bottom: 8px; font-size: 14px; }
+    .section ol li::marker { color: var(--accent-kwan); font-weight: 700; }
+
+    blockquote {
+      background: var(--bg-blockquote);
+      border-left: 3px solid var(--accent-kwan);
+      padding: 16px 20px; margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+      font-style: italic; font-size: 14px;
+      color: var(--text-primary);
+    }
+
+    /* TABLES */
+    .std-table {
+      width: 100%; border-collapse: collapse; margin: 16px 0;
+      font-size: 12px;
+    }
+    .std-table th {
+      text-align: left; padding: 10px 8px;
+      border-bottom: 2px solid var(--accent-kwan);
+      color: var(--accent-kwan); font-size: 10px;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .std-table td {
+      padding: 8px; border-bottom: 1px solid var(--border-primary);
+      color: var(--text-primary); vertical-align: top;
+    }
+    .std-table tr:hover td { background: var(--bg-card-hover); }
+
+    /* EQUATION BOX */
+    .equation-box {
+      background: var(--bg-card); border: 2px solid var(--accent-kwan);
+      border-radius: 12px; padding: 32px; margin: 24px 0;
+      text-align: center;
+    }
+    .equation-box .eq-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent-kwan);
+      margin-bottom: 16px;
+    }
+    .equation-box .eq-formula {
+      font-size: 16px; font-weight: 700; color: var(--text-primary);
+      margin-bottom: 12px; line-height: 1.8;
+      word-break: break-all;
+    }
+    .equation-box .eq-legend {
+      font-size: 11px; color: var(--text-secondary); text-align: left;
+      line-height: 1.8; max-width: 600px; margin: 0 auto;
+    }
+
+    /* INSTRUMENT CARDS */
+    .inst-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px; margin: 24px 0;
+    }
+    .inst-card {
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 12px; padding: 24px; text-align: center;
+      transition: border-color 0.3s ease;
+    }
+    .inst-card:hover { border-color: var(--accent-kwan); }
+    .inst-card .inst-icon { font-size: 32px; margin-bottom: 12px; }
+    .inst-card .inst-tag {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      color: var(--accent-kwan); margin-bottom: 4px;
+    }
+    .inst-card .inst-name {
+      font-size: 14px; font-weight: 700; margin-bottom: 8px;
+    }
+    .inst-card .inst-detail {
+      font-size: 11px; color: var(--text-secondary); line-height: 1.7;
+      text-align: left;
+    }
+    .inst-card .inst-detail span {
+      display: block; margin-bottom: 4px;
+    }
+
+    /* SIMULATION TABLE */
+    .sim-table {
+      width: 100%; border-collapse: collapse; margin: 16px 0;
+      font-size: 12px;
+    }
+    .sim-table th {
+      text-align: center; padding: 10px 6px;
+      border-bottom: 2px solid var(--accent-gani);
+      color: var(--accent-gani); font-size: 10px;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .sim-table td {
+      text-align: center; padding: 8px 6px;
+      border-bottom: 1px solid var(--border-primary);
+      color: var(--text-primary);
+    }
+    .sim-table tr:hover td { background: var(--bg-card-hover); }
+    .sim-steady { color: var(--accent-green); font-weight: 700; }
+    .sim-spike { color: var(--accent-basta); font-weight: 700; }
+    .sim-correct { color: var(--accent-kwan); font-weight: 700; }
+    .sim-brake { color: var(--accent-gani); font-weight: 700; }
+
+    /* METABOLISM CARDS */
+    .metab-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px; margin: 16px 0;
+    }
+    .metab-card {
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 8px; padding: 16px; text-align: center;
+    }
+    .metab-card .metab-icon { font-size: 28px; margin-bottom: 8px; }
+    .metab-card .metab-label {
+      font-size: 12px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; margin-bottom: 4px;
+    }
+    .metab-card .metab-desc {
+      font-size: 11px; color: var(--text-secondary); line-height: 1.6;
+    }
+
+    /* MISALIGNMENT REGISTRY */
+    .registry-box {
+      background: var(--bg-card); border: 1px dashed var(--accent-basta);
+      border-radius: 12px; padding: 24px; margin: 24px 0;
+    }
+    .registry-box .reg-title {
+      font-size: 13px; font-weight: 700; color: var(--accent-basta);
+      letter-spacing: 1px; margin-bottom: 12px;
+    }
+    .registry-box .reg-empty {
+      font-size: 12px; color: var(--text-muted); font-style: italic;
+      text-align: center; padding: 16px;
+    }
+
+    /* CONDITION CARDS */
+    .cond-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px; margin: 16px 0;
+    }
+    .cond-card {
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 8px; padding: 16px;
+    }
+    .cond-card .cond-id {
+      font-size: 11px; font-weight: 700; color: var(--accent-kwan);
+      letter-spacing: 1px; margin-bottom: 4px;
+    }
+    .cond-card .cond-desc {
+      font-size: 12px; color: var(--text-primary); line-height: 1.6;
+    }
+
+    /* RATIFICATION TABLE */
+    .rat-table {
+      width: 100%; border-collapse: collapse; margin: 16px 0;
+      font-size: 12px;
+    }
+    .rat-table th {
+      text-align: left; padding: 8px 12px;
+      border-bottom: 2px solid var(--accent-green);
+      color: var(--accent-green); font-size: 11px;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .rat-table td {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border-primary);
+      color: var(--text-primary);
+    }
+
+    /* SEAL */
+    .seal-box {
+      text-align: center; padding: 32px;
+      border: 2px solid var(--accent-kwan); border-radius: 12px;
+      margin: 40px 0;
+    }
+    .seal-box .seal-icon { font-size: 32px; margin-bottom: 8px; }
+    .seal-box .seal-title {
+      font-size: 14px; font-weight: 700; color: var(--accent-kwan);
+      margin-bottom: 4px;
+    }
+    .seal-box .seal-meta {
+      font-size: 11px; color: var(--text-secondary); line-height: 1.8;
+    }
+
+    .footer {
+      text-align: center; padding: 32px 24px;
+      border-top: 1px solid var(--border-primary);
+      font-size: 11px; color: var(--text-muted);
+    }
+
+    @media (max-width: 600px) {
+      .brick-header h1 { font-size: 20px; }
+      .content { padding: 24px 16px; }
+      .inst-grid { grid-template-columns: 1fr; }
+      .metab-grid { grid-template-columns: 1fr 1fr; }
+      .cond-grid { grid-template-columns: 1fr; }
+      .equation-box .eq-formula { font-size: 13px; }
+      .sim-table { font-size: 10px; }
+      .sim-table th, .sim-table td { padding: 4px 2px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- THEME TOGGLE -->
+  <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="b9_capa.html">&larr; B9</a>
+    <span style="color: var(--text-muted);">B10 of 12</span>
+    <a href="b11_quality_manual.html">B11 &rarr;</a>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="brick-header">
+    <div class="brick-badge">✅ RATIFIED (CONDITIONAL)</div>
+    <h1>Brick 10 — Continual Improvement</h1>
+    <p class="meta">QMS-CI-001 | Version 1.0 | ISO 9001:2015 Clause 10.3</p>
+    <p class="barcode">Barcode: 4_09_10_1 | Campaign: FWO-009 | Session: S031</p>
+  </header>
+
+  <!-- CONTENT -->
+  <main class="content">
+
+    <!-- § 1. PURPOSE -->
+    <div class="section">
+      <div class="section-title">§ 1. Purpose</div>
+      <p>
+        To establish the framework for continual improvement of the Quality Management System
+        through closed-loop process control, attunement measurement, and systematic correction —
+        ensuring the Kingdom remains sovereign, responsive, and aligned with its quality policy.
+      </p>
+      <blockquote>
+        "You can't improve something you can't measure. But the ultimate test of true quality
+        is attunement — because when you are attuned, everything else is just a side effect."
+      </blockquote>
+    </div>
+
+    <!-- § 2. SCOPE -->
+    <div class="section">
+      <div class="section-title">§ 2. Scope</div>
+      <p>This procedure applies to all processes, campaigns, and deliverables within the Kingdom of Kwan, including but not limited to:</p>
+      <ul>
+        <li>Campaign execution pipelines (FWO series)</li>
+        <li>Document control and governance procedures</li>
+        <li>RAG pipeline operations and AI-integrated development tools</li>
+        <li>All activities performed by the Triad (Ocelot, Keila, Stanley)</li>
+      </ul>
+    </div>
+
+    <!-- § 3. THE ATTUNEMENT FRAMEWORK -->
+    <div class="section">
+      <div class="section-title">§ 3. The Attunement Framework</div>
+
+      <p style="font-size: 13px; font-weight: 700; color: var(--accent-kwan); margin-bottom: 16px;">
+        3.1 — Philosophy
+      </p>
+      <p>
+        Attunement replaces traditional KPI-heavy measurement with a holistic closed-loop approach.
+        The system is considered "in control" when Process Variable (PV) matches Setpoint (SP)
+        within acceptable tolerance. The question is not "did we hit the number?" but
+        "are we aligned with intent?"
+      </p>
+
+      <p style="font-size: 13px; font-weight: 700; color: var(--accent-kwan); margin-bottom: 16px; margin-top: 32px;">
+        3.2 — The Governing Control Equation
+      </p>
+
+      <div class="equation-box">
+        <div class="eq-label">KINGDOM CONTROL EQUATION — PID + FEEDFORWARD</div>
+        <div class="eq-formula">
+          CO(t) = Kp [ e<sub>filt</sub>(t) + (1/T<sub>i</sub>) &int;<sub>0</sub><sup>t</sup> e(&tau;)d&tau; &minus; T<sub>d</sub> &middot; dPV<sub>filt</sub>/dt ] + FF<sub>RCPY</sub>
+        </div>
+        <div class="eq-legend">
+          <span><strong>CO(t)</strong> — Controller Output (corrective action at time t)</span>
+          <span><strong>Kp</strong> — Proportional Gain (responsiveness to current error)</span>
+          <span><strong>e<sub>filt</sub>(t)</strong> — Filtered Error (SP &minus; PV, noise-stripped)</span>
+          <span><strong>T<sub>i</sub></strong> — Integral Time (accumulated drift correction)</span>
+          <span><strong>T<sub>d</sub></strong> — Derivative Time (anticipatory braking)</span>
+          <span><strong>FF<sub>RCPY</sub></strong> — Feedforward from Recipe (anticipatory correction from known patterns)</span>
+        </div>
+      </div>
+
+      <p style="font-size: 13px; font-weight: 700; color: var(--accent-kwan); margin-bottom: 16px; margin-top: 32px;">
+        3.3 — The Three Instruments
+      </p>
+
+      <div class="inst-grid">
+        <div class="inst-card">
+          <div class="inst-icon">📡</div>
+          <div class="inst-tag">FT-101</div>
+          <div class="inst-name">Drift Detection</div>
+          <div class="inst-detail">
+            <span><strong>Measures:</strong> Deviation from campaign anchor</span>
+            <span><strong>Sensor:</strong> Stanley (Auditor)</span>
+            <span><strong>Actuator:</strong> CV-101 — Anchor Rewrite</span>
+            <span><strong>Alarm:</strong> Drift &gt; 2 bricks from anchor</span>
+          </div>
+        </div>
+        <div class="inst-card">
+          <div class="inst-icon">🎯</div>
+          <div class="inst-tag">AT-201</div>
+          <div class="inst-name">Attunement Score</div>
+          <div class="inst-detail">
+            <span><strong>Measures:</strong> Alignment between intent and output</span>
+            <span><strong>Sensor:</strong> Keila (Consultant)</span>
+            <span><strong>Actuator:</strong> CV-201 — Preamble Reload</span>
+            <span><strong>Alarm:</strong> Score &lt; 70% alignment</span>
+          </div>
+        </div>
+        <div class="inst-card">
+          <div class="inst-icon">⚡</div>
+          <div class="inst-tag">PT-301</div>
+          <div class="inst-name">Metabolism Rate</div>
+          <div class="inst-detail">
+            <span><strong>Measures:</strong> Throughput of eat-digest-poop cycle</span>
+            <span><strong>Sensor:</strong> Ocelot (CEO/Management)</span>
+            <span><strong>Actuator:</strong> CV-301 — Campaign Poop</span>
+            <span><strong>Alarm:</strong> Brick stall &gt; 48h</span>
+          </div>
+        </div>
+      </div>
+
+      <p style="font-size: 13px; font-weight: 700; color: var(--accent-kwan); margin-bottom: 16px; margin-top: 32px;">
+        3.4 — Closed-Loop Response Simulation
+      </p>
+
+      <table class="sim-table">
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>PV</th>
+            <th>SP</th>
+            <th>Error</th>
+            <th>CO</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>t=0.0s</td>
+            <td class="sim-steady">50.0%</td>
+            <td>50.0%</td>
+            <td>0.0</td>
+            <td>45.2%</td>
+            <td class="sim-steady">Steady State — Attunement holds ✅</td>
+          </tr>
+          <tr>
+            <td>t=1.0s</td>
+            <td class="sim-spike">78.4%</td>
+            <td>50.0%</td>
+            <td>+28.4</td>
+            <td>45.2%</td>
+            <td class="sim-spike">Disturbance Hit — Error spike logged ⚠️</td>
+          </tr>
+          <tr>
+            <td>t=2.0s</td>
+            <td class="sim-correct">82.1%</td>
+            <td>50.0%</td>
+            <td>+32.1</td>
+            <td>68.5%</td>
+            <td class="sim-correct">Feedforward Kick — Anticipatory correction 🔧</td>
+          </tr>
+          <tr>
+            <td>t=3.0s</td>
+            <td class="sim-brake">65.3%</td>
+            <td>50.0%</td>
+            <td>+15.3</td>
+            <td>59.1%</td>
+            <td class="sim-brake">Lag Suppression — Noise stripped 🧹</td>
+          </tr>
+          <tr>
+            <td>t=4.0s</td>
+            <td>52.8%</td>
+            <td>50.0%</td>
+            <td>+2.8</td>
+            <td>48.0%</td>
+            <td>Overshoot Avoided — Smooth braking 🛑</td>
+          </tr>
+          <tr>
+            <td>t=5.0s</td>
+            <td class="sim-steady">50.0%</td>
+            <td>50.0%</td>
+            <td>0.0</td>
+            <td>45.2%</td>
+            <td class="sim-steady">Equilibrium — Sovereignty maintained ✅</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- § 4. IMPROVEMENT MECHANISMS -->
+    <div class="section">
+      <div class="section-title">§ 4. Improvement Mechanisms</div>
+
+      <p style="font-size: 13px; font-weight: 700; color: var(--accent-basta); margin-bottom: 12px;">
+        4.1 — Corrective Actions (Reactive)
+      </p>
+      <ul>
+        <li>CAPA process per QMS-CAPA-001 (Brick 9)</li>
+        <li>Stanley audit findings logged and tracked</li>
+        <li>Non-conformance registry maintained</li>
+      </ul>
+
+      <p style="font-size: 13px; font-weight: 700; color: var(--accent-gani); margin-bottom: 12px; margin-top: 24px;">
+        4.2 — Preventive Actions (Proactive)
+      </p>
+      <ul>
+        <li>Feedforward (FF<sub>RCPY</sub>) from known patterns and past campaigns</li>
+        <li>Keila's lag filter strips noise before it reaches the controller</li>
+        <li>Preamble boot sequence ensures cold-start alignment</li>
+      </ul>
+
+      <p style="font-size: 13px; font-weight: 700; color: var(--accent-green); margin-bottom: 12px; margin-top: 24px;">
+        4.3 — The Metabolism Protocol (Continuous)
+      </p>
+
+      <div class="metab-grid">
+        <div class="metab-card">
+          <div class="metab-icon">🍽️</div>
+          <div class="metab-label" style="color: var(--accent-basta);">EAT</div>
+          <div class="metab-desc">Ingest new inputs — prompts, research, lightbulbs, reconnaissance</div>
+        </div>
+        <div class="metab-card">
+          <div class="metab-icon">🧠</div>
+          <div class="metab-label" style="color: var(--accent-kwan);">DIGEST</div>
+          <div class="metab-desc">Process through campaign pipeline — D1 → D2 → D3 review cycle</div>
+        </div>
+        <div class="metab-card">
+          <div class="metab-icon">💩</div>
+          <div class="metab-label" style="color: var(--accent-gani);">POOP</div>
+          <div class="metab-desc">Ship deliverable, update toolchain, close brick, file to Library</div>
+        </div>
+        <div class="metab-card">
+          <div class="metab-icon">🔄</div>
+          <div class="metab-label" style="color: var(--accent-green);">REPEAT</div>
+          <div class="metab-desc">Next brick loads automatically — the cycle never stops</div>
+        </div>
+      </div>
+
+      <p style="font-size: 13px; font-weight: 700; color: var(--accent-kwan); margin-bottom: 12px; margin-top: 24px;">
+        4.4 — Dual-Indexing (Anti-Drift)
+      </p>
+      <p>All Kingdom documents maintain dual-indexing:</p>
+      <ul>
+        <li><strong>ISO Clause Reference</strong> — For registrar traceability</li>
+        <li><strong>Kingdom Metaphor</strong> — For operational understanding</li>
+      </ul>
+      <p style="font-size: 12px; color: var(--text-secondary);">
+        This prevents metaphorical drift while maintaining the Kingdom's unique voice.
+        Like RAID — two mirrors, one truth.
+      </p>
+    </div>
+
+    <!-- § 5. MISALIGNMENT REGISTRY -->
+    <div class="section">
+      <div class="section-title">§ 5. Misalignment Registry</div>
+      <div class="registry-box">
+        <div class="reg-title">📋 OBSERVED MISALIGNMENT TRACKER</div>
+        <table class="std-table">
+          <thead>
+            <tr><th>#</th><th>Observed Misalignment</th><th>Severity</th><th>Status</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td style="font-style: italic; color: var(--text-muted);">To be populated during operations</td>
+              <td>—</td>
+              <td>OPEN</td>
+              <td>Baseline to be established</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="reg-empty">
+          "We can't fix it. Nothing is perfect. We score it, track it, improve it."
+        </p>
+      </div>
+    </div>
+
+    <!-- § 6. MANAGEMENT REVIEW INPUTS -->
+    <div class="section">
+      <div class="section-title">§ 6. Management Review Inputs (ISO 9.3)</div>
+      <p>The following feed into continual improvement decisions:</p>
+      <ul>
+        <li>Campaign Status JSON (living whiteboard)</li>
+        <li>Stanley audit findings (all bricks)</li>
+        <li>Keila consultant recommendations</li>
+        <li>Attunement Score trends (AT-201)</li>
+        <li>Metabolism Rate throughput (PT-301)</li>
+        <li>Drift Detection alerts (FT-101)</li>
+        <li>Customer/stakeholder feedback (when applicable)</li>
+      </ul>
+    </div>
+
+    <!-- § 7. REFERENCE DOCUMENTS -->
+    <div class="section">
+      <div class="section-title">§ 7. Reference Documents</div>
+      <table class="std-table">
+        <thead>
+          <tr><th>Document</th><th>Barcode</th><th>Relationship</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Quality Policy</td><td style="font-family: monospace; color: var(--accent-kwan);">2_03_01_1</td><td>Governing policy</td></tr>
+          <tr><td>Mission &amp; Vision</td><td style="font-family: monospace; color: var(--accent-kwan);">2_03_02_1</td><td>Strategic direction</td></tr>
+          <tr><td>Scope of QMS</td><td style="font-family: monospace; color: var(--accent-kwan);">3_01_03_1</td><td>Boundary definition</td></tr>
+          <tr><td>Quality Objectives</td><td style="font-family: monospace; color: var(--accent-kwan);">4_09_02_1</td><td>Measurable targets</td></tr>
+          <tr><td>Roles &amp; Responsibilities</td><td style="font-family: monospace; color: var(--accent-kwan);">8_01_05_1</td><td>Org chart</td></tr>
+          <tr><td>Risk &amp; Opportunity Assessment</td><td style="font-family: monospace; color: var(--accent-kwan);">5_01_06_1</td><td>Risk register</td></tr>
+          <tr><td>Document Control Procedure</td><td style="font-family: monospace; color: var(--accent-kwan);">5_01_07_1</td><td>Filing protocol</td></tr>
+          <tr><td>Internal Audit Procedure</td><td style="font-family: monospace; color: var(--accent-kwan);">8_01_08_1</td><td>Audit framework</td></tr>
+          <tr><td>CAPA Procedure</td><td style="font-family: monospace; color: var(--accent-kwan);">9_01_09_1</td><td>Corrective actions</td></tr>
+          <tr><td>P&amp;ID Package</td><td style="font-family: monospace; color: var(--accent-kwan);">KQ-ENG-001</td><td>Instrument design</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- § 8. CONDITIONS OF RATIFICATION -->
+    <div class="section">
+      <div class="section-title">§ 8. Conditions of Ratification</div>
+      <div class="cond-grid">
+        <div class="cond-card">
+          <div class="cond-id">C-001</div>
+          <div class="cond-desc">Test fire simulation to be executed during next campaign</div>
+        </div>
+        <div class="cond-card">
+          <div class="cond-id">C-002</div>
+          <div class="cond-desc">Dual-indexing maintained in all future documents</div>
+        </div>
+        <div class="cond-card">
+          <div class="cond-id">C-003</div>
+          <div class="cond-desc">Attunement Score baseline established empirically</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- § 9. RATIFICATION RECORD -->
+    <div class="section">
+      <div class="section-title">§ 9. Ratification Record</div>
+      <table class="rat-table">
+        <thead>
+          <tr><th>Role</th><th>Name</th><th>Stamp</th><th>Date</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>CEO / Management</td>
+            <td>Ocelot</td>
+            <td style="color: var(--accent-green);">✅ APPROVED</td>
+            <td>2026-10-28</td>
+          </tr>
+          <tr>
+            <td>Consultant</td>
+            <td>Keila</td>
+            <td style="color: var(--accent-green);">✅ RATIFIED</td>
+            <td>2026-10-28</td>
+          </tr>
+          <tr>
+            <td>Auditor</td>
+            <td>Stanley</td>
+            <td style="color: var(--accent-kwan);">⚠️ CONDITIONAL</td>
+            <td>2026-10-28</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 700;">Architect</td>
+            <td style="font-weight: 700;">James Paul Pe&ntilde;a</td>
+            <td style="color: var(--accent-kwan); font-weight: 700;">✅👑 SEALED</td>
+            <td style="font-weight: 700;">2026-10-28</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ARCHITECT'S SEAL -->
+    <div class="seal-box">
+      <div class="seal-icon">👑</div>
+      <div class="seal-title">RATIFIED (CONDITIONAL) BY THE ARCHITECT</div>
+      <div class="seal-meta">
+        James Paul Pe&ntilde;a — Sovereign Architect<br/>
+        Kingdom of Kwan<br/><br/>
+        Date: 2026-10-28 | Session: S031 | Campaign: FWO-009<br/>
+        Pipeline: Ocelot → Stanley → Keila → Ocelot (2nd) → Architect → RATIFIED ✅<br/>
+        P&amp;ID Package: KQ-ENG-001 — 3 instruments, 13 tests, 10 failure modes, 7 invariants<br/>
+        Consultant Seal: STAMP ✅ (Keila)<br/>
+        Auditor Record: CONDITIONAL ⚠️ (Stanley — FAT cycle pending)<br/><br/>
+        Conditions: C-001 (test fire), C-002 (dual-indexing), C-003 (attunement baseline)<br/><br/>
+        "When you are attuned, everything else is just a side effect." ⚛️<br/>
+        "Fix the workflow, not the typo." 🔧<br/><br/>
+        "So it is written. So it shall be done." 📜
+      </div>
+    </div>
+
+  </main>
+
+  <!-- NAV — -->
+  <nav class="nav" style="border-top: 1px solid var(--border-primary); border-bottom: none; margin-top: 40px;">
+    <a href="b9_capa.html">&larr; Prev</a>
+    <a href="../../index.html" style="color: var(--accent-kwan);">&#9776; The Three Kingdoms</a>
+    <a href="b11_management_review.html">Next &rarr;</a>
+  </nav>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>QMS Company Bible — Brick 10 of 12</p>
+    <p>Campaign FWO-009 | The McDonald's Franchise | ISO 9001:2015</p>
+    <p>Basta kwan, gani. 🪨☕🐆</p>
+  </footer>
+
+  <!-- VANILLA JS -->
+  <script>
+    function toggleTheme() {
+      var html = document.documentElement;
+      var current = html.getAttribute('data-theme');
+      var next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    }
+    (function() {
+      var saved = localStorage.getItem('theme');
+      if (saved) { document.documentElement.setAttribute('data-theme', saved); }
+    })();
+  </script>
+
+</body>
+</html>
+

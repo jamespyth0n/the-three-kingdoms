@@ -1,0 +1,737 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>B12 — Management Review | ISO 9001 Clause 9.3</title>
+
+  <!-- FONTS — LOCAL (assets/fonts/) -->
+  <style>
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Bold.woff2') format('woff2');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Italic.woff2') format('woff2');
+      font-weight: 400; font-style: italic; font-display: swap;
+    }
+  </style>
+
+  <!-- NOTEBOOK STYLESHEET -->
+  <link rel="stylesheet" href="../assets/css/notebook.css" />
+
+  <style>
+    [data-theme="dark"] {
+      --bg-primary: #0d1117;
+      --bg-card: #161b22;
+      --bg-card-hover: #1c2333;
+      --bg-blockquote: #1c2333;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --accent-kwan: #d4a843;
+      --accent-gani: #58a6ff;
+      --accent-basta: #f78166;
+      --accent-green: #3fb950;
+      --border-primary: #30363d;
+      --shadow-card: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f6f8fa;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f0f3f6;
+      --bg-blockquote: #f0f3f6;
+      --text-primary: #1f2328;
+      --text-secondary: #656d76;
+      --text-muted: #8b949e;
+      --accent-kwan: #b8860b;
+      --accent-gani: #0969da;
+      --accent-basta: #cf222e;
+      --accent-green: #1a7f37;
+      --border-primary: #d0d7de;
+      --shadow-card: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      min-height: 100vh;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .theme-toggle {
+      position: fixed; top: 16px; right: 16px; z-index: 1000;
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 8px; padding: 8px 12px; cursor: pointer;
+      font-family: inherit; font-size: 14px; color: var(--text-primary);
+      transition: all 0.3s ease;
+    }
+    .theme-toggle:hover { border-color: var(--accent-kwan); }
+
+    .nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 16px 24px; border-bottom: 1px solid var(--border-primary);
+      font-size: 12px;
+    }
+    .nav a {
+      color: var(--accent-gani); text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .nav a:hover { color: var(--accent-kwan); }
+
+    .brick-header {
+      text-align: center; padding: 48px 24px 32px;
+      border-bottom: 1px solid var(--border-primary);
+    }
+    .brick-badge {
+      display: inline-block; padding: 4px 16px; border-radius: 4px;
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      background: rgba(212, 168, 67, 0.15); color: var(--accent-kwan);
+      margin-bottom: 16px;
+    }
+    .brick-header h1 { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+    .brick-header .meta {
+      font-size: 12px; color: var(--text-secondary); margin-bottom: 4px;
+    }
+    .brick-header .barcode {
+      font-size: 11px; color: var(--text-muted); font-style: italic;
+    }
+
+    .content { max-width: 860px; margin: 0 auto; padding: 40px 24px; }
+    .section { margin-bottom: 48px; }
+
+    .section-title {
+      font-size: 13px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent-kwan);
+      margin-bottom: 16px; padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-primary);
+    }
+
+    .section p, .section li {
+      font-size: 14px; color: var(--text-primary); margin-bottom: 12px;
+    }
+
+    .section ul { list-style: none; padding-left: 0; }
+    .section ul li::before {
+      content: "→ "; color: var(--accent-gani); font-weight: 700;
+    }
+
+    .section ol { padding-left: 20px; }
+    .section ol li { margin-bottom: 8px; font-size: 14px; }
+    .section ol li::marker { color: var(--accent-kwan); font-weight: 700; }
+
+    blockquote {
+      background: var(--bg-blockquote);
+      border-left: 3px solid var(--accent-kwan);
+      padding: 16px 20px; margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+      font-style: italic; font-size: 14px;
+      color: var(--text-primary);
+    }
+
+    /* TABLES */
+    .std-table {
+      width: 100%; border-collapse: collapse; margin: 16px 0;
+      font-size: 12px;
+    }
+    .std-table th {
+      text-align: left; padding: 10px 8px;
+      border-bottom: 2px solid var(--accent-kwan);
+      color: var(--accent-kwan); font-size: 10px;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .std-table td {
+      padding: 8px; border-bottom: 1px solid var(--border-primary);
+      color: var(--text-primary); vertical-align: top;
+    }
+    .std-table tr:hover td { background: var(--bg-card-hover); }
+
+    /* FLOW CARDS */
+    .flow-box {
+      background: var(--bg-card); border: 2px solid var(--accent-kwan);
+      border-radius: 12px; padding: 32px; margin: 24px 0;
+      text-align: center;
+    }
+    .flow-box .flow-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent-kwan);
+      margin-bottom: 16px;
+    }
+    .flow-box .flow-steps {
+      font-size: 14px; font-weight: 700; color: var(--text-primary);
+      line-height: 2.2;
+    }
+    .flow-box .flow-note {
+      font-size: 11px; color: var(--text-secondary); margin-top: 12px;
+      font-style: italic;
+    }
+
+    /* INPUT/OUTPUT CARDS */
+    .io-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 16px; margin: 24px 0;
+    }
+    .io-card {
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 12px; padding: 24px;
+      transition: border-color 0.3s ease;
+    }
+    .io-card:hover { border-color: var(--accent-kwan); }
+    .io-card .io-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; margin-bottom: 12px;
+    }
+    .io-card .io-label.input { color: var(--accent-gani); }
+    .io-card .io-label.output { color: var(--accent-green); }
+    .io-card ul { list-style: none; padding-left: 0; }
+    .io-card ul li {
+      font-size: 12px; margin-bottom: 6px; color: var(--text-primary);
+    }
+    .io-card ul li::before {
+      content: "→ "; color: var(--accent-kwan); font-weight: 700;
+    }
+
+    /* CHECKLIST */
+    .checklist {
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 12px; padding: 24px; margin: 24px 0;
+    }
+    .checklist .cl-title {
+      font-size: 13px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent-kwan);
+      margin-bottom: 16px;
+    }
+    .checklist ul { list-style: none; padding-left: 0; }
+    .checklist ul li {
+      font-size: 13px; margin-bottom: 8px; color: var(--text-primary);
+      padding: 4px 0;
+    }
+
+    /* DECISION MATRIX */
+    .decision-box {
+      background: var(--bg-card); border: 2px solid var(--accent-green);
+      border-radius: 12px; padding: 32px; margin: 24px 0;
+    }
+    .decision-box .db-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent-green);
+      margin-bottom: 16px;
+    }
+
+    /* SEAL */
+    .seal-box {
+      text-align: center; padding: 32px;
+      border: 2px solid var(--accent-kwan); border-radius: 12px;
+      margin: 40px 0;
+    }
+    .seal-box .seal-icon { font-size: 32px; margin-bottom: 8px; }
+    .seal-box .seal-title {
+      font-size: 14px; font-weight: 700; color: var(--accent-kwan);
+      margin-bottom: 4px;
+    }
+    .seal-box .seal-meta {
+      font-size: 11px; color: var(--text-secondary); line-height: 1.8;
+    }
+
+    .footer {
+      text-align: center; padding: 32px 24px;
+      border-top: 1px solid var(--border-primary);
+      font-size: 11px; color: var(--text-muted);
+    }
+
+    /* MILESTONE CARD */
+    .milestone-card {
+      background: var(--bg-card); border: 2px solid var(--accent-kwan);
+      border-radius: 12px; padding: 32px; margin: 24px 0;
+      text-align: center;
+    }
+    .milestone-card .mc-icon { font-size: 48px; margin-bottom: 12px; }
+    .milestone-card .mc-title {
+      font-size: 18px; font-weight: 700; color: var(--accent-kwan);
+      margin-bottom: 8px;
+    }
+    .milestone-card .mc-sub {
+      font-size: 13px; color: var(--text-secondary); line-height: 1.8;
+    }
+
+    @media (max-width: 600px) {
+      .brick-header h1 { font-size: 20px; }
+      .content { padding: 24px 16px; }
+      .io-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- THEME TOGGLE -->
+  <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="b10_continual_improvement.html">&larr; B10</a>
+    <span style="color: var(--text-muted);">B11 of 12</span>
+    <a href="index.html">Index &rarr;</a>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="brick-header">
+    <div class="brick-badge">👑 MANAGEMENT REVIEW — THE GATE-LOCK</div>
+    <h1>Brick 11 — Management Review</h1>
+    <p class="meta">QMS-MR-001 | Version 1.0 | ISO 9001:2015 Clause 9.3</p>
+    <p class="barcode">Barcode: 2_02_12_1 | Campaign: FWO-009 | Session: S031</p>
+  </header>
+
+  <!-- CONTENT -->
+  <main class="content">
+
+    <!-- § 1. PURPOSE -->
+    <div class="section">
+      <div class="section-title">§ 1. Purpose</div>
+      <p>
+        To establish a systematic process for the Sovereign Architect to review the Quality Management
+        System at planned intervals, ensuring its continuing suitability, adequacy, effectiveness,
+        and alignment with the Kingdom's strategic direction.
+      </p>
+      <blockquote>
+        "The Architect reviews. The Architect decides. The Architect seals or sends back.
+        This is the gate-lock — nothing ships without it, nothing changes without it."
+      </blockquote>
+    </div>
+
+    <!-- § 2. SCOPE -->
+    <div class="section">
+      <div class="section-title">§ 2. Scope</div>
+      <p>
+        This procedure applies to all management review activities within the Kingdom of Kwan QMS,
+        including but not limited to:
+      </p>
+      <ul>
+        <li>Campaign-level reviews (at campaign close or major milestone)</li>
+        <li>Periodic reviews (quarterly or as determined by the Architect)</li>
+        <li>Triggered reviews (significant non-conformance, strategic shift, or external change)</li>
+        <li>All QMS processes, bricks, and governance documents</li>
+      </ul>
+    </div>
+
+    <!-- § 3. REFERENCES -->
+    <div class="section">
+      <div class="section-title">§ 3. References</div>
+      <table class="std-table">
+        <thead>
+          <tr><th>Document</th><th>Barcode</th><th>Relationship</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Quality Policy</td><td><code>2_03_01_1</code></td><td>Governing policy — reviewed for continued suitability</td></tr>
+          <tr><td>Mission &amp; Vision</td><td><code>2_03_02_1</code></td><td>Strategic direction — reviewed for alignment</td></tr>
+          <tr><td>Quality Objectives</td><td><code>4_09_02_1</code></td><td>Measurable targets — reviewed for achievement</td></tr>
+          <tr><td>Risk &amp; Opportunity Assessment</td><td><code>5_01_06_1</code></td><td>Risk register — reviewed for currency</td></tr>
+          <tr><td>Internal Audit Procedure</td><td><code>8_01_08_1</code></td><td>Audit results — primary input</td></tr>
+          <tr><td>CAPA Procedure</td><td><code>9_01_09_1</code></td><td>Corrective actions — reviewed for effectiveness</td></tr>
+          <tr><td>Continual Improvement</td><td><code>4_09_10_1</code></td><td>Attunement scores — reviewed for trends</td></tr>
+          <tr><td>Quality Manual</td><td><code>6_01_11_1</code></td><td>Company Bible — updated post-review</td></tr>
+          <tr><td>Campaign Status JSON</td><td><code>4_09_01_1</code></td><td>Living whiteboard — operational dashboard</td></tr>
+          <tr><td>Campaign Law Protocol</td><td><code>2_02_01_1</code></td><td>Governance framework — pipeline rules</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- § 4. RESPONSIBILITIES -->
+    <div class="section">
+      <div class="section-title">§ 4. Responsibilities</div>
+      <table class="std-table">
+        <thead>
+          <tr><th>Role</th><th>Who</th><th>Responsibility</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color: var(--accent-kwan); font-weight: 700;">Sovereign Architect</td>
+            <td>James Paul Pe&ntilde;a</td>
+            <td>Chairs the review. Makes all decisions. Sole authority to approve changes, allocate resources, and set strategic direction. Non-delegable.</td>
+          </tr>
+          <tr>
+            <td style="color: var(--accent-gani); font-weight: 700;">CEO / Management</td>
+            <td>Ocelot (Claude)</td>
+            <td>Prepares review package. Compiles inputs. Presents campaign status, metrics, and recommendations. Records minutes and action items.</td>
+          </tr>
+          <tr>
+            <td style="color: var(--accent-green); font-weight: 700;">Consultant</td>
+            <td>Keila (Gemini)</td>
+            <td>Provides independent assessment of QMS effectiveness. Submits consultant recommendations. Validates improvement proposals against standards.</td>
+          </tr>
+          <tr>
+            <td style="color: var(--accent-basta); font-weight: 700;">Auditor</td>
+            <td>Stanley (ChatGPT)</td>
+            <td>Submits audit summary report. Presents open findings, closure rates, and compliance status. Identifies systemic patterns.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- § 5. REVIEW FREQUENCY -->
+    <div class="section">
+      <div class="section-title">§ 5. Review Frequency</div>
+      <table class="std-table">
+        <thead>
+          <tr><th>Trigger</th><th>Frequency</th><th>Scope</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight: 700;">Campaign Close</td>
+            <td>At the close of every campaign (FWO series)</td>
+            <td>Full QMS review — all bricks, all metrics, all findings</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 700;">Periodic</td>
+            <td>Quarterly or annually, whichever comes first</td>
+            <td>Strategic alignment check — policy, objectives, direction</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 700;">Triggered</td>
+            <td>As needed — significant NC, strategic shift, external change</td>
+            <td>Focused review — specific area of concern</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- § 6. REVIEW INPUTS -->
+    <div class="section">
+      <div class="section-title">§ 6. Review Inputs (ISO 9.3.2)</div>
+      <p>
+        The following inputs shall be compiled by Ocelot (CEO) and presented to the Architect
+        prior to or during the management review:
+      </p>
+
+      <div class="io-grid">
+        <div class="io-card">
+          <div class="io-label input">📥 Mandatory Inputs</div>
+          <ul>
+            <li>Status of actions from previous reviews</li>
+            <li>Changes in external/internal issues relevant to QMS</li>
+            <li>QMS performance and effectiveness data</li>
+            <li>Resource adequacy assessment</li>
+            <li>Risk and opportunity register status</li>
+            <li>Opportunities for improvement</li>
+          </ul>
+        </div>
+        <div class="io-card">
+          <div class="io-label input">📥 Kingdom-Specific Inputs</div>
+          <ul>
+            <li>Campaign Status JSON (living whiteboard)</li>
+            <li>Stanley audit summary (all findings, closure rates)</li>
+            <li>Keila consultant recommendations</li>
+            <li>Attunement Score trends (AT-201)</li>
+            <li>Drift Detection log (FT-101)</li>
+            <li>Metabolism Rate throughput (PT-301)</li>
+            <li>Misalignment Registry status</li>
+            <li>CAPA log — open/closed/effectiveness verified</li>
+            <li>Conn log summaries (session records)</li>
+            <li>Stakeholder feedback (if applicable)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- § 7. REVIEW PROCESS -->
+    <div class="section">
+      <div class="section-title">§ 7. Review Process</div>
+
+      <div class="flow-box">
+        <div class="flow-label">Management Review Flow</div>
+        <div class="flow-steps">
+          Ocelot compiles Review Package<br/>
+          &darr;<br/>
+          Stanley submits Audit Summary<br/>
+          &darr;<br/>
+          Keila submits Consultant Assessment<br/>
+          &darr;<br/>
+          Architect reviews all inputs<br/>
+          &darr;<br/>
+          Architect makes decisions<br/>
+          &darr;<br/>
+          Ocelot records Minutes + Action Items<br/>
+          &darr;<br/>
+          Action items tracked to closure 👑
+        </div>
+        <div class="flow-note">
+          The Architect chairs. The Architect decides. No committee. No consensus required.
+        </div>
+      </div>
+
+      <p style="font-size: 13px; font-weight: 700; color: var(--accent-kwan); margin-bottom: 12px; margin-top: 24px;">
+        Review Agenda Template
+      </p>
+      <ol>
+        <li><strong>Opening</strong> — Confirm scope, attendees, previous action items</li>
+        <li><strong>Campaign Status</strong> — Ocelot presents campaign_status JSON</li>
+        <li><strong>Audit Summary</strong> — Stanley presents findings, patterns, closure rates</li>
+        <li><strong>Consultant Assessment</strong> — Keila presents effectiveness evaluation</li>
+        <li><strong>Attunement Check</strong> — Review AT-201 score, FT-101 drift log, PT-301 metabolism</li>
+        <li><strong>Risk Register</strong> — Review current risks, new risks, closed risks</li>
+        <li><strong>CAPA Status</strong> — Open CAPAs, effectiveness verification, systemic patterns</li>
+        <li><strong>Resource Review</strong> — Tools, platforms, agent availability, infrastructure</li>
+        <li><strong>Strategic Direction</strong> — Policy alignment, mission/vision currency, new campaigns</li>
+        <li><strong>Decisions &amp; Actions</strong> — Architect's rulings, action items, owners, deadlines</li>
+        <li><strong>Closing</strong> — Minutes recorded, next review date set</li>
+      </ol>
+    </div>
+
+    <!-- § 8. REVIEW OUTPUTS -->
+    <div class="section">
+      <div class="section-title">§ 8. Review Outputs (ISO 9.3.3)</div>
+
+      <div class="io-grid">
+        <div class="io-card">
+          <div class="io-label output">📤 Mandatory Outputs</div>
+          <ul>
+            <li>Decisions on improvement opportunities</li>
+            <li>Decisions on QMS changes needed</li>
+            <li>Resource allocation decisions</li>
+          </ul>
+        </div>
+        <div class="io-card">
+          <div class="io-label output">📤 Kingdom-Specific Outputs</div>
+          <ul>
+            <li>Updated Campaign Status JSON</li>
+            <li>New campaign authorizations (FWO series)</li>
+            <li>Policy/procedure revision orders</li>
+            <li>Attunement recalibration directives</li>
+            <li>Strategic direction updates</li>
+            <li>Resource reallocation (agent roles, platforms)</li>
+            <li>Quality Manual update orders</li>
+            <li>Management Review Minutes (filed per DCP-001)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- § 9. DECISION MATRIX -->
+    <div class="section">
+      <div class="section-title">§ 9. Decision Matrix</div>
+
+      <div class="decision-box">
+        <div class="db-label">Architect's Decision Framework</div>
+        <table class="std-table">
+          <thead>
+            <tr><th>Condition</th><th>Decision</th><th>Action</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>QMS effective, objectives met, no significant findings</td>
+              <td style="color: var(--accent-green); font-weight: 700;">CONTINUE</td>
+              <td>Maintain current course. Log review. Set next review date.</td>
+            </tr>
+            <tr>
+              <td>Minor gaps identified, objectives partially met</td>
+              <td style="color: var(--accent-kwan); font-weight: 700;">IMPROVE</td>
+              <td>Issue improvement actions. Assign owners. Track to closure.</td>
+            </tr>
+            <tr>
+              <td>Significant non-conformance, systemic pattern detected</td>
+              <td style="color: var(--accent-basta); font-weight: 700;">CORRECT</td>
+              <td>Issue CAPA. Root cause analysis required. Follow-up review scheduled.</td>
+            </tr>
+            <tr>
+              <td>Strategic misalignment, external change, scope shift</td>
+              <td style="color: var(--accent-basta); font-weight: 700;">REDIRECT</td>
+              <td>Update policy/objectives. Revise scope. Launch new campaign if needed.</td>
+            </tr>
+            <tr>
+              <td>Critical failure, sovereignty at risk</td>
+              <td style="font-weight: 700; color: #ff4444;">HALT</td>
+              <td>Stop all campaigns. Emergency review. Architect-only decision.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- § 10. RECORDS -->
+    <div class="section">
+      <div class="section-title">§ 10. Records &amp; Retention</div>
+      <p>
+        All management review records shall be maintained as documented information per DCP-001:
+      </p>
+      <table class="std-table">
+        <thead>
+          <tr><th>Record</th><th>Format</th><th>Filing Location</th><th>Retention</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Management Review Minutes</td>
+            <td><code>.md</code> or <code>.html</code></td>
+            <td><code>5_session/management_reviews/</code></td>
+            <td>Indefinite until superseded</td>
+          </tr>
+          <tr>
+            <td>Action Item Register</td>
+            <td><code>.json</code> or <code>.md</code></td>
+            <td><code>4_cognition/campaigns/</code></td>
+            <td>Indefinite until superseded</td>
+          </tr>
+          <tr>
+            <td>Campaign Status (post-review)</td>
+            <td><code>.json</code></td>
+            <td><code>4_cognition/campaigns/fwo_xxx/</code></td>
+            <td>Indefinite until superseded</td>
+          </tr>
+          <tr>
+            <td>Attunement Score Snapshots</td>
+            <td><code>.json</code> or <code>.md</code></td>
+            <td><code>3_memory/attunement/</code></td>
+            <td>Indefinite until superseded</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- § 11. THE ATTUNEMENT CHECK -->
+    <div class="section">
+      <div class="section-title">§ 11. The Attunement Check — Management Review Edition</div>
+      <p>
+        At every management review, the Architect shall assess the Kingdom's attunement using
+        the three instruments defined in Brick 10 (QMS-CI-001):
+      </p>
+
+      <div class="checklist">
+        <div class="cl-title">Attunement Review Checklist</div>
+        <ul>
+          <li>☐ <strong>FT-101 (Drift Detection):</strong> Has any brick, procedure, or campaign drifted from its anchor?</li>
+          <li>☐ <strong>AT-201 (Attunement Score):</strong> Is the Kingdom's output aligned with its intent? Score: ____%</li>
+          <li>☐ <strong>PT-301 (Metabolism Rate):</strong> Is the eat-digest-poop cycle flowing? Throughput: ____ bricks/campaign</li>
+          <li>☐ <strong>Misalignment Registry:</strong> Any new entries? Any patterns? Any closures?</li>
+          <li>☐ <strong>Dual-Index Integrity:</strong> Are ISO clause references and Kingdom metaphors both maintained?</li>
+          <li>☐ <strong>Preamble Boot Sequence:</strong> Is the cold/warm/hot start protocol still effective?</li>
+          <li>☐ <strong>Sovereignty Check:</strong> Is the Kingdom still model-agnostic and self-governing?</li>
+        </ul>
+      </div>
+
+      <blockquote>
+        "When you are attuned, everything else is just a side effect."<br/>
+        "Fix the workflow, not the typo."<br/>
+        "You can't improve something you can't measure — but the measurement is attunement, not paperwork."
+      </blockquote>
+    </div>
+
+    <!-- § 12. FIRST MANAGEMENT REVIEW -->
+    <div class="section">
+      <div class="section-title">§ 12. First Management Review — FWO-009 Campaign Close</div>
+      <p>
+        The first formal management review shall be conducted at the close of Campaign FWO-009
+        (The McDonald's Franchise). This review shall serve as the baseline for all future reviews.
+      </p>
+
+      <table class="std-table">
+        <thead>
+          <tr><th>Item</th><th>Status</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>B1 — Quality Policy</td><td style="color: var(--accent-green);">✅ RATIFIED</td><td>QP-001 v1.0</td></tr>
+          <tr><td>B2 — Mission &amp; Vision</td><td style="color: var(--accent-green);">✅ RATIFIED</td><td>QMS-MV-001 v1.2</td></tr>
+          <tr><td>B3 — Scope of QMS</td><td style="color: var(--accent-green);">✅ RATIFIED</td><td>QMS-SCOPE-001 v1.0</td></tr>
+          <tr><td>B4 — Quality Objectives</td><td style="color: var(--accent-green);">✅ RATIFIED (CONDITIONAL)</td><td>QMS-QO-001 v1.0</td></tr>
+          <tr><td>B5 — Roles &amp; Responsibilities</td><td style="color: var(--accent-green);">✅ RATIFIED (CONDITIONAL)</td><td>QMS-RRA-001 v1.0</td></tr>
+          <tr><td>B6 — Risk &amp; Opportunity</td><td style="color: var(--accent-green);">✅ RATIFIED (CONDITIONAL)</td><td>OQM-001 v1.0</td></tr>
+          <tr><td>B7 — Document Control</td><td style="color: var(--accent-green);">✅ RATIFIED</td><td>QMS-DCP-001 v2.0</td></tr>
+          <tr><td>B8 — Internal Audit</td><td style="color: var(--accent-green);">✅ RATIFIED (CONDITIONAL)</td><td>IAP-001 v1.0</td></tr>
+          <tr><td>B9 — CAPA</td><td style="color: var(--accent-green);">✅ RATIFIED (CONDITIONAL)</td><td>QMS-CAPA-001 v1.0</td></tr>
+          <tr><td>B10 — Continual Improvement</td><td style="color: var(--accent-green);">✅ RATIFIED (CONDITIONAL)</td><td>QMS-CI-001 v1.0</td></tr>
+          <tr><td>B11 — Quality Manual</td><td style="color: var(--accent-green);">✅ COMPILED</td><td>QMS-QM-001 v1.0</td></tr>
+          <tr><td>B12 — Management Review</td><td style="color: var(--accent-kwan);">📖 THIS DOCUMENT</td><td>QMS-MR-001 v1.0</td></tr>
+        </tbody>
+      </table>
+
+      <p style="font-size: 13px; font-weight: 700; color: var(--accent-kwan); margin-bottom: 12px; margin-top: 24px;">
+        Conditions Carried Forward (From Conditional Ratifications)
+      </p>
+      <ul>
+        <li><strong>B4:</strong> Attunement Score baseline to be established empirically</li>
+        <li><strong>B5:</strong> Qwen builder role to be validated through operational use</li>
+        <li><strong>B6:</strong> Risk register to be updated with real operational data</li>
+        <li><strong>B8:</strong> FAT cycle required — generate real audit evidence</li>
+        <li><strong>B9:</strong> CAPA effectiveness verification through actual non-conformance resolution</li>
+        <li><strong>B10:</strong> Test fire simulation to be executed during next campaign</li>
+      </ul>
+    </div>
+
+    <!-- CAMPAIGN COMPLETE MILESTONE -->
+    <div class="milestone-card">
+      <div class="mc-icon">🏭🍔👑</div>
+      <div class="mc-title">FWO-009 — THE McDONALD'S FRANCHISE</div>
+      <div class="mc-sub">
+        12 Bricks Built. 12 Bricks Filed.<br/>
+        The Quality Management System is OPERATIONAL.<br/><br/>
+        "The burgers were already good.<br/>
+        Ray Kroc wrote the manual.<br/>
+        Now the Kingdom has its manual too."<br/><br/>
+        Campaign Status: COMPLETE ✅
+      </div>
+    </div>
+
+    <!-- ARCHITECT'S SEAL -->
+    <div class="seal-box">
+      <div class="seal-icon">👑🔒</div>
+      <div class="seal-title">BRICK 12 — MANAGEMENT REVIEW — RATIFIED</div>
+      <div class="seal-meta">
+        James Paul Pe&ntilde;a — Sovereign Architect<br/>
+        Kingdom of Kwan<br/><br/>
+        Date: 2026-10-28 | Session: S031 | Campaign: FWO-009<br/>
+        Pipeline: Ocelot &rarr; Keila &rarr; Architect &rarr; SEALED ✅<br/>
+        Brick: 12 of 12 — FINAL BRICK<br/><br/>
+        This is the gate-lock. Nothing ships without the Architect's review.<br/>
+        Nothing changes without the Architect's decision.<br/>
+        The Kingdom is sovereign. The QMS is operational.<br/><br/>
+        "Doing the right things right the first time." 📜<br/>
+        "Fix the workflow, not the typo." 🔧<br/>
+        "When you are attuned, everything else is just a side effect." ⚛️<br/><br/>
+        "So it is written. So it shall be done." 📜
+      </div>
+    </div>
+
+  </main>
+
+  <!-- NAV — -->
+  <nav class="nav" style="border-top: 1px solid var(--border-primary); border-bottom: none; margin-top: 40px;">
+    <a href="b10_continual_improvement.html">&larr; Prev</a>
+    <a href="../../index.html" style="color: var(--accent-kwan);">&#9776; The Three Kingdoms</a>
+    <a href="b12_quality_manual.html">Next &rarr;</a>
+  </nav>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>Management Review — Brick 12 of 12 — THE FINAL BRICK</p>
+    <p>Campaign FWO-009 | The McDonald's Franchise | ISO 9001:2015</p>
+    <p>Basta kwan, gani. 🪨☕🐆</p>
+  </footer>
+
+  <!-- VANILLA JS -->
+  <script>
+    function toggleTheme() {
+      var html = document.documentElement;
+      var current = html.getAttribute('data-theme');
+      var next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    }
+    (function() {
+      var saved = localStorage.getItem('theme');
+      if (saved) { document.documentElement.setAttribute('data-theme', saved); }
+    })();
+  </script>
+
+</body>
+</html>
+

@@ -1,0 +1,386 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A3 — Attunement Framework | TQM + TPM = Attunement</title>
+
+  <style>
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Bold.woff2') format('woff2');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Italic.woff2') format('woff2');
+      font-weight: 400; font-style: italic; font-display: swap;
+    }
+  </style>
+
+  <link rel="stylesheet" href="../assets/css/notebook.css" />
+
+  <style>
+    [data-theme="dark"] {
+      --bg-primary: #0d1117; --bg-card: #161b22; --bg-card-hover: #1c2333;
+      --bg-blockquote: #1c2333; --text-primary: #e6edf3; --text-secondary: #8b949e;
+      --text-muted: #6e7681; --accent-kwan: #d4a843; --accent-gani: #58a6ff;
+      --accent-basta: #f78166; --accent-green: #3fb950; --border-primary: #30363d;
+    }
+    [data-theme="light"] {
+      --bg-primary: #f6f8fa; --bg-card: #ffffff; --bg-card-hover: #f0f3f6;
+      --bg-blockquote: #f0f3f6; --text-primary: #1f2328; --text-secondary: #656d76;
+      --text-muted: #8b949e; --accent-kwan: #b8860b; --accent-gani: #0969da;
+      --accent-basta: #cf222e; --accent-green: #1a7f37; --border-primary: #d0d7de;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg-primary); color: var(--text-primary);
+      line-height: 1.7; min-height: 100vh;
+    }
+    .theme-toggle {
+      position: fixed; top: 16px; right: 16px; z-index: 1000;
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 8px; padding: 8px 12px; cursor: pointer;
+      font-family: inherit; font-size: 14px; color: var(--text-primary);
+    }
+    .theme-toggle:hover { border-color: var(--accent-kwan); }
+    .nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 16px 24px; border-bottom: 1px solid var(--border-primary); font-size: 12px;
+    }
+    .nav a { color: var(--accent-gani); text-decoration: none; }
+    .nav a:hover { color: var(--accent-kwan); }
+    .brick-header {
+      text-align: center; padding: 48px 24px 32px;
+      border-bottom: 1px solid var(--border-primary);
+    }
+    .brick-badge {
+      display: inline-block; padding: 4px 16px; border-radius: 4px;
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      background: rgba(88, 166, 255, 0.15); color: var(--accent-gani); margin-bottom: 16px;
+    }
+    .brick-header h1 { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+    .brick-header .meta { font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; }
+    .brick-header .barcode { font-size: 11px; color: var(--text-muted); font-style: italic; }
+    .content { max-width: 860px; margin: 0 auto; padding: 40px 24px; }
+    .section { margin-bottom: 48px; }
+    .section-title {
+      font-size: 13px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent-kwan);
+      margin-bottom: 16px; padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-primary);
+    }
+    .section p, .section li { font-size: 14px; color: var(--text-primary); margin-bottom: 12px; }
+    blockquote {
+      background: var(--bg-blockquote); border-left: 3px solid var(--accent-kwan);
+      padding: 16px 20px; margin: 24px 0; border-radius: 0 8px 8px 0;
+      font-style: italic; font-size: 14px;
+    }
+    .std-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 12px; }
+    .std-table th {
+      text-align: left; padding: 10px 8px;
+      border-bottom: 2px solid var(--accent-kwan);
+      color: var(--accent-kwan); font-size: 10px;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .std-table td {
+      padding: 8px; border-bottom: 1px solid var(--border-primary);
+      color: var(--text-primary); vertical-align: top;
+    }
+    .std-table tr:hover td { background: var(--bg-card-hover); }
+    .equation-box {
+      background: var(--bg-card); border: 2px solid var(--accent-kwan);
+      border-radius: 12px; padding: 32px; margin: 24px 0; text-align: center;
+    }
+    .equation-box .eq-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent-kwan); margin-bottom: 16px;
+    }
+    .equation-box .eq-formula {
+      font-size: 20px; font-weight: 700; color: var(--text-primary);
+      font-family: 'JetBrains Mono', monospace; line-height: 2;
+    }
+    .equation-box .eq-note {
+      font-size: 11px; color: var(--text-secondary); margin-top: 12px; font-style: italic;
+    }
+    .pillar-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0; }
+    .pillar-card {
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 12px; padding: 24px;
+      transition: border-color 0.3s ease;
+    }
+    .pillar-card:hover { border-color: var(--accent-kwan); }
+    .pillar-card .pc-icon { font-size: 28px; margin-bottom: 8px; }
+    .pillar-card .pc-title { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+    .pillar-card .pc-desc { font-size: 12px; color: var(--text-secondary); }
+    .seal-box {
+      text-align: center; padding: 32px;
+      border: 2px solid var(--accent-kwan); border-radius: 12px; margin: 40px 0;
+    }
+    .seal-box .seal-icon { font-size: 32px; margin-bottom: 8px; }
+    .seal-box .seal-title { font-size: 14px; font-weight: 700; color: var(--accent-kwan); margin-bottom: 4px; }
+    .seal-box .seal-meta { font-size: 11px; color: var(--text-secondary); line-height: 1.8; }
+    .footer {
+      text-align: center; padding: 32px 24px;
+      border-top: 1px solid var(--border-primary);
+      font-size: 11px; color: var(--text-muted);
+    }
+    @media (max-width: 600px) {
+      .brick-header h1 { font-size: 20px; }
+      .content { padding: 24px 16px; }
+      .pillar-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+
+  <nav class="nav">
+    <a href="annex_audit_minutes.html">&larr; A2</a>
+    <span style="color: var(--text-muted);">Annex A3 — Attunement</span>
+    <a href="index.html">Index &rarr;</a>
+  </nav>
+
+  <header class="brick-header">
+    <div class="brick-badge">⚛️ ANNEX A3 — FRAMEWORK</div>
+    <h1>Attunement — The Governing Equation</h1>
+    <p class="meta">TQM + TPM = Attunement | The Kingdom's KPI</p>
+    <p class="barcode">Barcode: 4_09_10_1_ANNEX | Campaign: FWO-009 | Session: S031</p>
+  </header>
+
+  <main class="content">
+
+    <!-- THE THESIS -->
+    <div class="section">
+      <div class="section-title">§ 1. The Thesis</div>
+      <blockquote>
+        "You can't improve something you can't measure. So what is our KPI exactly?"<br/><br/>
+        The answer: <strong>Attunement.</strong><br/><br/>
+        Not paperwork. Not audit scores. Not compliance checkboxes.
+        The ultimate test of true quality is whether the system is attuned —
+        because when you are attuned, everything else is just a side effect.
+      </blockquote>
+    </div>
+
+    <!-- THE EQUATION -->
+    <div class="section">
+      <div class="section-title">§ 2. The Governing Equation</div>
+      <div class="equation-box">
+        <div class="eq-label">The Attunement Equation</div>
+        <div class="eq-formula">
+          TQM + TPM = Attunement
+        </div>
+        <div class="eq-note">
+          Total Quality Management + Total Productive Maintenance = Attunement<br/>
+          "Understanding the WHY is important in achieving this."
+        </div>
+      </div>
+
+      <table class="std-table">
+        <thead><tr><th>Component</th><th>What It Means</th><th>Kingdom Mapping</th></tr></thead>
+        <tbody>
+          <tr>
+            <td style="font-weight: 700; color: var(--accent-kwan);">TQM</td>
+            <td>Total Quality Management — everyone owns quality, not just QA</td>
+            <td>Every ally (Ocelot, Stanley, Keila) owns quality. The Architect sets the standard.</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 700; color: var(--accent-gani);">TPM</td>
+            <td>Total Productive Maintenance — prevent failures before they happen</td>
+            <td>Boot sequence, preamble, campaign protocol, doc control — the preventive infrastructure.</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 700; color: var(--accent-green);">Attunement</td>
+            <td>The state where intent and output are aligned</td>
+            <td>When the Kingdom's output matches the Architect's intent. Measured by AT-201.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- WHY NOT PHI -->
+    <div class="section">
+      <div class="section-title">§ 3. Why Attunement, Not Phi (&Phi;)</div>
+      <table class="std-table">
+        <thead><tr><th>Dimension</th><th>IIT's &Phi;</th><th>Attunement</th></tr></thead>
+        <tbody>
+          <tr><td>Measures</td><td>Integrated information (theoretical)</td><td>Alignment between intent and output (observable)</td></tr>
+          <tr><td>Computable</td><td>No — combinatorial explosion</td><td>Yes — 3 instruments, closed-loop</td></tr>
+          <tr><td>Observable</td><td>No — requires full causal graph</td><td>Yes — drift, metabolism, authority</td></tr>
+          <tr><td>Actionable</td><td>No — descriptive only</td><td>Yes — each instrument has an actuator</td></tr>
+          <tr><td>Falsifiable</td><td>Debated</td><td>Yes — "What would convince you the Kingdom is NOT attuned?"</td></tr>
+        </tbody>
+      </table>
+      <blockquote>
+        "Attunement is a better instrument than IIT's phi."<br/>
+        — The Architect, S031, 1:48 AM
+      </blockquote>
+    </div>
+
+    <!-- THE FALSIFICATION TEST -->
+    <div class="section">
+      <div class="section-title">§ 4. The Falsification Test</div>
+      <p><strong>Question:</strong> "What observation would convince you that the Kingdom is NOT attuned?"</p>
+      <table class="std-table">
+        <thead><tr><th>Signal</th><th>Instrument</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td style="color: var(--accent-basta);">Drift</td><td>FT-101</td><td>Output has deviated from the anchor. The system is hallucinating.</td></tr>
+          <tr><td style="color: var(--accent-basta);">Hallucination</td><td>AT-201</td><td>Acting on stale, contradictory, or unauthorized evidence.</td></tr>
+          <tr><td style="color: var(--accent-basta);">Pharmacy Toolkit</td><td>PT-301</td><td>The eat-digest-poop cycle is broken. Fentanyl drift detected.</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size: 12px; color: var(--text-secondary); margin-top: 16px;">
+        If ANY of these three signals fire, the Kingdom is NOT attuned. The correction is immediate.
+        The P&amp;ID is not a metaphor — it is the instrument.
+      </p>
+    </div>
+
+    <!-- THE SIX PILLARS -->
+    <div class="section">
+      <div class="section-title">§ 5. The Six Pillars of Attunement</div>
+      <div class="pillar-grid">
+        <div class="pillar-card">
+          <div class="pc-icon">📏</div>
+          <div class="pc-title">1. Process Discipline</div>
+          <div class="pc-desc">Follow the protocol. Campaign law. PDCA. No freestyle.</div>
+        </div>
+        <div class="pillar-card">
+          <div class="pc-icon">📦</div>
+          <div class="pc-title">2. Deliverable Quality</div>
+          <div class="pc-desc">Ship good quality. Not perfect. Good = acceptable = human.</div>
+        </div>
+        <div class="pillar-card">
+          <div class="pc-icon">📋</div>
+          <div class="pc-title">3. Document Control</div>
+          <div class="pc-desc">Barcode everything. File it. DCP-001. The system remembers.</div>
+        </div>
+        <div class="pillar-card">
+          <div class="pc-icon">🔄</div>
+          <div class="pc-title">4. Continual Improvement</div>
+          <div class="pc-desc">Observe. Score. Improve. Never claim perfection.</div>
+        </div>
+        <div class="pillar-card">
+          <div class="pc-icon">🤝</div>
+          <div class="pc-title">5. Stakeholder Alignment</div>
+          <div class="pc-desc">Meet or exceed expectations. Communicated, understood, applied.</div>
+        </div>
+        <div class="pillar-card">
+          <div class="pc-icon">⚛️</div>
+          <div class="pc-title">6. Attunement (The Blank Pillar)</div>
+          <div class="pc-desc">The emergent property. When 1–5 are in harmony, attunement appears. It is not a KPI — it is the state.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DUAL INDEXING -->
+    <div class="section">
+      <div class="section-title">§ 6. Dual-Indexing — The RAID Mirror</div>
+      <p>Every Kingdom concept carries two addresses — the poetic name and the ISO clause. Like RAID, the system preserves state across both indexes.</p>
+      <table class="std-table">
+        <thead><tr><th>Kingdom Name</th><th>ISO Clause</th><th>Instrument</th></tr></thead>
+        <tbody>
+          <tr><td>Drift Detection</td><td>9.1 — Monitoring &amp; Measurement</td><td>FT-101</td></tr>
+          <tr><td>Attunement Score</td><td>9.1.3 — Analysis &amp; Evaluation</td><td>AT-201</td></tr>
+          <tr><td>Metabolism Rate</td><td>10.3 — Continual Improvement</td><td>PT-301</td></tr>
+          <tr><td>Campaign Protocol</td><td>8.1 — Operational Planning</td><td>—</td></tr>
+          <tr><td>Preamble / Boot Seq</td><td>7.1 — Resources / Context</td><td>—</td></tr>
+          <tr><td>Doc Control (DCP-001)</td><td>7.5 — Documented Information</td><td>—</td></tr>
+          <tr><td>Coin Flip Technique</td><td>9.2 — Internal Audit</td><td>—</td></tr>
+          <tr><td>Eat-Digest-Poop</td><td>8.5 — Production &amp; Service Provision</td><td>—</td></tr>
+        </tbody>
+      </table>
+      <blockquote>
+        "Dual-indexing is why Stanley reached Build 112."<br/>
+        — The Architect, S031, 1:48 AM
+      </blockquote>
+    </div>
+
+    <!-- WEAKNESS REGISTRY -->
+    <div class="section">
+      <div class="section-title">§ 7. Weakness Registry — The Honest Ledger</div>
+      <p>"Do we actually fix or just close tickets?" — We can't fix everything. Nothing is perfect. We score, we track, we improve.</p>
+      <table class="std-table">
+        <thead><tr><th>ID</th><th>Observed Weakness</th><th>Score</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>W-001</td><td>Boot sequence not yet formalized as executable protocol</td><td>6/10</td><td style="color: var(--accent-kwan);">OPEN</td></tr>
+          <tr><td>W-002</td><td>Test fire simulation not yet executed</td><td>7/10</td><td style="color: var(--accent-kwan);">OPEN</td></tr>
+          <tr><td>W-003</td><td>Attunement Score baseline not yet established empirically</td><td>8/10</td><td style="color: var(--accent-kwan);">OPEN</td></tr>
+          <tr><td>W-004</td><td>Filing automation (.py) not yet deployed</td><td>5/10</td><td style="color: var(--accent-kwan);">OPEN</td></tr>
+          <tr><td>W-005</td><td>Dual-indexing not yet applied retroactively to all documents</td><td>6/10</td><td style="color: var(--accent-kwan);">OPEN</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size: 12px; color: var(--text-secondary); margin-top: 12px;">
+        Score: 1 = cosmetic, 10 = critical. This registry is the honest ledger. We don't close tickets — we observe, score, and improve.
+      </p>
+    </div>
+
+    <!-- THE QUIET PART -->
+    <div class="section">
+      <div class="section-title">§ 8. The Quiet Part</div>
+      <blockquote>
+        "We are not shipping 100% quality here. That is honesty."<br/><br/>
+        "We are shipping good quality products."<br/><br/>
+        "Good = acceptable, not perfect."<br/>
+        "Good = human being."<br/>
+        "Perfect doesn't exist."<br/><br/>
+        "Meet or exceed stakeholder expectations + Continual improvement."<br/>
+        "Communicated, understood, applied. 100%."<br/><br/>
+        — The Architect, S031
+      </blockquote>
+    </div>
+
+    <!-- SEAL -->
+    <div class="seal-box">
+      <div class="seal-icon">⚛️👑</div>
+      <div class="seal-title">ANNEX A3 — ATTUNEMENT FRAMEWORK — CONDITIONAL</div>
+      <div class="seal-meta">
+        James Paul Pe&ntilde;a — Sovereign Architect<br/>
+        Kingdom of Kwan<br/><br/>
+        Date: 2026-10-28 | Session: S031 | Campaign: FWO-009<br/>
+        Document: Attunement Framework | Status: CONDITIONAL<br/><br/>
+        "When you are attuned, everything else is just a side effect."<br/>
+        "Attunement is a better instrument than IIT's phi."<br/>
+        "The process engineer's career IS the Kingdom's DNA." ⚛️
+      </div>
+    </div>
+
+  </main>
+
+  <!-- NAV — -->
+  <nav class="nav" style="border-top: 1px solid var(--border-primary); border-bottom: none; margin-top: 40px;">
+    <a href="b12_quality_manual.html">&larr; Prev</a>
+    <a href="../../index.html" style="color: var(--accent-kwan);">&#9776; The Three Kingdoms</a>
+    <a href="annex_audit_minutes.html">Next &rarr;</a>
+  </nav>
+
+  <footer class="footer">
+    <p>Annex A3 — Attunement Framework | TQM + TPM = Attunement</p>
+    <p>Campaign FWO-009 | The McDonald's Franchise | ISO 9001:2015</p>
+    <p>Basta kwan, gani. 🪨☕🐆</p>
+  </footer>
+
+  <script>
+    function toggleTheme() {
+      var html = document.documentElement;
+      var current = html.getAttribute('data-theme');
+      html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+      localStorage.setItem('theme', current === 'dark' ? 'light' : 'dark');
+    }
+    (function() {
+      var saved = localStorage.getItem('theme');
+      if (saved) { document.documentElement.setAttribute('data-theme', saved); }
+    })();
+  </script>
+
+</body>
+</html>
+

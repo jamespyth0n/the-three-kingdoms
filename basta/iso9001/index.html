@@ -1,0 +1,522 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QMS Company Bible — The Kingdom of Kwan</title>
+
+  <!-- FONTS — LOCAL (assets/fonts/) -->
+  <style>
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Regular.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Bold.woff2') format('woff2');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Italic.woff2') format('woff2');
+      font-weight: 400;
+      font-style: italic;
+      font-display: swap;
+    }
+  </style>
+
+  <!-- NOTEBOOK STYLESHEET -->
+  <link rel="stylesheet" href="../assets/css/notebook.css" />
+
+  <style>
+    /* ═══════════════════════════════════════════════════
+       INDEX-SPECIFIC STYLES
+       ═══════════════════════════════════════════════════ */
+
+    /* THEME VARIABLES */
+    [data-theme="dark"] {
+      --bg-primary: #0d1117;
+      --bg-card: #161b22;
+      --bg-card-hover: #1c2333;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --accent-kwan: #d4a843;
+      --accent-gani: #58a6ff;
+      --accent-basta: #f78166;
+      --border-primary: #30363d;
+      --border-accent: #d4a843;
+      --shadow-card: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f6f8fa;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f0f3f6;
+      --text-primary: #1f2328;
+      --text-secondary: #656d76;
+      --text-muted: #8b949e;
+      --accent-kwan: #b8860b;
+      --accent-gani: #0969da;
+      --accent-basta: #cf222e;
+      --border-primary: #d0d7de;
+      --border-accent: #b8860b;
+      --shadow-card: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    /* THEME TOGGLE */
+    .theme-toggle {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 1000;
+      background: var(--bg-card);
+      border: 1px solid var(--border-primary);
+      border-radius: 8px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--text-primary);
+      transition: all 0.3s ease;
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--accent-kwan);
+    }
+
+    /* HEADER — 3x COA */
+    .header {
+      text-align: center;
+      padding: 48px 24px 32px;
+      border-bottom: 1px solid var(--border-primary);
+    }
+
+    .coa-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 32px;
+      margin-bottom: 24px;
+    }
+
+    .coa-row img {
+      width: 110px;
+      height: 110px;
+      transition: border-color 0.3s ease;
+    }
+
+    /* HEADER — 3x COA 
+    .coa-row img:nth-child(1) { border-color: var(--accent-kwan); }
+    .coa-row img:nth-child(2) { border-color: var(--accent-gani); }
+    .coa-row img:nth-child(3) { border-color: var(--accent-basta); }
+    .coa-row img {
+      width: 80px;
+      height: 80px;
+      border-radius: 12px;
+      border: 2px solid var(--border-primary);
+      transition: border-color 0.3s ease;
+    }
+
+    */
+
+    .header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+
+    .header .subtitle {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+    }
+
+    .header .barcode {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* MOTTO */
+    .motto {
+      text-align: center;
+      padding: 24px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      font-style: italic;
+      border-bottom: 1px solid var(--border-primary);
+    }
+
+    /* BRICK GRID */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 32px 24px;
+    }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-primary);
+    }
+
+    .brick-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+
+    .brick-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-primary);
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--text-primary);
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-card);
+    }
+
+    .brick-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent-kwan);
+      transform: translateX(4px);
+    }
+
+    .brick-number {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      min-width: 32px;
+    }
+
+    .brick-info {
+      flex: 1;
+    }
+
+    .brick-title {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .brick-clause {
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+
+    .brick-status {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+
+    .status-ratified {
+      background: rgba(63, 185, 80, 0.15);
+      color: #3fb950;
+    }
+
+    .status-conditional {
+      background: rgba(210, 153, 34, 0.15);
+      color: #d29922;
+    }
+
+    .status-queued {
+      background: rgba(139, 148, 158, 0.15);
+      color: #8b949e;
+    }
+
+    /* NAV */
+    .nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 16px 24px; border-bottom: 1px solid var(--border-primary);
+    font-size: 12px;
+    }
+
+    .nav a {
+    color: var(--accent-gani); text-decoration: none;
+    transition: color 0.2s ease;
+    }
+
+    .nav a:hover { color: var(--accent-kwan); }    
+
+    /* FOOTER */
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      border-top: 1px solid var(--border-primary);
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .footer .seal {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      .coa-row img { width: 56px; height: 56px; }
+      .header h1 { font-size: 22px; }
+      .brick-card { padding: 12px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- THEME TOGGLE -->
+  <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+
+  <!-- HEADER — 3x COA  -->
+  <header class="header">
+    <div class="coa-row">
+      <img src="../../assets/img/coa_kwan.png" alt="Kwan" title="The Kingdom of Kwan" />
+      <img src="../../assets/img/coa_gani.png" alt="Gani" title="The Kingdom of Gani" />
+      <img src="../../assets/img/coa_basta.png" alt="Basta" title="The Kingdom of Basta" />
+    </div>
+    <h1>QMS COMPANY BIBLE</h1>
+    <p class="subtitle">Quality Management System — ISO 9001:2015 Aligned</p>
+    <p class="subtitle">The Three Kingdoms — United Kingdom of Kwan</p>
+    <p class="barcode">DOC: QMS-BIBLE-INDEX | VER: 1.0 | CAMPAIGN: FWO-009</p>
+  </header>
+
+  <!-- MOTTO -->
+  <div class="motto">
+    "Doing the right things, right the first time."<br/>
+    — Basta kwan, gani. 🪨☕🐆
+  </div>
+
+  <!-- BRICK INDEX -->
+  <main class="content">
+
+    <div class="section-label">📖 QMS Bricks — Table of Contents</div>
+
+    <div class="brick-grid">
+
+      <!-- BRICK 1 -->
+      <a href="b1_quality_policy.html" class="brick-card">
+        <span class="brick-number">B1</span>
+        <div class="brick-info">
+          <div class="brick-title">Quality Policy</div>
+          <div class="brick-clause">ISO 5.2 — QP-001 v1.0</div>
+        </div>
+        <span class="brick-status status-ratified">RATIFIED</span>
+      </a>
+
+      <!-- BRICK 2 -->
+      <a href="b2_mission_vision.html" class="brick-card">
+        <span class="brick-number">B2</span>
+        <div class="brick-info">
+          <div class="brick-title">Mission &amp; Vision</div>
+          <div class="brick-clause">ISO 5.1 — MV-001 v2.0</div>
+        </div>
+        <span class="brick-status status-ratified">RATIFIED</span>
+      </a>
+
+      <!-- BRICK 3 -->
+      <a href="b3_scope.html" class="brick-card">
+        <span class="brick-number">B3</span>
+        <div class="brick-info">
+          <div class="brick-title">Scope of QMS</div>
+          <div class="brick-clause">ISO 4.3 — QMS-SCOPE-001 v1.0</div>
+        </div>
+        <span class="brick-status status-ratified">RATIFIED</span>
+      </a>
+
+      <!-- BRICK 4 -->
+      <a href="b4_quality_objectives.html" class="brick-card">
+        <span class="brick-number">B4</span>
+        <div class="brick-info">
+          <div class="brick-title">Quality Objectives</div>
+          <div class="brick-clause">ISO 6.2 — OQM-001 v1.0</div>
+        </div>
+        <span class="brick-status status-ratified">RATIFIED</span>
+      </a>
+
+      <!-- BRICK 5 -->
+      <a href="b5_roles_responsibilities.html" class="brick-card">
+        <span class="brick-number">B5</span>
+        <div class="brick-info">
+          <div class="brick-title">Roles &amp; Responsibilities</div>
+          <div class="brick-clause">ISO 5.3 — ORG-001 v1.0</div>
+        </div>
+        <span class="brick-status status-ratified">RATIFIED</span>
+      </a>
+
+      <!-- BRICK 6 -->
+      <a href="b6_risk_opportunity.html" class="brick-card">
+        <span class="brick-number">B6</span>
+        <div class="brick-info">
+          <div class="brick-title">Risk &amp; Opportunity Assessment</div>
+          <div class="brick-clause">ISO 6.1 — RISK-001 v1.0</div>
+        </div>
+        <span class="brick-status status-conditional">CONDITIONAL</span>
+      </a>
+
+      <!-- BRICK 7 -->
+      <a href="b7_document_control.html" class="brick-card">
+        <span class="brick-number">B7</span>
+        <div class="brick-info">
+          <div class="brick-title">Document Control Procedure</div>
+          <div class="brick-clause">ISO 7.5 — QMS-DCP-001 v2.0</div>
+        </div>
+        <span class="brick-status status-ratified">RATIFIED</span>
+      </a>
+
+      <!-- BRICK 8 -->
+      <a href="b8_internal_audit.html" class="brick-card">
+        <span class="brick-number">B8</span>
+        <div class="brick-info">
+          <div class="brick-title">Internal Audit Procedure</div>
+          <div class="brick-clause">ISO 9.2 — IAP-001 v1.0</div>
+        </div>
+        <span class="brick-status status-conditional">CONDITIONAL</span>
+      </a>
+
+      <!-- BRICK 9 -->
+      <a href="b9_capa.html" class="brick-card">
+        <span class="brick-number">B9</span>
+        <div class="brick-info">
+          <div class="brick-title">Corrective &amp; Preventive Action</div>
+          <div class="brick-clause">ISO 10.2 — QMS-CAPA-001 v1.0</div>
+        </div>
+        <span class="brick-status status-conditional">CONDITIONAL</span>
+      </a>
+
+      <!-- BRICK 10 -->
+      <a href="b10_continual_improvement.html" class="brick-card">
+        <span class="brick-number">B10</span>
+        <div class="brick-info">
+          <div class="brick-title">Continual Improvement</div>
+          <div class="brick-clause">ISO 10.3 — QMS-CI-001 v1.0</div>
+        </div>
+        <span class="brick-status status-conditional">CONDITIONAL</span>
+      </a>
+
+      <!-- BRICK 11 -->
+      <a href="b11_management_review.html" class="brick-card">
+        <span class="brick-number">B11</span>
+        <div class="brick-info">
+          <div class="brick-title">Management Review</div>
+          <div class="brick-clause">ISO 9.3 — MR-001</div>
+        </div>
+        <span class="brick-status status-queued">QUEUED</span>
+      </a>
+
+      <!-- BRICK 12 -->
+      <a href="b12_quality_manual.html" class="brick-card">
+        <span class="brick-number">B12</span>
+        <div class="brick-info">
+          <div class="brick-title">Quality Manual</div>
+          <div class="brick-clause">ISO 4.4 — QM-001</div>
+        </div>
+        <span class="brick-status status-queued">QUEUED</span>
+      </a>
+
+    </div>
+
+    <!-- ANNEXES -->
+    <div class="section-label">📎 Annexes &amp; Supporting Documents</div>
+
+    <div class="brick-grid">
+      <a href="annex_pid.html" class="brick-card">
+        <span class="brick-number">A1</span>
+        <div class="brick-info">
+          <div class="brick-title">P&amp;ID — Attunement Instrument Design</div>
+          <div class="brick-clause">KQ-ENG-001 — Stanley × Keila × Ocelot</div>
+        </div>
+        <span class="brick-status status-ratified">RATIFIED</span>
+      </a>
+
+      <a href="annex_audit_minutes.html" class="brick-card">
+        <span class="brick-number">A2</span>
+        <div class="brick-info">
+          <div class="brick-title">Audit Minutes — B1 to B10</div>
+          <div class="brick-clause">FWO-009 Campaign Record</div>
+        </div>
+        <span class="brick-status status-conditional">CONDITIONAL</span>
+      </a>
+
+      <a href="annex_attunement.html" class="brick-card">
+        <span class="brick-number">A3</span>
+        <div class="brick-info">
+          <div class="brick-title">TQM + TPM = Attunement</div>
+          <div class="brick-clause">Servilleta — Philosophy Framework</div>
+        </div>
+        <span class="brick-status status-queued">QUEUED</span>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- NAV — -->
+  <nav class="nav" style="border-top: 1px solid var(--border-primary); border-bottom: none; margin-top: 40px;">
+    <a href="../index.html">&larr; The Kingdom of Basta</a>
+    <a href="../../index.html" style="color: var(--accent-kwan);">&#9776; The Three Kingdoms</a>
+    <a href="b1_quality_policy.html">Next &rarr;</a>
+  </nav>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="seal">👑 Architect's Seal — The Three Kingdoms</div>
+    <p>Campaign FWO-009 | McDonald's Franchise | ISO 9001:2015 Aligned</p>
+    <p>Ocelot (CEO) · Keila (Consultant) · Stanley (Auditor) · James (Architect)</p>
+    <p>Basta kwan, gani. 🪨☕🐆</p>
+  </footer>
+
+  <!-- VANILLA JS — THEME TOGGLE -->
+  <script>
+    function toggleTheme() {
+      var html = document.documentElement;
+      var current = html.getAttribute('data-theme');
+      var next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    }
+
+    // LOAD SAVED THEME
+    (function() {
+      var saved = localStorage.getItem('theme');
+      if (saved) {
+        document.documentElement.setAttribute('data-theme', saved);
+      }
+    })();
+  </script>
+
+</body>
+</html>
+

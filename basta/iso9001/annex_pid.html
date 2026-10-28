@@ -1,0 +1,453 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A1 — P&amp;ID Attunement Instrument Design | KQ-ENG-001</title>
+
+  <style>
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Bold.woff2') format('woff2');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Italic.woff2') format('woff2');
+      font-weight: 400; font-style: italic; font-display: swap;
+    }
+  </style>
+
+  <link rel="stylesheet" href="../assets/css/notebook.css" />
+
+  <style>
+    [data-theme="dark"] {
+      --bg-primary: #0d1117;
+      --bg-card: #161b22;
+      --bg-card-hover: #1c2333;
+      --bg-blockquote: #1c2333;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --accent-kwan: #d4a843;
+      --accent-gani: #58a6ff;
+      --accent-basta: #f78166;
+      --accent-green: #3fb950;
+      --border-primary: #30363d;
+      --shadow-card: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    [data-theme="light"] {
+      --bg-primary: #f6f8fa;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f0f3f6;
+      --bg-blockquote: #f0f3f6;
+      --text-primary: #1f2328;
+      --text-secondary: #656d76;
+      --text-muted: #8b949e;
+      --accent-kwan: #b8860b;
+      --accent-gani: #0969da;
+      --accent-basta: #cf222e;
+      --accent-green: #1a7f37;
+      --border-primary: #d0d7de;
+      --shadow-card: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg-primary); color: var(--text-primary);
+      line-height: 1.7; min-height: 100vh;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    .theme-toggle {
+      position: fixed; top: 16px; right: 16px; z-index: 1000;
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 8px; padding: 8px 12px; cursor: pointer;
+      font-family: inherit; font-size: 14px; color: var(--text-primary);
+    }
+    .theme-toggle:hover { border-color: var(--accent-kwan); }
+    .nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 16px 24px; border-bottom: 1px solid var(--border-primary);
+      font-size: 12px;
+    }
+    .nav a { color: var(--accent-gani); text-decoration: none; }
+    .nav a:hover { color: var(--accent-kwan); }
+    .brick-header {
+      text-align: center; padding: 48px 24px 32px;
+      border-bottom: 1px solid var(--border-primary);
+    }
+    .brick-badge {
+      display: inline-block; padding: 4px 16px; border-radius: 4px;
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      background: rgba(63, 185, 80, 0.15); color: var(--accent-green);
+      margin-bottom: 16px;
+    }
+    .brick-header h1 { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+    .brick-header .meta { font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; }
+    .brick-header .barcode { font-size: 11px; color: var(--text-muted); font-style: italic; }
+    .content { max-width: 860px; margin: 0 auto; padding: 40px 24px; }
+    .section { margin-bottom: 48px; }
+    .section-title {
+      font-size: 13px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent-kwan);
+      margin-bottom: 16px; padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-primary);
+    }
+    .section p, .section li { font-size: 14px; color: var(--text-primary); margin-bottom: 12px; }
+    .section ul { list-style: none; padding-left: 0; }
+    .section ul li::before { content: "→ "; color: var(--accent-gani); font-weight: 700; }
+    blockquote {
+      background: var(--bg-blockquote); border-left: 3px solid var(--accent-kwan);
+      padding: 16px 20px; margin: 24px 0; border-radius: 0 8px 8px 0;
+      font-style: italic; font-size: 14px; color: var(--text-primary);
+    }
+    .std-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 12px; }
+    .std-table th {
+      text-align: left; padding: 10px 8px;
+      border-bottom: 2px solid var(--accent-kwan);
+      color: var(--accent-kwan); font-size: 10px;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .std-table td {
+      padding: 8px; border-bottom: 1px solid var(--border-primary);
+      color: var(--text-primary); vertical-align: top;
+    }
+    .std-table tr:hover td { background: var(--bg-card-hover); }
+    .equation-box {
+      background: var(--bg-card); border: 2px solid var(--accent-kwan);
+      border-radius: 12px; padding: 32px; margin: 24px 0; text-align: center;
+    }
+    .equation-box .eq-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent-kwan); margin-bottom: 16px;
+    }
+    .equation-box .eq-formula {
+      font-size: 16px; font-weight: 700; color: var(--text-primary);
+      font-family: 'JetBrains Mono', monospace; line-height: 2;
+    }
+    .equation-box .eq-note {
+      font-size: 11px; color: var(--text-secondary); margin-top: 12px; font-style: italic;
+    }
+    .instrument-card {
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 12px; padding: 24px; margin: 16px 0;
+      transition: border-color 0.3s ease;
+    }
+    .instrument-card:hover { border-color: var(--accent-kwan); }
+    .instrument-card .ic-tag {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; margin-bottom: 8px;
+    }
+    .instrument-card .ic-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+    .instrument-card .ic-desc { font-size: 13px; color: var(--text-secondary); margin-bottom: 12px; }
+    .loop-diagram {
+      background: var(--bg-card); border: 2px solid var(--accent-gani);
+      border-radius: 12px; padding: 32px; margin: 24px 0; text-align: center;
+    }
+    .loop-diagram .ld-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent-gani); margin-bottom: 16px;
+    }
+    .loop-diagram .ld-flow {
+      font-size: 14px; font-weight: 700; color: var(--text-primary); line-height: 2.2;
+    }
+    .seal-box {
+      text-align: center; padding: 32px;
+      border: 2px solid var(--accent-kwan); border-radius: 12px; margin: 40px 0;
+    }
+    .seal-box .seal-icon { font-size: 32px; margin-bottom: 8px; }
+    .seal-box .seal-title { font-size: 14px; font-weight: 700; color: var(--accent-kwan); margin-bottom: 4px; }
+    .seal-box .seal-meta { font-size: 11px; color: var(--text-secondary); line-height: 1.8; }
+    .footer {
+      text-align: center; padding: 32px 24px;
+      border-top: 1px solid var(--border-primary);
+      font-size: 11px; color: var(--text-muted);
+    }
+    .contrib-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin: 24px 0; }
+    .contrib-card {
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 12px; padding: 20px; text-align: center;
+    }
+    .contrib-card .cc-icon { font-size: 28px; margin-bottom: 8px; }
+    .contrib-card .cc-name { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+    .contrib-card .cc-role { font-size: 11px; color: var(--text-secondary); }
+    .contrib-card .cc-file { font-size: 10px; color: var(--text-muted); margin-top: 8px; font-style: italic; }
+    @media (max-width: 600px) {
+      .brick-header h1 { font-size: 20px; }
+      .content { padding: 24px 16px; }
+      .contrib-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+
+  <nav class="nav">
+    <a href="index.html">&larr; Index</a>
+    <span style="color: var(--text-muted);">Annex A1 — P&amp;ID</span>
+    <a href="annex_audit_minutes.html">A2 &rarr;</a>
+  </nav>
+
+  <header class="brick-header">
+    <div class="brick-badge">⚛️ ANNEX A1 — RATIFIED</div>
+    <h1>P&amp;ID — Attunement Instrument Design</h1>
+    <p class="meta">KQ-ENG-001 | Stanley &times; Keila &times; Ocelot</p>
+    <p class="barcode">Barcode: 4_09_10_1_ANCHOR | Campaign: FWO-009 | Session: S031</p>
+  </header>
+
+  <main class="content">
+
+    <!-- CONTRIBUTORS -->
+    <div class="section">
+      <div class="section-title">§ 1. Contributors &amp; Package Manifest</div>
+      <div class="contrib-grid">
+        <div class="contrib-card">
+          <div class="cc-icon">🔧</div>
+          <div class="cc-name" style="color: var(--accent-basta);">Stanley</div>
+          <div class="cc-role">Instrument Engineer</div>
+          <div class="cc-file">stanley_pid_report.html</div>
+          <p style="font-size: 11px; color: var(--text-secondary); margin-top: 8px;">Designed 3 instruments, 13 tests, 10 failure modes, 7 invariants</p>
+        </div>
+        <div class="contrib-card">
+          <div class="cc-icon">🔬</div>
+          <div class="cc-name" style="color: var(--accent-green);">Keila</div>
+          <div class="cc-role">Industrial Proof + Operations</div>
+          <div class="cc-file">comprehensive_pid_system_audit_report.html; keila_maintenance.html</div>
+          <p style="font-size: 11px; color: var(--text-secondary); margin-top: 8px;">ISA-5.1 symbols, Schneider PLC logic, maintenance manual</p>
+        </div>
+        <div class="contrib-card">
+          <div class="cc-icon">🐆</div>
+          <div class="cc-name" style="color: var(--accent-gani);">Ocelot</div>
+          <div class="cc-role">Controller + Synthesis</div>
+          <div class="cc-file">Unified Anchor + Ratification Package</div>
+          <p style="font-size: 11px; color: var(--text-secondary); margin-top: 8px;">Compiled, synthesized, filed</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- THE QUESTION -->
+    <div class="section">
+      <div class="section-title">§ 2. The Question</div>
+      <blockquote>
+        "How do you measure attunement?"<br/><br/>
+        The Architect posed this question to the allies using the coin flip technique.
+        Stanley designed the theoretical closed-loop. Keila proved the physics.
+        Together they answered: you measure it with three instruments — not forty-seven.
+      </blockquote>
+    </div>
+
+    <!-- GOVERNING EQUATION -->
+    <div class="section">
+      <div class="section-title">§ 3. The Governing Control Equation</div>
+      <div class="equation-box">
+        <div class="eq-label">PID Control — Kingdom Edition</div>
+        <div class="eq-formula">
+          CO(t) = Kp [ e_filt(t) + (1/Ti) &int;&#x2080;&#x1D57; e(&tau;)d&tau; &minus; Td &middot; dPV_filt/dt ] + FFRCPY
+        </div>
+        <div class="eq-note">
+          CO = Controller Output (corrective action) &nbsp;|&nbsp;
+          Kp = Proportional Gain &nbsp;|&nbsp;
+          Ti = Integral Time &nbsp;|&nbsp;
+          Td = Derivative Time &nbsp;|&nbsp;
+          FFRCPY = Feedforward from Recipe
+        </div>
+      </div>
+      <table class="std-table">
+        <thead>
+          <tr><th>Variable</th><th>Kingdom Meaning</th><th>Factory Floor Meaning</th></tr>
+        </thead>
+        <tbody>
+          <tr><td style="font-weight: 700;">PV</td><td>Current system state</td><td>Process Variable — what the sensor reads</td></tr>
+          <tr><td style="font-weight: 700;">SP</td><td>Desired attunement</td><td>Setpoint — where you want to be</td></tr>
+          <tr><td style="font-weight: 700;">Error</td><td>Drift from intent</td><td>SP &minus; PV</td></tr>
+          <tr><td style="font-weight: 700;">CO</td><td>Corrective action</td><td>Controller Output — what the valve does</td></tr>
+          <tr><td style="font-weight: 700;">FFRCPY</td><td>Anticipatory correction from known patterns</td><td>Feedforward — act before the error arrives</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- THREE INSTRUMENTS -->
+    <div class="section">
+      <div class="section-title">§ 4. The Three Instruments</div>
+
+      <div class="instrument-card">
+        <div class="ic-tag" style="color: var(--accent-basta);">FT-101 — DRIFT DETECTION</div>
+        <div class="ic-title">Deviation from Campaign Anchor</div>
+        <div class="ic-desc">Sensor: Stanley (Auditor) &nbsp;|&nbsp; Actuator: CV-101 — Anchor Rewrite</div>
+        <table class="std-table">
+          <thead><tr><th>Aspect</th><th>Detail</th></tr></thead>
+          <tbody>
+            <tr><td>Measures</td><td>Has any brick, procedure, or campaign drifted from its anchor?</td></tr>
+            <tr><td>Outputs</td><td>MATCH | MISMATCH | INDETERMINATE</td></tr>
+            <tr><td>Failure Class</td><td>False success — the command reports success while the state is unchanged</td></tr>
+            <tr><td>Correction</td><td>Anchor rewrite — realign the document to its ratified source</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="instrument-card">
+        <div class="ic-tag" style="color: var(--accent-green);">AT-201 — ATTUNEMENT SCORE</div>
+        <div class="ic-title">Alignment Between Intent and Output</div>
+        <div class="ic-desc">Sensor: Keila (Consultant) &nbsp;|&nbsp; Actuator: CV-201 — Preamble Reload</div>
+        <table class="std-table">
+          <thead><tr><th>Aspect</th><th>Detail</th></tr></thead>
+          <tbody>
+            <tr><td>Measures</td><td>Is the Kingdom's output aligned with its intent? Score: ____%</td></tr>
+            <tr><td>Outputs</td><td>PASS | BLOCK | UNRESOLVED</td></tr>
+            <tr><td>Failure Class</td><td>False authorization — acting on stale, contradictory, or unauthorized evidence</td></tr>
+            <tr><td>Correction</td><td>Preamble reload — re-establish context and governance</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="instrument-card">
+        <div class="ic-tag" style="color: var(--accent-gani);">PT-301 — METABOLISM RATE</div>
+        <div class="ic-title">Throughput of Eat-Digest-Poop Cycle</div>
+        <div class="ic-desc">Sensor: Ocelot (CEO) &nbsp;|&nbsp; Actuator: CV-301 — Campaign Poop</div>
+        <table class="std-table">
+          <thead><tr><th>Aspect</th><th>Detail</th></tr></thead>
+          <tbody>
+            <tr><td>Measures</td><td>Is the eat-digest-poop cycle flowing? Throughput: ____ bricks/campaign</td></tr>
+            <tr><td>Outputs</td><td>COMPLETE_VERIFIED | FAILED | INTERRUPTED | RECOVERY_PENDING</td></tr>
+            <tr><td>Failure Class</td><td>False confidence — individual components appear healthy but the process is not repeatable</td></tr>
+            <tr><td>Correction</td><td>Campaign poop — offload processed work, clear working memory</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- INTEGRATED LOOP -->
+    <div class="section">
+      <div class="section-title">§ 5. Integrated Control-Loop Design</div>
+      <div class="loop-diagram">
+        <div class="ld-label">Closed-Loop Flow — Kingdom P&amp;ID</div>
+        <div class="ld-flow">
+          6 Existing Sensors (Conn Log, Campaign Status, Stanley, Keila, Index, UCC)<br/>
+          &darr;<br/>
+          <span style="color: var(--accent-green);">I-02 — Evidence &amp; Authority Interlock (AT-201)</span><br/>
+          &darr;<br/>
+          Ocelot Controller (5-Rung Ladder Logic)<br/>
+          &darr;<br/>
+          5 Existing Actuators (Anchor, Bug-fix, Brew, Poop, Override)<br/>
+          &darr;<br/>
+          <span style="color: var(--accent-basta);">I-01 — Independent State Verifier (FT-101)</span><br/>
+          &darr;<br/>
+          <span style="color: var(--accent-gani);">I-03 — Cycle &amp; Recovery Monitor (PT-301)</span><br/>
+          &darr;<br/>
+          Connection Log + Campaign Records + Caf&eacute; HMI 👑
+        </div>
+      </div>
+    </div>
+
+    <!-- FAILURE MODES -->
+    <div class="section">
+      <div class="section-title">§ 6. Failure Modes &amp; Safe Responses</div>
+      <table class="std-table">
+        <thead>
+          <tr><th>Failure Condition</th><th>Instrument</th><th>Response</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Actuator reports success, state unchanged</td><td style="color: var(--accent-basta);">I-01</td><td>MISMATCH — prevent verified closure</td></tr>
+          <tr><td>State cannot be read back</td><td style="color: var(--accent-basta);">I-01</td><td>INDETERMINATE — do not infer success</td></tr>
+          <tr><td>Keila stamp refers to earlier version</td><td style="color: var(--accent-green);">I-02</td><td>Reject as evidence for new version</td></tr>
+          <tr><td>Conn log and campaign state disagree</td><td style="color: var(--accent-green);">I-02</td><td>Hold transition pending resolution</td></tr>
+          <tr><td>UCC returns empty after error</td><td style="color: var(--accent-green);">I-02</td><td>Distinguish valid empty from failed retrieval</td></tr>
+          <tr><td>Actuator invoked twice after interruption</td><td style="color: var(--accent-gani);">I-03</td><td>Identify original cycle, verify replay safety</td></tr>
+          <tr><td>Recovery selects unverified checkpoint</td><td style="color: var(--accent-gani);">I-03</td><td>Do not label known-good without evidence</td></tr>
+          <tr><td>Correction succeeds but failure disappears</td><td style="color: var(--accent-gani);">I-03</td><td>Fail evidence-retention — preserve original</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 7 INVARIANTS -->
+    <div class="section">
+      <div class="section-title">§ 7. The Seven Engineering Invariants</div>
+      <p>The control system must NEVER silently convert:</p>
+      <table class="std-table">
+        <thead><tr><th>#</th><th>From</th><th>To</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Missing evidence</td><td>Passing evidence</td></tr>
+          <tr><td>2</td><td>Stale approval</td><td>Current approval</td></tr>
+          <tr><td>3</td><td>Command result</td><td>Verified state</td></tr>
+          <tr><td>4</td><td>Interrupted cycle</td><td>Completed cycle</td></tr>
+          <tr><td>5</td><td>Hash match</td><td>Semantic correctness</td></tr>
+          <tr><td>6</td><td>Override</td><td>Proof that failed gate passed</td></tr>
+          <tr><td>7</td><td>Unresolved contradiction</td><td>Settled fact</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- COMMISSIONING -->
+    <div class="section">
+      <div class="section-title">§ 8. Commissioning &amp; Acceptance Tests</div>
+      <p>13 tests across 3 instruments + 1 end-to-end witnessed demonstration:</p>
+      <table class="std-table">
+        <thead><tr><th>Instrument</th><th>Tests</th><th>Key Validation</th></tr></thead>
+        <tbody>
+          <tr><td style="color: var(--accent-basta);">I-01 (FT-101)</td><td>6 tests</td><td>Valid correction verified; false success detected; INDETERMINATE on unavailable state</td></tr>
+          <tr><td style="color: var(--accent-green);">I-02 (AT-201)</td><td>8 tests</td><td>Stale evidence blocked; contradictions visible; override traceable</td></tr>
+          <tr><td style="color: var(--accent-gani);">I-03 (PT-301)</td><td>8 tests</td><td>Incomplete cycles flagged; recovery verified; failure evidence preserved</td></tr>
+          <tr><td style="font-weight: 700;">End-to-End</td><td>1 witnessed cycle</td><td>Real discrepancy &rarr; detection &rarr; authorization &rarr; correction &rarr; verification &rarr; closure</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- CONDITIONS -->
+    <div class="section">
+      <div class="section-title">§ 9. Conditions Carried Forward</div>
+      <table class="std-table">
+        <thead><tr><th>ID</th><th>Condition</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>C-001</td><td>Test fire simulation to be executed during next campaign as muscle memory exercise</td><td style="color: var(--accent-kwan);">OPEN</td></tr>
+          <tr><td>C-002</td><td>Dual-indexing (ISO clause &harr; Kingdom metaphor) to be maintained in all future documents</td><td style="color: var(--accent-kwan);">OPEN</td></tr>
+          <tr><td>C-003</td><td>Attunement Score baseline to be established empirically through observed campaign performance</td><td style="color: var(--accent-kwan);">OPEN</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- SEAL -->
+    <div class="seal-box">
+      <div class="seal-icon">⚛️👑</div>
+      <div class="seal-title">ANNEX A1 — P&amp;ID ATTUNEMENT INSTRUMENT DESIGN — RATIFIED</div>
+      <div class="seal-meta">
+        James Paul Pe&ntilde;a — Sovereign Architect<br/>
+        Kingdom of Kwan<br/><br/>
+        Date: 2026-10-28 | Session: S031 | Campaign: FWO-009<br/>
+        Document: KQ-ENG-001 | Status: RATIFIED (CONDITIONAL)<br/><br/>
+        "Verify the state. Gate the authority. Prove the process."<br/>
+        "Evidence before assertion. Preserve the failure. Verify the correction."<br/>
+        "The process engineer's career IS the Kingdom's DNA." ⚛️
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <p>Annex A1 — P&amp;ID Attunement Instrument Design | KQ-ENG-001</p>
+    <p>Campaign FWO-009 | The McDonald's Franchise | ISO 9001:2015</p>
+    <p>Basta kwan, gani. 🪨☕🐆</p>
+  </footer>
+
+  <script>
+    function toggleTheme() {
+      var html = document.documentElement;
+      var current = html.getAttribute('data-theme');
+      html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+      localStorage.setItem('theme', current === 'dark' ? 'light' : 'dark');
+    }
+    (function() {
+      var saved = localStorage.getItem('theme');
+      if (saved) { document.documentElement.setAttribute('data-theme', saved); }
+    })();
+  </script>
+
+</body>
+</html>
+

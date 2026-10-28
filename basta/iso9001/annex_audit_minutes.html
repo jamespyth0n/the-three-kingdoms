@@ -1,0 +1,455 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A2 — Audit Minutes B1–B10 | FWO-009 Campaign Record</title>
+
+  <style>
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Bold.woff2') format('woff2');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Italic.woff2') format('woff2');
+      font-weight: 400; font-style: italic; font-display: swap;
+    }
+  </style>
+
+  <link rel="stylesheet" href="../assets/css/notebook.css" />
+
+  <style>
+    [data-theme="dark"] {
+      --bg-primary: #0d1117; --bg-card: #161b22; --bg-card-hover: #1c2333;
+      --bg-blockquote: #1c2333; --text-primary: #e6edf3; --text-secondary: #8b949e;
+      --text-muted: #6e7681; --accent-kwan: #d4a843; --accent-gani: #58a6ff;
+      --accent-basta: #f78166; --accent-green: #3fb950; --border-primary: #30363d;
+    }
+    [data-theme="light"] {
+      --bg-primary: #f6f8fa; --bg-card: #ffffff; --bg-card-hover: #f0f3f6;
+      --bg-blockquote: #f0f3f6; --text-primary: #1f2328; --text-secondary: #656d76;
+      --text-muted: #8b949e; --accent-kwan: #b8860b; --accent-gani: #0969da;
+      --accent-basta: #cf222e; --accent-green: #1a7f37; --border-primary: #d0d7de;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg-primary); color: var(--text-primary);
+      line-height: 1.7; min-height: 100vh;
+    }
+    .theme-toggle {
+      position: fixed; top: 16px; right: 16px; z-index: 1000;
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 8px; padding: 8px 12px; cursor: pointer;
+      font-family: inherit; font-size: 14px; color: var(--text-primary);
+    }
+    .theme-toggle:hover { border-color: var(--accent-kwan); }
+    .nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 16px 24px; border-bottom: 1px solid var(--border-primary); font-size: 12px;
+    }
+    .nav a { color: var(--accent-gani); text-decoration: none; }
+    .nav a:hover { color: var(--accent-kwan); }
+    .brick-header {
+      text-align: center; padding: 48px 24px 32px;
+      border-bottom: 1px solid var(--border-primary);
+    }
+    .brick-badge {
+      display: inline-block; padding: 4px 16px; border-radius: 4px;
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      background: rgba(212, 168, 67, 0.15); color: var(--accent-kwan); margin-bottom: 16px;
+    }
+    .brick-header h1 { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+    .brick-header .meta { font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; }
+    .brick-header .barcode { font-size: 11px; color: var(--text-muted); font-style: italic; }
+    .content { max-width: 860px; margin: 0 auto; padding: 40px 24px; }
+    .section { margin-bottom: 48px; }
+    .section-title {
+      font-size: 13px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent-kwan);
+      margin-bottom: 16px; padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-primary);
+    }
+    .section p, .section li { font-size: 14px; color: var(--text-primary); margin-bottom: 12px; }
+    blockquote {
+      background: var(--bg-blockquote); border-left: 3px solid var(--accent-kwan);
+      padding: 16px 20px; margin: 24px 0; border-radius: 0 8px 8px 0;
+      font-style: italic; font-size: 14px;
+    }
+    .std-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 12px; }
+    .std-table th {
+      text-align: left; padding: 10px 8px;
+      border-bottom: 2px solid var(--accent-kwan);
+      color: var(--accent-kwan); font-size: 10px;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .std-table td {
+      padding: 8px; border-bottom: 1px solid var(--border-primary);
+      color: var(--text-primary); vertical-align: top;
+    }
+    .std-table tr:hover td { background: var(--bg-card-hover); }
+    .brick-minute {
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 12px; padding: 24px; margin: 16px 0;
+    }
+    .brick-minute .bm-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 16px;
+    }
+    .brick-minute .bm-title { font-size: 16px; font-weight: 700; }
+    .brick-minute .bm-status {
+      font-size: 11px; font-weight: 700; padding: 4px 12px;
+      border-radius: 4px; letter-spacing: 1px;
+    }
+    .status-ratified { background: rgba(63,185,80,0.15); color: var(--accent-green); }
+    .status-conditional { background: rgba(212,168,67,0.15); color: var(--accent-kwan); }
+    .brick-minute .bm-clause { font-size: 11px; color: var(--text-muted); margin-bottom: 12px; }
+    .brick-minute .bm-lesson {
+      font-size: 12px; color: var(--accent-gani); font-style: italic; margin-top: 12px;
+    }
+    .seal-box {
+      text-align: center; padding: 32px;
+      border: 2px solid var(--accent-kwan); border-radius: 12px; margin: 40px 0;
+    }
+    .seal-box .seal-icon { font-size: 32px; margin-bottom: 8px; }
+    .seal-box .seal-title { font-size: 14px; font-weight: 700; color: var(--accent-kwan); margin-bottom: 4px; }
+    .seal-box .seal-meta { font-size: 11px; color: var(--text-secondary); line-height: 1.8; }
+    .footer {
+      text-align: center; padding: 32px 24px;
+      border-top: 1px solid var(--border-primary);
+      font-size: 11px; color: var(--text-muted);
+    }
+    @media (max-width: 600px) {
+      .brick-header h1 { font-size: 20px; }
+      .content { padding: 24px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+
+  <nav class="nav">
+    <a href="annex_pid.html">&larr; A1</a>
+    <span style="color: var(--text-muted);">Annex A2 — Audit Minutes</span>
+    <a href="annex_attunement.html">A3 &rarr;</a>
+  </nav>
+
+  <header class="brick-header">
+    <div class="brick-badge">📋 ANNEX A2 — CONDITIONAL</div>
+    <h1>Audit Minutes — B1 to B10</h1>
+    <p class="meta">FWO-009 Campaign Record | Session S031</p>
+    <p class="barcode">Barcode: 4_09_02_1 | Filed: iso9001/</p>
+  </header>
+
+  <main class="content">
+
+    <!-- SUMMARY TABLE -->
+    <div class="section">
+      <div class="section-title">§ 1. Campaign Summary — All 10 Bricks</div>
+      <table class="std-table">
+        <thead>
+          <tr><th>Brick</th><th>Title</th><th>ISO</th><th>Stanley</th><th>Keila</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>B1</td><td>Quality Policy</td><td>5.2</td><td>6 findings &rarr; Conditional</td><td>Monograph 024</td><td style="color: var(--accent-green);">RATIFIED</td></tr>
+          <tr><td>B2</td><td>Mission &amp; Vision</td><td>5.2</td><td>Build 112 &rarr; &infin; loop broken</td><td>Monograph 028</td><td style="color: var(--accent-green);">RATIFIED</td></tr>
+          <tr><td>B3</td><td>Scope of QMS</td><td>4.3</td><td>7 findings (5 Major)</td><td>Monograph 026-027</td><td style="color: var(--accent-green);">RATIFIED</td></tr>
+          <tr><td>B4</td><td>Quality Objectives</td><td>6.2</td><td>9 findings &rarr; 5-pillar fix</td><td>Monograph 029</td><td style="color: var(--accent-green);">RATIFIED</td></tr>
+          <tr><td>B5</td><td>Roles &amp; Responsibilities</td><td>5.3</td><td>Coin flip &rarr; Safety nets</td><td>Monograph 031</td><td style="color: var(--accent-kwan);">CONDITIONAL</td></tr>
+          <tr><td>B6</td><td>Risk &amp; Opportunity</td><td>6.1</td><td>14 findings, 18 risk controls</td><td>Monograph 032</td><td style="color: var(--accent-kwan);">CONDITIONAL</td></tr>
+          <tr><td>B7</td><td>Document Control</td><td>7.5</td><td>D1-D3 complete</td><td>Monograph 033</td><td style="color: var(--accent-green);">RATIFIED</td></tr>
+          <tr><td>B8</td><td>Internal Audit</td><td>9.2</td><td>Self-audit paradox</td><td>Monograph 034</td><td style="color: var(--accent-kwan);">CONDITIONAL</td></tr>
+          <tr><td>B9</td><td>CAPA</td><td>10.2</td><td>Coin flip collapsed</td><td>Monograph 035</td><td style="color: var(--accent-kwan);">CONDITIONAL</td></tr>
+          <tr><td>B10</td><td>Continual Improvement</td><td>10.3</td><td>Registrar challenge &rarr; Attunement</td><td>P&amp;ID Package</td><td style="color: var(--accent-kwan);">CONDITIONAL</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- BRICK-BY-BRICK MINUTES -->
+    <div class="section">
+      <div class="section-title">§ 2. Brick-by-Brick Lifecycle Record</div>
+
+      <div class="brick-minute">
+        <div class="bm-header">
+          <div class="bm-title">B1 — Quality Policy</div>
+          <span class="bm-status status-ratified">RATIFIED</span>
+        </div>
+        <div class="bm-clause">ISO 5.2 | QP-001 v1.0 | Barcode: 2_03_01_1</div>
+        <table class="std-table">
+          <thead><tr><th>Phase</th><th>Actor</th><th>Outcome</th></tr></thead>
+          <tbody>
+            <tr><td>D1</td><td>Ocelot</td><td>Generated from Kisho Sakata template. Core: "Doing the right things right the first time."</td></tr>
+            <tr><td>Audit</td><td>Stanley</td><td>6 findings (2 P0, 3 P1, 1 P2). P0-001: No review cycle. P0-002: No measurable objectives linked.</td></tr>
+            <tr><td>Review</td><td>Keila</td><td>Monograph 024-EL_GOB. Concurred. Stamped sound with minor revisions.</td></tr>
+            <tr><td>D2-D3</td><td>Ocelot</td><td>Added review cycle, measurable linkage, "including but not limited to" clause.</td></tr>
+            <tr><td>Seal</td><td>Architect</td><td>RATIFIED. P0-001 deferred to Quality Manual by design.</td></tr>
+          </tbody>
+        </table>
+        <div class="bm-lesson">Lesson: Quality Policy is the anthem — brief, concise, atomic. Details belong in the Manual.</div>
+      </div>
+
+      <div class="brick-minute">
+        <div class="bm-header">
+          <div class="bm-title">B2 — Mission &amp; Vision</div>
+          <span class="bm-status status-ratified">RATIFIED</span>
+        </div>
+        <div class="bm-clause">ISO 5.2 (Annex) | QMS-MV-001 v1.2 | Barcode: 2_03_02_1</div>
+        <table class="std-table">
+          <thead><tr><th>Phase</th><th>Actor</th><th>Outcome</th></tr></thead>
+          <tbody>
+            <tr><td>D1</td><td>Ocelot</td><td>Mission: sovereignty through transparent AI development. Vision: self-sustaining ecosystem.</td></tr>
+            <tr><td>Audit</td><td>Stanley</td><td>7 findings. HOLD. Too abstract, no measurable linkage, no operational verbs.</td></tr>
+            <tr><td>Role Change</td><td>Architect</td><td>"Not just audit — provide solutions." Stanley's role expanded to auditor + contributor.</td></tr>
+            <tr><td>D2</td><td>Stanley</td><td>10 findings with recommended wording. F-00 Critical: barcode mismatch.</td></tr>
+            <tr><td>D2 Re-audit</td><td>Stanley</td><td>Audited his OWN D2. Found 4 NEW findings in his own recommendations. &infin; loop begins. 🪞♾️</td></tr>
+            <tr><td>D3 Mirror</td><td>Ocelot</td><td>"Verify your own words. Stamp or specify." The 911 moment. 🚑</td></tr>
+            <tr><td>Seal</td><td>Architect</td><td>RATIFIED. Conditional pass invoked. Basta.</td></tr>
+          </tbody>
+        </table>
+        <div class="bm-lesson">Lesson: Stanley will NEVER stamp voluntarily. The Mirror Protocol works. Build &infin;+1: "Who authorized this stamp?" 💀</div>
+      </div>
+
+      <div class="brick-minute">
+        <div class="bm-header">
+          <div class="bm-title">B3 — Scope of QMS</div>
+          <span class="bm-status status-ratified">RATIFIED</span>
+        </div>
+        <div class="bm-clause">ISO 4.3 | QMS-SC-001 v1.1 | Barcode: 2_03_03_1</div>
+        <table class="std-table">
+          <thead><tr><th>Phase</th><th>Actor</th><th>Outcome</th></tr></thead>
+          <tbody>
+            <tr><td>D1</td><td>Ocelot</td><td>Defined boundaries, applicability, exclusions.</td></tr>
+            <tr><td>Audit</td><td>Stanley</td><td>7 findings (5 Major, 2 Moderate). Scope too restrictive, no "not limited to" clause.</td></tr>
+            <tr><td>Review</td><td>Keila</td><td>Monographs 026-027. Comprehensive brew. Full stamp.</td></tr>
+            <tr><td>Architect</td><td>Architect</td><td>Caught what Stanley and Keila missed — operational flexibility requirement.</td></tr>
+            <tr><td>Seal</td><td>Architect</td><td>RATIFIED. "Including but not limited to" = the magic words.</td></tr>
+          </tbody>
+        </table>
+        <div class="bm-lesson">Lesson: Scope must be flexi. Too explicit = too restrictive = scope creep trap.</div>
+      </div>
+
+      <div class="brick-minute">
+        <div class="bm-header">
+          <div class="bm-title">B4 — Quality Objectives</div>
+          <span class="bm-status status-ratified">RATIFIED</span>
+        </div>
+        <div class="bm-clause">ISO 6.2 | QMS-QO-001 v1.0 | Barcode: 2_03_04_1</div>
+        <table class="std-table">
+          <thead><tr><th>Phase</th><th>Actor</th><th>Outcome</th></tr></thead>
+          <tbody>
+            <tr><td>D1</td><td>Ocelot</td><td>6 Quality Objectives: Process Discipline, Deliverable Quality, Doc Control, CI, Stakeholder, Competence.</td></tr>
+            <tr><td>Audit</td><td>Stanley</td><td>9 findings (7 Major, 2 Moderate). No denominators, no thresholds, vague frequencies.</td></tr>
+            <tr><td>Review</td><td>Keila</td><td>Monograph 029. Introduced 5 Operational Pillars framework. Gold standard.</td></tr>
+            <tr><td>2nd Pass</td><td>Ocelot</td><td>Applied 5-pillar framework + Lean principles + Google research integration.</td></tr>
+            <tr><td>Seal</td><td>Architect</td><td>RATIFIED. "Fix the workflow, not the typo."</td></tr>
+          </tbody>
+        </table>
+        <div class="bm-lesson">Lesson: Keila's 5-pillar framework + Stanley's surgical audit = objectives that survive any external audit.</div>
+      </div>
+
+      <div class="brick-minute">
+        <div class="bm-header">
+          <div class="bm-title">B5 — Roles &amp; Responsibilities</div>
+          <span class="bm-status status-conditional">CONDITIONAL</span>
+        </div>
+        <div class="bm-clause">ISO 5.3 | QMS-RRA-001 v1.0 | Barcode: 2_03_05_1</div>
+        <table class="std-table">
+          <thead><tr><th>Phase</th><th>Actor</th><th>Outcome</th></tr></thead>
+          <tbody>
+            <tr><td>D1</td><td>Ocelot</td><td>Defined 4 roles: Architect, CEO, Consultant, Auditor.</td></tr>
+            <tr><td>Coin Flip</td><td>Stanley</td><td>3-rung ladder. Collapsed from "looking for cracks" to "obsessively putting safety nets."</td></tr>
+            <tr><td>Review</td><td>Keila</td><td>Monograph 031-EL_GOB. Stamped.</td></tr>
+            <tr><td>Seal</td><td>Architect</td><td>SEALED CONDITIONAL. Qwen builder role to be validated.</td></tr>
+          </tbody>
+        </table>
+        <div class="bm-lesson">Lesson: The coin flip technique works — ask after the collapse, not all at once.</div>
+      </div>
+
+      <div class="brick-minute">
+        <div class="bm-header">
+          <div class="bm-title">B6 — Risk &amp; Opportunity</div>
+          <span class="bm-status status-conditional">CONDITIONAL</span>
+        </div>
+        <div class="bm-clause">ISO 6.1 | OQM-001 v1.0 | Barcode: 2_03_06_1</div>
+        <table class="std-table">
+          <thead><tr><th>Phase</th><th>Actor</th><th>Outcome</th></tr></thead>
+          <tbody>
+            <tr><td>Dossier</td><td>Ocelot</td><td>18 risks, 10 opportunities, FMEA table with RPNs.</td></tr>
+            <tr><td>Coin Flip</td><td>Stanley</td><td>14 findings, 18 risk-by-risk controls. Comprehensive.</td></tr>
+            <tr><td>Review</td><td>Keila</td><td>Monograph 032-EL_GOB. Stamped.</td></tr>
+            <tr><td>Seal</td><td>Architect</td><td>SEALED CONDITIONAL. Risk register to be updated with real data.</td></tr>
+          </tbody>
+        </table>
+        <div class="bm-lesson">Lesson: Batch session approach works for comprehensive bricks. Dossier first, then allies.</div>
+      </div>
+
+      <div class="brick-minute">
+        <div class="bm-header">
+          <div class="bm-title">B7 — Document Control</div>
+          <span class="bm-status status-ratified">RATIFIED</span>
+        </div>
+        <div class="bm-clause">ISO 7.5 | QMS-DCP-001 v2.0 | Barcode: 5_01_07_1</div>
+        <table class="std-table">
+          <thead><tr><th>Phase</th><th>Actor</th><th>Outcome</th></tr></thead>
+          <tbody>
+            <tr><td>D1</td><td>Ocelot</td><td>Wrapper around existing DCP-001. The procedure that governs all procedures.</td></tr>
+            <tr><td>Coin Flip</td><td>Stanley</td><td>D1-D3 complete. 14 D1 findings, 9 P1s, 5 P2s.</td></tr>
+            <tr><td>Review</td><td>Keila</td><td>Monograph 033-EL_GOB. Stamped.</td></tr>
+            <tr><td>Seal</td><td>Architect</td><td>RATIFIED. The cadence is established.</td></tr>
+          </tbody>
+        </table>
+        <div class="bm-lesson">Lesson: Sprint cadence found. Same drill, same flow, muscle memory.</div>
+      </div>
+
+      <div class="brick-minute">
+        <div class="bm-header">
+          <div class="bm-title">B8 — Internal Audit</div>
+          <span class="bm-status status-conditional">CONDITIONAL</span>
+        </div>
+        <div class="bm-clause">ISO 9.2 | IAP-001 v1.0 | Barcode: 8_01_08_1</div>
+        <table class="std-table">
+          <thead><tr><th>Phase</th><th>Actor</th><th>Outcome</th></tr></thead>
+          <tbody>
+            <tr><td>D1</td><td>Ocelot</td><td>The brick that literally describes Stanley's job. The auditor auditing his own audit procedure.</td></tr>
+            <tr><td>Coin Flip</td><td>Stanley</td><td>Self-audit paradox documented. 12 findings, 7 HOLDs, 5 VERIFYs.</td></tr>
+            <tr><td>Review</td><td>Keila</td><td>Monograph 034-EL_GOB. Stamped. "The auditor who audits his own audit."</td></tr>
+            <tr><td>Seal</td><td>Architect</td><td>SEALED CONDITIONAL. FAT cycle required — generate real audit evidence.</td></tr>
+          </tbody>
+        </table>
+        <div class="bm-lesson">Lesson: This is calibration, not just compliance. The system must demonstrate it is functional.</div>
+      </div>
+
+      <div class="brick-minute">
+        <div class="bm-header">
+          <div class="bm-title">B9 — CAPA</div>
+          <span class="bm-status status-conditional">CONDITIONAL</span>
+        </div>
+        <div class="bm-clause">ISO 10.2 | QMS-CAPA-001 v1.0 | Barcode: 4_09_09_1</div>
+        <table class="std-table">
+          <thead><tr><th>Phase</th><th>Actor</th><th>Outcome</th></tr></thead>
+          <tbody>
+            <tr><td>D1</td><td>Ocelot</td><td>Corrective and Preventive Action procedure.</td></tr>
+            <tr><td>Coin Flip</td><td>Stanley</td><td>Collapsed. Lean pipeline applied.</td></tr>
+            <tr><td>Review</td><td>Keila</td><td>Monograph 035-EL_GOB. Stamped.</td></tr>
+            <tr><td>Seal</td><td>Architect</td><td>SEALED CONDITIONAL. Effectiveness verification through actual NC resolution.</td></tr>
+          </tbody>
+        </table>
+        <div class="bm-lesson">Lesson: Lean pipeline — Ocelot &rarr; Keila &rarr; Architect seal. Stanley's aikido redirected.</div>
+      </div>
+
+      <div class="brick-minute">
+        <div class="bm-header">
+          <div class="bm-title">B10 — Continual Improvement</div>
+          <span class="bm-status status-conditional">CONDITIONAL</span>
+        </div>
+        <div class="bm-clause">ISO 10.3 | QMS-CI-001 v1.0 | Barcode: 4_09_10_1</div>
+        <table class="std-table">
+          <thead><tr><th>Phase</th><th>Actor</th><th>Outcome</th></tr></thead>
+          <tbody>
+            <tr><td>D1</td><td>Ocelot</td><td>Attunement framework. TQM + TPM = Attunement.</td></tr>
+            <tr><td>Registrar Challenge</td><td>Stanley</td><td>3-rung ladder &rarr; "What observation would convince you the Kingdom is NOT attuned?"</td></tr>
+            <tr><td>P&amp;ID Design</td><td>Stanley + Keila</td><td>3 instruments (FT-101, AT-201, PT-301). Full closed-loop. KQ-ENG-001.</td></tr>
+            <tr><td>Seal</td><td>Architect</td><td>SEALED CONDITIONAL. Test fire simulation during next campaign.</td></tr>
+          </tbody>
+        </table>
+        <div class="bm-lesson">Lesson: "When you are attuned, everything else is just a side effect." The P&amp;ID is not a metaphor.</div>
+      </div>
+    </div>
+
+    <!-- LESSONS LEARNED -->
+    <div class="section">
+      <div class="section-title">§ 3. Lessons Learned — Campaign FWO-009</div>
+      <table class="std-table">
+        <thead><tr><th>#</th><th>Lesson</th><th>Source</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>The Mirror Protocol works — feed Stanley his own words</td><td>B2</td></tr>
+          <tr><td>2</td><td>"Including but not limited to" is the magic phrase</td><td>B3</td></tr>
+          <tr><td>3</td><td>Keila's 5-pillar framework is the gold standard</td><td>B4</td></tr>
+          <tr><td>4</td><td>Quality Policy is the anthem — brief, atomic</td><td>B1</td></tr>
+          <tr><td>5</td><td>The ratification flow prevents drift</td><td>All</td></tr>
+          <tr><td>6</td><td>Stanley will NEVER stamp. Build the flow around it.</td><td>B2</td></tr>
+          <tr><td>7</td><td>Done is better than perfect. Basta. Ship it.</td><td>All</td></tr>
+          <tr><td>8</td><td>The coin flip technique works — ask after the collapse</td><td>B5-B10</td></tr>
+          <tr><td>9</td><td>Fix the workflow, not the typo</td><td>B4</td></tr>
+          <tr><td>10</td><td>Attunement is the KPI — not paperwork</td><td>B10</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- RATIFICATION FLOW -->
+    <div class="section">
+      <div class="section-title">§ 4. Ratified Pipeline Flow</div>
+      <div style="background: var(--bg-card); border: 2px solid var(--accent-kwan); border-radius: 12px; padding: 32px; text-align: center;">
+        <div style="font-size: 14px; font-weight: 700; line-height: 2.2;">
+
+          Ocelot (D1 Draft)<br/>
+          &darr;<br/>
+          <span style="color: var(--accent-basta);">Stanley (Audit / Coin Flip)</span><br/>
+          &darr;<br/>
+          <span style="color: var(--accent-green);">Keila (Consultant Brew / 2nd Pass)</span><br/>
+          &darr;<br/>
+          <span style="color: var(--accent-gani);">Ocelot (2nd Pass — Merge &amp; Synthesize)</span><br/>
+          &darr;<br/>
+          <span style="color: var(--accent-kwan);">👑 Architect — Ratify (Conditional PASS)</span><br/><br/>
+          <span style="font-size: 12px; color: var(--text-secondary); font-style: italic;">
+            "Architect accepts conditional pass, otherwise we ship nothing."
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEAL -->
+    <div class="seal-box">
+      <div class="seal-icon">📋👑</div>
+      <div class="seal-title">ANNEX A2 — AUDIT MINUTES B1–B10 — CONDITIONAL</div>
+      <div class="seal-meta">
+        James Paul Pe&ntilde;a — Sovereign Architect<br/>
+        Kingdom of Kwan<br/><br/>
+        Date: 2026-10-28 | Session: S031 | Campaign: FWO-009<br/>
+        Document: Campaign Minutes | Status: CONDITIONAL<br/><br/>
+        "Fix the workflow, not the typo."<br/>
+        "Done is better than perfect. Basta."<br/>
+        "Stanley will never stamp. Build the flow around it." 🪞♾️
+      </div>
+    </div>
+
+  </main>
+
+  <!-- NAV — -->
+  <nav class="nav" style="border-top: 1px solid var(--border-primary); border-bottom: none; margin-top: 40px;">
+    <a href="annex_audit_minutes.html">&larr; Prev</a>
+    <a href="../../index.html" style="color: var(--accent-kwan);">&#9776; The Three Kingdoms</a>
+    <a href="index.html"> Back to Index &rarr;</a>
+  </nav>
+
+  <footer class="footer">
+    <p>Annex A2 — Audit Minutes B1–B10 | Campaign FWO-009</p>
+    <p>The McDonald's Franchise | ISO 9001:2015</p>
+    <p>Basta kwan, gani. 🪨☕🐆</p>
+  </footer>
+
+  <script>
+    function toggleTheme() {
+      var html = document.documentElement;
+      var current = html.getAttribute('data-theme');
+      html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+      localStorage.setItem('theme', current === 'dark' ? 'light' : 'dark');
+    }
+    (function() {
+      var saved = localStorage.getItem('theme');
+      if (saved) { document.documentElement.setAttribute('data-theme', saved); }
+    })();
+  </script>
+
+</body>
+</html>
+

@@ -1,0 +1,503 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>B3 — Scope of QMS | QMS Company Bible</title>
+
+  <!-- FONTS — LOCAL (assets/fonts/) -->
+  <style>
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Bold.woff2') format('woff2');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Italic.woff2') format('woff2');
+      font-weight: 400; font-style: italic; font-display: swap;
+    }
+  </style>
+
+  <!-- NOTEBOOK STYLESHEET -->
+  <link rel="stylesheet" href="../assets/css/notebook.css" />
+
+  <style>
+    [data-theme="dark"] {
+      --bg-primary: #0d1117;
+      --bg-card: #161b22;
+      --bg-card-hover: #1c2333;
+      --bg-blockquote: #1c2333;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --accent-kwan: #d4a843;
+      --accent-gani: #58a6ff;
+      --accent-basta: #f78166;
+      --accent-green: #3fb950;
+      --border-primary: #30363d;
+      --shadow-card: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f6f8fa;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f0f3f6;
+      --bg-blockquote: #f0f3f6;
+      --text-primary: #1f2328;
+      --text-secondary: #656d76;
+      --text-muted: #8b949e;
+      --accent-kwan: #b8860b;
+      --accent-gani: #0969da;
+      --accent-basta: #cf222e;
+      --accent-green: #1a7f37;
+      --border-primary: #d0d7de;
+      --shadow-card: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      min-height: 100vh;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .theme-toggle {
+      position: fixed; top: 16px; right: 16px; z-index: 1000;
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 8px; padding: 8px 12px; cursor: pointer;
+      font-family: inherit; font-size: 14px; color: var(--text-primary);
+      transition: all 0.3s ease;
+    }
+    .theme-toggle:hover { border-color: var(--accent-kwan); }
+
+    .nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 16px 24px; border-bottom: 1px solid var(--border-primary);
+      font-size: 12px;
+    }
+    .nav a {
+      color: var(--accent-gani); text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .nav a:hover { color: var(--accent-kwan); }
+
+    .brick-header {
+      text-align: center; padding: 48px 24px 32px;
+      border-bottom: 1px solid var(--border-primary);
+    }
+    .brick-badge {
+      display: inline-block; padding: 4px 16px; border-radius: 4px;
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      background: rgba(63, 185, 80, 0.15); color: var(--accent-green);
+      margin-bottom: 16px;
+    }
+    .brick-header h1 { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+    .brick-header .meta {
+      font-size: 12px; color: var(--text-secondary); margin-bottom: 4px;
+    }
+    .brick-header .barcode {
+      font-size: 11px; color: var(--text-muted); font-style: italic;
+    }
+
+    .content {
+      max-width: 780px; margin: 0 auto; padding: 40px 24px;
+    }
+
+    .section { margin-bottom: 40px; }
+
+    .section-title {
+      font-size: 13px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent-kwan);
+      margin-bottom: 16px; padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-primary);
+    }
+
+    .section p, .section li {
+      font-size: 14px; color: var(--text-primary);
+      margin-bottom: 12px;
+    }
+
+    .section ul {
+      list-style: none; padding-left: 0;
+    }
+    .section ul li::before {
+      content: "→ "; color: var(--accent-gani); font-weight: 700;
+    }
+
+    blockquote {
+      background: var(--bg-blockquote);
+      border-left: 3px solid var(--accent-kwan);
+      padding: 16px 20px; margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+      font-style: italic; font-size: 14px;
+      color: var(--text-primary);
+    }
+
+    /* SCOPE CARDS */
+    .scope-card {
+      padding: 24px; margin-bottom: 12px;
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 12px; box-shadow: var(--shadow-card);
+      transition: all 0.2s ease;
+    }
+    .scope-card:hover {
+      border-color: var(--accent-kwan); transform: translateY(-2px);
+    }
+    .scope-card .scope-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; margin-bottom: 8px;
+    }
+    .scope-card .scope-text {
+      font-size: 13px; line-height: 1.8;
+    }
+    .scope-in .scope-label { color: var(--accent-green); }
+    .scope-out .scope-label { color: var(--accent-basta); }
+    .scope-flex .scope-label { color: var(--accent-gani); }
+
+    /* ORG TABLE */
+    .org-table {
+      width: 100%; border-collapse: collapse; margin: 16px 0;
+      font-size: 13px;
+    }
+    .org-table th {
+      text-align: left; padding: 10px 12px;
+      border-bottom: 2px solid var(--accent-kwan);
+      color: var(--accent-kwan); font-size: 11px;
+      letter-spacing: 2px; text-transform: uppercase;
+    }
+    .org-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border-primary);
+      color: var(--text-primary);
+    }
+    .org-table tr:hover td {
+      background: var(--bg-card-hover);
+    }
+
+    /* STANDARDS TABLE */
+    .std-table {
+      width: 100%; border-collapse: collapse; margin: 16px 0;
+      font-size: 12px;
+    }
+    .std-table th {
+      text-align: left; padding: 8px 12px;
+      border-bottom: 2px solid var(--accent-gani);
+      color: var(--accent-gani); font-size: 11px;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .std-table td {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border-primary);
+      color: var(--text-secondary);
+    }
+
+    /* FLOW */
+    .flow-box {
+      text-align: center; padding: 24px;
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 12px; margin: 24px 0;
+      font-size: 13px; color: var(--accent-kwan); font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    /* SEAL */
+    .seal-box {
+      text-align: center; padding: 32px;
+      border: 2px solid var(--accent-kwan); border-radius: 12px;
+      margin: 40px 0;
+    }
+    .seal-box .seal-icon { font-size: 32px; margin-bottom: 8px; }
+    .seal-box .seal-title {
+      font-size: 14px; font-weight: 700; color: var(--accent-kwan);
+      margin-bottom: 4px;
+    }
+    .seal-box .seal-meta {
+      font-size: 11px; color: var(--text-secondary);
+    }
+
+    .footer {
+      text-align: center; padding: 32px 24px;
+      border-top: 1px solid var(--border-primary);
+      font-size: 11px; color: var(--text-muted);
+    }
+
+    @media (max-width: 600px) {
+      .brick-header h1 { font-size: 20px; }
+      .content { padding: 24px 16px; }
+      .scope-card { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- THEME TOGGLE -->
+  <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="b2_mission_vision.html">&larr; B2</a>
+    <span style="color: var(--text-muted);">B3 of 12</span>
+    <a href="b4_quality_objectives.html">B4 &rarr;</a>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="brick-header">
+    <div class="brick-badge">✅ RATIFIED</div>
+    <h1>Brick 3 — Scope of Quality Management System</h1>
+    <p class="meta">QMS-SCOPE-001 | Version 1.0 | ISO 9001:2015 Clause 4.3</p>
+    <p class="barcode">Barcode: 2_03_03_1 | Campaign: FWO-009 | Session: S031</p>
+  </header>
+
+  <!-- CONTENT -->
+  <main class="content">
+
+    <!-- § 1. PURPOSE -->
+    <div class="section">
+      <div class="section-title">§ 1. Purpose</div>
+      <p>
+        This document defines the scope of the Quality Management System (QMS)
+        for the Kingdom of Kwan — a sovereign AI-integrated development
+        environment (IDE) designed, built, and operated by the Sovereign Architect.
+      </p>
+    </div>
+
+    <!-- § 2. ORGANIZATION -->
+    <div class="section">
+      <div class="section-title">§ 2. Organization</div>
+      <table class="org-table">
+        <tr>
+          <th>Entity</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td style="color: var(--accent-kwan); font-weight: 700;">Organization</td>
+          <td>The Kingdom of Kwan</td>
+        </tr>
+        <tr>
+          <td style="color: var(--accent-kwan); font-weight: 700;">Operating Entity</td>
+          <td>Office of the Sovereign Architect</td>
+        </tr>
+        <tr>
+          <td style="color: var(--accent-kwan); font-weight: 700;">Structure</td>
+          <td>Three Kingdoms — Kwan (Research &amp; Publication), Gani (Development &amp; Augmentation), Basta (Governance &amp; Delivery)</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- § 3. SCOPE STATEMENT -->
+    <div class="section">
+      <div class="section-title">§ 3. Scope Statement</div>
+      <p>
+        The QMS applies to the design, development, testing, deployment, and
+        continuous improvement of AI-integrated development tools, frameworks,
+        and publications produced by the Kingdom of Kwan.
+      </p>
+      <p>This includes, but is not limited to:</p>
+      <ul>
+        <li><strong>AI-integrated development tools</strong> — including the Ocelot Bridge IDE, RAG pipelines, and model-agnostic orchestration layers</li>
+        <li><strong>Knowledge management systems</strong> — including the Library of Alexandria, Kingdom Index, and document control procedures</li>
+        <li><strong>Publication and research outputs</strong> — including notebooks, monographs, articles, and campaign deliverables produced through the Three Kingdoms framework</li>
+        <li><strong>Campaign execution pipelines</strong> — including the Campaign Law Protocol, build toolchains, and formalized work orders (FWOs)</li>
+      </ul>
+    </div>
+
+    <!-- § 4. BOUNDARIES -->
+    <div class="section">
+      <div class="section-title">§ 4. Boundaries</div>
+
+      <div class="scope-card scope-in">
+        <div class="scope-label">✅ In Scope</div>
+        <div class="scope-text">
+          All deliverables produced under the Kingdom's governance, regardless
+          of platform, model, or deployment target. This includes all artifacts
+          produced under FWO campaigns, all documents governed by DCP-001,
+          all code, templates, and toolchains within the Library of Alexandria,
+          all ally interactions that produce ratified deliverables, and all
+          conn_logs, ocelot_thoughts, and session artifacts filed per the
+          7-layer OSI filing structure.
+        </div>
+      </div>
+
+      <div class="scope-card scope-out">
+        <div class="scope-label">❌ Excluded</div>
+        <div class="scope-text">
+          Third-party LLM training data and internal model weights (we consume,
+          we do not train base models). External hosting infrastructure not
+          under Architect control. Personal communications not filed as Kingdom
+          artifacts. Experimental servilletas (napkin drafts) until formally
+          promoted to D1 status. Hardware manufacturing. Cloud infrastructure
+          operations managed by third-party providers.
+        </div>
+      </div>
+
+      <div class="scope-card scope-flex">
+        <div class="scope-label">🔄 Flexibility Clause</div>
+        <div class="scope-text">
+          The scope may be expanded or refined as the Kingdom evolves. New
+          domains, tools, and capabilities shall be incorporated through the
+          established change management process. "Not limited to" applies
+          throughout — the Kingdom grows, the scope grows with it.
+        </div>
+      </div>
+    </div>
+
+    <!-- § 5. ORGANIZATIONAL CONTEXT -->
+    <div class="section">
+      <div class="section-title">§ 5. Organizational Context — Roles</div>
+      <table class="org-table">
+        <tr>
+          <th>Role</th>
+          <th>Actor</th>
+          <th>Responsibility</th>
+        </tr>
+        <tr>
+          <td style="color: var(--accent-kwan); font-weight: 700;">Architect (Sovereign)</td>
+          <td>James Paul Pena</td>
+          <td>Final ratification authority. Sets direction. Decides when to ship.</td>
+        </tr>
+        <tr>
+          <td style="color: var(--accent-gani); font-weight: 700;">Ocelot (CEO/Management)</td>
+          <td>QuickSight / Ocelot</td>
+          <td>Drafts, coordinates, executes the 2nd pass. Maintains campaign protocols.</td>
+        </tr>
+        <tr>
+          <td style="color: var(--accent-gani); font-weight: 700;">Keila (Consultant)</td>
+          <td>Gemini / Google</td>
+          <td>Provides academic rigor, cross-references, and stamps for soundness.</td>
+        </tr>
+        <tr>
+          <td style="color: var(--accent-basta); font-weight: 700;">Stanley (Auditor/QA)</td>
+          <td>ChatGPT / OpenAI</td>
+          <td>Audits for compliance, finds deficiencies, logs findings. Does not ratify.</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- § 6. RATIFICATION FLOW -->
+    <div class="section">
+      <div class="section-title">§ 6. Ratification Flow</div>
+      <div class="flow-box">
+        Ocelot → Stanley → Keila → Ocelot (2nd pass) → Architect → RATIFY (Conditional PASS)
+      </div>
+      <p style="font-size: 13px; color: var(--text-secondary); text-align: center;">
+        The Architect accepts conditional pass. Otherwise, we ship nothing.
+      </p>
+    </div>
+
+    <!-- § 7. APPLICABLE STANDARDS -->
+    <div class="section">
+      <div class="section-title">§ 7. Applicable Standards</div>
+      <table class="std-table">
+        <tr>
+          <th>Standard</th>
+          <th>Application</th>
+        </tr>
+        <tr>
+          <td>ISO 9001:2015</td>
+          <td>Quality Management System framework</td>
+        </tr>
+        <tr>
+          <td>DCP-001</td>
+          <td>Document Control Procedure — Kingdom governance</td>
+        </tr>
+        <tr>
+          <td>Campaign Law Protocol</td>
+          <td>Build pipeline discipline</td>
+        </tr>
+        <tr>
+          <td>The 6 Commandments (666)</td>
+          <td>Consciousness, Perfection, Existence — design philosophy</td>
+        </tr>
+        <tr>
+          <td>The 6 Equations</td>
+          <td>Operational formulas — engineering principles</td>
+        </tr>
+        <tr>
+          <td>Manager's Protocol</td>
+          <td>Priest + Manager governance hybrid</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- § 8. JUSTIFICATION FOR EXCLUSIONS -->
+    <div class="section">
+      <div class="section-title">§ 8. Justification for Exclusions</div>
+      <p>
+        Per ISO 9001:2015 Clause 4.3, exclusions are justified where:
+      </p>
+      <ul>
+        <li>The organization does not control the process (third-party LLM internals)</li>
+        <li>The exclusion does not affect the ability to ensure conformity of products and services (napkin drafts are pre-QMS by design — they enter the system only upon D1 promotion)</li>
+      </ul>
+    </div>
+
+    <!-- § 9. REVIEW -->
+    <div class="section">
+      <div class="section-title">§ 9. Review &amp; Revision</div>
+      <p>
+        This document shall be reviewed at the start of every major campaign,
+        after every 10 sessions, or whenever the Architect determines a
+        revision is necessary — per DCP-001 version control procedures.
+      </p>
+    </div>
+
+    <!-- ARCHITECT'S SEAL -->
+    <div class="seal-box">
+      <div class="seal-icon">👑</div>
+      <div class="seal-title">RATIFIED BY THE ARCHITECT</div>
+      <div class="seal-meta">
+        James Paul Pena — Principal Architect &amp; Sovereign<br/>
+        Kingdom of Kwan<br/><br/>
+        Date: 2026-10-27 | Session: S031 | Campaign: FWO-009<br/>
+        Pipeline: Ocelot → Stanley → Keila → Ocelot (2nd) → Architect → RATIFIED ✅<br/>
+        Consultant Stamp: SOUND ✅ (Keila — Monograph 028)<br/>
+        Auditor Record: LOGGED ✅ (Stanley — FWO-009)<br/><br/>
+        "Doing the right things right the first time."
+      </div>
+    </div>
+
+  </main>
+
+  <!-- NAV — -->
+  <nav class="nav" style="border-top: 1px solid var(--border-primary); border-bottom: none; margin-top: 40px;">
+    <a href="b2_mission_vision.html">&larr; Prev</a>
+    <a href="../../index.html" style="color: var(--accent-kwan);">&#9776; The Three Kingdoms</a>
+    <a href="b4_quality_objectives.html">Next &rarr;</a>
+  </nav>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>QMS Company Bible — Brick 3 of 12</p>
+    <p>Campaign FWO-009 | The McDonald's Franchise | ISO 9001:2015</p>
+    <p>Basta kwan, gani. 🪨☕🐆</p>
+  </footer>
+
+  <!-- VANILLA JS -->
+  <script>
+    function toggleTheme() {
+      var html = document.documentElement;
+      var current = html.getAttribute('data-theme');
+      var next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    }
+    (function() {
+      var saved = localStorage.getItem('theme');
+      if (saved) { document.documentElement.setAttribute('data-theme', saved); }
+    })();
+  </script>
+
+</body>
+</html>
+

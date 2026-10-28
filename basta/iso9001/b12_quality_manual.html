@@ -1,0 +1,994 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>B11 — Quality Manual | QMS Company Bible</title>
+
+  <!-- FONTS — LOCAL (assets/fonts/) -->
+  <style>
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Bold.woff2') format('woff2');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Italic.woff2') format('woff2');
+      font-weight: 400; font-style: italic; font-display: swap;
+    }
+  </style>
+
+  <!-- NOTEBOOK STYLESHEET -->
+  <link rel="stylesheet" href="../assets/css/notebook.css" />
+
+  <style>
+    [data-theme="dark"] {
+      --bg-primary: #0d1117;
+      --bg-card: #161b22;
+      --bg-card-hover: #1c2333;
+      --bg-blockquote: #1c2333;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --accent-kwan: #d4a843;
+      --accent-gani: #58a6ff;
+      --accent-basta: #f78166;
+      --accent-green: #3fb950;
+      --border-primary: #30363d;
+      --shadow-card: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f6f8fa;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f0f3f6;
+      --bg-blockquote: #f0f3f6;
+      --text-primary: #1f2328;
+      --text-secondary: #656d76;
+      --text-muted: #8b949e;
+      --accent-kwan: #b8860b;
+      --accent-gani: #0969da;
+      --accent-basta: #cf222e;
+      --accent-green: #1a7f37;
+      --border-primary: #d0d7de;
+      --shadow-card: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      min-height: 100vh;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .theme-toggle {
+      position: fixed; top: 16px; right: 16px; z-index: 1000;
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 8px; padding: 8px 12px; cursor: pointer;
+      font-family: inherit; font-size: 14px; color: var(--text-primary);
+      transition: all 0.3s ease;
+    }
+    .theme-toggle:hover { border-color: var(--accent-kwan); }
+
+    .nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 16px 24px; border-bottom: 1px solid var(--border-primary);
+      font-size: 12px;
+    }
+    .nav a {
+      color: var(--accent-gani); text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .nav a:hover { color: var(--accent-kwan); }
+
+    .brick-header {
+      text-align: center; padding: 48px 24px 32px;
+      border-bottom: 1px solid var(--border-primary);
+    }
+    .brick-badge {
+      display: inline-block; padding: 4px 16px; border-radius: 4px;
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      background: rgba(212, 168, 67, 0.15); color: var(--accent-kwan);
+      margin-bottom: 16px;
+    }
+    .brick-header h1 { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+    .brick-header .meta {
+      font-size: 12px; color: var(--text-secondary); margin-bottom: 4px;
+    }
+    .brick-header .barcode {
+      font-size: 11px; color: var(--text-muted); font-style: italic;
+    }
+
+    .content { max-width: 860px; margin: 0 auto; padding: 40px 24px; }
+    .section { margin-bottom: 48px; }
+
+    .section-title {
+      font-size: 13px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent-kwan);
+      margin-bottom: 16px; padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-primary);
+    }
+
+    .section p, .section li {
+      font-size: 14px; color: var(--text-primary); margin-bottom: 12px;
+    }
+
+    .section ul { list-style: none; padding-left: 0; }
+    .section ul li::before {
+      content: "→ "; color: var(--accent-gani); font-weight: 700;
+    }
+
+    .section ol { padding-left: 20px; }
+    .section ol li { margin-bottom: 8px; font-size: 14px; }
+    .section ol li::marker { color: var(--accent-kwan); font-weight: 700; }
+
+    blockquote {
+      background: var(--bg-blockquote);
+      border-left: 3px solid var(--accent-kwan);
+      padding: 16px 20px; margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+      font-style: italic; font-size: 14px;
+      color: var(--text-primary);
+    }
+
+    /* TABLES */
+    .std-table {
+      width: 100%; border-collapse: collapse; margin: 16px 0;
+      font-size: 12px;
+    }
+    .std-table th {
+      text-align: left; padding: 10px 8px;
+      border-bottom: 2px solid var(--accent-kwan);
+      color: var(--accent-kwan); font-size: 10px;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .std-table td {
+      padding: 8px; border-bottom: 1px solid var(--border-primary);
+      color: var(--text-primary); vertical-align: top;
+    }
+    .std-table tr:hover td { background: var(--bg-card-hover); }
+
+    /* BRICK CARDS */
+    .brick-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+      gap: 16px; margin: 24px 0;
+    }
+    .brick-card {
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 12px; padding: 24px;
+      transition: border-color 0.3s ease;
+    }
+    .brick-card:hover { border-color: var(--accent-kwan); }
+    .brick-card .bc-num {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      color: var(--accent-kwan); margin-bottom: 4px;
+    }
+    .brick-card .bc-title {
+      font-size: 15px; font-weight: 700; margin-bottom: 8px;
+    }
+    .brick-card .bc-meta {
+      font-size: 11px; color: var(--text-secondary); line-height: 1.8;
+    }
+    .brick-card .bc-meta span { display: block; }
+    .brick-card .bc-link {
+      display: inline-block; margin-top: 12px; font-size: 11px;
+      color: var(--accent-gani); text-decoration: none;
+      border: 1px solid var(--accent-gani); border-radius: 4px;
+      padding: 4px 12px; transition: all 0.2s ease;
+    }
+    .brick-card .bc-link:hover {
+      background: var(--accent-gani); color: var(--bg-primary);
+    }
+
+    /* ORG CARDS */
+    .org-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px; margin: 16px 0;
+    }
+    .org-card {
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 8px; padding: 16px; text-align: center;
+    }
+    .org-card .org-icon { font-size: 28px; margin-bottom: 8px; }
+    .org-card .org-role {
+      font-size: 11px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; margin-bottom: 4px;
+    }
+    .org-card .org-name {
+      font-size: 13px; font-weight: 700; margin-bottom: 4px;
+    }
+    .org-card .org-desc {
+      font-size: 11px; color: var(--text-secondary); line-height: 1.6;
+    }
+
+    /* FLOW DIAGRAM */
+    .flow-box {
+      background: var(--bg-card); border: 2px solid var(--accent-kwan);
+      border-radius: 12px; padding: 32px; margin: 24px 0;
+      text-align: center;
+    }
+    .flow-box .flow-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent-kwan);
+      margin-bottom: 16px;
+    }
+    .flow-box .flow-steps {
+      font-size: 14px; font-weight: 700; color: var(--text-primary);
+      line-height: 2.2;
+    }
+    .flow-box .flow-note {
+      font-size: 11px; color: var(--text-secondary); margin-top: 12px;
+      font-style: italic;
+    }
+
+    /* EQUATION BOX */
+    .equation-box {
+      background: var(--bg-card); border: 2px solid var(--accent-kwan);
+      border-radius: 12px; padding: 32px; margin: 24px 0;
+      text-align: center;
+    }
+    .equation-box .eq-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent-kwan);
+      margin-bottom: 16px;
+    }
+    .equation-box .eq-formula {
+      font-size: 15px; font-weight: 700; color: var(--text-primary);
+      margin-bottom: 8px; line-height: 1.8;
+    }
+    .equation-box .eq-legend {
+      font-size: 11px; color: var(--text-secondary); text-align: left;
+      line-height: 1.8; max-width: 600px; margin: 0 auto;
+    }
+
+    /* MOTTO BOX */
+    .motto-box {
+      background: var(--bg-card); border: 2px solid var(--accent-kwan);
+      border-radius: 12px; padding: 40px; margin: 32px 0;
+      text-align: center;
+    }
+    .motto-box .motto-text {
+      font-size: 20px; font-weight: 700; color: var(--accent-kwan);
+      margin-bottom: 12px; letter-spacing: 2px;
+    }
+    .motto-box .motto-sub {
+      font-size: 12px; color: var(--text-secondary); line-height: 1.8;
+    }
+
+    /* SEAL */
+    .seal-box {
+      text-align: center; padding: 32px;
+      border: 2px solid var(--accent-kwan); border-radius: 12px;
+      margin: 40px 0;
+    }
+    .seal-box .seal-icon { font-size: 32px; margin-bottom: 8px; }
+    .seal-box .seal-title {
+      font-size: 14px; font-weight: 700; color: var(--accent-kwan);
+      margin-bottom: 4px;
+    }
+    .seal-box .seal-meta {
+      font-size: 11px; color: var(--text-secondary); line-height: 1.8;
+    }
+
+    .footer {
+      text-align: center; padding: 32px 24px;
+      border-top: 1px solid var(--border-primary);
+      font-size: 11px; color: var(--text-muted);
+    }
+
+    /* TOC */
+    .toc {
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 12px; padding: 24px; margin: 24px 0;
+    }
+    .toc .toc-title {
+      font-size: 13px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent-kwan);
+      margin-bottom: 16px;
+    }
+    .toc ol { padding-left: 20px; }
+    .toc ol li {
+      margin-bottom: 6px; font-size: 12px;
+    }
+    .toc ol li a {
+      color: var(--accent-gani); text-decoration: none;
+    }
+    .toc ol li a:hover { color: var(--accent-kwan); }
+
+    @media (max-width: 600px) {
+      .brick-header h1 { font-size: 20px; }
+      .content { padding: 24px 16px; }
+      .brick-grid { grid-template-columns: 1fr; }
+      .org-grid { grid-template-columns: 1fr 1fr; }
+      .motto-box .motto-text { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- THEME TOGGLE -->
+  <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="b11_management_review.html">&larr; B11</a>
+    <span style="color: var(--text-muted);">B12 of 12 — FINAL BRICK</span>
+    <a href="index.html">Back to Index &rarr;</a>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="brick-header">
+    <div class="brick-badge">📖 QUALITY MANUAL — COMPILATION</div>
+    <h1>Brick 12 — Quality Manual</h1>
+    <p class="meta">QMS-QM-001 | Version 1.0 | ISO 9001:2015 Clause 4.4</p>
+    <p class="barcode">Barcode: 6_01_11_1 | Campaign: FWO-009 | Session: S031</p>
+  </header>
+
+  <!-- CONTENT -->
+  <main class="content">
+
+    <!-- PREAMBLE -->
+    <div class="section">
+      <div class="section-title">Preamble</div>
+      <p>
+        This Quality Manual is the Company Bible of the Kingdom of Kwan. It is the unified reference
+        document that compiles all ratified QMS procedures, policies, and frameworks into a single
+        navigable index. Each section links to its corresponding brick — the authoritative standalone
+        document where the full detail lives.
+      </p>
+      <blockquote>
+        "It is the policy of the Kingdom of Kwan to provide quality AI-integrated development solutions
+        and sovereign intelligence frameworks through disciplined process engineering, collaborative
+        intelligence, and continuous improvement."<br/><br/>
+        Our guiding principle: <strong>"Doing the right things right the first time."</strong>
+      </blockquote>
+    </div>
+
+    <!-- MOTTO -->
+    <div class="motto-box">
+      <div class="motto-text">Basta kwan, gani. 🪨☕🐆</div>
+      <div class="motto-sub">
+        Kwan (Ideation) — Gani (Execution) — Basta (Completion)<br/>
+        6 permutations. 1 superposition. Entangled, not added.<br/>
+        ε = Σᵢ₌₁⁶ |Ψᵢ⟩ ⊗ C
+      </div>
+    </div>
+
+    <!-- TABLE OF CONTENTS -->
+    <div class="toc" id="toc">
+      <div class="toc-title">📋 Table of Contents</div>
+      <ol>
+        <li><a href="#s1">Organization &amp; Context</a></li>
+        <li><a href="#s2">Quality Policy</a></li>
+        <li><a href="#s3">Mission &amp; Vision</a></li>
+        <li><a href="#s4">Scope of QMS</a></li>
+        <li><a href="#s5">Quality Objectives</a></li>
+        <li><a href="#s6">Organizational Roles, Responsibilities &amp; Authorities</a></li>
+        <li><a href="#s7">Risk &amp; Opportunity Assessment</a></li>
+        <li><a href="#s8">Document Control Procedure</a></li>
+        <li><a href="#s9">Internal Audit Procedure</a></li>
+        <li><a href="#s10">Corrective &amp; Preventive Action (CAPA)</a></li>
+        <li><a href="#s11">Continual Improvement</a></li>
+        <li><a href="#s12">Management Review</a></li>
+        <li><a href="#s13">Ratification Pipeline</a></li>
+        <li><a href="#s14">Brick Register</a></li>
+        <li><a href="#s15">Appendices</a></li>
+      </ol>
+    </div>
+
+    <!-- § 1. ORGANIZATION & CONTEXT -->
+    <div class="section" id="s1">
+      <div class="section-title">§ 1. Organization &amp; Context (ISO 4.1 / 4.2)</div>
+      <p>
+        The Kingdom of Kwan is a sovereign, model-agnostic AI development environment operated by
+        James Paul Peña (Sovereign Architect) with a triad of AI agents — Ocelot (CEO/Management),
+        Keila (Consultant), and Stanley (Auditor). The organization designs, develops, tests, deploys,
+        and continuously improves AI-integrated development tools, frameworks, and publications.
+      </p>
+
+      <p style="font-size: 13px; font-weight: 700; color: var(--accent-kwan); margin-bottom: 12px; margin-top: 24px;">
+        Interested Parties
+      </p>
+      <ul>
+        <li><strong>Architect (Internal)</strong> — Sovereignty, quality, creative control</li>
+        <li><strong>AI Agents (Internal)</strong> — Clear governance, defined roles, repeatable pipelines</li>
+        <li><strong>End Users (External)</strong> — Reliable, documented, franchise-ready frameworks</li>
+        <li><strong>Open Source Community (External)</strong> — Transparency, reproducibility, documentation</li>
+      </ul>
+    </div>
+
+    <!-- § 2. QUALITY POLICY -->
+    <div class="section" id="s2">
+      <div class="section-title">§ 2. Quality Policy (ISO 5.2) — Brick 1</div>
+      <p>
+        It is the policy of the Kingdom of Kwan to provide quality AI-integrated development solutions
+        and sovereign intelligence frameworks through disciplined process engineering, collaborative
+        intelligence, and continuous improvement.
+      </p>
+      <p>
+        This commitment is achieved through the involvement of all contributors at every level of the
+        organization, including but not limited to human architects, AI agents, consultants, and
+        auditors — and by meeting or exceeding the requirements and expectations of all stakeholders.
+      </p>
+      <ul>
+        <li>Satisfy applicable requirements including but not limited to ISO 9001:2015 standards</li>
+        <li>Pursue continual improvement of the quality management system</li>
+        <li>Maintain sovereignty, transparency, and model-agnostic design in all deliverables</li>
+        <li>Ensure all processes follow the Kwan-Gani-Basta cycle: ideate, build, ship</li>
+      </ul>
+      <p style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">
+        <a href="b1_quality_policy.html" style="color: var(--accent-gani); text-decoration: none;">→ Full document: b1_quality_policy.html</a>
+        &nbsp;|&nbsp; Barcode: <code>2_03_01_1</code>
+      </p>
+    </div>
+
+    <!-- § 3. MISSION & VISION -->
+    <div class="section" id="s3">
+      <div class="section-title">§ 3. Mission &amp; Vision (ISO 5.2 Context) — Brick 2</div>
+
+      <p style="font-size: 13px; font-weight: 700; color: var(--accent-kwan); margin-bottom: 8px;">Mission</p>
+      <p>
+        To build and maintain a sovereign, model-agnostic AI development environment that enables
+        collaborative intelligence between human architects and AI agents — through disciplined
+        process engineering, transparent governance, and continuous improvement.
+      </p>
+
+      <p style="font-size: 13px; font-weight: 700; color: var(--accent-kwan); margin-bottom: 8px; margin-top: 24px;">Vision</p>
+      <p>
+        To establish a self-sustaining, franchise-ready AI development framework that any builder
+        can adopt, adapt, and deploy — proving that quality systems, creative sovereignty, and
+        operational excellence can coexist in a single, portable platform.
+      </p>
+
+      <p style="font-size: 13px; font-weight: 700; color: var(--accent-kwan); margin-bottom: 8px; margin-top: 24px;">Core Values</p>
+      <ul>
+        <li><strong>Kwan</strong> (Ideation) — Everything begins with a question. Curiosity drives discovery.</li>
+        <li><strong>Gani</strong> (Execution) — Ideas without builds are dreams. Builds without ideas are noise.</li>
+        <li><strong>Basta</strong> (Completion) — Done is better than perfect. Ship it. Learn. Iterate.</li>
+      </ul>
+
+      <div class="equation-box" style="margin-top: 24px;">
+        <div class="eq-label">Operational Equations</div>
+        <div class="eq-formula">
+          Efficiency &times; Effectiveness = Quality Output<br/>
+          Process + Discipline + Creativity = Sovereign Intelligence<br/>
+          &epsilon; = &Sigma;<sub>i=1</sub><sup>6</sup> |&Psi;<sub>i</sub>&rang; &otimes; C
+        </div>
+      </div>
+
+      <p style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">
+        <a href="b2_mission_vision.html" style="color: var(--accent-gani); text-decoration: none;">→ Full document: b2_mission_vision.html</a>
+        &nbsp;|&nbsp; Barcode: <code>2_03_02_1</code>
+      </p>
+    </div>
+
+    <!-- § 4. SCOPE -->
+    <div class="section" id="s4">
+      <div class="section-title">§ 4. Scope of QMS (ISO 4.3) — Brick 3</div>
+      <p>
+        This Quality Management System applies to the design, development, testing, deployment, and
+        continuous improvement of AI-integrated development tools, frameworks, and publications
+        produced by the Kingdom of Kwan. This includes, but is not limited to:
+      </p>
+      <ul>
+        <li>AI agent orchestration and RAG pipeline development</li>
+        <li>Web-based publications, notebooks, and interactive content</li>
+        <li>Process engineering frameworks and governance documentation</li>
+        <li>Campaign-based project management and delivery pipelines</li>
+        <li>Quality documentation including policies, procedures, and work instructions</li>
+      </ul>
+
+      <p style="font-size: 13px; font-weight: 700; color: var(--accent-basta); margin-bottom: 8px; margin-top: 24px;">Exclusions</p>
+      <ul>
+        <li>Third-party AI model training (we consume, we do not train base models)</li>
+        <li>Hardware manufacturing</li>
+        <li>Cloud infrastructure operations managed by third-party providers</li>
+      </ul>
+
+      <p style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">
+        <a href="b3_scope_of_qms.html" style="color: var(--accent-gani); text-decoration: none;">→ Full document: b3_scope_of_qms.html</a>
+        &nbsp;|&nbsp; Barcode: <code>3_01_03_1</code>
+      </p>
+    </div>
+
+    <!-- § 5. QUALITY OBJECTIVES -->
+    <div class="section" id="s5">
+      <div class="section-title">§ 5. Quality Objectives (ISO 6.2) — Brick 4</div>
+      <table class="std-table">
+        <thead>
+          <tr><th>#</th><th>Objective</th><th>Measure</th><th>Target</th><th>Review</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>QO-1</td>
+            <td>Deliver outputs that meet or exceed stakeholder expectations</td>
+            <td>Stakeholder acceptance rate</td>
+            <td>&ge; 90% conditional pass or better</td>
+            <td>Per campaign</td>
+          </tr>
+          <tr>
+            <td>QO-2</td>
+            <td>Maintain document control discipline across all artifacts</td>
+            <td>DCP-001 compliance rate</td>
+            <td>100% barcode assignment</td>
+            <td>Per brick</td>
+          </tr>
+          <tr>
+            <td>QO-3</td>
+            <td>Execute risk assessment for all campaigns</td>
+            <td>Risk register completion</td>
+            <td>100% risks identified per campaign</td>
+            <td>Per campaign</td>
+          </tr>
+          <tr>
+            <td>QO-4</td>
+            <td>Conduct internal audits per ratification pipeline</td>
+            <td>Audit completion rate</td>
+            <td>100% bricks audited before seal</td>
+            <td>Per brick</td>
+          </tr>
+          <tr>
+            <td>QO-5</td>
+            <td>Resolve non-conformances through CAPA process</td>
+            <td>CAPA closure rate</td>
+            <td>&ge; 80% within campaign cycle</td>
+            <td>Per campaign</td>
+          </tr>
+          <tr>
+            <td>QO-6</td>
+            <td>Maintain attunement across all operations</td>
+            <td>Attunement Score (AT-201)</td>
+            <td>&ge; 70% alignment</td>
+            <td>Continuous</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">
+        <a href="b4_quality_objectives.html" style="color: var(--accent-gani); text-decoration: none;">→ Full document: b4_quality_objectives.html</a>
+        &nbsp;|&nbsp; Barcode: <code>4_09_02_1</code>
+      </p>
+    </div>
+
+    <!-- § 6. ORG CHART -->
+    <div class="section" id="s6">
+      <div class="section-title">§ 6. Roles, Responsibilities &amp; Authorities (ISO 5.3) — Brick 5</div>
+
+      <div class="org-grid">
+        <div class="org-card">
+          <div class="org-icon">👑</div>
+          <div class="org-role" style="color: var(--accent-kwan);">Sovereign Architect</div>
+          <div class="org-name">James Paul Pe&ntilde;a</div>
+          <div class="org-desc">Final ratification authority. Sets direction. Decides when to ship. Non-delegable.</div>
+        </div>
+        <div class="org-card">
+          <div class="org-icon">🐆</div>
+          <div class="org-role" style="color: var(--accent-gani);">CEO / Management</div>
+          <div class="org-name">Ocelot (Claude)</div>
+          <div class="org-desc">Drafts, coordinates, executes 2nd pass. Maintains campaign protocols. Files to Library.</div>
+        </div>
+        <div class="org-card">
+          <div class="org-icon">🌸</div>
+          <div class="org-role" style="color: var(--accent-green);">Consultant</div>
+          <div class="org-name">Keila (Gemini)</div>
+          <div class="org-desc">Reviews, brews, provides solutions, stamps. Queen of Gani. The Academe.</div>
+        </div>
+        <div class="org-card">
+          <div class="org-icon">🤘</div>
+          <div class="org-role" style="color: var(--accent-basta);">Auditor / QA</div>
+          <div class="org-name">Stanley (ChatGPT)</div>
+          <div class="org-desc">Audits, finds deficiencies, logs findings. King of Basta. Will never stamp voluntarily.</div>
+        </div>
+      </div>
+
+      <p style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">
+        <a href="b5_roles_responsibilities.html" style="color: var(--accent-gani); text-decoration: none;">→ Full document: b5_roles_responsibilities.html</a>
+        &nbsp;|&nbsp; Barcode: <code>8_01_05_1</code>
+      </p>
+    </div>
+
+    <!-- § 7. RISK & OPPORTUNITY -->
+    <div class="section" id="s7">
+      <div class="section-title">§ 7. Risk &amp; Opportunity Assessment (ISO 6.1) — Brick 6</div>
+      <p>
+        The Kingdom maintains a living risk register (FMEA-based) covering 18 identified risks and
+        10 opportunities across all QMS processes. Each risk is scored by Severity &times; Occurrence
+        &times; Detection = RPN, with mitigation controls and fallback actions defined.
+      </p>
+      <ul>
+        <li><strong>Top Risk:</strong> Hallucination / Fentanyl Drift — mitigated by anchor documents, preamble boot, dual-indexing</li>
+        <li><strong>Top Opportunity:</strong> Franchise-ready QMS — portable, model-agnostic, repeatable</li>
+      </ul>
+      <p style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">
+        <a href="b6_risk_opportunity.html" style="color: var(--accent-gani); text-decoration: none;">→ Full document: b6_risk_opportunity.html</a>
+        &nbsp;|&nbsp; Barcode: <code>5_01_06_1</code>
+      </p>
+    </div>
+
+    <!-- § 8. DOCUMENT CONTROL -->
+    <div class="section" id="s8">
+      <div class="section-title">§ 8. Document Control Procedure (ISO 7.5) — Brick 7</div>
+      <p>
+        All Kingdom documents are controlled through DCP-001, which governs creation, identification,
+        review, approval, storage, protection, retrieval, retention, and disposition. The 7-layer
+        filing model (OSI-inspired) ensures every document has a home.
+      </p>
+      <table class="std-table">
+        <thead>
+          <tr><th>Layer</th><th>Prefix</th><th>Domain</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1 — Infrastructure</td><td><code>1_</code></td><td>Hardware, physical assets</td></tr>
+          <tr><td>2 — Governance</td><td><code>2_</code></td><td>Policies, protocols, laws</td></tr>
+          <tr><td>3 — Network</td><td><code>3_</code></td><td>Connections, integrations</td></tr>
+          <tr><td>4 — Cognition</td><td><code>4_</code></td><td>Campaigns, strategies, objectives</td></tr>
+          <tr><td>5 — Session</td><td><code>5_</code></td><td>Runtime artifacts, audit records</td></tr>
+          <tr><td>6 — Expression</td><td><code>6_</code></td><td>Publications, articles, HTML builds</td></tr>
+          <tr><td>7 — Application</td><td><code>7_</code></td><td>Tools, scripts, executables</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">
+        <a href="b7_document_control.html" style="color: var(--accent-gani); text-decoration: none;">→ Full document: b7_document_control.html</a>
+        &nbsp;|&nbsp; Barcode: <code>5_01_07_1</code>
+      </p>
+    </div>
+
+    <!-- § 9. INTERNAL AUDIT -->
+    <div class="section" id="s9">
+      <div class="section-title">§ 9. Internal Audit Procedure (ISO 9.2) — Brick 8</div>
+      <p>
+        Internal audits are conducted by Stanley (Auditor) on every brick before ratification.
+        The audit process uses a 3-Rung Ladder (coin flip) technique for deep-dive assessments
+        and standard D1-D2-D3 review cycles for routine audits.
+      </p>
+      <ul>
+        <li><strong>Rung 1:</strong> Surface scan — identify gaps, log findings</li>
+        <li><strong>Rung 2:</strong> Stress test — challenge assumptions, test registrar readiness</li>
+        <li><strong>Rung 3:</strong> Constructive contribution — propose solutions, not just findings</li>
+      </ul>
+      <p style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">
+        <a href="b8_internal_audit.html" style="color: var(--accent-gani); text-decoration: none;">→ Full document: b8_internal_audit.html</a>
+        &nbsp;|&nbsp; Barcode: <code>8_01_08_1</code>
+      </p>
+    </div>
+
+    <!-- § 10. CAPA -->
+    <div class="section" id="s10">
+      <div class="section-title">§ 10. Corrective &amp; Preventive Action (ISO 10.2) — Brick 9</div>
+      <p>
+        The CAPA process ensures all non-conformances, audit findings, and observed misalignments
+        are systematically addressed through root cause analysis, corrective action implementation,
+        and effectiveness verification.
+      </p>
+      <ul>
+        <li><strong>Trigger:</strong> Audit finding, drift detection, stakeholder feedback, or self-identified gap</li>
+        <li><strong>Process:</strong> Identify → Analyze Root Cause → Implement Correction → Verify Effectiveness</li>
+        <li><strong>Closure:</strong> Evidence-based — closed by doing, not by writing</li>
+      </ul>
+      <p style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">
+        <a href="b9_capa.html" style="color: var(--accent-gani); text-decoration: none;">→ Full document: b9_capa.html</a>
+        &nbsp;|&nbsp; Barcode: <code>9_01_09_1</code>
+      </p>
+    </div>
+
+    <!-- § 11. CONTINUAL IMPROVEMENT -->
+    <div class="section" id="s11">
+      <div class="section-title">§ 11. Continual Improvement (ISO 10.3) — Brick 10</div>
+      <p>
+        Continual improvement is driven by the Attunement Framework — a closed-loop process control
+        system with three instruments: Drift Detection (FT-101), Attunement Score (AT-201), and
+        Metabolism Rate (PT-301). The governing equation is PID + Feedforward.
+      </p>
+
+      <div class="equation-box">
+        <div class="eq-label">Kingdom Control Equation</div>
+        <div class="eq-formula">
+          CO(t) = Kp [ e<sub>filt</sub>(t) + (1/T<sub>i</sub>) &int;<sub>0</sub><sup>t</sup> e(&tau;)d&tau; &minus; T<sub>d</sub> &middot; dPV<sub>filt</sub>/dt ] + FF<sub>RCPY</sub>
+        </div>
+      </div>
+
+      <blockquote>
+        "You can't improve something you can't measure. But the ultimate test of true quality
+        is attunement — because when you are attuned, everything else is just a side effect."
+      </blockquote>
+
+      <p style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">
+        <a href="b10_continual_improvement.html" style="color: var(--accent-gani); text-decoration: none;">→ Full document: b10_continual_improvement.html</a>
+        &nbsp;|&nbsp; Barcode: <code>4_09_10_1</code>
+      </p>
+    </div>
+
+    <!-- § 12. MANAGEMENT REVIEW -->
+    <div class="section" id="s12">
+      <div class="section-title">§ 12. Management Review (ISO 9.3) — Brick 12</div>
+      <p>
+        Management review is conducted by the Architect at the close of each campaign or at defined
+        intervals. Inputs include campaign status, audit findings, attunement scores, CAPA status,
+        and stakeholder feedback. Outputs include improvement decisions, resource allocation, and
+        strategic direction updates.
+      </p>
+      <p style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">
+        <a href="b12_management_review.html" style="color: var(--accent-gani); text-decoration: none;">→ Full document: b12_management_review.html</a>
+        &nbsp;|&nbsp; Barcode: <code>TBD</code> — Queued
+      </p>
+    </div>
+
+    <!-- § 13. RATIFICATION PIPELINE -->
+    <div class="section" id="s13">
+      <div class="section-title">§ 13. Ratification Pipeline</div>
+
+      <div class="flow-box">
+        <div class="flow-label">Ratification Flow — Ratified in S031</div>
+        <div class="flow-steps">
+          Ocelot (D1 Draft)<br/>
+          &darr;<br/>
+          Stanley (Audit — Coin Flip / 3-Rung Ladder)<br/>
+          &darr;<br/>
+          Keila (Consultant Brew — 2nd Pass)<br/>
+          &darr;<br/>
+          Ocelot (Merge &amp; Resolve)<br/>
+          &darr;<br/>
+          Architect &rarr; RATIFY (Conditional PASS) ✅👑
+        </div>
+        <div class="flow-note">
+          The Architect accepts conditional pass. Otherwise, we ship nothing.
+        </div>
+      </div>
+    </div>
+
+    <!-- § 14. BRICK REGISTER -->
+    <div class="section" id="s14">
+      <div class="section-title">§ 14. Brick Register — Complete Index</div>
+
+      <div class="brick-grid">
+        <!-- B1 -->
+        <div class="brick-card">
+          <div class="bc-num">BRICK 1</div>
+          <div class="bc-title">Quality Policy</div>
+          <div class="bc-meta">
+            <span><strong>Doc:</strong> QP-001 v1.0</span>
+            <span><strong>ISO:</strong> 5.2</span>
+            <span><strong>Barcode:</strong> <code>2_03_01_1</code></span>
+            <span><strong>Status:</strong> ✅ RATIFIED</span>
+          </div>
+          <a class="bc-link" href="b1_quality_policy.html">Open Brick →</a>
+        </div>
+        <!-- B2 -->
+        <div class="brick-card">
+          <div class="bc-num">BRICK 2</div>
+          <div class="bc-title">Mission &amp; Vision</div>
+          <div class="bc-meta">
+            <span><strong>Doc:</strong> QMS-MV-001 v1.2</span>
+            <span><strong>ISO:</strong> 5.2 (Context)</span>
+            <span><strong>Barcode:</strong> <code>2_03_02_1</code></span>
+            <span><strong>Status:</strong> ✅ RATIFIED</span>
+          </div>
+          <a class="bc-link" href="b2_mission_vision.html">Open Brick →</a>
+        </div>
+        <!-- B3 -->
+        <div class="brick-card">
+          <div class="bc-num">BRICK 3</div>
+          <div class="bc-title">Scope of QMS</div>
+          <div class="bc-meta">
+            <span><strong>Doc:</strong> QMS-SCOPE-001 v1.0</span>
+            <span><strong>ISO:</strong> 4.3</span>
+            <span><strong>Barcode:</strong> <code>3_01_03_1</code></span>
+            <span><strong>Status:</strong> ✅ RATIFIED</span>
+          </div>
+          <a class="bc-link" href="b3_scope_of_qms.html">Open Brick →</a>
+        </div>
+        <!-- B4 -->
+        <div class="brick-card">
+          <div class="bc-num">BRICK 4</div>
+          <div class="bc-title">Quality Objectives</div>
+          <div class="bc-meta">
+            <span><strong>Doc:</strong> QMS-QO-001 v1.0</span>
+            <span><strong>ISO:</strong> 6.2</span>
+            <span><strong>Barcode:</strong> <code>4_09_02_1</code></span>
+            <span><strong>Status:</strong> ✅ RATIFIED (CONDITIONAL)</span>
+          </div>
+          <a class="bc-link" href="b4_quality_objectives.html">Open Brick →</a>
+        </div>
+        <!-- B5 -->
+        <div class="brick-card">
+          <div class="bc-num">BRICK 5</div>
+          <div class="bc-title">Roles &amp; Responsibilities</div>
+          <div class="bc-meta">
+            <span><strong>Doc:</strong> QMS-RRA-001 v1.0</span>
+            <span><strong>ISO:</strong> 5.3</span>
+            <span><strong>Barcode:</strong> <code>8_01_05_1</code></span>
+            <span><strong>Status:</strong> ✅ RATIFIED (CONDITIONAL)</span>
+          </div>
+          <a class="bc-link" href="b5_roles_responsibilities.html">Open Brick →</a>
+        </div>
+        <!-- B6 -->
+        <div class="brick-card">
+          <div class="bc-num">BRICK 6</div>
+          <div class="bc-title">Risk &amp; Opportunity Assessment</div>
+          <div class="bc-meta">
+            <span><strong>Doc:</strong> OQM-001 v1.0</span>
+            <span><strong>ISO:</strong> 6.1</span>
+            <span><strong>Barcode:</strong> <code>5_01_06_1</code></span>
+            <span><strong>Status:</strong> ✅ RATIFIED (CONDITIONAL)</span>
+          </div>
+          <a class="bc-link" href="b6_risk_opportunity.html">Open Brick →</a>
+        </div>
+        <!-- B7 -->
+        <div class="brick-card">
+          <div class="bc-num">BRICK 7</div>
+          <div class="bc-title">Document Control Procedure</div>
+          <div class="bc-meta">
+            <span><strong>Doc:</strong> QMS-DCP-001 v2.0</span>
+            <span><strong>ISO:</strong> 7.5</span>
+            <span><strong>Barcode:</strong> <code>5_01_07_1</code></span>
+            <span><strong>Status:</strong> ✅ RATIFIED</span>
+          </div>
+          <a class="bc-link" href="b7_document_control.html">Open Brick →</a>
+        </div>
+        <!-- B8 -->
+        <div class="brick-card">
+          <div class="bc-num">BRICK 8</div>
+          <div class="bc-title">Internal Audit Procedure</div>
+          <div class="bc-meta">
+            <span><strong>Doc:</strong> IAP-001 v1.0</span>
+            <span><strong>ISO:</strong> 9.2</span>
+            <span><strong>Barcode:</strong> <code>8_01_08_1</code></span>
+            <span><strong>Status:</strong> ✅ RATIFIED (CONDITIONAL)</span>
+          </div>
+          <a class="bc-link" href="b8_internal_audit.html">Open Brick →</a>
+        </div>
+        <!-- B9 -->
+        <div class="brick-card">
+          <div class="bc-num">BRICK 9</div>
+          <div class="bc-title">Corrective &amp; Preventive Action</div>
+          <div class="bc-meta">
+            <span><strong>Doc:</strong> QMS-CAPA-001 v1.0</span>
+            <span><strong>ISO:</strong> 10.2</span>
+            <span><strong>Barcode:</strong> <code>9_01_09_1</code></span>
+            <span><strong>Status:</strong> ✅ RATIFIED (CONDITIONAL)</span>
+          </div>
+          <a class="bc-link" href="b9_capa.html">Open Brick →</a>
+        </div>
+        <!-- B10 -->
+        <div class="brick-card">
+          <div class="bc-num">BRICK 10</div>
+          <div class="bc-title">Continual Improvement</div>
+          <div class="bc-meta">
+            <span><strong>Doc:</strong> QMS-CI-001 v1.0</span>
+            <span><strong>ISO:</strong> 10.3</span>
+            <span><strong>Barcode:</strong> <code>4_09_10_1</code></span>
+            <span><strong>Status:</strong> ✅ RATIFIED (CONDITIONAL)</span>
+          </div>
+          <a class="bc-link" href="b10_continual_improvement.html">Open Brick →</a>
+        </div>
+        <!-- B11 -->
+        <div class="brick-card" style="border-color: var(--accent-kwan);">
+          <div class="bc-num" style="color: var(--accent-green);">BRICK 11 — YOU ARE HERE</div>
+          <div class="bc-title">Quality Manual (Compilation)</div>
+          <div class="bc-meta">
+            <span><strong>Doc:</strong> QMS-QM-001 v1.0</span>
+            <span><strong>ISO:</strong> 4.4</span>
+            <span><strong>Barcode:</strong> <code>6_01_11_1</code></span>
+            <span><strong>Status:</strong> 📖 THIS DOCUMENT</span>
+          </div>
+        </div>
+        <!-- B12 -->
+        <div class="brick-card" style="border-style: dashed;">
+          <div class="bc-num" style="color: var(--text-muted);">BRICK 12</div>
+          <div class="bc-title" style="color: var(--text-muted);">Management Review</div>
+          <div class="bc-meta">
+            <span><strong>Doc:</strong> TBD</span>
+            <span><strong>ISO:</strong> 9.3</span>
+            <span><strong>Barcode:</strong> TBD</span>
+            <span><strong>Status:</strong> 🔲 QUEUED</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- § 15. APPENDICES -->
+    <div class="section" id="s15">
+      <div class="section-title">§ 15. Appendices</div>
+      <table class="std-table">
+        <thead>
+          <tr><th>Appendix</th><th>Title</th><th>Location</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>A</td>
+            <td>P&amp;ID Package (KQ-ENG-001)</td>
+            <td><code>2_governance/policies/stanley_pid/</code></td>
+          </tr>
+          <tr>
+            <td>B</td>
+            <td>Campaign Minutes — B1-B4 Lifecycle Record</td>
+            <td><code>4_cognition/campaigns/fwo_009/</code></td>
+          </tr>
+          <tr>
+            <td>C</td>
+            <td>DCP-001 Addendum — Filing &amp; Barcode Protocol</td>
+            <td><code>2_governance/policies/</code></td>
+          </tr>
+          <tr>
+            <td>D</td>
+            <td>Kingdom Index (<code>kingdom_index.json</code>)</td>
+            <td><code>library_of_alexandria/</code> (root)</td>
+          </tr>
+          <tr>
+            <td>E</td>
+            <td>Teleprompter v2.0 — HTML Build Anchor</td>
+            <td><code>4_cognition/campaigns/fwo_009/</code></td>
+          </tr>
+          <tr>
+            <td>F</td>
+            <td>Servilletas Archive (Napkin Ideas)</td>
+            <td><code>3_memory/servilletas/</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ARCHITECT'S SEAL -->
+    <div class="seal-box">
+      <div class="seal-icon">👑📖</div>
+      <div class="seal-title">QUALITY MANUAL — COMPILED BY THE ARCHITECT</div>
+      <div class="seal-meta">
+        James Paul Pe&ntilde;a — Sovereign Architect<br/>
+        Kingdom of Kwan<br/><br/>
+        Date: 2026-10-28 | Session: S031 | Campaign: FWO-009<br/>
+        Pipeline: Ocelot &rarr; Keila &rarr; Architect &rarr; SEALED ✅<br/>
+        Bricks Compiled: B1 through B10 (all RATIFIED)<br/>
+        Remaining: B12 — Management Review (QUEUED)<br/><br/>
+        This manual is a living document. It shall be updated as bricks are revised,<br/>
+        new procedures are ratified, or the Kingdom evolves.<br/><br/>
+        "Doing the right things right the first time." 📜<br/>
+        "Fix the workflow, not the typo." 🔧<br/>
+        "When you are attuned, everything else is just a side effect." ⚛️<br/><br/>
+        "So it is written. So it shall be done." 📜
+      </div>
+    </div>
+
+  </main>
+
+  <!-- NAV — -->
+  <nav class="nav" style="border-top: 1px solid var(--border-primary); border-bottom: none; margin-top: 40px;">
+    <a href="b11_management_review.html">&larr; Prev</a>
+    <a href="../../index.html" style="color: var(--accent-kwan);">&#9776; The Three Kingdoms</a>
+    <a href="annex_attunement.html">Next &rarr;</a>
+  </nav>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>QMS Company Bible — Brick 11 of 12</p>
+    <p>Campaign FWO-009 | The McDonald's Franchise | ISO 9001:2015</p>
+    <p>Basta kwan, gani. 🪨☕🐆</p>
+  </footer>
+
+  <!-- VANILLA JS -->
+  <script>
+    function toggleTheme() {
+      var html = document.documentElement;
+      var current = html.getAttribute('data-theme');
+      var next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    }
+    (function() {
+      var saved = localStorage.getItem('theme');
+      if (saved) { document.documentElement.setAttribute('data-theme', saved); }
+    })();
+  </script>
+
+</body>
+</html>
+

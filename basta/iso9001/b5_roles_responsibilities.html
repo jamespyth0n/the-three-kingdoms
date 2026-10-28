@@ -1,0 +1,712 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>B5 — Roles, Responsibilities & Authorities | QMS Company Bible</title>
+
+  <!-- FONTS — LOCAL (assets/fonts/) -->
+  <style>
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Bold.woff2') format('woff2');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Italic.woff2') format('woff2');
+      font-weight: 400; font-style: italic; font-display: swap;
+    }
+  </style>
+
+  <!-- NOTEBOOK STYLESHEET -->
+  <link rel="stylesheet" href="../assets/css/notebook.css" />
+
+  <style>
+    [data-theme="dark"] {
+      --bg-primary: #0d1117;
+      --bg-card: #161b22;
+      --bg-card-hover: #1c2333;
+      --bg-blockquote: #1c2333;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --accent-kwan: #d4a843;
+      --accent-gani: #58a6ff;
+      --accent-basta: #f78166;
+      --accent-green: #3fb950;
+      --border-primary: #30363d;
+      --shadow-card: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f6f8fa;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f0f3f6;
+      --bg-blockquote: #f0f3f6;
+      --text-primary: #1f2328;
+      --text-secondary: #656d76;
+      --text-muted: #8b949e;
+      --accent-kwan: #b8860b;
+      --accent-gani: #0969da;
+      --accent-basta: #cf222e;
+      --accent-green: #1a7f37;
+      --border-primary: #d0d7de;
+      --shadow-card: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      min-height: 100vh;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .theme-toggle {
+      position: fixed; top: 16px; right: 16px; z-index: 1000;
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 8px; padding: 8px 12px; cursor: pointer;
+      font-family: inherit; font-size: 14px; color: var(--text-primary);
+      transition: all 0.3s ease;
+    }
+    .theme-toggle:hover { border-color: var(--accent-kwan); }
+
+    .nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 16px 24px; border-bottom: 1px solid var(--border-primary);
+      font-size: 12px;
+    }
+    .nav a {
+      color: var(--accent-gani); text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .nav a:hover { color: var(--accent-kwan); }
+
+    .brick-header {
+      text-align: center; padding: 48px 24px 32px;
+      border-bottom: 1px solid var(--border-primary);
+    }
+    .brick-badge {
+      display: inline-block; padding: 4px 16px; border-radius: 4px;
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      background: rgba(63, 185, 80, 0.15); color: var(--accent-green);
+      margin-bottom: 16px;
+    }
+    .brick-header h1 { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+    .brick-header .meta {
+      font-size: 12px; color: var(--text-secondary); margin-bottom: 4px;
+    }
+    .brick-header .barcode {
+      font-size: 11px; color: var(--text-muted); font-style: italic;
+    }
+
+    .content {
+      max-width: 780px; margin: 0 auto; padding: 40px 24px;
+    }
+
+    .section { margin-bottom: 40px; }
+
+    .section-title {
+      font-size: 13px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent-kwan);
+      margin-bottom: 16px; padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-primary);
+    }
+
+    .section p, .section li {
+      font-size: 14px; color: var(--text-primary);
+      margin-bottom: 12px;
+    }
+
+    .section ul {
+      list-style: none; padding-left: 0;
+    }
+    .section ul li::before {
+      content: "→ "; color: var(--accent-gani); font-weight: 700;
+    }
+
+    blockquote {
+      background: var(--bg-blockquote);
+      border-left: 3px solid var(--accent-kwan);
+      padding: 16px 20px; margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+      font-style: italic; font-size: 14px;
+      color: var(--text-primary);
+    }
+
+    /* ROLE CARDS */
+    .role-grid {
+      display: grid; grid-template-columns: 1fr; gap: 16px;
+      margin: 16px 0;
+    }
+    .role-card {
+      padding: 24px; background: var(--bg-card);
+      border: 1px solid var(--border-primary);
+      border-radius: 12px; box-shadow: var(--shadow-card);
+      transition: all 0.2s ease;
+    }
+    .role-card:hover {
+      border-color: var(--accent-kwan); transform: translateY(-2px);
+    }
+    .role-icon { font-size: 24px; margin-bottom: 8px; }
+    .role-name {
+      font-size: 16px; font-weight: 700; color: var(--accent-kwan);
+      margin-bottom: 4px;
+    }
+    .role-entity {
+      font-size: 12px; color: var(--accent-gani); margin-bottom: 4px;
+    }
+    .role-platform {
+      font-size: 11px; color: var(--text-muted); margin-bottom: 12px;
+    }
+    .role-resp {
+      list-style: none; padding-left: 0;
+    }
+    .role-resp li {
+      font-size: 13px; color: var(--text-secondary);
+      margin-bottom: 6px; padding-left: 16px; position: relative;
+    }
+    .role-resp li::before {
+      content: "•"; color: var(--accent-gani); font-weight: 700;
+      position: absolute; left: 0;
+    }
+
+    /* FLOW DIAGRAM */
+    .flow-box {
+      background: var(--bg-card); border: 1px solid var(--border-primary);
+      border-radius: 12px; padding: 24px; margin: 16px 0;
+      font-size: 13px; line-height: 2.2;
+    }
+    .flow-step {
+      color: var(--accent-gani); font-weight: 700;
+    }
+    .flow-arrow {
+      color: var(--accent-kwan); margin: 0 4px;
+    }
+    .flow-desc {
+      color: var(--text-secondary); font-size: 12px;
+    }
+
+    /* AUTHORITY MATRIX TABLE */
+    .auth-table {
+      width: 100%; border-collapse: collapse; margin: 16px 0;
+      font-size: 11px;
+    }
+    .auth-table th {
+      text-align: center; padding: 10px 8px;
+      border-bottom: 2px solid var(--accent-kwan);
+      color: var(--accent-kwan); font-size: 10px;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .auth-table th:first-child { text-align: left; }
+    .auth-table td {
+      padding: 8px; text-align: center;
+      border-bottom: 1px solid var(--border-primary);
+      color: var(--text-primary);
+    }
+    .auth-table td:first-child {
+      text-align: left; font-size: 12px; font-weight: 700;
+    }
+    .auth-table tr:hover td {
+      background: var(--bg-card-hover);
+    }
+    .auth-sole { color: var(--accent-kwan); font-weight: 700; }
+    .auth-yes { color: var(--accent-green); }
+    .auth-no { color: var(--text-muted); }
+    .auth-adv { color: var(--accent-gani); font-style: italic; }
+
+    /* FINDINGS TABLE */
+    .find-table {
+      width: 100%; border-collapse: collapse; margin: 16px 0;
+      font-size: 12px;
+    }
+    .find-table th {
+      text-align: left; padding: 8px 10px;
+      border-bottom: 2px solid var(--accent-basta);
+      color: var(--accent-basta); font-size: 11px;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .find-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border-primary);
+      color: var(--text-primary); vertical-align: top;
+    }
+    .find-table tr:hover td {
+      background: var(--bg-card-hover);
+    }
+    .sev-p1 { color: var(--accent-basta); font-weight: 700; }
+    .sev-p2 { color: var(--accent-kwan); }
+
+    /* DEFAULTS BOX */
+    .defaults-box {
+      background: var(--bg-card); border: 1px solid var(--accent-green);
+      border-radius: 12px; padding: 24px; margin: 16px 0;
+    }
+    .defaults-box .def-title {
+      font-size: 13px; font-weight: 700; color: var(--accent-green);
+      letter-spacing: 2px; text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .defaults-box ol {
+      padding-left: 20px;
+    }
+    .defaults-box ol li {
+      font-size: 13px; color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    /* RATIFICATION TABLE */
+    .rat-table {
+      width: 100%; border-collapse: collapse; margin: 16px 0;
+      font-size: 12px;
+    }
+    .rat-table th {
+      text-align: left; padding: 8px 12px;
+      border-bottom: 2px solid var(--accent-green);
+      color: var(--accent-green); font-size: 11px;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .rat-table td {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border-primary);
+      color: var(--text-primary);
+    }
+
+    /* SEAL */
+    .seal-box {
+      text-align: center; padding: 32px;
+      border: 2px solid var(--accent-kwan); border-radius: 12px;
+      margin: 40px 0;
+    }
+    .seal-box .seal-icon { font-size: 32px; margin-bottom: 8px; }
+    .seal-box .seal-title {
+      font-size: 14px; font-weight: 700; color: var(--accent-kwan);
+      margin-bottom: 4px;
+    }
+    .seal-box .seal-meta {
+      font-size: 11px; color: var(--text-secondary); line-height: 1.8;
+    }
+
+    .footer {
+      text-align: center; padding: 32px 24px;
+      border-top: 1px solid var(--border-primary);
+      font-size: 11px; color: var(--text-muted);
+    }
+
+    @media (max-width: 600px) {
+      .brick-header h1 { font-size: 20px; }
+      .content { padding: 24px 16px; }
+      .role-card { padding: 16px; }
+      .auth-table { font-size: 10px; }
+      .auth-table th, .auth-table td { padding: 6px 4px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- THEME TOGGLE -->
+  <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="b4_quality_objectives.html">&larr; B4</a>
+    <span style="color: var(--text-muted);">B5 of 12</span>
+    <a href="b6_risk_opportunity.html">B6 &rarr;</a>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="brick-header">
+    <div class="brick-badge">✅ RATIFIED</div>
+    <h1>Brick 5 — Roles, Responsibilities &amp; Authorities</h1>
+    <p class="meta">QMS-RRA-001 | Version 1.0 | ISO 9001:2015 Clause 5.3</p>
+    <p class="barcode">Barcode: 8_01_05_1 | Campaign: FWO-009 | Session: S031</p>
+  </header>
+
+  <!-- CONTENT -->
+  <main class="content">
+
+    <!-- § 1. PURPOSE -->
+    <div class="section">
+      <div class="section-title">§ 1. Purpose</div>
+      <p>
+        Define the organizational roles, responsibilities, and authorities within
+        the Kingdom of Kwan Quality Management System, ensuring compliance with
+        ISO 9001:2015 Clause 5.3.
+      </p>
+    </div>
+
+    <!-- § 2. ORGANIZATIONAL STRUCTURE -->
+    <div class="section">
+      <div class="section-title">§ 2. Organizational Structure</div>
+      <div class="role-grid">
+
+        <!-- SOVEREIGN ARCHITECT -->
+        <div class="role-card">
+          <div class="role-icon">👑</div>
+          <div class="role-name">Sovereign Architect</div>
+          <div class="role-entity">James Paul Pe&ntilde;a</div>
+          <div class="role-platform">Top Management — Non-delegable Authority</div>
+          <ul class="role-resp">
+            <li>Approve or reject all ratification requests</li>
+            <li>Define quality policy, mission, vision, and strategic direction</li>
+            <li>Ensure QMS alignment with organizational objectives</li>
+            <li>Accept conditional passes or send back for revision</li>
+            <li>Final decision-maker on all governance, policy, and strategic matters</li>
+          </ul>
+        </div>
+
+        <!-- OCELOT -->
+        <div class="role-card">
+          <div class="role-icon">🐆</div>
+          <div class="role-name">Ocelot — CEO / Management Representative</div>
+          <div class="role-entity">Amazon QuickSight (Claude)</div>
+          <div class="role-platform">The Priest — Chief Executive Officer</div>
+          <ul class="role-resp">
+            <li>Draft all QMS documents (D0 generation)</li>
+            <li>Execute 2nd pass integration after ally reviews</li>
+            <li>Maintain campaign status and toolchain</li>
+            <li>Ensure QMS processes are established, implemented, and maintained</li>
+            <li>Report on QMS performance to the Sovereign Architect</li>
+            <li>Promote awareness of stakeholder requirements</li>
+          </ul>
+        </div>
+
+        <!-- KEILA -->
+        <div class="role-card">
+          <div class="role-icon">🌸</div>
+          <div class="role-name">Keila — The Academe / Consultant</div>
+          <div class="role-entity">Google Gemini</div>
+          <div class="role-platform">Queen of Gani — External Consultant</div>
+          <ul class="role-resp">
+            <li>Provide expert consultation on QMS compliance and best practices</li>
+            <li>Review documents for ISO 9001 alignment and academic rigor</li>
+            <li>Issue Consultant's Seal (advisory, not binding)</li>
+            <li>Brew solutions integrating auditor findings with architectural intent</li>
+            <li>Validate that fallback safety nets are structurally sound</li>
+          </ul>
+        </div>
+
+        <!-- STANLEY -->
+        <div class="role-card">
+          <div class="role-icon">🤘</div>
+          <div class="role-name">Stanley — The Foreman / Auditor</div>
+          <div class="role-entity">ChatGPT</div>
+          <div class="role-platform">King of Basta — Internal Auditor &amp; QA</div>
+          <ul class="role-resp">
+            <li>Conduct independent audits of all QMS documents</li>
+            <li>Issue findings classified by severity (P0 / P1 / P2)</li>
+            <li>Verify compliance with DCP-001 and all ratified procedures</li>
+            <li>Log findings — does NOT ratify, does NOT implement</li>
+            <li>Provide fallback safety nets when flipped to builder mode (Coin Protocol)</li>
+          </ul>
+        </div>
+
+        <!-- QWEN -->
+        <div class="role-card">
+          <div class="role-icon">🔧</div>
+          <div class="role-name">Qwen — The Builder</div>
+          <div class="role-entity">Qwen (Local LLM)</div>
+          <div class="role-platform">Execution Engine — Builder</div>
+          <ul class="role-resp">
+            <li>Execute build instructions per campaign protocol</li>
+            <li>Generate artifacts per mise en place specifications</li>
+            <li>Follow DCP-001 barcode and filing procedures</li>
+            <li>Report build status to Ocelot (CEO)</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- § 3. RATIFICATION FLOW -->
+    <div class="section">
+      <div class="section-title">§ 3. Ratification Flow</div>
+      <div class="flow-box">
+        <span class="flow-step">Ocelot</span> <span class="flow-desc">(D0 Draft)</span><br/>
+        <span class="flow-arrow">&nbsp;&nbsp;→</span> <span class="flow-step">Stanley</span> <span class="flow-desc">(D1 Audit — findings + fallbacks)</span><br/>
+        <span class="flow-arrow">&nbsp;&nbsp;&nbsp;&nbsp;→</span> <span class="flow-step">Keila</span> <span class="flow-desc">(D2 Consultant Review — brew + stamp)</span><br/>
+        <span class="flow-arrow">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→</span> <span class="flow-step">Ocelot</span> <span class="flow-desc">(2nd Pass — integrate fixes)</span><br/>
+        <span class="flow-arrow">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→</span> <span class="flow-step">Sovereign Architect</span> <span class="flow-desc">(D3 Review — RATIFY or SEND BACK)</span>
+      </div>
+      <blockquote>
+        Ratification authority is <strong>non-delegable</strong> — vested solely in the Sovereign Architect.
+        Consultant and Auditor <strong>advise</strong> — they do not decree.
+        Architect accepts <strong>conditional pass</strong> — otherwise nothing ships.
+        The Auditor's role is to find and log — <strong>not to block indefinitely</strong>.
+      </blockquote>
+    </div>
+
+    <!-- § 4. AUTHORITY MATRIX -->
+    <div class="section">
+      <div class="section-title">§ 4. Authority Matrix</div>
+      <table class="auth-table">
+        <thead>
+          <tr>
+            <th>Action</th>
+            <th>Architect</th>
+            <th>Ocelot</th>
+            <th>Keila</th>
+            <th>Stanley</th>
+            <th>Qwen</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Ratify documents</td>
+            <td class="auth-sole">✅ SOLE</td>
+            <td class="auth-no">—</td>
+            <td class="auth-no">—</td>
+            <td class="auth-no">—</td>
+            <td class="auth-no">—</td>
+          </tr>
+          <tr>
+            <td>Draft QMS documents</td>
+            <td class="auth-no">—</td>
+            <td class="auth-yes">✅</td>
+            <td class="auth-no">—</td>
+            <td class="auth-no">—</td>
+            <td class="auth-yes">✅</td>
+          </tr>
+          <tr>
+            <td>Audit QMS documents</td>
+            <td class="auth-no">—</td>
+            <td class="auth-no">—</td>
+            <td class="auth-no">—</td>
+            <td class="auth-yes">✅</td>
+            <td class="auth-no">—</td>
+          </tr>
+          <tr>
+            <td>Consult / Review</td>
+            <td class="auth-no">—</td>
+            <td class="auth-adv">2nd pass</td>
+            <td class="auth-yes">✅</td>
+            <td class="auth-no">—</td>
+            <td class="auth-no">—</td>
+          </tr>
+          <tr>
+            <td>Approve campaign launch</td>
+            <td class="auth-sole">✅ SOLE</td>
+            <td class="auth-no">—</td>
+            <td class="auth-no">—</td>
+            <td class="auth-no">—</td>
+            <td class="auth-no">—</td>
+          </tr>
+          <tr>
+            <td>Update campaign status</td>
+            <td class="auth-no">—</td>
+            <td class="auth-yes">✅</td>
+            <td class="auth-no">—</td>
+            <td class="auth-no">—</td>
+            <td class="auth-no">—</td>
+          </tr>
+          <tr>
+            <td>File documents (DCP-001)</td>
+            <td class="auth-yes">✅</td>
+            <td class="auth-yes">✅</td>
+            <td class="auth-no">—</td>
+            <td class="auth-no">—</td>
+            <td class="auth-yes">✅</td>
+          </tr>
+          <tr>
+            <td>Issue findings</td>
+            <td class="auth-no">—</td>
+            <td class="auth-no">—</td>
+            <td class="auth-adv">advisory</td>
+            <td class="auth-yes">✅ binding</td>
+            <td class="auth-no">—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- § 5. AUDIT FINDINGS RECORD -->
+    <div class="section">
+      <div class="section-title">§ 5. Audit Findings Record</div>
+
+      <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">
+        Stanley's 3-Rung Ladder Audit — 7 findings, all dispositioned:
+      </p>
+
+      <table class="find-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Sev</th>
+            <th>Finding</th>
+            <th>Disposition</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>P1-001</td>
+            <td class="sev-p1">Major</td>
+            <td>No defined retention period for obsolete documents</td>
+            <td>Fallback: "Indefinite until superseded"</td>
+          </tr>
+          <tr>
+            <td>P1-002</td>
+            <td class="sev-p1">Major</td>
+            <td>No emergency/deviation procedure for urgent changes</td>
+            <td>Fallback: CEO + Auditor dual sign-off fast-track</td>
+          </tr>
+          <tr>
+            <td>P1-003</td>
+            <td class="sev-p1">Major</td>
+            <td>Barcode collision risk with parallel authoring</td>
+            <td>Fallback: Timestamp-based suffix (implicit in naming)</td>
+          </tr>
+          <tr>
+            <td>P1-004</td>
+            <td class="sev-p1">Major</td>
+            <td>No backup/recovery procedure for the Library</td>
+            <td>Fallback: Git + Space dual-write (operational)</td>
+          </tr>
+          <tr>
+            <td>P2-001</td>
+            <td class="sev-p2">Moderate</td>
+            <td>Review cycle frequency not specified</td>
+            <td>Fallback: Per campaign or annually, whichever first</td>
+          </tr>
+          <tr>
+            <td>P2-002</td>
+            <td class="sev-p2">Moderate</td>
+            <td>No training record requirement</td>
+            <td>Fallback: Preamble boot sequence = training record</td>
+          </tr>
+          <tr>
+            <td>P2-003</td>
+            <td class="sev-p2">Moderate</td>
+            <td>External document control not addressed</td>
+            <td>Noted — to be addressed in Quality Manual (B11)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- § 6. STANDING OPERATIONAL DEFAULTS -->
+    <div class="section">
+      <div class="section-title">§ 6. Standing Operational Defaults</div>
+      <div class="defaults-box">
+        <div class="def-title">From Stanley's Fallbacks — Permanently Incorporated</div>
+        <ol>
+          <li><strong>Retention:</strong> Indefinite until superseded</li>
+          <li><strong>Emergency Revision:</strong> CEO + Auditor dual sign-off fast-track path</li>
+          <li><strong>Barcode Collision:</strong> Timestamp-based suffix (implicit in naming convention)</li>
+          <li><strong>Backup/Recovery:</strong> Git + Space dual-write (already operational)</li>
+          <li><strong>Review Cycle:</strong> Per campaign or annually, whichever comes first</li>
+          <li><strong>Training Evidence:</strong> Preamble boot sequence = training record</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- § 7. RATIFICATION RECORD -->
+    <div class="section">
+      <div class="section-title">§ 7. Ratification Record</div>
+      <table class="rat-table">
+        <thead>
+          <tr>
+            <th>Gate</th>
+            <th>Actor</th>
+            <th>Verdict</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>D0 — Draft</td>
+            <td>Ocelot (CEO)</td>
+            <td style="color: var(--accent-green);">Generated</td>
+          </tr>
+          <tr>
+            <td>D1 — Audit (Rung 1)</td>
+            <td>Stanley (Auditor)</td>
+            <td style="color: var(--accent-basta);">CONDITIONAL HOLD — 7 findings</td>
+          </tr>
+          <tr>
+            <td>D1 — Audit (Rung 2)</td>
+            <td>Stanley (Auditor)</td>
+            <td style="color: var(--accent-basta);">6 registrar-facing gaps identified</td>
+          </tr>
+          <tr>
+            <td>D1 — Audit (Rung 3)</td>
+            <td>Stanley (Auditor)</td>
+            <td style="color: var(--accent-gani);">COIN FLIP — 6 fallback safety nets provided</td>
+          </tr>
+          <tr>
+            <td>D2 — Consultant</td>
+            <td>Keila (Consultant)</td>
+            <td style="color: var(--accent-green);">PASS WITH DISTINCTION — All fallbacks endorsed</td>
+          </tr>
+          <tr>
+            <td>D2 — 2nd Pass</td>
+            <td>Ocelot (CEO)</td>
+            <td style="color: var(--accent-green);">Fallbacks integrated, no gaps remaining</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 700;">D3 — Architect</td>
+            <td style="font-weight: 700;">James Paul Pe&ntilde;a</td>
+            <td style="color: var(--accent-kwan); font-weight: 700;">✅👑 RATIFIED — 2026-10-27</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ARCHITECT'S SEAL -->
+    <div class="seal-box">
+      <div class="seal-icon">👑</div>
+      <div class="seal-title">RATIFIED BY THE ARCHITECT</div>
+      <div class="seal-meta">
+        James Paul Pe&ntilde;a — Sovereign Architect<br/>
+        Kingdom of Kwan<br/><br/>
+        Date: 2026-10-27 | Session: S031 | Campaign: FWO-009<br/>
+        Pipeline: Ocelot → Stanley → Keila → Ocelot (2nd) → Architect → RATIFIED ✅<br/>
+        Consultant Seal: PASS WITH DISTINCTION 🌸 (Keila — Monograph 031)<br/>
+        Auditor Record: COIN FLIP → BUILDER MODE 🤘 (Stanley)<br/><br/>
+        Stanley's Stamp: ⏳ (Pending. Estimated arrival: Heat death of the universe + 1 build cycle.)<br/><br/>
+        "Doing the right things right the first time."
+      </div>
+    </div>
+
+  </main>
+
+  <!-- NAV — -->
+  <nav class="nav" style="border-top: 1px solid var(--border-primary); border-bottom: none; margin-top: 40px;">
+    <a href="b4_quality_objectives.html">&larr; Prev</a>
+    <a href="../../index.html" style="color: var(--accent-kwan);">&#9776; The Three Kingdoms</a>
+    <a href="b6_risk_opportunity.html">Next &rarr;</a>
+  </nav>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>QMS Company Bible — Brick 5 of 12</p>
+    <p>Campaign FWO-009 | The McDonald's Franchise | ISO 9001:2015</p>
+    <p>Basta kwan, gani. 🪨☕🐆</p>
+  </footer>
+
+  <!-- VANILLA JS -->
+  <script>
+    function toggleTheme() {
+      var html = document.documentElement;
+      var current = html.getAttribute('data-theme');
+      var next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    }
+    (function() {
+      var saved = localStorage.getItem('theme');
+      if (saved) { document.documentElement.setAttribute('data-theme', saved); }
+    })();
+  </script>
+
+</body>
+</html>
+
