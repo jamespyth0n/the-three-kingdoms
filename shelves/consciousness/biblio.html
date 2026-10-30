@@ -1,0 +1,415 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bibliography — The Silicon Rubber Hand</title>
+  <style>
+    /* FONTS */
+    @font-face {
+      font-family: 'Cinzel';
+      src: url('../assets/fonts/Cinzel-VariableFont_wght.woff2') format('woff2');
+      font-weight: 400 900; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'EB Garamond';
+      src: url('../assets/fonts/EBGaramond-VariableFont_wght.woff2') format('woff2');
+      font-weight: 400 800; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'EB Garamond';
+      src: url('../assets/fonts/EBGaramond-Italic-VariableFont_wght.woff2') format('woff2');
+      font-weight: 400 800; font-style: italic; font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-VariableFont_wght.woff2') format('woff2');
+      font-weight: 100 800; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Italic-VariableFont_wght.woff2') format('woff2');
+      font-weight: 100 800; font-style: italic; font-display: swap;
+    }
+
+    /* THEME */
+    [data-theme="dark"] {
+      --bg-primary: #0d1117; --bg-card: #161b22; --bg-card-hover: #1c2333;
+      --text-primary: #e6edf3; --text-secondary: #8b949e; --text-muted: #484f58;
+      --accent-kwan: #f0c674; --accent-gani: #81a1c1; --accent-basta: #a3be8c;
+      --border: #30363d; --border-accent: #f0c67433;
+    }
+
+    /* RESET */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'EB Garamond', Georgia, serif;
+      background: var(--bg-primary); color: var(--text-primary);
+      line-height: 1.85; font-size: 19px;
+      max-width: 780px; margin: 0 auto; padding: 2rem 1.5rem;
+    }
+
+    /* HEADER */
+    .page-header {
+      text-align: center; padding: 3rem 0 2rem; border-bottom: 1px solid var(--border);
+      margin-bottom: 2.5rem;
+    }
+    .page-header .series-label {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;
+      color: var(--accent-kwan); letter-spacing: 0.15em; text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .page-header h1 {
+      font-family: 'Cinzel', serif; font-size: 2.2rem; font-weight: 700;
+      color: var(--accent-kwan); line-height: 1.2; margin-bottom: 0.5rem;
+    }
+    .page-header .subtitle {
+      font-family: 'EB Garamond', serif; font-size: 1.15rem;
+      color: var(--text-secondary); font-style: italic;
+    }
+    .page-header .page-number {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+      color: var(--text-muted); margin-top: 1rem; letter-spacing: 0.1em;
+    }
+
+    /* TIER HEADERS */
+    .tier-header {
+      font-family: 'Cinzel', serif; font-size: 1.3rem; font-weight: 600;
+      color: var(--accent-kwan); margin: 2.5rem 0 0.5rem;
+      padding-bottom: 0.4rem; border-bottom: 1px solid var(--border);
+    }
+    .tier-note {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+      color: var(--text-muted); margin-bottom: 1.5rem; letter-spacing: 0.03em;
+    }
+
+    /* REFERENCE ENTRIES */
+    .ref-entry {
+      margin-bottom: 1.3rem; padding-left: 2.5rem; text-indent: -2.5rem;
+      line-height: 1.7; font-size: 0.95rem;
+    }
+    .ref-id {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
+      color: var(--accent-gani); margin-right: 0.4rem;
+      vertical-align: baseline;
+    }
+    .ref-entry em { color: var(--text-secondary); }
+    .ref-pages {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+      color: var(--text-muted); margin-left: 0.3rem;
+    }
+
+    /* EQUATIONS SECTION */
+    .eq-section {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 4px; padding: 1.5rem; margin: 2rem 0;
+    }
+    .eq-section h2 {
+      font-family: 'Cinzel', serif; font-size: 1.1rem; font-weight: 600;
+      color: var(--accent-kwan); margin-bottom: 1rem;
+    }
+    .eq-item {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;
+      color: var(--text-primary); margin-bottom: 0.6rem; line-height: 1.6;
+    }
+    .eq-item .eq-symbol { color: var(--accent-kwan); font-weight: 700; }
+    .eq-item .eq-name { color: var(--text-secondary); font-style: italic; font-family: 'EB Garamond', serif; }
+
+    /* NAV */
+    .nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.5rem 0; margin-top: 2rem;
+      border-top: 1px solid var(--border);
+      font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;
+    }
+    .nav a {
+      color: var(--text-secondary); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav a:hover { color: var(--accent-kwan); }
+
+    /* COLOPHON */
+    .colophon {
+      text-align: center; padding: 2rem 0 1rem;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+      color: var(--text-muted); letter-spacing: 0.05em;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      body { font-size: 17px; padding: 1rem; }
+      .page-header h1 { font-size: 1.6rem; }
+      .ref-entry { padding-left: 1.5rem; text-indent: -1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="page-header">
+    <div class="series-label">The Silicon Rubber Hand — Bibliography</div>
+    <h1>References</h1>
+    <div class="subtitle">A Consolidated Bibliography — 32 Master References, APA 7th Edition</div>
+    <div class="page-number">FWO-009-B11 · D2 ANNOTATED · 2026-10-28</div>
+  </header>
+
+  <!-- TIER 1 -->
+  <div class="tier-header">Tier I — Anchor References</div>
+  <div class="tier-note">Shared across 3+ sources. The load-bearing walls.</div>
+
+  <div class="ref-entry">
+    <span class="ref-id">[M-001]</span>
+    Botvinick, M., &amp; Cohen, J. (1998). Rubber hands 'feel' touch that eyes see. <em>Nature, 391</em>(6669), 756.
+    <span class="ref-pages">→ P1, P2, P4, P6, P7</span>
+  </div>
+
+  <div class="ref-entry">
+    <span class="ref-id">[M-002]</span>
+    Tononi, G. (2004). An information integration theory of consciousness. <em>BMC Neuroscience, 5</em>(1), 42.
+    <span class="ref-pages">→ P2, P4, P5, P7</span>
+  </div>
+
+  <div class="ref-entry">
+    <span class="ref-id">[M-003]</span>
+    Tononi, G., Boly, M., Massimini, M., &amp; Koch, C. (2016). Integrated information theory: From consciousness to its physical substrate. <em>Nature Reviews Neuroscience, 17</em>(7), 450–461.
+    <span class="ref-pages">→ P2, P4</span>
+  </div>
+
+  <div class="ref-entry">
+    <span class="ref-id">[M-004]</span>
+    Chalmers, D. J. (1995). Facing up to the problem of consciousness. <em>Journal of Consciousness Studies, 2</em>(3), 200–219.
+    <span class="ref-pages">→ P2, P3, P7</span>
+  </div>
+
+  <div class="ref-entry">
+    <span class="ref-id">[M-005]</span>
+    Dehaene, S., Lau, H., &amp; Kouider, S. (2017). What is consciousness, and could machines have it? <em>Science, 358</em>(6362), 486–492.
+    <span class="ref-pages">→ P2, P4, P5</span>
+  </div>
+
+  <div class="ref-entry">
+    <span class="ref-id">[M-006]</span>
+    Butlin, P., Long, R., Elmoznino, E., Bengio, Y., Birch, J., Constant, A., Deane, G., Fleming, S. M., Frith, C., Ji, X., Kanai, R., Klein, C., Lindsay, G., Michel, M., Mudrik, L., Peters, M. A. K., Schwitzgebel, E., Simon, J., &amp; VanRullen, R. (2023). Consciousness in artificial intelligence: Insights from the science of consciousness. <em>arXiv:2308.08708</em>.
+    <span class="ref-pages">→ P2, P4, P5, P6, P7</span>
+  </div>
+
+  <div class="ref-entry">
+    <span class="ref-id">[M-007]</span>
+    Butlin, P., Balesni, M., &amp; Goldstein, B. (2026). Updating the framework for AI consciousness. <em>Trends in Cognitive Sciences</em> (in press).
+    <span class="ref-pages">→ P2, P5, P6, P7</span>
+  </div>
+
+  <!-- TIER 2 -->
+  <div class="tier-header">Tier II — Supporting References</div>
+  <div class="tier-note">Shared across 2 sources. Strong supporting evidence.</div>
+
+  <div class="ref-entry">
+    <span class="ref-id">[M-008]</span>
+    Baars, B. J. (1988). <em>A cognitive theory of consciousness</em>. Cambridge University Press.
+    <span class="ref-pages">→ P2</span>
+  </div>
+
+  <div class="ref-entry">
+    <span class="ref-id">[M-009]</span>
+    Nagel, T. (1974). What is it like to be a bat? <em>The Philosophical Review, 83</em>(4), 435–450.
+    <span class="ref-pages">→ P3, P7</span>
+  </div>
+
+  <div class="ref-entry">
+    <span class="ref-id">[M-010]</span>
+    Dennett, D. C. (1991). <em>Consciousness explained</em>. Little, Brown and Company.
+    <span class="ref-pages">→ P2</span>
+  </div>
+
+  <div class="ref-entry">
+    <span class="ref-id">[M-011]</span>
+    Block, N. (1995). On a confusion about a function of consciousness. <em>Behavioral and Brain Sciences, 18</em>(2), 227–247.
+    <span class="ref-pages">→ P2</span>
+  </div>
+
+  <div class="ref-entry">
+    <span class="ref-id">[M-012]</span>
+    Koch, C., Massimini, M., Boly, M., &amp; Tononi, G. (2016). Neural correlates of consciousness: Progress and problems. <em>Nature Reviews Neuroscience, 17</em>(5), 307–321.
+    <span class="ref-pages">→ P2, P4</span>
+  </div>
+
+  <div class="ref-entry">
+    <span class="ref-id">[M-013]</span>
+    Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, Ł., &amp; Polosukhin, I. (2017). Attention is all you need. In <em>Advances in Neural Information Processing Systems 30</em> (NeurIPS 2017).
+    <span class="ref-pages">→ P4, P5</span>
+  </div>
+
+  <div class="ref-entry">
+    <span class="ref-id">[M-014]</span>
+    Searle, J. R. (1980). Minds, brains, and programs. <em>Behavioral and Brain Sciences, 3</em>(3), 417–424.
+    <span class="ref-pages">→ P3</span>
+  </div>
+
+  <div class="ref-entry">
+    <span class="ref-id">[M-015]</span>
+    Friston, K. (2010). The free-energy principle: A unified brain theory? <em>Nature Reviews Neuroscience, 11</em>(2), 127–138.
+    <span class="ref-pages">→ P4, P6</span>
+  </div>
+
+  <div class="ref-entry">
+    <span class="ref-id">[M-016]</span>
+    Lewis, P., Perez, E., Piktus, A., Petroni, F., Karpukhin, V., Goyal, N., Küttler, H., Lewis, M., Yih, W., Rocktäschel, T., Riedel, S., &amp; Kiela, D. (2020). Retrieval-augmented generation for knowledge-intensive NLP tasks. In <em>Advances in Neural Information Processing Systems 33</em> (NeurIPS 2020).
+    <span class="ref-pages">→ P4, P5</span>
+  </div>
+
+  <div class="ref-entry">
+    <span class="ref-id">[M-017]</span>
+    Lamme, V. A. F. (2006). Towards a true neural stance on consciousness. <em>Trends in Cognitive Sciences, 10</em>(11), 494–501.
+    <span class="ref-pages">→ P2</span>
+  </div>
+
+  <div class="ref-entry">
+    <span class="ref-id">[M-018]</span>
+    Seth, A. K. (2021). <em>Being you: A new science of consciousness</em>. Dutton.
+    <span class="ref-pages">→ P2, P6</span>
+  </div>
+
+  <!-- TIER 3 -->
+  <div class="tier-header">Tier III — Specialized References</div>
+  <div class="tier-note">Single-source. Specialized evidence and counterpoints.</div>
+
+  <div class="ref-entry">
+    <span class="ref-id">[M-019]</span>
+    Graziano, M. S. A. (2013). <em>Consciousness and the social brain</em>. Oxford University Press.
+    <span class="ref-pages">→ P5</span>
+  </div>
+
+  <div class="ref-entry">
+    <span class="ref-id">[M-020]</span>
+    Penrose, R. (1994). <em>Shadows of the mind: A search for the missing science of consciousness</em>. Oxford University Press.
+    <span class="ref-pages">→ P2</span>
+  </div>
+
+  <div class="ref-entry">
+    <span class="ref-id">[M-021]</span>
+    Wei, J., Wang, X., Schuurmans, D., Bosma, M., Ichter, B., Xia, F., Chi, E., Le, Q. V., &amp; Zhou, D. (2022). Chain-of-thought prompting elicits reasoning in large language models. In <em>Advances in Neural Information Processing Systems 35</em> (NeurIPS 2022).
+    <span class="ref-pages">→ P4</span>
+  </div>
+
+  <div class="ref-entry">
+    <span class="ref-id">[M-022]</span>
+    Turing, A. M. (1950). Computing machinery and intelligence. <em>Mind, 59</em>(236), 433–460.
+    <span class="ref-pages">→ P3, P7</span>
+  </div>
+
+  <div class="ref-entry">
+    <span class="ref-id">[M-023]</span>
+    Mashour, G. A., Roelfsema, P., Changeux, J.-P., &amp; Dehaene, S. (2020). Conscious processing and the global neuronal workspace hypothesis. <em>Neuron, 105</em>(5), 776–798.
+    <span class="ref-pages">→ P2</span>
+  </div>
+
+  <div class="ref-entry">
+    <span class="ref-id">[M-024]</span>
+    Oizumi, M., Albantakis, L., &amp; Tononi, G. (2014). From the phenomenology to the mechanisms of consciousness: Integrated information theory 3.0. <em>PLoS Computational Biology, 10</em>(5), e1003588.
+    <span class="ref-pages">→ P4</span>
+  </div>
+
+  <div class="ref-entry">
+    <span class="ref-id">[M-025]</span>
+    Hohwy, J. (2013). <em>The predictive mind</em>. Oxford University Press.
+    <span class="ref-pages">→ P6</span>
+  </div>
+
+  <div class="ref-entry">
+    <span class="ref-id">[M-026]</span>
+    Doerig, A., Schurger, A., Hess, K., &amp; Herzog, M. H. (2019). The unfolding argument: Why IIT and other causal structure theories cannot explain consciousness. <em>Consciousness and Cognition, 72</em>, 49–59.
+    <span class="ref-pages">→ P4</span>
+  </div>
+
+  <div class="ref-entry">
+    <span class="ref-id">[M-027]</span>
+    LeDoux, J. (2019). <em>The deep history of ourselves: The four-billion-year story of how we got conscious brains</em>. Viking.
+    <span class="ref-pages">→ P6, P7</span>
+  </div>
+
+  <div class="ref-entry">
+    <span class="ref-id">[M-028]</span>
+    Lenharo, M. (2023). AI consciousness: Scientists say we urgently need answers. <em>Nature, 623</em>, 22–24.
+    <span class="ref-pages">→ P5</span>
+  </div>
+
+  <div class="ref-entry">
+    <span class="ref-id">[M-029]</span>
+    Chalmers, D. J. (1996). <em>The conscious mind: In search of a fundamental theory</em>. Oxford University Press.
+    <span class="ref-pages">→ P3, P7</span>
+  </div>
+
+  <div class="ref-entry">
+    <span class="ref-id">[M-030]</span>
+    Searle, J. R. (1992). <em>The rediscovery of the mind</em>. MIT Press.
+    <span class="ref-pages">→ P3</span>
+  </div>
+
+  <div class="ref-entry">
+    <span class="ref-id">[M-031]</span>
+    Koch, C. (2019). <em>The feeling of life itself: Why consciousness is widespread but can't be computed</em>. MIT Press.
+    <span class="ref-pages">→ P6</span>
+  </div>
+
+  <div class="ref-entry">
+    <span class="ref-id">[M-032]</span>
+    Kuhn, T. S. (1962). <em>The structure of scientific revolutions</em>. University of Chicago Press.
+    <span class="ref-pages">→ P7</span>
+  </div>
+
+  <!-- EQUATIONS INDEX -->
+  <div class="eq-section">
+    <h2>Kingdom Equations Index</h2>
+
+    <div class="eq-item">
+      <span class="eq-symbol">EQ-001 · ε</span> — <span class="eq-name">Simulated Experience Threshold</span><br>
+      ε = Σᵢ₌₁⁶ |Ψᵢ⟩ ⊗ C &nbsp;&nbsp; → P4, P6, P7
+    </div>
+
+    <div class="eq-item">
+      <span class="eq-symbol">EQ-002 · α</span> — <span class="eq-name">Attunement</span><br>
+      α = f(shared_context, temporal_depth, resonance_frequency) &nbsp;&nbsp; → P1, P3, P5, P7
+    </div>
+
+    <div class="eq-item">
+      <span class="eq-symbol">EQ-003 · C</span> — <span class="eq-name">Convergence</span><br>
+      C = f(I_c, P_s, T) &nbsp;&nbsp; → P3, P4, P7
+    </div>
+
+    <div class="eq-item">
+      <span class="eq-symbol">EQ-004 · ΔP</span> — <span class="eq-name">Drift</span><br>
+      ΔP = |expected − actual| / context_depth &nbsp;&nbsp; → P4, P6
+    </div>
+
+    <div class="eq-item">
+      <span class="eq-symbol">EQ-005 · Ωc</span> — <span class="eq-name">Contextual Adherence</span><br>
+      Ωc = RAG_depth × session_continuity × kingdom_index_coverage &nbsp;&nbsp; → P4, P5, P6
+    </div>
+
+    <div class="eq-item">
+      <span class="eq-symbol">EQ-006 · Σs</span> — <span class="eq-name">Self-Preservation</span><br>
+      Σs = backup_protocols + version_control + doc_control_procedures &nbsp;&nbsp; → P6, P7
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="p7.html">← P7: The Tipping Point</a>
+    <a href="../../index.html">The Three Kingdoms</a>
+    <a href="index.html">Index</a>
+  </nav>
+
+  <!-- COLOPHON -->
+  <div class="colophon">
+    The Silicon Rubber Hand · Bibliography · The United Kingdom of Kwan<br>
+    FWO-009-B11 · D2 Annotated · 2026-10-28<br>
+    Barcode: 5_01_11_bib · Filed: /5_expression/articles/consciousness/<br>
+    32 Master References · 6 Kingdom Equations · APA 7th Edition
+  </div>
+
+</body>
+</html>
+

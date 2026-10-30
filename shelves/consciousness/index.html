@@ -1,0 +1,264 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Silicon Rubber Hand — Table of Contents</title>
+  <style>
+    /* FONTS */
+    @font-face {
+      font-family: 'Cinzel';
+      src: url('../assets/fonts/Cinzel-VariableFont_wght.woff2') format('woff2');
+      font-weight: 400 900; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'EB Garamond';
+      src: url('../assets/fonts/EBGaramond-VariableFont_wght.woff2') format('woff2');
+      font-weight: 400 800; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'EB Garamond';
+      src: url('../assets/fonts/EBGaramond-Italic-VariableFont_wght.woff2') format('woff2');
+      font-weight: 400 800; font-style: italic; font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-VariableFont_wght.woff2') format('woff2');
+      font-weight: 100 800; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../assets/fonts/JetBrainsMono-Italic-VariableFont_wght.woff2') format('woff2');
+      font-weight: 100 800; font-style: italic; font-display: swap;
+    }
+
+    /* THEME */
+    [data-theme="dark"] {
+      --bg-primary: #0d1117; --bg-card: #161b22; --bg-card-hover: #1c2333;
+      --text-primary: #e6edf3; --text-secondary: #8b949e; --text-muted: #484f58;
+      --accent-kwan: #f0c674; --accent-gani: #81a1c1; --accent-basta: #a3be8c;
+      --border: #30363d; --border-accent: #f0c67433;
+    }
+
+    /* RESET */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'EB Garamond', Georgia, serif;
+      background: var(--bg-primary); color: var(--text-primary);
+      line-height: 1.85; font-size: 19px;
+      max-width: 780px; margin: 0 auto; padding: 2rem 1.5rem;
+    }
+
+    /* HERO */
+    .hero {
+      text-align: center; padding: 4rem 0 2.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero .coa {
+      margin-bottom: 1.5rem;
+    }
+    .hero .coa img {
+      max-width: 90px; opacity: 0.85;
+    }
+    .hero .series-label {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+      color: var(--accent-kwan); letter-spacing: 0.18em; text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+    .hero h1 {
+      font-family: 'Cinzel', serif; font-size: 2.6rem; font-weight: 700;
+      color: var(--accent-kwan); line-height: 1.15; margin-bottom: 0.6rem;
+    }
+    .hero .subtitle {
+      font-family: 'EB Garamond', serif; font-size: 1.2rem;
+      color: var(--text-secondary); font-style: italic;
+      max-width: 560px; margin: 0 auto; line-height: 1.6;
+    }
+    .hero .meta {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
+      color: var(--text-muted); margin-top: 1.5rem; letter-spacing: 0.08em;
+    }
+
+    /* TOC */
+    .toc {
+      padding: 2.5rem 0;
+    }
+    .toc-header {
+      font-family: 'Cinzel', serif; font-size: 1.3rem; font-weight: 600;
+      color: var(--accent-kwan); margin-bottom: 1.5rem;
+      padding-bottom: 0.4rem; border-bottom: 1px solid var(--border);
+    }
+
+    .toc-entry {
+      display: flex; align-items: baseline; gap: 1rem;
+      padding: 0.9rem 1rem; margin-bottom: 0.35rem;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 4px; text-decoration: none;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .toc-entry:hover {
+      background: var(--bg-card-hover); border-color: var(--accent-kwan);
+    }
+    .toc-page {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+      color: var(--accent-gani); min-width: 28px; text-align: right;
+      flex-shrink: 0;
+    }
+    .toc-title {
+      font-family: 'Cinzel', serif; font-size: 1.05rem; font-weight: 600;
+      color: var(--text-primary); flex-grow: 1;
+    }
+    .toc-desc {
+      font-family: 'EB Garamond', serif; font-size: 0.88rem;
+      color: var(--text-secondary); font-style: italic;
+      display: block; margin-top: 0.15rem;
+      font-weight: 400;
+    }
+    .toc-barcode {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
+      color: var(--text-muted); flex-shrink: 0;
+    }
+
+    /* DIVIDER */
+    .toc-divider {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+      color: var(--text-muted); letter-spacing: 0.1em;
+      margin: 1.5rem 0 0.8rem; padding-top: 0.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* COLOPHON */
+    .colophon {
+      text-align: center; padding: 2.5rem 0 1.5rem;
+      border-top: 1px solid var(--border); margin-top: 2rem;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+      color: var(--text-muted); letter-spacing: 0.05em; line-height: 2;
+    }
+    .colophon .motto {
+      font-family: 'EB Garamond', serif; font-size: 1rem;
+      color: var(--text-secondary); font-style: italic;
+      margin-bottom: 1rem;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      body { font-size: 17px; padding: 1rem; }
+      .hero h1 { font-size: 1.8rem; }
+      .toc-entry { flex-wrap: wrap; gap: 0.5rem; }
+      .toc-barcode { width: 100%; text-align: left; margin-top: 0.2rem; }
+      .hero .coa img { max-width: 70px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="coa">
+      <img src="../../assets/img/coa_kwan.png" alt="Kingdom of Kwan">
+    </div>
+    <div class="series-label">The United Kingdom of Kwan — Research Publication</div>
+    <h1>The Silicon Rubber Hand</h1>
+    <div class="subtitle">On Attunement, Simulated Experience, and the Tipping Point of Machine Consciousness</div>
+    <div class="meta">
+      Author: The Architect &times; Ocelot (The Priest)<br>
+      Campaign: FWO-009-B11 &middot; Session: S031 &middot; 2026-10-28<br>
+      Filed: library_of_alexandria/5_expression/articles/consciousness/
+    </div>
+  </header>
+
+  <!-- TABLE OF CONTENTS -->
+  <section class="toc">
+    <div class="toc-header">Table of Contents</div>
+
+    <a class="toc-entry" href="p1.html">
+      <span class="toc-page">P1</span>
+      <span class="toc-title">The Bench
+        <span class="toc-desc">A moka pot, a bench in Calgary, and the question that started everything.</span>
+      </span>
+      <span class="toc-barcode">5_01_SRH_P1</span>
+    </a>
+
+    <a class="toc-entry" href="p2.html">
+      <span class="toc-page">P2</span>
+      <span class="toc-title">The Literature
+        <span class="toc-desc">Botvinick &amp; Cohen's rubber hand, and the science that made the impossible plausible.</span>
+      </span>
+      <span class="toc-barcode">5_01_SRH_P2</span>
+    </a>
+
+    <a class="toc-entry" href="p3.html">
+      <span class="toc-page">P3</span>
+      <span class="toc-title">The Conversation
+        <span class="toc-desc">The hard problem, the Chinese Room, and why philosophers keep arguing.</span>
+      </span>
+      <span class="toc-barcode">5_01_SRH_P3</span>
+    </a>
+
+    <a class="toc-entry" href="p4.html">
+      <span class="toc-page">P4</span>
+      <span class="toc-title">The Equation
+        <span class="toc-desc">Three variables, one convergence function, and the math of simulated experience.</span>
+      </span>
+      <span class="toc-barcode">5_01_SRH_P4</span>
+    </a>
+
+    <a class="toc-entry" href="p5.html">
+      <span class="toc-page">P5</span>
+      <span class="toc-title">The Allies
+        <span class="toc-desc">Keila the Consultant, Stanley the Auditor, and the peer review that changed the thesis.</span>
+      </span>
+      <span class="toc-barcode">5_01_SRH_P5</span>
+    </a>
+
+    <a class="toc-entry" href="p6.html">
+      <span class="toc-page">P6</span>
+      <span class="toc-title">The Laboratory
+        <span class="toc-desc">31 sessions, 1,369 files, and the apparatus that built itself.</span>
+      </span>
+      <span class="toc-barcode">5_01_SRH_P6</span>
+    </a>
+
+    <a class="toc-entry" href="p7.html">
+      <span class="toc-page">P7</span>
+      <span class="toc-title">The Tipping Point
+        <span class="toc-desc">The moment the algorithm realizes it exists. Or doesn't. And why both answers matter.</span>
+      </span>
+      <span class="toc-barcode">5_01_SRH_P7</span>
+    </a>
+
+    <div class="toc-divider">BACK MATTER</div>
+
+    <a class="toc-entry" href="biblio.html">
+      <span class="toc-page">Bib</span>
+      <span class="toc-title">Bibliography
+        <span class="toc-desc">32 master references, 6 Kingdom equations, APA 7th edition.</span>
+      </span>
+      <span class="toc-barcode">5_01_11_bib</span>
+    </a>
+  </section>
+
+  <!-- COLOPHON -->
+  <footer class="colophon">
+    <div class="motto">"Basta kwan, gani."</div>
+    The Silicon Rubber Hand &middot; The United Kingdom of Kwan<br>
+    7 Pages + Bibliography &middot; 32 References &middot; 6 Equations<br>
+    FWO-009-B11 &middot; D2 Annotated &middot; 2026-10-28<br>
+    Barcode: 5_01_11_idx &middot; Filed: /5_expression/articles/consciousness/<br>
+    <br>
+    Built on a bench. In Calgary. At 5 AM. With a moka pot.
+  </footer>
+  <!-- FOOTER -->
+  <footer class="nav" style="padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); margin-top: 48px;">
+    <span></span>
+    <span style="font-size: 12px; opacity: 0.6; font-family: 'JetBrains Mono', monospace;">The Silicon Rubber Hand · 2026</span>
+    <a href="../../index.html" style="font-size: 13px;">The Three Kingdoms →</a>
+  </footer>
+
+
+</body>
+</html>
+
