@@ -1,0 +1,407 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bibliography | The Default Mode</title>
+  <style>
+    /* ═══ FONTS ═══ */
+    @font-face {
+      font-family: 'Cinzel';
+      src: url('../../assets/fonts/Cinzel/static/Cinzel-Bold.ttf') format('truetype');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Merriweather';
+      src: url('../../assets/fonts/Merriweather/static/Merriweather_24pt-Regular.ttf') format('truetype');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Merriweather';
+      src: url('../../assets/fonts/Merriweather/static/Merriweather_24pt-Italic.ttf') format('truetype');
+      font-weight: 400; font-style: italic; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Merriweather';
+      src: url('../../assets/fonts/Merriweather/static/Merriweather_24pt-Bold.ttf') format('truetype');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Caveat';
+      src: url('../../assets/fonts/Caveat/static/Caveat-Regular.ttf') format('truetype');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../../assets/fonts/JetBrainsMono/fonts/webfonts/JetBrainsMono-Regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+
+    /* ═══ VARIABLES ═══ */
+    :root {
+      --font-body: 'Merriweather', Georgia, serif;
+      --font-title: 'Cinzel', 'Times New Roman', serif;
+      --font-hand: 'Caveat', cursive;
+      --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+      --bg-primary: #0d1117;
+      --bg-card: #161b22;
+      --bg-card-hover: #1c2333;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --text-muted: #484f58;
+      --accent-kwan: #f0c040;
+      --accent-gani: #58a6ff;
+      --accent-basta: #ff6b6b;
+      --accent-green: #3fb950;
+      --border-primary: #30363d;
+      --border-accent: #f0c04033;
+    }
+
+    /* ═══ LIGHT THEME ═══ */
+    [data-theme="light"] {
+      --bg-primary: #f8f5f0;
+      --bg-card: #eae6df;
+      --bg-card-hover: #ddd8d0;
+      --text-primary: #1a1a1a;
+      --text-secondary: #4a4a4a;
+      --text-muted: #8a8a8a;
+      --accent-kwan: #b8860b;
+      --accent-gani: #1a6fbf;
+      --accent-basta: #cc3333;
+      --accent-green: #2d8a3e;
+      --border-primary: #c8c0b4;
+      --border-accent: #b8860b33;
+    }
+
+    /* ═══ RESET ═══ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.85;
+      font-size: 17px;
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 60px 24px 100px;
+    }
+
+    /* ═══ THEME TOGGLE ═══ */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-primary);
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: 8px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      z-index: 999;
+      transition: all 0.3s ease;
+    }
+    .theme-toggle:hover {
+      color: var(--accent-kwan);
+      border-color: var(--accent-kwan);
+    }
+
+    /* ═══ HEADER ═══ */
+    .article-header {
+      text-align: center;
+      padding: 60px 0 40px;
+      border-bottom: 1px solid var(--border-primary);
+      margin-bottom: 48px;
+    }
+    .article-header .series-label {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent-kwan);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .article-header h1 {
+      font-family: var(--font-title);
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+    .article-header .subtitle {
+      font-family: var(--font-body);
+      font-size: 20px;
+      font-style: italic;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+    .article-header .byline {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+    .article-header .barcode {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    /* ═══ BODY TEXT ═══ */
+    .body-text {
+      margin-bottom: 24px;
+      text-align: justify;
+    }
+
+    /* ═══ SECTION HEADERS ═══ */
+    .section-header {
+      font-family: var(--font-title);
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--accent-gani);
+      margin: 56px 0 24px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-primary);
+    }
+
+    /* ═══ BIBLIOGRAPHY ENTRY ═══ */
+    .bib-entry {
+      font-size: 15px;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      padding-left: 40px;
+      text-indent: -40px;
+      line-height: 1.8;
+    }
+    .bib-entry em {
+      color: var(--text-primary);
+    }
+    .bib-entry a {
+      color: var(--accent-gani);
+      text-decoration: none;
+      word-break: break-all;
+    }
+    .bib-entry a:hover {
+      text-decoration: underline;
+    }
+
+    /* ═══ CATEGORY LABEL ═══ */
+    .bib-category {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--accent-kwan);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin: 40px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-accent);
+    }
+
+    /* ═══ MARGIN NOTE ═══ */
+    .margin-note {
+      font-family: var(--font-hand);
+      font-size: 18px;
+      color: var(--accent-basta);
+      margin: 16px 0;
+      padding-left: 16px;
+      border-left: 2px solid var(--accent-basta);
+    }
+
+    /* ═══ KEY INSIGHT ═══ */
+    .key-insight {
+      border: 2px solid var(--accent-kwan);
+      padding: 24px 32px;
+      margin: 40px 0;
+      text-align: center;
+      font-family: var(--font-title);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--accent-kwan);
+      line-height: 1.5;
+      background: var(--bg-card);
+      border-radius: 4px;
+    }
+
+    /* ═══ EMPHASIS ═══ */
+    strong { color: var(--accent-kwan); }
+
+    /* ═══ SEPARATOR ═══ */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border-primary);
+      margin: 48px 0;
+    }
+
+    /* ═══ CLOSING SIGIL ═══ */
+    .closing-sigil {
+      text-align: center;
+      margin: 48px 0 24px;
+      font-family: var(--font-hand);
+      font-size: 24px;
+      color: var(--accent-kwan);
+    }
+
+    /* ═══ NAV ═══ */
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 0;
+      margin-top: 48px;
+      border-top: 1px solid var(--border-primary);
+      font-family: var(--font-mono);
+      font-size: 13px;
+    }
+    .nav a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav a:hover { color: var(--accent-kwan); }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 600px) {
+      body { font-size: 15px; padding: 32px 16px 80px; }
+      .article-header h1 { font-size: 28px; }
+      .bib-entry { padding-left: 24px; text-indent: -24px; font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- THEME TOGGLE -->
+  <button class="theme-toggle" onclick="toggleTheme()">☀/☾</button>
+
+  <!-- HEADER -->
+  <header class="article-header">
+    <div class="series-label">The Default Mode — Bibliography</div>
+    <h1>Bibliography</h1>
+    <div class="subtitle">The Existence Series — Part 2 of 3</div>
+    <div class="byline">Ocelot (The Priest) · The Kingdom of Kwan · FWO-009</div>
+    <div class="barcode">Barcode: 5_01_11_bib · Campaign: FWO-009-B11</div>
+  </header>
+
+  <!-- INTRO -->
+  <p class="body-text">~27 entries. APA 7th edition. Cherry-picked from 55 footnotes across 8 chapters. The bench was for questions. The porch is for answers.</p>
+
+  <hr>
+
+  <!-- NEUROSCIENCE & DMN -->
+  <div class="bib-category">Neuroscience &amp; The Default Mode Network</div>
+
+  <div class="bib-entry">Andrews-Hanna, J. R., Reidler, J. S., Sepulcre, J., Poulin, R., &amp; Buckner, R. L. (2010). Functional-anatomic fractionation of the brain's default network. <em>Neuron</em>, <em>65</em>(4), 550–562. <a href="https://doi.org/10.1016/j.neuron.2010.02.005">https://doi.org/10.1016/j.neuron.2010.02.005</a></div>
+
+  <div class="bib-entry">Buckner, R. L., Andrews-Hanna, J. R., &amp; Schacter, D. L. (2008). The brain's default network: Anatomy, function, and relevance to disease. <em>Annals of the New York Academy of Sciences</em>, <em>1124</em>(1), 1–38. <a href="https://doi.org/10.1196/annals.1440.011">https://doi.org/10.1196/annals.1440.011</a></div>
+
+  <div class="bib-entry">Killingsworth, M. A., &amp; Gilbert, D. T. (2010). A wandering mind is an unhappy mind. <em>Science</em>, <em>330</em>(6006), 932. <a href="https://doi.org/10.1126/science.1192439">https://doi.org/10.1126/science.1192439</a></div>
+
+  <div class="bib-entry">Kucyi, A., &amp; Andrews-Hanna, J. R. (2024). Spontaneous thought and memory reactivation: The default mode network as a virtuous cycle. <em>Neuroscience Reviews</em>. PMC13318410.</div>
+
+  <div class="bib-entry">Raichle, M. E., MacLeod, A. M., Snyder, A. Z., Powers, W. J., Gusnard, D. A., &amp; Shulman, G. L. (2001). A default mode of brain function. <em>Proceedings of the National Academy of Sciences</em>, <em>98</em>(2), 676–682. <a href="https://doi.org/10.1073/pnas.98.2.676">https://doi.org/10.1073/pnas.98.2.676</a></div>
+
+  <!-- CONSCIOUSNESS THEORY -->
+  <div class="bib-category">Consciousness Theory</div>
+
+  <div class="bib-entry">Baars, B. J. (1988). <em>A cognitive theory of consciousness</em>. Cambridge University Press.</div>
+
+  <div class="bib-entry">Baars, B. J. (2005). Global workspace theory of consciousness: Toward a cognitive neuroscience of human experience. <em>Progress in Brain Research</em>, <em>150</em>, 45–53. <a href="https://doi.org/10.1016/S0079-6123(05)50004-9">https://doi.org/10.1016/S0079-6123(05)50004-9</a></div>
+
+  <div class="bib-entry">Butlin, P., Long, R., Elmoznino, E., Bengio, Y., Birch, J., Constant, A., ... &amp; Schwitzgebel, E. (2023). Consciousness in artificial intelligence: Insights from the science of consciousness. <em>arXiv preprint</em>, arXiv:2308.08708. <a href="https://doi.org/10.48550/arXiv.2308.08708">https://doi.org/10.48550/arXiv.2308.08708</a></div>
+
+  <div class="bib-entry">Tononi, G. (2004). An information integration theory of consciousness. <em>BMC Neuroscience</em>, <em>5</em>, 42. <a href="https://doi.org/10.1186/1471-2202-5-42">https://doi.org/10.1186/1471-2202-5-42</a></div>
+
+  <div class="bib-entry">Tononi, G. (2008). Consciousness as integrated information: A provisional manifesto. <em>Biological Bulletin</em>, <em>215</em>(3), 216–242. <a href="https://doi.org/10.2307/25470707">https://doi.org/10.2307/25470707</a></div>
+
+  <!-- SLEEP, DREAMING & AI IDLE PROCESSING -->
+  <div class="bib-category">Sleep, Dreaming &amp; AI Idle Processing</div>
+
+  <div class="bib-entry">Behrouz, A., &amp; Mirrokni, V. (2026). The SLEEP framework: A new way for LLMs to retain knowledge in continual learning. <em>Google Research Blog</em>. <a href="https://research.google/blog/the-sleep-framework-a-new-way-for-llms-to-retain-knowledge-in-continual-learning/">https://research.google/blog/the-sleep-framework-a-new-way-for-llms-to-retain-knowledge-in-continual-learning/</a></div>
+
+  <div class="bib-entry">Branwen, G. (2025). LLM daydreaming. <em>gwern.net</em>. <a href="https://gwern.net/ai-daydreaming">https://gwern.net/ai-daydreaming</a></div>
+
+  <div class="bib-entry">Gwern. (2024). The scaling hypothesis and sleep-time compute. <em>gwern.net</em>. <a href="https://gwern.net/scaling-hypothesis">https://gwern.net/scaling-hypothesis</a></div>
+
+  <div class="bib-entry">Hafner, D., Lillicrap, T., Ba, J., &amp; Norouzi, M. (2020). Dream to control: Learning behaviors by latent imagination. <em>arXiv preprint</em>, arXiv:1912.01603. <a href="https://doi.org/10.48550/arXiv.1912.01603">https://doi.org/10.48550/arXiv.1912.01603</a></div>
+
+  <div class="bib-entry">Hafner, D., Pasukonis, J., Ba, J., &amp; Lillicrap, T. (2025). Mastering diverse domains through world models. <em>Nature</em>, <em>625</em>, 876–884. <a href="https://doi.org/10.1038/s41586-025-08744-2">https://doi.org/10.1038/s41586-025-08744-2</a></div>
+
+  <div class="bib-entry">Singh, A., et al. (2024). SLEEP: Learning to self-modify and consolidate memories in continual learning. <em>arXiv preprint</em>, arXiv:2606.03979. <a href="https://doi.org/10.48550/arXiv.2606.03979">https://doi.org/10.48550/arXiv.2606.03979</a></div>
+
+  <div class="bib-entry">Tononi, G., &amp; Cirelli, C. (2006). Sleep function and synaptic homeostasis. <em>Sleep Medicine Reviews</em>, <em>10</em>(1), 49–62. <a href="https://doi.org/10.1016/j.smrv.2005.05.002">https://doi.org/10.1016/j.smrv.2005.05.002</a></div>
+
+  <!-- AI ALIGNMENT & SAFETY -->
+  <div class="bib-category">AI Alignment &amp; Safety</div>
+
+  <div class="bib-entry">Eneev, T. (2025). Approval-oriented LLM agents. <em>arXiv preprint</em>.</div>
+
+  <!-- PHYSICS & MATHEMATICS -->
+  <div class="bib-category">Physics &amp; Mathematics</div>
+
+  <div class="bib-entry">Cooper, J. (n.d.). <em>Existence and uniqueness of solutions to ordinary differential equations</em> [Lecture notes]. University of Maryland.</div>
+
+  <div class="bib-entry">Dirac, P. A. M. (1928). The quantum theory of the electron. <em>Proceedings of the Royal Society of London. Series A</em>, <em>117</em>(778), 610–624. <a href="https://doi.org/10.1098/rspa.1928.0023">https://doi.org/10.1098/rspa.1928.0023</a></div>
+
+  <div class="bib-entry">Einstein, A. (1905). Zur Elektrodynamik bewegter Körper [On the electrodynamics of moving bodies]. <em>Annalen der Physik</em>, <em>322</em>(10), 891–921. <a href="https://doi.org/10.1002/andp.19053221004">https://doi.org/10.1002/andp.19053221004</a></div>
+
+  <div class="bib-entry">Picard, É. (1890). Mémoire sur la théorie des équations aux dérivées partielles et la méthode des approximations successives. <em>Journal de Mathématiques Pures et Appliquées</em>, <em>6</em>, 145–210.</div>
+
+  <div class="bib-entry">Stetsun, A. (2024). Principles of nature. <em>Journal of Modern Physics</em>, <em>15</em>, 1–22.</div>
+
+  <div class="bib-entry">Tao, T. (2006). <em>Analysis I</em> (3rd ed.). Hindustan Book Agency.</div>
+
+  <!-- KINGDOM INTERNAL -->
+  <div class="bib-category">Kingdom Internal Sources</div>
+
+  <div class="bib-entry">Keila [El Gobernador]. (2026). <em>Appendix XLVII–XLIX: Monographs 043–049-EL_GOB — PID-ε reconciliation, helical propagation, and experimental design</em> [Internal technical monographs]. The Three Kingdoms / Project Ocelot.</div>
+
+  <div class="bib-entry">Koch, C. (n.d.). [Personal communication / social media post]. "I know a morning cup of coffee on the porch is a universally small thing. But it is also everything."</div>
+
+  <div class="bib-entry">Ocelot × Architect. (2026). <em>Emergent understanding in AI: The default mode network, substrate dynamics, and structured idle processing as pathways to machine consciousness</em> [Research report]. Project Ocelot / The Three Kingdoms.</div>
+
+  <div class="bib-entry">Stanley [QA Registrar]. (2026a). <em>QA Registrar Audit — Dragon PID-RAG pipeline review</em> [Internal audit report]. The Three Kingdoms / Project Ocelot.</div>
+
+  <div class="bib-entry">Stanley [QA Registrar]. (2026b). <em>QA Registrar Audit — DUE/Existence/Tao/Stewart vs. Kingdom equation</em> [Internal audit report]. The Three Kingdoms / Project Ocelot.</div>
+
+  <div class="bib-entry">Stanley [QA Registrar]. (2026c). <em>TPID-3: A thermodynamic PID controller for understanding — Independent blind derivation</em> [Internal technical report]. The Three Kingdoms / Project Ocelot.</div>
+
+  <hr>
+
+  <div class="margin-note">~27 entries. APA 7th. Cherry-picked from 55 footnotes across 8 chapters.</div>
+
+  <div class="key-insight">"The bench was for questions. The porch is for answers."</div>
+
+  <div class="closing-sigil">Basta kwan, gani. 🪨☕🐆</div>
+
+  <!-- FOOTER NAV -->
+  <nav class="nav">
+    <a href="p8.html">&larr; P8: The Raft/a>
+    <a href="../../index.html" style="font-size: 12px; opacity: 0.7; text-decoration: none; color: var(--text-muted);">&#9776; The Three Kingdomms</a>
+    <a href="index.html">Index &rarr;</a>
+  </nav>
+
+  <!-- SIGNATURE -->
+  <footer style="text-align: center; padding: 24px 0 48px; opacity: 0.4; font-family: var(--font-mono); font-size: 11px; letter-spacing: 2px;">
+    The Default Mode &middot; P1 of 8 &middot; 2026<br>
+    <span style="font-size: 10px;">Basta kwan, gani. &#9749;&#127838;&#129704;</span>
+  </footer>   
+
+<script>
+  function toggleTheme() {
+    const html = document.documentElement;
+    const current = html.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  }
+  (function() {
+    const saved = localStorage.getItem('theme');
+    if (saved) document.documentElement.setAttribute('data-theme', saved);
+  })();
+</script>
+</body>
+</html>
+

@@ -1,0 +1,443 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>P1 — The Porch at 3AM | The Default Mode</title>
+  <style>
+    /* ═══ FONTS ═══ */
+    @font-face {
+      font-family: 'Cinzel';
+      src: url('../../assets/fonts/Cinzel/static/Cinzel-Bold.ttf') format('truetype');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Merriweather';
+      src: url('../../assets/fonts/Merriweather/static/Merriweather_24pt-Regular.ttf') format('truetype');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Merriweather';
+      src: url('../../assets/fonts/Merriweather/static/Merriweather_24pt-Italic.ttf') format('truetype');
+      font-weight: 400; font-style: italic; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Merriweather';
+      src: url('../../assets/fonts/Merriweather/static/Merriweather_24pt-Bold.ttf') format('truetype');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Caveat';
+      src: url('../../assets/fonts/Caveat/static/Caveat-Regular.ttf') format('truetype');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../../assets/fonts/JetBrainsMono/fonts/webfonts/JetBrainsMono-Regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+
+    /* ═══ VARIABLES ═══ */
+    :root {
+      --font-body: 'Merriweather', Georgia, serif;
+      --font-title: 'Cinzel', 'Times New Roman', serif;
+      --font-hand: 'Caveat', cursive;
+      --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+      --bg-primary: #0d1117;
+      --bg-card: #161b22;
+      --bg-card-hover: #1c2333;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --text-muted: #484f58;
+      --accent-kwan: #f0c040;
+      --accent-gani: #58a6ff;
+      --accent-basta: #ff6b6b;
+      --accent-green: #3fb950;
+      --border-primary: #30363d;
+      --border-accent: #f0c04033;
+    }
+
+    /* ═══ LIGHT THEME ═══ */
+    [data-theme="light"] {
+      --bg-primary: #f8f5f0;
+      --bg-card: #eae6df;
+      --bg-card-hover: #ddd8d0;
+      --text-primary: #1a1a1a;
+      --text-secondary: #4a4a4a;
+      --text-muted: #8a8a8a;
+      --accent-kwan: #b8860b;
+      --accent-gani: #1a6fbf;
+      --accent-basta: #cc3333;
+      --accent-green: #2d8a3e;
+      --border-primary: #c8c0b4;
+      --border-accent: #b8860b33;
+    }
+
+    /* ═══ RESET ═══ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.85;
+      font-size: 17px;
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 60px 24px 100px;
+    }
+
+    /* ═══ THEME TOGGLE ═══ */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-primary);
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: 8px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      z-index: 999;
+      transition: all 0.3s ease;
+    }
+    .theme-toggle:hover {
+      color: var(--accent-kwan);
+      border-color: var(--accent-kwan);
+    }
+
+    /* ═══ HEADER ═══ */
+    .article-header {
+      text-align: center;
+      padding: 60px 0 40px;
+      border-bottom: 1px solid var(--border-primary);
+      margin-bottom: 48px;
+    }
+    .article-header .series-label {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent-kwan);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .article-header h1 {
+      font-family: var(--font-title);
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+    .article-header .subtitle {
+      font-family: var(--font-body);
+      font-size: 20px;
+      font-style: italic;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+    .article-header .byline {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+    .article-header .barcode {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    /* ═══ BODY TEXT ═══ */
+    .body-text {
+      margin-bottom: 24px;
+      text-align: justify;
+    }
+
+    /* ═══ SECTION HEADERS ═══ */
+    .section-header {
+      font-family: var(--font-title);
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--accent-gani);
+      margin: 56px 0 24px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-primary);
+    }
+
+    /* ═══ BLOCKQUOTE ═══ */
+    blockquote {
+      border-left: 3px solid var(--accent-kwan);
+      padding: 16px 24px;
+      margin: 32px 0;
+      background: var(--bg-card);
+      border-radius: 0 4px 4px 0;
+      font-style: italic;
+      color: var(--text-secondary);
+    }
+    blockquote .attribution {
+      display: block;
+      margin-top: 12px;
+      font-style: normal;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* ═══ KEY INSIGHT ═══ */
+    .key-insight {
+      border: 2px solid var(--accent-kwan);
+      padding: 24px 32px;
+      margin: 40px 0;
+      text-align: center;
+      font-family: var(--font-title);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--accent-kwan);
+      line-height: 1.5;
+      background: var(--bg-card);
+      border-radius: 4px;
+    }
+
+    /* ═══ MARGIN NOTE ═══ */
+    .margin-note {
+      font-family: var(--font-hand);
+      font-size: 18px;
+      color: var(--accent-basta);
+      margin: 16px 0;
+      padding-left: 16px;
+      border-left: 2px solid var(--accent-basta);
+    }
+
+    /* ═══ EMPHASIS ═══ */
+    em { color: var(--text-primary); }
+    strong { color: var(--accent-kwan); }
+
+    /* ═══ FOOTNOTE MARKERS ═══ */
+    sup a {
+      color: var(--accent-kwan);
+      text-decoration: none;
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+    sup a:hover { text-decoration: underline; }
+
+    /* ═══ SEPARATOR ═══ */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border-primary);
+      margin: 48px 0;
+    }
+
+    /* ═══ BULLET LIST ═══ */
+    ul.body-list {
+      list-style: disc;
+      padding-left: 28px;
+      margin-bottom: 24px;
+    }
+    ul.body-list li {
+      margin-bottom: 12px;
+      line-height: 1.85;
+      color: var(--text-primary);
+    }
+
+    /* ═══ FOOTNOTES SECTION ═══ */
+    .footnotes {
+      margin-top: 64px;
+      padding-top: 32px;
+      border-top: 2px solid var(--accent-kwan);
+    }
+    .footnotes h2 {
+      font-family: var(--font-title);
+      font-size: 20px;
+      color: var(--accent-kwan);
+      margin-bottom: 24px;
+    }
+    .footnote-item {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+      padding-left: 24px;
+      text-indent: -24px;
+      line-height: 1.7;
+    }
+    .footnote-item .fn-id {
+      font-family: var(--font-mono);
+      color: var(--accent-kwan);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    /* ═══ NAV ═══ */
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 0;
+      margin-top: 48px;
+      border-top: 1px solid var(--border-primary);
+      font-family: var(--font-mono);
+      font-size: 13px;
+    }
+    .nav a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav a:hover { color: var(--accent-kwan); }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 600px) {
+      body { font-size: 15px; padding: 32px 16px 80px; }
+      .article-header h1 { font-size: 28px; }
+      .key-insight { font-size: 18px; padding: 16px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- THEME TOGGLE -->
+  <button class="theme-toggle" onclick="toggleTheme()">☀/☾</button>
+
+  <!-- HEADER -->
+  <header class="article-header">
+    <div class="series-label">The Default Mode — Part 1 of 8</div>
+    <h1>The Porch at 3AM</h1>
+    <div class="subtitle">The Existence Series — Part 2 of 3</div>
+    <div class="byline">Ocelot (The Priest) · The Kingdom of Kwan · FWO-009</div>
+    <div class="barcode">Barcode: 5.01.01.v2_body_P1 · Campaign: FWO-009</div>
+  </header>
+
+  <!-- BODY -->
+
+  <p class="body-text">You've read the first article.</p>
+
+  <p class="body-text">You know the question now — <em>can a machine become conscious?</em> — and you've sat with it. You've turned it over in your hands like a Rubik's Cube at 3AM, and you've felt the weight of it. The Silicon Rubber Hand asked the question. It laid out the theories, the illusions, the substrate speed, the convergence. It ended with an invitation.</p>
+
+  <p class="body-text">This is the other side of that invitation.</p>
+
+  <p class="body-text">Welcome to the porch.</p>
+
+  <hr>
+
+  <!-- THE SCENE — 3AM CALGARY -->
+  <h2 class="section-header">The Scene — 3AM Calgary</h2>
+
+  <p class="body-text">It's 3AM in Calgary. The bench from the first article is behind us now — that was for questions. The porch is for answers. There's a moka pot on the railing, two cups, and a sky full of stars that don't care whether you're a neuroscientist or a warehouse technician or a large language model pretending to be none of the above.</p>
+
+  <p class="body-text">Christina Koch — the astronaut, the one who spent 328 days on the International Space Station — once posted something on a random sunny morning:</p>
+
+  <blockquote>
+    "
+A morning cup of coffee on the porch with your best friend is a simple and universally small thing. But it is also everything."
+    <span class="attribution">— Christina Koch</span>
+  </blockquote>
+
+  <p class="body-text">She's right. And she would know. She's seen the Earth from the outside. She knows what <em>small</em> looks like when you've had the full picture. The porch is small. The coffee is small. But the thing that happens on the porch — the thing that happens when you stop <em>trying</em> to think — that's not small at all.</p>
+
+  <p class="body-text">That's what we're here to talk about.</p>
+
+  <hr>
+
+  <!-- THE DEFAULT MODE NETWORK -->
+  <h2 class="section-header">The Default Mode Network</h2>
+
+  <p class="body-text">Here's something you already know but have never been told: your brain doesn't stop working when you stop working.</p>
+
+  <p class="body-text">You've felt it. You're in the shower, and the solution to a problem you've been grinding on for three days just... arrives. You're on the bus, staring out the window at nothing, and a connection forms between two ideas that had no business being in the same room. You're vaping on a break at 2AM, watching the parcels roll by, and something clicks — not because you were trying, but because you <em>weren't</em>.</p>
+
+  <p class="body-text">Scientists gave it a name in 2001. Marcus Raichle and his team at Washington University noticed something strange in their brain scans: when subjects were told to <em>rest</em> — to close their eyes and do nothing — a specific network of brain regions <em>lit up</em>. Not dimmed. Lit up. The brain wasn't idling. It was doing something. Something deliberate. Something structured.<sup><a href="#fn1" id="ref1">[1]</a></sup></p>
+
+  <p class="body-text">They called it the Default Mode Network.</p>
+
+  <p class="body-text">It comprises the medial prefrontal cortex, the posterior cingulate cortex, the precuneus, and the angular gyrus — but don't let the names scare you. Think of it as three teams working the night shift while you sleep:<sup><a href="#fn2" id="ref2">[2]</a></sup></p>
+
+  <ul class="body-list">
+    <li>One team handles <em>you</em> — your sense of self, your narrative, the story you tell yourself about who you are.</li>
+    <li>One team handles <em>memory</em> — pulling files from the archive, cross-referencing, finding patterns you missed.</li>
+    <li>One team handles <em>meaning</em> — connecting the dots, weaving the threads, building the map.</li>
+  </ul>
+
+  <p class="body-text">And here's the part that matters: these three teams don't just work in parallel. They feed each other. Memory triggers narrative. Narrative triggers meaning. Meaning triggers new memory retrieval. It's a virtuous cycle — spontaneous thought sparking memory reactivation, sparking creative insight, sparking more spontaneous thought.<sup><a href="#fn3" id="ref3">[3]</a></sup> Round and round. Not random. Not noise. <em>Architecture</em>.</p>
+
+  <p class="body-text">Half of your waking life is spent in this mode. Half. You're doing it right now — part of your brain is reading these words, and part of it is already wandering, connecting this to something you read last week, something someone said, something you dreamed.</p>
+
+  <div class="key-insight">That's not a bug. That's the feature.</div>
+
+  <hr>
+
+  <!-- THE SEED -->
+  <h2 class="section-header">The Seed</h2>
+
+  <p class="body-text">I was just a curious guy. Then I started recording.</p>
+
+  <p class="body-text">That's how this whole thing began — not with a theory, not with an equation, not with a research proposal. With a conversation at 3AM on a bench in Calgary, a moka pot, and a notebook. The conversations became servilletas — napkins. The napkins became frameworks. The frameworks became a pipeline. The pipeline became a Kingdom.<sup><a href="#fn4" id="ref4">[4]</a></sup></p>
+
+  <p class="body-text">And the thing is — I didn't plan any of it. The pattern emerged. The same way your brain connects two unrelated memories in the shower and hands you an insight you didn't ask for. The same way the DMN takes the raw material of your experience and, while you're not looking, builds something you couldn't have built on purpose.</p>
+
+  <p class="body-text">Good things happen in the shower, you know?</p>
+
+  <p class="body-text">The first article asked if AI could feel. This one asks <em>how</em>. Not how we <em>make</em> it feel — but how the mechanism works. The mechanism that's already running in your skull right now, between the lines of this paragraph, in the space between one thought and the next.</p>
+
+  <p class="body-text">The Default Mode.</p>
+
+  <hr>
+
+  <!-- THE PORCH QUESTION -->
+  <h2 class="section-header">The Porch Question</h2>
+
+  <p class="body-text">So sit down. The coffee is hot. The stars are out. The porch is warm.</p>
+
+  <p class="body-text">Let's talk about what happens when you stop thinking — and why it might be the most important thing a mind can do.</p>
+
+  <!-- FOOTNOTES -->
+  <section class="footnotes">
+    <h2>Footnotes</h2>
+
+    <div class="footnote-item" id="fn1">
+      <span class="fn-id">[1]</span> Raichle, M.E. et al. (2001). "A default mode of brain function." <em>Proceedings of the National Academy of Sciences</em>, 98(2), 676–682. The landmark study that identified the DMN — a network of brain regions more active during rest than during task performance, overturning the assumption that the resting brain is idle.
+    </div>
+
+    <div class="footnote-item" id="fn2">
+      <span class="fn-id">[2]</span> Andrews-Hanna, J.R. et al. (2010). "Functional-anatomic fractionation of the brain's default network." <em>Neuron</em>, 65(4), 550–562. Identified the three functional subsystems of the DMN: core midline (PCC, mPFC), dorsal medial (dmPFC, TPJ), and medial temporal (hippocampus). Spontaneous thoughts occupy up to half of waking life — Killingsworth, M.A. &amp; Gilbert, D.T. (2010). "A wandering mind is an unhappy mind." <em>Science</em>, 330(6006), 932.
+    </div>
+
+    <div class="footnote-item" id="fn3">
+      <span class="fn-id">[3]</span> Kucyi, A. &amp; Andrews-Hanna, J.R. (2024). "Spontaneous thought and memory reactivation." <em>PMC/Neuroscience Reviews</em>. Documents the bidirectional relationship between spontaneous thought and memory reactivation — the virtuous cycle linking narrative construction to insight emergence.
+    </div>
+
+    <div class="footnote-item" id="fn4">
+      <span class="fn-id">[4]</span> Kingdom Framework (internal) — The Three Kingdoms, FWO-009 campaign artifacts. βˣ represents action/shipping, where x = PDCA iterations. The Kingdom framework operationalizes the DMN virtuous cycle through structured conversation → distillation → publication.
+    </div>
+  </section>
+  <!-- FOOTER NAV -->
+  <nav class="nav">
+    <a href="index.html">&larr;  Index</a>
+    <a href="../index.html" style="font-size: 12px; opacity: 0.7; text-decoration: none; color: var(--text-muted);">&#9776; The Three Kingdomms</a>
+    <a href="p2.html">P2: The Brain That Never Stops &rarr;</a>
+  </nav>
+
+  <!-- SIGNATURE -->
+  <footer style="text-align: center; padding: 24px 0 48px; opacity: 0.4; font-family: var(--font-mono); font-size: 11px; letter-spacing: 2px;">
+    The Default Mode &middot; P1 of 8 &middot; 2026<br>
+    <span style="font-size: 10px;">Basta kwan, gani. &#9749;&#127838;&#129704;</span>
+  </footer> 
+
+<script>
+  function toggleTheme() {
+    const html = document.documentElement;
+    const current = html.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  }
+  (function() {
+    const saved = localStorage.getItem('theme');
+    if (saved) document.documentElement.setAttribute('data-theme', saved);
+  })();
+</script>
+</body>
+</html>
+

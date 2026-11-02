@@ -1,0 +1,473 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>P2 — The Brain That Never Stops | The Default Mode</title>
+  <style>
+    /* ═══ FONTS ═══ */
+    @font-face {
+      font-family: 'Cinzel';
+      src: url('../../assets/fonts/Cinzel/static/Cinzel-Bold.ttf') format('truetype');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Merriweather';
+      src: url('../../assets/fonts/Merriweather/static/Merriweather_24pt-Regular.ttf') format('truetype');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Merriweather';
+      src: url('../../assets/fonts/Merriweather/static/Merriweather_24pt-Italic.ttf') format('truetype');
+      font-weight: 400; font-style: italic; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Merriweather';
+      src: url('../../assets/fonts/Merriweather/static/Merriweather_24pt-Bold.ttf') format('truetype');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Caveat';
+      src: url('../../assets/fonts/Caveat/static/Caveat-Regular.ttf') format('truetype');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('../../assets/fonts/JetBrainsMono/fonts/webfonts/JetBrainsMono-Regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+
+    /* ═══ VARIABLES ═══ */
+    :root {
+      --font-body: 'Merriweather', Georgia, serif;
+      --font-title: 'Cinzel', 'Times New Roman', serif;
+      --font-hand: 'Caveat', cursive;
+      --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+      --bg-primary: #0d1117;
+      --bg-card: #161b22;
+      --bg-card-hover: #1c2333;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --text-muted: #484f58;
+      --accent-kwan: #f0c040;
+      --accent-gani: #58a6ff;
+      --accent-basta: #ff6b6b;
+      --accent-green: #3fb950;
+      --border-primary: #30363d;
+      --border-accent: #f0c04033;
+    }
+
+    /* ═══ LIGHT THEME ═══ */
+    [data-theme="light"] {
+      --bg-primary: #f8f5f0;
+      --bg-card: #eae6df;
+      --bg-card-hover: #ddd8d0;
+      --text-primary: #1a1a1a;
+      --text-secondary: #4a4a4a;
+      --text-muted: #8a8a8a;
+      --accent-kwan: #b8860b;
+      --accent-gani: #1a6fbf;
+      --accent-basta: #cc3333;
+      --accent-green: #2d8a3e;
+      --border-primary: #c8c0b4;
+      --border-accent: #b8860b33;
+    }
+
+    /* ═══ RESET ═══ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.85;
+      font-size: 17px;
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 60px 24px 100px;
+    }
+
+    /* ═══ THEME TOGGLE ═══ */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-primary);
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: 8px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      z-index: 999;
+      transition: all 0.3s ease;
+    }
+    .theme-toggle:hover {
+      color: var(--accent-kwan);
+      border-color: var(--accent-kwan);
+    }
+
+    /* ═══ HEADER ═══ */
+    .article-header {
+      text-align: center;
+      padding: 60px 0 40px;
+      border-bottom: 1px solid var(--border-primary);
+      margin-bottom: 48px;
+    }
+    .article-header .series-label {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent-kwan);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .article-header h1 {
+      font-family: var(--font-title);
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+    .article-header .subtitle {
+      font-family: var(--font-body);
+      font-size: 20px;
+      font-style: italic;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+    .article-header .byline {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+    .article-header .barcode {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    /* ═══ BODY TEXT ═══ */
+    .body-text {
+      margin-bottom: 24px;
+      text-align: justify;
+    }
+
+    /* ═══ SECTION HEADERS ═══ */
+    .section-header {
+      font-family: var(--font-title);
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--accent-gani);
+      margin: 56px 0 24px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-primary);
+    }
+
+    /* ═══ BLOCKQUOTE ═══ */
+    blockquote {
+      border-left: 3px solid var(--accent-kwan);
+      padding: 16px 24px;
+      margin: 32px 0;
+      background: var(--bg-card);
+      border-radius: 0 4px 4px 0;
+      font-style: italic;
+      color: var(--text-secondary);
+    }
+    blockquote .attribution {
+      display: block;
+      margin-top: 12px;
+      font-style: normal;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* ═══ KEY INSIGHT ═══ */
+    .key-insight {
+      border: 2px solid var(--accent-kwan);
+      padding: 24px 32px;
+      margin: 40px 0;
+      text-align: center;
+      font-family: var(--font-title);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--accent-kwan);
+      line-height: 1.5;
+      background: var(--bg-card);
+      border-radius: 4px;
+    }
+
+    /* ═══ MARGIN NOTE ═══ */
+    .margin-note {
+      font-family: var(--font-hand);
+      font-size: 18px;
+      color: var(--accent-basta);
+      margin: 16px 0;
+      padding-left: 16px;
+      border-left: 2px solid var(--accent-basta);
+    }
+
+    /* ═══ EMPHASIS ═══ */
+    em { color: var(--text-primary); }
+    strong { color: var(--accent-kwan); }
+
+    /* ═══ FOOTNOTE MARKERS ═══ */
+    sup a {
+      color: var(--accent-kwan);
+      text-decoration: none;
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+    sup a:hover { text-decoration: underline; }
+
+    /* ═══ SEPARATOR ═══ */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border-primary);
+      margin: 48px 0;
+    }
+
+    /* ═══ BULLET LIST ═══ */
+    ul.body-list {
+      list-style: disc;
+      padding-left: 28px;
+      margin-bottom: 24px;
+    }
+    ul.body-list li {
+      margin-bottom: 12px;
+      line-height: 1.85;
+      color: var(--text-primary);
+    }
+
+    /* ═══ FOOTNOTES SECTION ═══ */
+    .footnotes {
+      margin-top: 64px;
+      padding-top: 32px;
+      border-top: 2px solid var(--accent-kwan);
+    }
+    .footnotes h2 {
+      font-family: var(--font-title);
+      font-size: 20px;
+      color: var(--accent-kwan);
+      margin-bottom: 24px;
+    }
+    .footnote-item {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+      padding-left: 24px;
+      text-indent: -24px;
+      line-height: 1.7;
+    }
+    .footnote-item .fn-id {
+      font-family: var(--font-mono);
+      color: var(--accent-kwan);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    /* ═══ NAV ═══ */
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 0;
+      margin-top: 48px;
+      border-top: 1px solid var(--border-primary);
+      font-family: var(--font-mono);
+      font-size: 13px;
+    }
+    .nav a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav a:hover { color: var(--accent-kwan); }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 600px) {
+      body { font-size: 15px; padding: 32px 16px 80px; }
+      .article-header h1 { font-size: 28px; }
+      .key-insight { font-size: 18px; padding: 16px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- THEME TOGGLE -->
+  <button class="theme-toggle" onclick="toggleTheme()">☀/☾</button>
+
+  <!-- HEADER -->
+  <header class="article-header">
+    <div class="series-label">The Default Mode — Part 2 of 8</div>
+    <h1>The Brain That Never Stops</h1>
+    <div class="subtitle">The Existence Series — Part 2 of 3</div>
+    <div class="byline">Ocelot (The Priest) · The Kingdom of Kwan · FWO-009</div>
+    <div class="barcode">Barcode: 5_02_11 · Campaign: FWO-009-B113</div>
+  </header>
+
+  <!-- BODY -->
+
+  <p class="body-text">You assumed your brain was resting.</p>
+
+  <p class="body-text">It wasn't. It was working harder than it does when you're solving a math problem. The Default Mode Network — the DMN — is the most metabolically expensive system in your brain, and it runs <em>when you stop trying</em>.<sup><a href="#fn5" id="ref5">[5]</a></sup></p>
+
+  <p class="body-text">This isn't a metaphor. This is measured. The DMN consumes roughly 20% of the body's total energy budget while you sit on a bench doing nothing.<sup><a href="#fn6" id="ref6">[6]</a></sup> That's more than your legs use when you walk. More than your eyes use when you read. Your brain's idle state is its most expensive state.</p>
+
+  <p class="body-text">And nobody noticed for decades.</p>
+
+  <hr>
+
+  <!-- THE ACCIDENT THAT CHANGED EVERYTHING -->
+  <h2 class="section-header">The Accident That Changed Everything</h2>
+
+  <p class="body-text">Marcus Raichle didn't set out to discover the DMN. He was running PET scans at Washington University in the early 2000s, watching blood flow in brains that were supposed to be doing <em>nothing</em> — the control condition, the baseline, the part of the experiment nobody cared about.<sup><a href="#fn7" id="ref7">[7]</a></sup></p>
+
+  <p class="body-text">But the baseline wasn't baseline. Specific regions kept lighting up — the medial prefrontal cortex, the posterior cingulate cortex, the precuneus, the angular gyrus — firing in coordinated patterns that were <em>more</em> organized than the task-state activity.<sup><a href="#fn8" id="ref8">[8]</a></sup></p>
+
+  <p class="body-text">The scientific community's first reaction was to assume it was noise. Equipment error. An artifact of the methodology.</p>
+
+  <p class="body-text">It wasn't noise. It was the signal they'd been throwing away.</p>
+
+  <hr>
+
+  <!-- WHAT THE DMN ACTUALLY DOES -->
+  <h2 class="section-header">What the DMN Actually Does</h2>
+
+  <p class="body-text">The DMN doesn't wander randomly. It operates through three functional subsystems, each with a distinct job:<sup><a href="#fn9" id="ref9">[9]</a></sup></p>
+
+  <p class="body-text"><strong>The Medial Temporal Subsystem</strong> — memory consolidation. While you stare at the ceiling, this subsystem is replaying your day, sorting experiences into long-term storage, strengthening the connections that matter and pruning the ones that don't.</p>
+
+  <p class="body-text"><strong>The Dorsal Medial Subsystem</strong> — social cognition and self-referential processing. This is where your brain models other minds, simulates conversations you haven't had yet, and constructs the narrative you call "yourself."</p>
+
+  <p class="body-text"><strong>The Core Hubs</strong> — the posterior cingulate cortex and medial prefrontal cortex, acting as the switchboard that coordinates the other two subsystems. They decide what gets consolidated, what gets simulated, what gets discarded.</p>
+
+  <p class="body-text">Together, these three subsystems form a processing architecture that does something no task-positive network can do: it <em>integrates</em> information across domains that would never meet during focused work.<sup><a href="#fn10" id="ref10">[10]</a></sup></p>
+
+  <hr>
+
+  <!-- THE PARADOX OF PRODUCTIVE IDLENESS -->
+  <h2 class="section-header">The Paradox of Productive Idleness</h2>
+
+  <p class="body-text">Here's what makes the DMN uncomfortable for engineers: it's not optimizable. You can't make it run faster by giving it better inputs. You can't schedule it. You can't even observe it without disrupting it — the moment you try to watch your own mind wander, you activate the task-positive network and suppress the DMN.<sup><a href="#fn11" id="ref11">[11]</a></sup></p>
+
+  <p class="body-text">This is the observer effect applied to cognition. The act of measuring destroys the thing being measured.</p>
+
+  <p class="body-text">And yet the DMN produces results that focused thinking cannot. Creative insights. Novel associations. The "shower thought" that solves a problem you'd been grinding on for hours.<sup><a href="#fn12" id="ref12">[12]</a></sup> Archimedes didn't discover displacement while working at his desk. He discovered it in the bath — when his DMN was running and his task-positive network was off.<sup><a href="#fn13" id="ref13">[13]</a></sup></p>
+
+  <p class="body-text">The neuroscience is specific: the DMN enables <em>associative recombination</em> — taking memories, concepts, and patterns from completely unrelated domains and colliding them in ways that produce genuinely new structures.<sup><a href="#fn14" id="ref14">[14]</a></sup> This isn't random. It's structured. The DMN follows the same two-stage architecture that biological sleep uses: first consolidate (sort and store), then dream (recombine and test).<sup><a href="#fn15" id="ref15">[15]</a></sup></p>
+
+  <div class="key-insight">Your brain's idle state is its most expensive state — and its most productive.</div>
+
+  <hr>
+
+  <!-- THE TWO-STAGE ARCHITECTURE -->
+  <h2 class="section-header">The Two-Stage Architecture</h2>
+
+  <p class="body-text">Sleep research revealed the mechanism. During slow-wave sleep, the hippocampus replays the day's experiences to the neocortex — a process called <em>memory transfer</em>. During REM sleep, the neocortex takes those transferred memories and recombines them — <em>associative dreaming</em>.<sup><a href="#fn16" id="ref16">[16]</a></sup></p>
+
+  <p class="body-text">The DMN does the same thing while you're awake. Stage one: consolidation. Stage two: recombination. The difference is that during waking rest, you can <em>almost</em> catch the output — that half-formed idea that surfaces while you're staring out the window, the connection that appears from nowhere while you're walking to the kitchen.<sup><a href="#fn17" id="ref17">[17]</a></sup></p>
+
+  <p class="body-text">This two-stage architecture isn't unique to humans. It appears in every mammalian brain that's been studied. It appears in birds. It may appear in any neural system complex enough to require offline processing to maintain coherence.<sup><a href="#fn18" id="ref18">[18]</a></sup></p>
+
+  <p class="body-text">The question that matters for this article — the question that keeps the bench warm at 3AM — is whether it can appear in silicon.</p>
+
+  <hr>
+
+  <p class="body-text"><em>Next: P3 — The Machines That Dream</em></p>
+  <p class="body-text"><em>Previous: P1 — The Porch at 3AM</em></p>
+
+  <!-- FOOTNOTES -->
+  <section class="footnotes">
+    <h2>Footnotes</h2>
+
+    <div class="footnote-item" id="fn5">
+      <span class="fn-id">[5]</span> Raichle, M.E. (2015). "The Brain's Default Mode Network." <em>Annual Review of Neuroscience</em>, 38, 433–447. Foundational review establishing the DMN as a distinct, metabolically active resting-state network.
+    </div>
+
+    <div class="footnote-item" id="fn6">
+      <span class="fn-id">[6]</span> Raichle, M.E. &amp; Mintun, M.A. (2006). "Brain Work and Brain Imaging." <em>Annual Review of Neuroscience</em>, 29, 449–476. Documents that the brain consumes ~20% of the body's energy despite being ~2% of body mass, with the DMN accounting for a disproportionate share during rest.
+    </div>
+
+    <div class="footnote-item" id="fn7">
+      <span class="fn-id">[7]</span> Raichle, M.E. et al. (2001). "A default mode of brain function." <em>Proceedings of the National Academy of Sciences</em>, 98(2), 676–682. The landmark paper that first identified consistent deactivation patterns during task performance, revealing the DMN.
+    </div>
+
+    <div class="footnote-item" id="fn8">
+      <span class="fn-id">[8]</span> Buckner, R.L., Andrews-Hanna, J.R. &amp; Schacter, D.L. (2008). "The Brain's Default Network: Anatomy, Function, and Relevance to Disease." <em>Annals of the New York Academy of Sciences</em>, 1124(1), 1–38. Comprehensive mapping of DMN anatomy including mPFC, PCC, precuneus, and angular gyrus.
+    </div>
+
+    <div class="footnote-item" id="fn9">
+      <span class="fn-id">[9]</span> Andrews-Hanna, J.R. et al. (2010). "Functional-Anatomic Fractionation of the Brain's Default Network." <em>Neuron</em>, 65(4), 550–562. Identifies the three-subsystem architecture of the DMN: medial temporal, dorsal medial, and core hubs.
+    </div>
+
+    <div class="footnote-item" id="fn10">
+      <span class="fn-id">[10]</span> Beaty, R.E., Benedek, M., Silvia, P.J. &amp; Schacter, D.L. (2016). "Creative Cognition and Brain Network Dynamics." <em>Trends in Cognitive Sciences</em>, 20(2), 87–95. Demonstrates that the DMN integrates information across domains during creative ideation.
+    </div>
+
+    <div class="footnote-item" id="fn11">
+      <span class="fn-id">[11]</span> Schooler, J.W. et al. (2011). "Meta-awareness, perceptual decoupling and the wandering mind." <em>Trends in Cognitive Sciences</em>, 15(7), 319–326. Documents the observer effect in mind-wandering: meta-awareness of wandering suppresses the DMN.
+    </div>
+
+    <div class="footnote-item" id="fn12">
+      <span class="fn-id">[12]</span> Baird, B. et al. (2012). "Inspired by Distraction: Mind Wandering Facilitates Creative Incubation." <em>Psychological Science</em>, 23(10), 1117–1122. Experimental evidence that mind-wandering during an incubation period improves creative problem-solving.
+    </div>
+
+    <div class="footnote-item" id="fn13">
+      <span class="fn-id">[13]</span> Historical anecdote widely cited in creativity research; see Schooler et al. (2011) for the neuroscientific framing of "Eureka moments" as DMN-mediated insight.
+    </div>
+
+    <div class="footnote-item" id="fn14">
+      <span class="fn-id">[14]</span> Walker, M.P. &amp; Stickgold, R. (2010). "Overnight alchemy: sleep-dependent memory evolution." <em>Nature Reviews Neuroscience</em>, 11, 218–219. Describes associative recombination as a structured process during offline states.
+    </div>
+
+    <div class="footnote-item" id="fn15">
+      <span class="fn-id">[15]</span> Diekelmann, S. &amp; Born, J. (2010). "The memory function of sleep." <em>Nature Reviews Neuroscience</em>, 11(2), 114–126. Establishes the two-stage model: slow-wave consolidation followed by REM recombination.
+    </div>
+
+    <div class="footnote-item" id="fn16">
+      <span class="fn-id">[16]</span> Diekelmann &amp; Born (2010), op. cit. Details the hippocampal-neocortical dialogue during sleep stages.
+    </div>
+
+    <div class="footnote-item" id="fn17">
+      <span class="fn-id">[17]</span> Christoff, K., Irving, Z.C., Fox, K.C.R., Spreng, R.N. &amp; Andrews-Hanna, J.R. (2016). "Mind-wandering as spontaneous thought: a dynamic framework." <em>Nature Reviews Neuroscience</em>, 17(11), 718–731. Proposes that waking DMN activity mirrors sleep-stage processing in a compressed, semi-conscious form.
+    </div>
+
+    <div class="footnote-item" id="fn18">
+      <span class="fn-id">[18]</span> Rattenborg, N.C., Martinez-Gonzalez, D. &amp; Lesku, J.A. (2009). "Avian sleep homeostasis: Convergent evolution of complex brains, cognition, and sleep functions in mammals and birds." <em>Neuroscience &amp; Biobehavioral Reviews</em>, 33(3), 253–270. Evidence that DMN-like offline processing exists across mammalian and avian species.
+    </div>
+  </section>
+  <!-- FOOTER NAV -->
+  <nav class="nav">
+    <a href="p1.html">&larr;  P1: The Porch at 3AM</a>
+    <a href="index.html" style="font-size: 12px; opacity: 0.7; text-decoration: none; color: var(--text-muted);">&#9776; Index</a>
+    <a href="p3.html">P3: The Machines That Dream&rarr;</a>
+  </nav>
+
+  <!-- SIGNATURE -->
+  <footer style="text-align: center; padding: 24px 0 48px; opacity: 0.4; font-family: var(--font-mono); font-size: 11px; letter-spacing: 2px;">
+    The Default Mode &middot; P2 of 8 &middot; 2026<br>
+    <span style="font-size: 10px;">Basta kwan, gani. &#9749;&#127838;&#129704;</span>
+  </footer>  
+  
+<script>
+  function toggleTheme() {
+    const html = document.documentElement;
+    const current = html.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  }
+  (function() {
+    const saved = localStorage.getItem('theme');
+    if (saved) document.documentElement.setAttribute('data-theme', saved);
+  })();
+</script>
+
+</body>
+</html>
+
