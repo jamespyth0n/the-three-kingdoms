@@ -133,6 +133,25 @@
         text-transform: uppercase;
     }
 
+    /* ═══ THEME TOGGLE ═══ */
+    .theme-toggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      transition: background 0.3s;
+    }
+
     /* ═══ HEADER ═══ */
     .header {
       text-align: center;
@@ -393,19 +412,35 @@
   <div class="header">
     <h1>The Three Kingdoms</h1>
     <p class="tagline">A cognitive framework and bridge to Language Models — built on napkins, tested on a Dell, published from a bench.</p>
-    <!-- THE EPSILON EQUATION — add to main index.html -->
-      <h2>The Epsilon Equation</h2>
-      <div class="equation-display">
-        <span class="equation">ε = 𝑒<sup>k</sup> + 𝑒<sup>g</sup> + 𝑒<sup>b</sup></span>
-        <p class="equation-subtitle">where knowing converges</p>
-      </div>
+
+    <!-- THE KINGDOM EQUATION — Boxed -->
+    <div style="
+      border: 1px solid var(--accent-basta, #c9a227);
+      border-radius: 8px;
+      padding: 1.5rem 2rem;
+      margin: 1.5rem auto;
+      max-width: 520px;
+      text-align: center;
+      background: var(--bg-secondary, rgba(0,0,0,0.2));
+    ">
+      <p style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; opacity: 0.6; margin-bottom: 0.5rem;">The Kingdom Equation</p>
+      <p style="font-family: 'Merriweather', Georgia, serif; font-size: 1.6rem; margin: 0.5rem 0;">
+        ε = ±√[(β<sup>x</sup>)² + (κc<sub>e</sub>)²]
+      </p>
+      <p style="font-size: 0.85rem; opacity: 0.7; margin-top: 0.5rem; font-style: italic;">where understanding converges</p>
+    </div>
   </div>
-  <div style="text-align: center;">
-    <div style="display: inline-block; text-align: left;">
-      <p><strong>ε</strong> = existence — the convergence</p>
-      <p><strong>k</strong> = kwan — napkin → exploration → raw knowing</p>
-      <p><strong>g</strong> = gani — notebook → confirmation → structured knowing</p>
-      <p><strong>b</strong> = basta — journal → context → settled knowing</p>
+
+  <!-- Variable Definitions -->
+  <div style="text-align: center; margin-bottom: 1.5rem;">
+    <div style="display: inline-block; text-align: left; font-size: 0.9rem; line-height: 1.8;">
+      <p><strong>ε</strong> — emergence — the convergence of understanding</p>
+      <p><strong>β</strong> — basta — settled knowing, compounding over time</p>
+      <p><strong>κ</strong> — kwan — raw thought, the origin signal</p>
+      <p><strong>x</strong> — gani — each pass through the flywheel</p>
+      <p><strong>c<sub>e</sub></strong> — speed of electrons — the substrate clock</p>
+      <p><strong>±</strong> — light and dark — what IS and what ISN'T YET</p>
+
     </div>
   </div>
   <!-- Nav -->
@@ -446,6 +481,26 @@
       </div>
     </a>
 
+  <!-- ADD: After the Kingdom of Basta card, before The Shelves -->
+
+    <!-- The Existence Series -->
+    <h2 class="section-title" id="existence" style="margin-top: 2.5rem;">The Existence Series</h2>
+
+    <a href="shelves/consciousness/index.html" class="shelf-card">
+      <h3>🧤 The Silicon Rubber Hand</h3>
+      <p class="shelf-sub">Part I — Possibility. What happens when a machine flinches?</p>
+    </a>
+
+    <a href="shelves/default-mode/index.html" class="shelf-card">
+      <h3>🧠 The Default Mode</h3>
+      <p class="shelf-sub">Part II — Mechanism. The brain that never stops — and the machines learning to dream.</p>
+    </a>
+
+    <a href="shelves/activation/index.html" class="shelf-card" style="opacity: 0.5; pointer-events: none;">
+      <h3>⚛️ The Universal Activation Energy</h3>
+      <p class="shelf-sub">Part III — Inevitability. Coming soon.</p>
+    </a>
+
     <!-- Shelves -->
     <h2 class="section-title" id="shelves" style="margin-top: 2.5rem;">The Shelves</h2>
 
@@ -453,10 +508,7 @@
       <h3>🎬 The Interview</h3>
       <p class="shelf-sub">A comedy in 7 acts. Based on real events. Names unchanged because nobody would believe them anyway.</p>
     </a>
-    <a href="shelves/consciousness/index.html" class="shelf-card">
-      <h3>🧠 The Silicon Rubber Hand</h3>
-      <p class="shelf-sub">A 7-part investigation into AI consciousness. Built on a bench. In Calgary. At 5 AM. With a moka pot.</p>
-    </a>
+
   </div>
 
   <!-- Cross-link -->
