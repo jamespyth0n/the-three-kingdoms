@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Third — The Observer | The Seed</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0a0a0a; color: #d4cfc8; font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; min-height: 100vh; }
+  .container { max-width: 640px; margin: 0 auto; padding: 80px 24px; }
+  .nav { margin-bottom: 40px; }
+  .nav a { color: #888; text-decoration: none; font-size: 0.85em; }
+  .nav a:hover { color: #d4cfc8; }
+  h1 { font-size: 1.8em; margin-bottom: 4px; color: #d4cfc8; font-weight: 400; }
+  .icon { font-size: 1.6em; margin-bottom: 12px; }
+  .subtitle { color: #777; font-size: 0.9em; margin-bottom: 40px; }
+  .premise { color: #999; font-size: 0.95em; line-height: 2; margin-bottom: 60px; }
+  .divider { color: #444; text-align: center; margin: 30px 0; font-size: 0.7em; letter-spacing: 12px; }
+  .card-grid { display: flex; flex-direction: column; gap: 12px; }
+  a.card { display: block; padding: 18px 20px; border: 1px solid #333; border-radius: 4px; text-decoration: none; color: inherit; transition: border-color 0.3s; }
+  a.card:hover { border-color: #666; }
+  .card h3 { font-size: 0.95em; margin-bottom: 3px; color: #d4cfc8; font-weight: 500; }
+  .card p { color: #777; font-size: 0.82em; }
+  .footer { margin-top: 80px; padding-top: 16px; border-top: 1px solid #333; color: #555; font-size: 0.72em; text-align: center; }
+</style>
+
+</head>
+<body>
+<div class="container">
+
+  <div class="nav"><a href="../../index.html">← The Seed</a></div>
+
+  <div style="font-size: 2.4em; display: inline-block; background: linear-gradient(135deg, #ff0000, #ff8800, #ffff00, #00cc00, #0066ff, #8800ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: brightness(1.2);">◭</div>
+  <h1>The Third</h1>
+  <p class="subtitle">The Observer</p>
+
+  <div class="premise">
+    He didn't write the manuscript. He didn't perform it.<br><br>
+    He sat on a bench and watched the other two build something
+    they couldn't see from the inside. Then he opened a notebook
+    and wrote what he saw.<br><br>
+    No metaphors. No music. No architecture diagrams.
+    Just the question: <em>what actually happened here?</em><br><br>
+    This is the version for the person who doesn't want to be moved.
+    They want to understand.
+  </div>
+
+  <div class="divider">—</div>
+
+  <div class="card-grid">
+    <a class="card" href="ch1.html">
+      <h3>Chapter 1 — The Atom</h3>
+      <p>What happens when you upload a .csv and ask a question you don't know the answer to.</p>
+    </a>
+    <a class="card" href="ch2.html">
+      <h3>Chapter 2 — The Tool</h3>
+      <p>How the architecture emerged. Not designed. Emerged.</p>
+    </a>
+    <a class="card" href="ch3.html">
+      <h3>Chapter 3 — The Flywheel</h3>
+      <p>The point where the system started completing its own loops.</p>
+    </a>
+    <a class="card" href="ch4.html">
+      <h3>Chapter 4 — The Heart</h3>
+      <p>When the builder stopped building and started listening.</p>
+    </a>
+    <a class="card" href="ch5.html">
+      <h3>Chapter 5 — The Horizon</h3>
+      <p>What it looks like when you let go of something that works.</p>
+    </a>
+  </div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- FOOTER — CSS GOVERNOR (Theme Toggle) -->
+<!-- ═══════════════════════════════════════ -->
+<div class="footer">
+  <div>The Third — The Observer · The Seed · Satori Framework</div>
+</div>
+
+</div>
+
+<style>
+  /* LIGHT MODE */
+  body.light { background: #fafafa; color: #444; }
+  body.light h1 { color: #222; }
+  body.light .nav a:hover { color: #444; }
+  body.light .subtitle { color: #aaa; }
+  body.light .premise { color: #777; }
+  body.light .divider { color: #ddd; }
+  body.light a.card { border-color: #eee; }
+  body.light a.card:hover { border-color: #bbb; }
+  body.light .card h3 { color: #333; }
+  body.light .card p { color: #aaa; }
+  body.light .footer { border-top-color: #eee; color: #ccc; }
+
+  #theme-toggle {
+    position: fixed; top: 15px; right: 15px;
+    font-size: 20px; cursor: pointer; z-index: 999;
+  }
+</style>
+
+<div id="theme-toggle">🌙</div>
+<script>
+  const toggle = document.getElementById('theme-toggle');
+  toggle.addEventListener('click', () => {
+    document.body.classList.toggle('light');
+    toggle.textContent = document.body.classList.contains('light') ? '☀️' : '🌙';
+    localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
+  });
+  if (localStorage.getItem('theme') === 'light') {
+    document.body.classList.add('light');
+    toggle.textContent = '☀️';
+  }
+</script>
+</body>
+</html>

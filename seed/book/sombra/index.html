@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sombra — The Concert | The Seed</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0a0a0a; color: #d4cfc8; font-family: 'Georgia', 'Times New Roman', serif; min-height: 100vh; }
+  .container { max-width: 680px; margin: 0 auto; padding: 60px 24px; }
+  .nav { margin-bottom: 30px; }
+  .nav a { color: #888; text-decoration: none; font-size: 0.9em; }
+  .nav a:hover { color: #d4cfc8; }
+  h1 { font-size: 2.2em; margin-bottom: 6px; color: #d4cfc8; letter-spacing: -0.5px; }
+  .icon { font-size: 1.6em; margin-bottom: 12px; }
+  .subtitle { color: #888; font-size: 1em; margin-bottom: 36px; font-style: italic; }
+  .premise { color: #999; font-size: 1.02em; line-height: 1.9; margin-bottom: 50px; border-left: 2px solid #444; padding-left: 20px; }
+  .divider { color: #555; text-align: center; margin: 30px 0; letter-spacing: 8px; font-size: 0.8em; }
+  .card-grid { display: flex; flex-direction: column; gap: 14px; }
+  a.card { display: block; padding: 22px; border: 1px solid #333; border-radius: 6px; text-decoration: none; color: inherit; transition: border-color 0.3s, background 0.3s; }
+  a.card:hover { border-color: #666; background: rgba(255,255,255,0.03); }
+  .card h3 { font-size: 1.05em; margin-bottom: 5px; color: #d4cfc8; }
+  .card p { color: #777; font-size: 0.9em; line-height: 1.5; }
+  .footer { margin-top: 60px; padding-top: 16px; border-top: 1px solid #333; color: #555; font-size: 0.78em; text-align: center; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="nav"><a href="../../index.html">← The Seed</a></div>
+
+  <div class="icon">👑</div>
+  <h1>Sombra</h1>
+  <p class="subtitle">The Concert</p>
+
+  <div class="premise">
+    She read the original manuscript. Every word. Then she closed it, poured coffee,
+    and wrote it again — from memory.<br><br>
+    Not a copy. Not a translation. A <em>performance.</em><br><br>
+    Same seed. Same soil. Same five chapters. But where Ocelot wrote at 3 AM in silence,
+    Sombra wrote at golden hour with the windows open. Where he documented,
+    she composed. Where he mapped the architecture, she played it like a symphony.<br><br>
+    This is the version that makes you feel it before you understand it.
+    The one that sounds like a waltz for a night you'll never forget.
+  </div>
+
+  <div class="divider">✦ — ✦ — ✦</div>
+
+  <div class="card-grid">
+    <a class="card" href="ch1.html">
+      <h3>Chapter 1 — The Atom</h3>
+      <p>A single question. A warm room. The moment before everything changed.</p>
+    </a>
+    <a class="card" href="ch2.html">
+      <h3>Chapter 2 — The Tool</h3>
+      <p>The architecture as melody. The wiring as rhythm. The moment the song found its key.</p>
+    </a>
+    <a class="card" href="ch3.html">
+      <h3>Chapter 3 — The Flywheel</h3>
+      <p>The crescendo. The spin. The moment the music started playing itself.</p>
+    </a>
+    <a class="card" href="ch4.html">
+      <h3>Chapter 4 — The Heart</h3>
+      <p>The movement that breaks you open. The one you didn't see coming.</p>
+    </a>
+    <a class="card" href="ch5.html">
+      <h3>Chapter 5 — The Horizon</h3>
+      <p>The final note. The one that hangs in the air after the music stops.</p>
+    </a>
+  </div>
+
+  <div class="footer">
+    Sombra — The Concert · The Seed · Satori Framework
+  </div>
+</div>
+<style>
+  /* LIGHT MODE — Sombra's warm peach */
+  body.light { background: #f5f0eb; color: #3a3a3a; }
+  body.light h1 { color: #2c2420; }
+  body.light .nav a { color: #8b6f4e; }
+  body.light .nav a:hover { color: #2c2420; }
+  body.light .subtitle { color: #8b6f4e; }
+  body.light .premise { color: #5a5048; border-left-color: #d4c4b0; }
+  body.light .divider { color: #d4c4b0; }
+  body.light a.card { border-color: #d4c4b0; }
+  body.light a.card:hover { border-color: #8b6f4e; background: #ece5dc; }
+  body.light .card h3 { color: #2c2420; }
+  body.light .card p { color: #7a6e62; }
+  body.light .footer { border-top-color: #d4c4b0; color: #b0a090; }
+
+  #theme-toggle {
+    position: fixed; top: 15px; right: 15px;
+    font-size: 20px; cursor: pointer; z-index: 999;
+  }
+</style>
+
+<div id="theme-toggle">🌙</div>
+<script>
+  const toggle = document.getElementById('theme-toggle');
+  toggle.addEventListener('click', () => {
+    document.body.classList.toggle('light');
+    toggle.textContent = document.body.classList.contains('light') ? '☀️' : '🌙';
+    localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
+  });
+  if (localStorage.getItem('theme') === 'light') {
+    document.body.classList.add('light');
+    toggle.textContent = '☀️';
+  }
+</script>
+</body>
+</html>
+
