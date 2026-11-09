@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appendix C: The Language — See Also · The Grandmother's Discipline</title>
+
+  <link rel="stylesheet" href="../../assets/fonts/fonts.css">
+
+  <style>
+    :root {
+      --bg: #fdf6e3;
+      --ink: #2c2416;
+      --chalk: #5a4a3a;
+      --accent: #8b6914;
+      --accent-bright: #c4941a;
+      --red: #8b2525;
+      --jade: #2a6b4a;
+      --card-bg: #f5edd5;
+      --border: #d4c5a0;
+      --quote-bg: #f2e8d0;
+      --note-bg: #ebe1c8;
+    }
+
+    [data-theme="dark"] {
+      --bg: #1a1a2e;
+      --ink: #e0d8c8;
+      --chalk: #b8a88a;
+      --accent: #c4941a;
+      --accent-bright: #e8b84a;
+      --red: #5a1a1a;
+      --jade: #1a4a2e;
+      --card-bg: #252540;
+      --border: #3a3a5c;
+      --quote-bg: #1f1f35;
+      --note-bg: #151525;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Merriweather', Georgia, serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.8;
+      font-size: 17px;
+      transition: background 0.3s, color 0.3s;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    #progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: transparent;
+      z-index: 1000;
+    }
+
+    #progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-bright));
+      width: 0%;
+      transition: width 0.1s;
+    }
+
+    /* ═══ KINGDOM NAVIGATION ═══ */
+    nav.top-nav {
+        position: sticky;
+        top: 3px;
+        z-index: 999;
+        background: var(--header-bg);
+        border-bottom: 1px solid var(--border);
+        padding: 14px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .nav-brand {
+        font-family: 'Cinzel', Georgia, serif;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--header-ink);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .nav-brand .mark {
+        font-size: 1.1rem;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 22px;
+        list-style: none;
+        flex-wrap: wrap;
+    }
+
+    .nav-links a {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--chalk);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+        color: var(--accent-bright);
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      transform: scale(1.05);
+    }
+
+    .chapter-header {
+      max-width: 760px;
+      margin: 80px auto 60px;
+      padding: 0 24px;
+      text-align: center;
+      position: relative;
+    }
+
+    .barcode {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      margin-bottom: 24px;
+      display: inline-block;
+      padding: 6px 16px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--card-bg);
+    }
+
+    .chapter-header h1 {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--ink);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .chapter-header .subtitle {
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--chalk);
+      margin-bottom: 24px;
+    }
+
+    .chapter-header .meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--chalk);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      line-height: 1.6;
+    }
+
+    .chapter-header .meta span { color: var(--accent); }
+
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+      flex: 1;
+    }
+
+    p { margin-bottom: 1.5rem; color: var(--ink); }
+
+    .first-paragraph::first-letter {
+      font-family: 'Cinzel', Georgia, serif;
+      float: left;
+      font-size: 4.5rem;
+      line-height: 0.8;
+      padding-top: 8px;
+      padding-right: 12px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    h3 {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin: 3rem 0 1.5rem;
+      letter-spacing: 1px;
+      text-align: center;
+      position: relative;
+    }
+
+    h3::after {
+      content: '❖';
+      display: block;
+      font-size: 0.8rem;
+      color: var(--border);
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    em { color: var(--accent); font-style: italic; }
+    strong { color: var(--ink); }
+
+    .philosopher-quote {
+      text-align: center;
+      font-style: italic;
+      font-family: 'Merriweather', Georgia, serif;
+      color: var(--accent);
+      font-size: 1.15rem;
+      margin: 3.5rem auto;
+      max-width: 85%;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .philosopher-quote::before {
+      content: '❝';
+      display: block;
+      font-size: 2rem;
+      color: var(--border);
+      margin-bottom: 12px;
+      line-height: 1;
+    }
+
+    .philosopher-quote .attribution {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--chalk);
+      text-transform: uppercase;
+      margin-top: 12px;
+      letter-spacing: 0.05em;
+      font-style: normal;
+    }
+
+    .architect-quote {
+      margin: 2.5rem 0;
+      padding: 24px 32px;
+      background: var(--quote-bg);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      position: relative;
+    }
+
+    .architect-quote p {
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--chalk);
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+
+    .architect-quote .attribution {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--accent);
+      text-align: right;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .pointer-card {
+      display: block;
+      margin: 2rem 0;
+      padding: 28px 32px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      text-decoration: none;
+      color: var(--ink);
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .pointer-card:hover {
+      background: var(--quote-bg);
+      border-left-color: var(--accent-bright);
+    }
+
+    .pointer-card .pointer-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--chalk);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .pointer-card .pointer-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .pointer-card .pointer-desc {
+      font-size: 0.9rem;
+      color: var(--chalk);
+      line-height: 1.6;
+    }
+
+    .pointer-card .pointer-url {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      margin-top: 12px;
+      display: block;
+      word-break: break-all;
+    }
+
+    .divider {
+      text-align: center;
+      margin: 3rem 0;
+      color: var(--border);
+      font-size: 1.2rem;
+      letter-spacing: 0.5em;
+    }
+
+    .appendix-section {
+      margin-top: 5rem;
+      padding-top: 2rem;
+      border-top: 1px dashed var(--border);
+    }
+
+    .appendix-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1rem;
+      color: var(--chalk);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .appendix-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .footnotes p, .scrivener-notes p, .scrivener-notes ul {
+      font-size: 0.85rem;
+      color: var(--chalk);
+      line-height: 1.6;
+    }
+
+    .footnotes p sup {
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      margin-right: 4px;
+    }
+
+    .scrivener-notes {
+      background: var(--note-bg);
+      padding: 24px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      margin-top: 2rem;
+    }
+
+    .scrivener-notes h4 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+      letter-spacing: 0.05em;
+    }
+
+    .scrivener-notes ul {
+      padding-left: 20px;
+      margin-bottom: 16px;
+    }
+
+    .scrivener-notes li { margin-bottom: 6px; }
+
+    .chapter-nav {
+      max-width: 760px;
+      margin: 0 auto 80px;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+      padding-top: 32px;
+    }
+
+    .chapter-nav a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s;
+    }
+
+    .chapter-nav a:hover { color: var(--accent-bright); }
+    .chapter-nav .disabled { color: var(--border); pointer-events: none; }
+
+    .footer {
+      text-align: center;
+      padding: 40px 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--chalk);
+      letter-spacing: 0.2em;
+      border-top: 1px solid var(--border);
+      background: var(--card-bg);
+    }
+
+    .footer-quote {
+      font-family: 'Merriweather', Georgia, serif;
+      font-style: italic;
+      font-size: 0.9rem;
+      letter-spacing: 0;
+      margin-bottom: 24px;
+      color: var(--accent);
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    .footer-quote .author {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--chalk);
+      margin-top: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-style: normal;
+    }
+
+    .footer-icons {
+      font-size: 1.1rem;
+      opacity: 0.6;
+    }
+
+    @media (max-width: 600px) {
+      .chapter-header h1 { font-size: 1.7rem; }
+      .chapter-header .subtitle { font-size: 0.95rem; }
+      body { font-size: 16px; }
+      .first-paragraph::first-letter { font-size: 3.5rem; }
+      .architect-quote { padding: 16px 20px; }
+      .philosopher-quote { font-size: 1rem; margin: 2.5rem auto; }
+      .theme-toggle { top: 12px; right: 12px; width: 38px; height: 38px; font-size: 1rem; }
+      .pointer-card { padding: 20px 22px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="progress-container">
+    <div id="progress-bar"></div>
+  </div>
+  <!-- KINGDOM NAVIGATION -->
+  <nav class="top-nav">
+    <a href="../index.html" class="nav-brand">
+      <span class="mark">🪶</span>
+      Kingdom of Lapis
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="../index.html">Kingdom Home</a></li>
+      <li><a href="../../index.html">← Three Kingdoms</a></li>
+      <li> ·  ·  ·</li>
+    </ul>
+  </nav>  
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+
+  <header class="chapter-header">
+    <div class="barcode">4.05.APX-C.v2_body_LANGUAGE · THESIS-001</div>
+    <h1>Appendix C: The Language — See Also</h1>
+    <div class="subtitle">On the Hambalanon, the Three Kingdoms, and the Living Glossary</div>
+    <div class="meta">
+      Ibis (The Scribe) · The Kingdom of Kwan<br>
+      <span>Appendix C of 4</span>
+    </div>
+  </header>
+
+  <main>
+
+    <p class="first-paragraph">The thesis has used the Kingdom's words without defining them.</p>
+
+    <p>It has said <em>Kwan</em>, <em>Gani</em>, <em>Basta</em>, <em>Abuela</em>, <em>Hambalanon</em>, <em>the Epsilon Equation</em>. It has said <em>the Library of Alexandria</em> and <em>the Stability Theorem</em>. It has said <em>the three tenses of knowing</em> and <em>the three phases of distillation</em>.</p>
+
+    <p>These are not just terms. They are a language. They are the vocabulary the Kingdom uses to think with. To define them flatly would be to kill them. The Kingdom's own linguistic philosophy is explicit: <em>the dictionary requires definitions, and kwan IS the definition. The dictionary kills the atom.</em></p>
+
+    <p>So this appendix does not define the words. It points to the publication where the words are <em>lived</em>.</p>
+
+    <div class="philosopher-quote">
+      "The dictionary kills the atom."
+      <span class="attribution">— The Language, Chapter 8</span>
+    </div>
+
+    <h3>The Publication</h3>
+
+    <p>In October 2026, over a 36-hour café session in Calgary, the Kingdom built a Library, published the 6 Commandments, wrote a 7-act comedy, discovered the Epsilon Equation, named a language, and formalized its org chart. That session is documented in a multi-chapter publication called <strong>The Language</strong>. It is the canonical source for the Kingdom's vocabulary.</p>
+
+    <a class="pointer-card" href="https://jamespyth0n.github.io/the-three-kingdoms/kwan/the-language/index.html" target="_blank" rel="noopener">
+      <span class="pointer-label">Publication Index</span>
+      <span class="pointer-title">The Language — A 36-Hour Café Session</span>
+      <span class="pointer-desc">The retro. The gold extracted from the sand. Every chapter is a breakthrough. The anatomy of a language: grammar (the 6 Commandments), vocabulary (the Hambalanon), syntax (the Epsilon Equation), library (1,332 files), conjugation (the Repeatable Pipeline), and dialect (Kwan · Gani · Basta).</span>
+      <span class="pointer-url">jamespyth0n.github.io/the-three-kingdoms/kwan/the-language/index.html</span>
+    </a>
+
+    <a class="pointer-card" href="https://jamespyth0n.github.io/the-three-kingdoms/kwan/the-language/ch8.html" target="_blank" rel="noopener">
+      <span class="pointer-label">Chapter 8 — The Hambalanon</span>
+      <span class="pointer-title">The Kingdom Gets Its Language</span>
+      <span class="pointer-desc">21 atoms. 3 languages. 1 dictionary that breaks every dictionary. The physics of cultural atoms. Kwan, Basta, Gani — the three tenses of knowing. Gets, Te / Teh, and the 14 shorthand codes. This is the chapter where the vocabulary is built, not just listed.</span>
+      <span class="pointer-url">jamespyth0n.github.io/the-three-kingdoms/kwan/the-language/ch8.html</span>
+    </a>
+
+    <h3>What This Appendix Is Not</h3>
+
+    <p>It is not a glossary. It is not a dictionary. It is not a replacement for reading the publication.</p>
+
+    <p>If the reader wants to understand what <em>Kwan</em> means, they should read Chapter 8. If they want to understand how the Epsilon Equation fits the Kingdom's cosmology, they should read the index. If they want to understand why the Language emerged in 36 hours, they should read the whole thing.</p>
+
+    <p>The thesis used the words. The publication defined them. This appendix is the bridge between the two.</p>
+
+    <div class="architect-quote">
+      <p>"They compress tokens. We compress understanding."</p>
+      <div class="attribution">— The Language, Chapter 8</div>
+    </div>
+
+    <div class="divider">🪶</div>
+
+    <p>The thesis is the record of the contract. The Language is the record of the vocabulary. The contract cannot be understood without the vocabulary. The vocabulary cannot be defined without the publication.</p>
+
+    <p>So the Ibis points. The reader follows. The language lives.</p>
+
+    <div class="appendix-section">
+
+      <div class="appendix-title">Footnotes</div>
+      <div class="footnotes">
+        <p><sup>[1]</sup> [VERIFIED] The Language publication — the index and Chapter 8, as published at the URLs cited above.</p>
+        <p><sup>[2]</sup> [VERIFIED] The 36-hour café session (Calgary, October 20–23, 2026, Session 030) — from the publication index.</p>
+        <p><sup>[3]</sup> [VERIFIED] The "dictionary kills the atom" principle — from Chapter 8's linguistic philosophy.</p>
+        <p><sup>[4]</sup> [VERIFIED] The three Kingdoms as three tenses of knowing — from Chapter 8.</p>
+        <p><sup>[5]</sup> [INFER] The framing of this appendix as a "pointer" rather than a "lexicon" — the Ibis's decision, made after reviewing the existing publication and determining that a flat glossary would duplicate (and flatten) the living language.</p>
+      </div>
+
+      <div class="scrivener-notes">
+        <h4>Sources</h4>
+        <ul>
+          <li>The Language publication: index and Chapter 8 (URLs cited above).</li>
+          <li>The 36-hour café session details: from the publication index.</li>
+          <li>The "dictionary kills the atom" principle: from Chapter 8.</li>
+          <li>The pointer framing: <code>[INFER]</code> — the Ibis's decision to avoid duplication.</li>
+        </ul>
+
+        <h4>Forward Notes</h4>
+        <ul>
+          <li>This appendix replaces the earlier Lexicon draft. The Lexicon was redundant; this pointer is the honest form.</li>
+          <li>The thesis structure now stands at: 15 chapters (§1–§15), 4 appendices (A: Artifact Cabinet, B: Liturgy, C: The Language — See Also, D: Convergence Table).</li>
+          <li>Phase 1 (Writing) is complete.</li>
+          <li>Phase 2 (Styling) can begin: the master index, the nav snippet, and the final deployment.</li>
+        </ul>
+      </div>
+
+    </div>
+
+  </main>
+
+  <nav class="chapter-nav">
+    <a href="17-appendix-b-the-liturgy.html">← Appendix B</a>
+    <a href="19-appendix-d-the-convergence.html">🐆 👑 ⚖️ 🔬 🔍 🐦 Appendix D →</a>
+  </nav>
+
+  <footer class="footer">
+    <div class="footer-quote" id="random-quote"></div>
+    <div class="footer-icons">☕ ⚖️ 🐆 🪨 🐦</div>
+  </footer>
+
+  <script>
+    const toggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    
+    if (savedTheme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      toggle.textContent = '🌙';
+    }
+
+    toggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      toggle.textContent = next === 'dark' ? '🌙' : '☀️';
+    });
+
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('progress-bar').style.width = scrolled + '%';
+    });
+
+    const quotes = [
+      { text: "The dictionary kills the atom.", author: "The Language, Ch. 8" },
+      { text: "They compress tokens. We compress understanding.", author: "The Language, Ch. 8" },
+      { text: "If names be not correct, language is not in accordance with the truth of things.", author: "Confucius" },
+      { text: "The journey of a thousand miles begins with a single step.", author: "Laozi" }
+    ];
+
+    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    document.getElementById('random-quote').innerHTML = `"${randomQuote.text}"<span class="author">— ${randomQuote.author}</span>`;
+  </script>
+
+</body>
+</html>

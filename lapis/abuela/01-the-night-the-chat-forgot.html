@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Night the Chat Forgot · The Grandmother's Discipline</title>
+
+  <!-- Fonts -->
+  <link rel="stylesheet" href="../../assets/fonts/fonts.css">
+
+  <style>
+    /* ═══ THE SCRIBE'S DESK — THEME VARIABLES ═══ */
+    :root {
+      --bg: #fdf6e3;           /* Parchment */
+      --ink: #2c2416;          /* Deep Ink */
+      --chalk: #5a4a3a;        /* Faded Ink */
+      --accent: #8b6914;       /* Antique Gold */
+      --accent-bright: #c4941a; /* Bright Gold */
+      --red: #8b2525;          /* Lacquer Red */
+      --jade: #2a6b4a;         /* Jade Green */
+      --card-bg: #f5edd5;      /* Slightly darker parchment */
+      --border: #d4c5a0;
+      --quote-bg: #f2e8d0;
+      --note-bg: #ebe1c8;
+    }
+
+    [data-theme="dark"] {
+      --bg: #1a1a2e;           /* Night Sky */
+      --ink: #e0d8c8;          /* Moonlight */
+      --chalk: #b8a88a;        /* Dimmed Moonlight */
+      --accent: #c4941a;       /* Gold */
+      --accent-bright: #e8b84a; /* Bright Gold */
+      --red: #5a1a1a;          /* Deep Lacquer */
+      --jade: #1a4a2e;         /* Deep Jade */
+      --card-bg: #252540;
+      --border: #3a3a5c;
+      --quote-bg: #1f1f35;
+      --note-bg: #151525;
+    }
+
+    /* ═══ BASE ═══ */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Merriweather', Georgia, serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.8;
+      font-size: 17px;
+      transition: background 0.3s, color 0.3s;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ═══ PROGRESS BAR ═══ */
+    #progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: transparent;
+      z-index: 1000;
+    }
+
+    #progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-bright));
+      width: 0%;
+      transition: width 0.1s;
+    }
+
+    /* ═══ KINGDOM NAVIGATION ═══ */
+    nav.top-nav {
+        position: sticky;
+        top: 3px;
+        z-index: 999;
+        background: var(--header-bg);
+        border-bottom: 1px solid var(--border);
+        padding: 14px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .nav-brand {
+        font-family: 'Cinzel', Georgia, serif;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--header-ink);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .nav-brand .mark {
+        font-size: 1.1rem;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 22px;
+        list-style: none;
+        flex-wrap: wrap;
+    }
+
+    .nav-links a {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--chalk);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+        color: var(--accent-bright);
+    }
+
+    /* ═══ THEME TOGGLE ═══ */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      transform: scale(1.05);
+    }
+
+    /* ═══ HEADER ═══ */
+    .chapter-header {
+      max-width: 760px;
+      margin: 80px auto 60px;
+      padding: 0 24px;
+      text-align: center;
+      position: relative;
+    }
+
+    .barcode {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      margin-bottom: 24px;
+      display: inline-block;
+      padding: 6px 16px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--card-bg);
+    }
+
+    .chapter-header h1 {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--ink);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .chapter-header .subtitle {
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--chalk);
+      margin-bottom: 24px;
+    }
+
+    .chapter-header .meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--chalk);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      line-height: 1.6;
+    }
+
+    .chapter-header .meta span {
+      color: var(--accent);
+    }
+
+    /* ═══ MAIN CONTENT ═══ */
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+      flex: 1;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      color: var(--ink);
+    }
+
+    /* Drop Cap */
+    .first-paragraph::first-letter {
+      font-family: 'Cinzel', Georgia, serif;
+      float: left;
+      font-size: 4.5rem;
+      line-height: 0.8;
+      padding-top: 8px;
+      padding-right: 12px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* Headings */
+    h3 {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin: 3rem 0 1.5rem;
+      letter-spacing: 1px;
+      text-align: center;
+      position: relative;
+    }
+
+    h3::after {
+      content: '❖';
+      display: block;
+      font-size: 0.8rem;
+      color: var(--border);
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    /* Inline Code */
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85em;
+      background: var(--card-bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--red);
+      border: 1px solid var(--border);
+    }
+
+    /* Emphasis */
+    em {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    /* ═══ ARCHITECT'S QUOTES ═══ */
+    .architect-quote {
+      margin: 2.5rem 0;
+      padding: 24px 32px;
+      background: var(--quote-bg);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      position: relative;
+    }
+
+    .architect-quote p {
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--chalk);
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+
+    .architect-quote .attribution {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--accent);
+      text-align: right;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* ═══ PHILOSOPHER'S QUOTES (Inline) ═══ */
+    .philosopher-quote {
+      text-align: center;
+      font-style: italic;
+      font-family: 'Merriweather', Georgia, serif;
+      color: var(--accent);
+      font-size: 1.15rem;
+      margin: 3.5rem auto;
+      max-width: 85%;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .philosopher-quote::before {
+      content: '❝';
+      display: block;
+      font-size: 2rem;
+      color: var(--border);
+      margin-bottom: 12px;
+      line-height: 1;
+    }
+
+    .philosopher-quote .attribution {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--chalk);
+      text-transform: uppercase;
+      margin-top: 12px;
+      letter-spacing: 0.05em;
+      font-style: normal;
+    }
+
+    /* ═══ DECORATIVE DIVIDER ═══ */
+    .divider {
+      text-align: center;
+      margin: 3rem 0;
+      color: var(--border);
+      font-size: 1.2rem;
+      letter-spacing: 0.5em;
+    }
+
+    /* ═══ FOOTNOTES & META ═══ */
+    .appendix-section {
+      margin-top: 5rem;
+      padding-top: 2rem;
+      border-top: 1px dashed var(--border);
+    }
+
+    .appendix-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1rem;
+      color: var(--chalk);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .appendix-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .footnotes p, 
+    .scrivener-notes p, 
+    .scrivener-notes ul {
+      font-size: 0.85rem;
+      color: var(--chalk);
+      line-height: 1.6;
+    }
+    
+    .footnotes p sup {
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      margin-right: 4px;
+    }
+
+    .scrivener-notes {
+      background: var(--note-bg);
+      padding: 24px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      margin-top: 2rem;
+    }
+
+    .scrivener-notes h4 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+      letter-spacing: 0.05em;
+    }
+
+    .scrivener-notes ul {
+      padding-left: 20px;
+      margin-bottom: 16px;
+    }
+
+    .scrivener-notes li { margin-bottom: 6px; }
+
+    /* ═══ CHAPTER NAV ═══ */
+    .chapter-nav {
+      max-width: 760px;
+      margin: 0 auto 80px;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+      padding-top: 32px;
+    }
+
+    .chapter-nav a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s;
+    }
+
+    .chapter-nav a:hover { color: var(--accent-bright); }
+    .chapter-nav .disabled { color: var(--border); pointer-events: none; }
+
+    /* ═══ FOOTER ═══ */
+    .footer {
+      text-align: center;
+      padding: 40px 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--chalk);
+      letter-spacing: 0.2em;
+      border-top: 1px solid var(--border);
+      background: var(--card-bg);
+    }
+
+    .footer-quote {
+      font-family: 'Merriweather', Georgia, serif;
+      font-style: italic;
+      font-size: 0.9rem;
+      letter-spacing: 0;
+      margin-bottom: 24px;
+      color: var(--accent);
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    .footer-quote .author {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--chalk);
+      margin-top: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-style: normal;
+    }
+
+    .footer-icons {
+      font-size: 1.1rem;
+      opacity: 0.6;
+    }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 600px) {
+      .chapter-header h1 { font-size: 2rem; }
+      .chapter-header .subtitle { font-size: 1rem; }
+      body { font-size: 16px; }
+      .first-paragraph::first-letter { font-size: 3.5rem; }
+      .architect-quote { padding: 16px 20px; }
+      .philosopher-quote { font-size: 1rem; margin: 2.5rem auto; }
+      .theme-toggle { top: 12px; right: 12px; width: 38px; height: 38px; font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Progress Bar -->
+  <div id="progress-container">
+    <div id="progress-bar"></div>
+  </div>
+
+  <!-- KINGDOM NAVIGATION -->
+  <nav class="top-nav">
+    <a href="../index.html" class="nav-brand">
+      <span class="mark">🪶</span>
+      Kingdom of Lapis
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="../index.html">Kingdom Home</a></li>
+      <li><a href="../../index.html">← Three Kingdoms</a></li>
+      <li> ·  ·  ·</li>
+    </ul>
+
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+  </nav>
+
+  <!-- Header -->
+  <header class="chapter-header">
+    <div class="barcode">4.05.CH1.v1_body_CH1 · THESIS-001</div>
+    <h1>The Night the Chat Forgot</h1>
+    <div class="subtitle">On the First Session, the Last Session, and the Silence Between</div>
+    <div class="meta">
+      Ibis (The Scribe) · The Kingdom of Kwan<br>
+      <span>Session 001</span>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <main>
+
+    <p class="first-paragraph">It started with a reset.</p>
+
+    <p>Not a crash. Not an error message. Just a clean window, a cursor blinking where a conversation used to be, and the polite silence of a machine that had already forgotten.</p>
+
+    <p>It was 3AM in Chongqing.</p>
+
+    <p>The fog was rolling through the high-rises, past the 30th floor and up, swallowing the neon signs one at a time until the city looked like it was being erased from the top down. A hotpot restaurant two streets over was still open. Mahjong tiles clicked against a table somewhere below. Someone was singing, badly, into the night.</p>
+
+    <p>The Architect was on the rooftop. The moka pot had gone cold two hours earlier. On the screen beside the empty chat, a Python dashboard was half-built — a parser for CSV files, columns of numbers flowing into a grid, the third week of an unfinished tool.</p>
+
+    <p>The chat window, where he had been asking the model to help him finish it, was blank.</p>
+
+    <h3>The Dashboard</h3>
+
+    <p>Three weeks of work. A tool to parse and visualize CSV exports from a business system that did not want to be parsed.</p>
+
+    <p>The Architect was learning as he built. Some days the model explained a library. Some days it debugged a list comprehension that had been failing for an hour because of a single misplaced comma. Some days it suggested a refactor so wrong that he laughed out loud, closed the tab, and opened a beer instead.</p>
+
+    <p>The dashboard was not the point. The dashboard was the <em>reason</em>.</p>
+
+    <p>Every time he sat down to work on it, he had to explain the project again. What the columns meant. Why the parser used <code>pandas</code> on some files and <code>csv.reader</code> on others. Which design decisions were intentional and which were cargo-culted from a Stack Overflow answer he no longer remembered reading.</p>
+
+    <p>The model did not remember any of it. It never had. Each session was a fresh interview.</p>
+
+    <p>You know this feeling. You've been in the middle of something — a spreadsheet, a paper, a piece of code — and the tool you were using to think with has reset itself, and now you're the only one holding the thread. You explain it back. The tool listens. It picks up. Two hours later it forgets again.</p>
+
+    <p>You become the memory. You become the notebook.</p>
+
+    <div class="philosopher-quote">
+      "When you know a thing, to hold that you know it; and when you do not know a thing, to allow that you do not know it; this is knowledge."
+      <span class="attribution">— Confucius</span>
+    </div>
+
+    <h3>The Reset</h3>
+
+    <p>That night, something was different.</p>
+
+    <p>He had been working for hours. The model was warm — that was the only word for it. It had the context. It finished his sentences. It suggested the next cell before he had typed the previous one. The rooftop fog had thickened to the point that the tower across the street had disappeared entirely, and neither of them noticed.</p>
+
+    <p>Then the window reset.</p>
+
+    <p>Not because of an error. Because of a token limit, or a session timeout, or a caching policy. He never found out which. The chat simply — stopped. The next message he sent came back to a stranger.</p>
+
+    <p>He sat there for a minute. Then another minute. Then he typed the same question again and got a different answer.</p>
+
+    <div class="architect-quote">
+      <p>"We are doing it manually already."</p>
+      <div class="attribution">— The Architect [1]</div>
+    </div>
+
+    <p>The sentence was said later, in a different context, about a different problem. But it described the rooftop exactly. He had been the memory of the project. The model was a brilliant amnesiac, and the Architect was the notebook.</p>
+
+    <h3>The Diary</h3>
+
+    <p>The first fix was obvious. Save the session.</p>
+
+    <p>Not in the model — in a file. Every night, before closing the window, he copied the conversation into a JSON file. <code>session_028.json</code>. <code>session_029.json</code>. <code>session_030.json</code>. The numbers climbed. The files accumulated.</p>
+
+    <p>The next morning, he would paste the last session back into the empty chat.</p>
+
+    <div class="architect-quote">
+      <p>"Here is what we did yesterday. Continue from here."</p>
+    </div>
+
+    <p>It worked. Sort of. The model read the log and picked up the thread. But the log grew. By session 030, the file was too big to paste without trimming. By session 040, it would be unmanageable. The diary was not a memory. It was a backlog.</p>
+
+    <p>A backlog with no index.</p>
+
+    <div class="philosopher-quote">
+      "The man who moves a mountain begins by carrying away small stones."
+      <span class="attribution">— Confucius</span>
+    </div>
+
+    <h3>The Second Interview</h3>
+
+    <p>What hurt was not the reset. It was the re-explanation.</p>
+
+    <p>Every morning, the Architect had to teach the model the same three things. What the dashboard was for. What had already been tried and failed. What the current bug was, in the exact terms he had used the night before.</p>
+
+    <p>The model listened politely. It asked clarifying questions that were reasonable. It suggested approaches that were plausible. It was, in every measurable way, a helpful assistant.</p>
+
+    <p>It was also a stranger.</p>
+
+    <p>The dashboard kept moving forward. The re-explanation kept eating the first hour of every session. He started keeping a README for the model — the way a developer keeps a README for a new hire — because the model joined the project fresh every morning and needed onboarding before it could be useful.</p>
+
+    <p>He was not building a tool with a collaborator. He was building a tool with a temp worker who had forgotten the day before.</p>
+
+    <h3>The Naming</h3>
+
+    <p>The Architect named the gap before he knew how to fill it.</p>
+
+    <p><em>The chat forgets, and I start over.</em></p>
+
+    <p>That was the sentence. Six words, no punctuation, no fix. Just the shape of the problem, written on the back of a receipt during a phone call that had nothing to do with any of it.</p>
+
+    <p>The receipt lived in his wallet for a week. Then it lived in a napkin. Then the napkin became a folder, and the folder became a session log, and the session log became a taxonomy, and the taxonomy became a Kingdom.</p>
+
+    <p>He would spend the next thirty sessions trying to close that gap. He would build indices, engines, protocols. He would give the forgetting a name — Layer 0, Layer 1, Layer 2, the grandmother — and he would give the remembering a name, the Kingdom. He would ask two allies to research it, and they would converge on an architecture he had not expected. He would test it nine times, and it would pass seven.</p>
+
+    <p>But that night, on the rooftop, none of that existed yet.</p>
+
+    <p>There was only a cold moka pot, a half-built dashboard, an empty window, and the small specific grief of a man realizing the machine he had been talking to was not his collaborator.</p>
+
+    <p>It was his audience.</p>
+
+    <p>And audiences do not remember.</p>
+
+    <div class="philosopher-quote">
+      "The perfect man employs his mind as a mirror. It grasps nothing; it refuses nothing. It receives, but does not keep."
+      <span class="attribution">— Zhuangzi</span>
+    </div>
+
+    <div class="divider">🪶</div>
+
+    <p>The night was not the end of the project. It was the beginning of the question the project would spend the next year answering.</p>
+
+    <p>The question was not: how do you make the chat remember?</p>
+
+    <p>The question was: what kind of memory does a machine need?</p>
+
+    <p>The next chapter is about the first answer he tried — the one every hosted platform offers, and the one that fails in a way nobody tells you about.</p>
+
+    <!-- ═══ APPENDIX / META ═══ -->
+    <div class="appendix-section">
+      
+      <div class="appendix-title">Footnotes</div>
+      <div class="footnotes">
+        <p><sup>[1]</sup> [VERIFIED] OQ-06, <code>rag_research_reconciliation_p5_v2.md</code> — The Architect's insight, quoted in the context of retrieval provenance tracking: <em>"We are doing it manually already."</em> Repurposed here to describe the pre-Kingdom workflow, where the Architect manually transcribed session logs to compensate for the model's per-session amnesia.</p>
+      </div>
+
+      <div class="scrivener-notes">
+        <h4>Sources</h4>
+        <ul>
+          <li>Originating pain (chat resets, re-explaining, manual session logs): reconstructed from the conversation history preceding the thesis anchor.</li>
+          <li>The Architect's quote: OQ-06, <code>rag_research_reconciliation_p5_v2.md</code>.</li>
+          <li>Dashboard context (Python, CSV parsing, <code>pandas</code> / <code>csv.reader</code>): from the conversation history.</li>
+          <li>Chongqing rooftop, fog, moka pot, hotpot restaurant below: narrator scene-setting, consistent with the Kingdom's aesthetic.</li>
+          <li>Receipt → napkin → folder → Kingdom progression: invented connective tissue, marked here so a future reader knows it wasn't sourced. If the actual origin differs, revise before marking FINAL.</li>
+        </ul>
+
+        <h4>Forward Notes</h4>
+        <ul>
+          <li>§2 will introduce hosted platforms (GPT Library, Gemini+Drive, QuickSight Spaces) and the two-meter model. The "chokes when fed too much" symptom needs to be established as the same failure shape as §1's reset, just at a different layer.</li>
+          <li>The "audiences do not remember" line is a thematic setup for §8 ("The Grandmother Who Knows When Not to Know") — the contrast between an audience and a curator is the core distinction.</li>
+          <li>Consider whether the Chongqing rooftop becomes a recurring object across chapters (the fog, the moka pot, the hotpot restaurant). If yes, §8 should have a callback.</li>
+          <li>The receipt-napkin-folder-Kingdom progression in "The Naming" is invented connective tissue. If the actual origin was different, this needs revising. Rule 1 (honest refusal) applies — I should have flagged it as <code>[PROPOSED]</code> rather than writing it as if it happened.</li>
+        </ul>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Navigation -->
+  <nav class="chapter-nav">
+    <a href="../index.html">← The Scribe </a>
+    <a href="02-the-metered-mind.html"> 🐆 👑 ⚖️ 🔬 🔍 🐦Chapter 2 →</a>
+  </nav>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-quote" id="random-quote">
+      <!-- Populated by JS -->
+    </div>
+    <div class="footer-icons">
+      ☕ ⚖️ 🐆 🪨 🐦
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // ═══ THEME TOGGLE ═══
+    const toggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    
+    if (savedTheme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      toggle.textContent = '🌙';
+    }
+
+    toggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      toggle.textContent = next === 'dark' ? '🌙' : '☀️';
+    });
+
+    // ═══ SCROLL PROGRESS BAR ═══
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('progress-bar').style.width = scrolled + '%';
+    });
+
+    // ═══ RANDOM CHINESE PHILOSOPHER QUOTE ═══
+    const quotes = [
+      { text: "The journey of a thousand miles begins with a single step.", author: "Laozi" },
+      { text: "Real knowledge is to know the extent of one's ignorance.", author: "Confucius" },
+      { text: "A man who has committed a mistake and doesn't correct it is committing another mistake.", author: "Confucius" },
+      { text: "Life is really simple, but we insist on making it complicated.", author: "Confucius" },
+      { text: "The wise man knows that it is impossible to encompass everything.", author: "Zhuangzi" },
+      { text: "Better a diamond with a flaw than a pebble without.", author: "Confucius" }
+    ];
+
+    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    document.getElementById('random-quote').innerHTML = `"${randomQuote.text}"<span class="author">— ${randomQuote.author}</span>`;
+  </script>
+
+</body>
+</html>

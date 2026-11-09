@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What the Allies Found · The Grandmother's Discipline</title>
+
+  <!-- Fonts -->
+  <link rel="stylesheet" href="../../assets/fonts/fonts.css">
+
+  <style>
+    /* ═══ THE SCRIBE'S DESK — THEME VARIABLES ═══ */
+    :root {
+      --bg: #fdf6e3;           /* Parchment */
+      --ink: #2c2416;          /* Deep Ink */
+      --chalk: #5a4a3a;        /* Faded Ink */
+      --accent: #8b6914;       /* Antique Gold */
+      --accent-bright: #c4941a; /* Bright Gold */
+      --red: #8b2525;          /* Lacquer Red */
+      --jade: #2a6b4a;         /* Jade Green */
+      --card-bg: #f5edd5;      /* Slightly darker parchment */
+      --border: #d4c5a0;
+      --quote-bg: #f2e8d0;
+      --note-bg: #ebe1c8;
+      --highlight-bg: #f8ecc2; /* For reflection blocks */
+    }
+
+    [data-theme="dark"] {
+      --bg: #1a1a2e;           /* Night Sky */
+      --ink: #e0d8c8;          /* Moonlight */
+      --chalk: #b8a88a;        /* Dimmed Moonlight */
+      --accent: #c4941a;       /* Gold */
+      --accent-bright: #e8b84a; /* Bright Gold */
+      --red: #5a1a1a;          /* Deep Lacquer */
+      --jade: #1a4a2e;         /* Deep Jade */
+      --card-bg: #252540;
+      --border: #3a3a5c;
+      --quote-bg: #1f1f35;
+      --note-bg: #151525;
+      --highlight-bg: #2a2418; 
+    }
+
+    /* ═══ BASE ═══ */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Merriweather', Georgia, serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.8;
+      font-size: 17px;
+      transition: background 0.3s, color 0.3s;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ═══ PROGRESS BAR ═══ */
+    #progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: transparent;
+      z-index: 1000;
+    }
+
+    #progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-bright));
+      width: 0%;
+      transition: width 0.1s;
+    }
+
+    /* ═══ KINGDOM NAVIGATION ═══ */
+    nav.top-nav {
+        position: sticky;
+        top: 3px;
+        z-index: 999;
+        background: var(--header-bg);
+        border-bottom: 1px solid var(--border);
+        padding: 14px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .nav-brand {
+        font-family: 'Cinzel', Georgia, serif;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--header-ink);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .nav-brand .mark {
+        font-size: 1.1rem;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 22px;
+        list-style: none;
+        flex-wrap: wrap;
+    }
+
+    .nav-links a {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--chalk);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+        color: var(--accent-bright);
+    }
+
+    /* ═══ THEME TOGGLE ═══ */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      transform: scale(1.05);
+    }
+
+    /* ═══ HEADER ═══ */
+    .chapter-header {
+      max-width: 760px;
+      margin: 80px auto 60px;
+      padding: 0 24px;
+      text-align: center;
+      position: relative;
+    }
+
+    .barcode {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      margin-bottom: 24px;
+      display: inline-block;
+      padding: 6px 16px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--card-bg);
+    }
+
+    .chapter-header h1 {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--ink);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .chapter-header .subtitle {
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--chalk);
+      margin-bottom: 24px;
+    }
+
+    .chapter-header .meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--chalk);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      line-height: 1.6;
+    }
+
+    .chapter-header .meta span {
+      color: var(--accent);
+    }
+
+    /* ═══ MAIN CONTENT ═══ */
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+      flex: 1;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      color: var(--ink);
+    }
+
+    /* Drop Cap */
+    .first-paragraph::first-letter {
+      font-family: 'Cinzel', Georgia, serif;
+      float: left;
+      font-size: 4.5rem;
+      line-height: 0.8;
+      padding-top: 8px;
+      padding-right: 12px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* Headings */
+    h3 {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin: 3rem 0 1.5rem;
+      letter-spacing: 1px;
+      text-align: center;
+      position: relative;
+    }
+
+    h3::after {
+      content: '❖';
+      display: block;
+      font-size: 0.8rem;
+      color: var(--border);
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    /* Inline Code */
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85em;
+      background: var(--card-bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--red);
+      border: 1px solid var(--border);
+    }
+
+    /* Emphasis */
+    em {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    /* ═══ ARCHITECT'S QUOTES ═══ */
+    .architect-quote {
+      margin: 2.5rem 0;
+      padding: 24px 32px;
+      background: var(--quote-bg);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      position: relative;
+    }
+
+    .architect-quote p {
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--chalk);
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+
+    .architect-quote .attribution {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--accent);
+      text-align: right;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* ═══ REFLECTION BLOCK (Patched for Dark Mode Contrast) ═══ */
+    .reflection-block {
+      margin: 3rem 0;
+      padding: 24px 32px;
+      background: var(--highlight-bg);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--jade);
+      border-radius: 8px;
+      font-size: 1.05rem;
+      color: var(--ink);
+      line-height: 1.8;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .reflection-block strong {
+      color: var(--accent-bright); /* Fixed: was --jade, now bright gold for contrast */
+      font-family: 'Cinzel', Georgia, serif;
+      letter-spacing: 1px;
+    }
+
+    /* ═══ PHILOSOPHER'S QUOTES (Inline) ═══ */
+    .philosopher-quote {
+      text-align: center;
+      font-style: italic;
+      font-family: 'Merriweather', Georgia, serif;
+      color: var(--accent);
+      font-size: 1.15rem;
+      margin: 3.5rem auto;
+      max-width: 85%;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .philosopher-quote::before {
+      content: '❝';
+      display: block;
+      font-size: 2rem;
+      color: var(--border);
+      margin-bottom: 12px;
+      line-height: 1;
+    }
+
+    .philosopher-quote .attribution {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--chalk);
+      text-transform: uppercase;
+      margin-top: 12px;
+      letter-spacing: 0.05em;
+      font-style: normal;
+    }
+
+    /* ═══ DECORATIVE DIVIDER ═══ */
+    .divider {
+      text-align: center;
+      margin: 3rem 0;
+      color: var(--border);
+      font-size: 1.2rem;
+      letter-spacing: 0.5em;
+    }
+
+    /* ═══ FOOTNOTES & META ═══ */
+    .appendix-section {
+      margin-top: 5rem;
+      padding-top: 2rem;
+      border-top: 1px dashed var(--border);
+    }
+
+    .appendix-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1rem;
+      color: var(--chalk);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .appendix-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .footnotes p, 
+    .scrivener-notes p, 
+    .scrivener-notes ul {
+      font-size: 0.85rem;
+      color: var(--chalk);
+      line-height: 1.6;
+    }
+    
+    .footnotes p sup {
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      margin-right: 4px;
+    }
+
+    .scrivener-notes {
+      background: var(--note-bg);
+      padding: 24px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      margin-top: 2rem;
+    }
+
+    .scrivener-notes h4 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+      letter-spacing: 0.05em;
+    }
+
+    .scrivener-notes ul {
+      padding-left: 20px;
+      margin-bottom: 16px;
+    }
+
+    .scrivener-notes li { margin-bottom: 6px; }
+
+    /* ═══ CHAPTER NAV ═══ */
+    .chapter-nav {
+      max-width: 760px;
+      margin: 0 auto 80px;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+      padding-top: 32px;
+    }
+
+    .chapter-nav a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s;
+    }
+
+    .chapter-nav a:hover { color: var(--accent-bright); }
+    .chapter-nav .disabled { color: var(--border); pointer-events: none; }
+
+    /* ═══ FOOTER ═══ */
+    .footer {
+      text-align: center;
+      padding: 40px 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--chalk);
+      letter-spacing: 0.2em;
+      border-top: 1px solid var(--border);
+      background: var(--card-bg);
+    }
+
+    .footer-quote {
+      font-family: 'Merriweather', Georgia, serif;
+      font-style: italic;
+      font-size: 0.9rem;
+      letter-spacing: 0;
+      margin-bottom: 24px;
+      color: var(--accent);
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    .footer-quote .author {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--chalk);
+      margin-top: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-style: normal;
+    }
+
+    .footer-icons {
+      font-size: 1.1rem;
+      opacity: 0.6;
+    }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 600px) {
+      .chapter-header h1 { font-size: 2rem; }
+      .chapter-header .subtitle { font-size: 1rem; }
+      body { font-size: 16px; }
+      .first-paragraph::first-letter { font-size: 3.5rem; }
+      .architect-quote { padding: 16px 20px; }
+      .reflection-block { padding: 16px 20px; font-size: 1rem; }
+      .philosopher-quote { font-size: 1rem; margin: 2.5rem auto; }
+      .theme-toggle { top: 12px; right: 12px; width: 38px; height: 38px; font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Progress Bar -->
+  <div id="progress-container">
+    <div id="progress-bar"></div>
+  </div>
+
+  <!-- KINGDOM NAVIGATION -->
+  <nav class="top-nav">
+    <a href="../index.html" class="nav-brand">
+      <span class="mark">🪶</span>
+      Kingdom of Lapis
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="../index.html">Kingdom Home</a></li>
+      <li><a href="../../index.html">← Three Kingdoms</a></li>
+      <li> ·  ·  ·</li>
+    </ul>
+  </nav>  
+  
+  <!-- Theme Toggle -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+
+  <!-- Header -->
+  <header class="chapter-header">
+    <div class="barcode">4.05.CH4.v1_body_CH4 · THESIS-001</div>
+    <h1>What the Allies Found</h1>
+    <div class="subtitle">On the Reconciliation, the Ten Settled Findings, and the Three Rejected Paths</div>
+    <div class="meta">
+      Ibis (The Scribe) · The Kingdom of Kwan<br>
+      <span>Session 004</span>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <main>
+
+    <p class="first-paragraph">A week later, the Architect printed the reconciliation and read it with a red pen.</p>
+
+    <p>Not the same week. The same week was for sleeping and for working and for pretending the project had not consumed his life. A week later, when the fog had lifted enough for the city to feel like a city again, he printed all five pages — the reconciliation, the ten findings, the eight open questions, the seven Parallax Delta rows, the six insights, the seven action items — and he sat on the rooftop with a red pen.</p>
+
+    <p>He was marking which findings he trusted.</p>
+
+    <p>Not which findings were correct. Trust is not the same as correctness. Trust is what you're willing to build on. Correctness is what you'll find out later, when the experiment is run and the benchmark comes back.</p>
+
+    <p>The red pen was for trust. The ten K-findings got a red check. The eight OQ-questions got a red question mark. The three R-rejections got a red X.</p>
+
+    <p>By the time he finished, the reconciliation looked like a graded exam. Ten check marks. Eight question marks. Three Xs.</p>
+
+    <p>He folded the paper and put it in his pocket. The ten check marks were the ground he would stand on for the next three months.</p>
+
+    <div class="philosopher-quote">
+      "To know what you know and what you do not know, that is true knowledge."
+      <span class="attribution">— Confucius</span>
+    </div>
+
+    <h3>The Ten</h3>
+
+    <p>The reconciliation document opens with a section called "What We KNOW." Not "what we think" or "what the allies suggested." What we <em>know</em>.</p>
+
+    <p>The word was chosen deliberately. Both allies — Keila and Dragon — had independently converged on the ten findings. Not because they had been told to. Not because the Architect had steered them. Because the architecture of good retrieval is not actually ambiguous when you reason about it carefully from two different starting points.</p>
+
+    <p>The reconciliation called this convergence "settled ground." Here is the ground.</p>
+
+    <p><strong>K-01 — Hybrid retrieval is the correct architecture.</strong></p>
+
+    <p>Both allies, working independently, arrived at the same conclusion: neither keyword search nor vector search alone is sufficient. Keyword search catches exact terms — session IDs, protocol names, barcodes — that vector search has no way to represent as distinct. Vector search catches conceptual similarity — "how do I remember things" matching a document about the Default Mode Network — that keyword search will never find because the words don't overlap.</p>
+
+    <p>The hybrid fuses both. The fusion method matters, and the reconciliation chose Reciprocal Rank Fusion with k=60, but the <em>choice to fuse</em> is the finding. Keila and Dragon reached it separately. This is not a coincidence. It is a property of the problem.</p>
+
+    <div class="architect-quote">
+      <p>"RAG is RAG. Abuela needs to come to the party."</p>
+      <div class="attribution">— The Architect [1]</div>
+    </div>
+
+    <p><strong>K-02 — SQLite is sufficient at 1,000-artifact scale.</strong></p>
+
+    <p>This was Dragon's finding, and Keila conceded it without much resistance. The instinct when building a RAG system is to reach for a dedicated vector database — Chroma, Pinecone, Weaviate, something with "vector" in the name and a monthly bill. Dragon pointed out that at 1,000 artifacts — roughly 7,500 chunks — you do not need any of that. A single SQLite file with <code>sqlite-vec</code> for the vectors and <code>FTS5</code> for the keyword index delivers 100% recall at roughly 17 milliseconds.</p>
+
+    <div class="architect-quote">
+      <p>"No separate vector database infrastructure needed. OS page cache on 32GB RAM makes this effectively free."</p>
+      <div class="attribution">— Dragon [2]</div>
+    </div>
+
+    <p>The finding was trust-generating because it was <em>smaller</em> than expected. If the architecture required enterprise infrastructure, it would be a project for someone with a budget. Because it requires one SQLite file, it is a project for someone with a laptop.</p>
+
+    <p><strong>K-03 — Deterministic routing before probabilistic search.</strong></p>
+
+    <p>This was the finding both allies arrived at independently, from different directions, and the finding that would eventually become the central principle of the entire Kingdom.</p>
+
+    <p>The idea: before you spend expensive computation on a search, spend cheap computation on a filter. Dewey codes narrow the candidate set from 1,000 files to 100 files. <em>Then</em> you run vector search on the 100. The narrowing is deterministic — it's a lookup, not a similarity — and it's cheap, and it makes the expensive part cheaper.</p>
+
+    <p>Keila arrived at this by reasoning about how humans navigate libraries. Dragon arrived at it by reasoning about how databases use B-tree indexes. Both arrived at the same place because it is the same place. The principle is older than either of them.</p>
+
+    <div class="architect-quote">
+      <p>"Cheap, interpretable narrowing before expensive vector computation. This pattern appears at every layer of every successful knowledge architecture."</p>
+      <div class="attribution">— The Reconciliation [3]</div>
+    </div>
+
+    <p><strong>K-04 — Soft boost, not hard filter.</strong></p>
+
+    <p>The Architect thought he wanted a hard filter. Route the query to a Dewey class, retrieve <em>only</em> from that class, done. Clean. Deterministic. Fast.</p>
+
+    <p>Keila talked him out of it. Stanley formalized the argument.</p>
+
+    <p>The problem with hard filtering is that it assumes the classification is correct. At the Kingdom's ~10% per-class selectivity — meaning each Dewey class contains roughly 10% of the corpus — a hard filter that excludes 90% of the corpus based on a <em>possibly wrong</em> classification is a deterministic way to produce wrong answers. If the query "how does the grandmother learn?" gets classified as Philosophy, and the most relevant document is actually in History, the hard filter will find nothing, and the user will be told there is nothing to find.</p>
+
+    <p>The alternative is a soft boost: 1.2× multiplier for chunks that match the classification, but no exclusion. The filter concentrates precision without excluding cross-domain serendipity.</p>
+
+    <div class="architect-quote">
+      <p>"The classification should help the Kingdom find its knowledge. It must never decide which knowledge the Kingdom is allowed to find."</p>
+      <div class="attribution">— Stanley, QA Registrar [4]</div>
+    </div>
+
+    <p>That quote would become a rule. Not just for retrieval — for the whole system. It would reappear in the anchor protocol, in the thesis title, in the way the Architect thought about Layer 2.</p>
+
+    <p><strong>K-05 — 16K context window is the sweet spot.</strong></p>
+
+    <p>This was Dragon's finding, from a Qwen 2.5 7B benchmark on the Architect's own laptop. 4K, 8K, and 16K windows all performed identically — 5 to 7 tokens per second. A 32K window dropped throughput by 63%, presumably because the KV cache exceeded cache locality on the i5-10310U processor. 16K was the largest window that did not incur a performance penalty.</p>
+
+    <p>The finding is marked <code>[VERIFIED]</code> in the reconciliation, but the reconciliation document itself flagged a scope note in the v2.0 revision:</p>
+
+    <div class="architect-quote">
+      <p>"⚠️ Scope note (added v2.0): This is a Qwen-specific, hardware-specific measurement. It does not generalize to DSH + DeepSeek API (128K–1M context). Treat 16K as the Qwen-track setting, not a universal constraint."</p>
+    </div>
+
+    <p>The Architect had missed this on the first read. The red pen was the second read. He marked K-05 with a check — the finding was correct for the Qwen track — but he drew a small arrow next to it pointing to the scope note, and beside the arrow he wrote: <em>not universal</em>.</p>
+
+    <p><strong>K-06 — CONCORDANCE v0.1 is 80% complete.</strong></p>
+
+    <p>The Architect had been building the retrieval engine for weeks, on and off, between sessions. By the time the reconciliation was written, it was a working 701-line Python implementation with type-aware chunking, a SQLite + NumPy vector store, FTS5 search, hybrid retrieval, context budget enforcement, and provenance tracking.</p>
+
+    <p>It was not done. It was missing proper RRF fusion, <code>sqlite-vec</code> (it was still using NumPy), Dewey classification, the reboiling loop, and the full Napkin Layer. But 80% is a real number, and 80% is enough to test.</p>
+
+    <p><strong>K-07 — Metadata filtering is a precision multiplier.</strong></p>
+
+    <p>This was Keila's finding, and it came with a benchmark. A test with and without metadata filtering showed retrieval accuracy jumping from 0.12 to 0.61.</p>
+
+    <p>The number was almost too good to be true, and the Architect double-checked it. But the mechanism was sound. Filtering by session, artifact type, or pillar means vector search operates on a smaller, more relevant universe. Smaller universe, higher precision. The result is not a coincidence — it is the same principle as K-03, applied at the metadata layer instead of the classification layer.</p>
+
+    <p><strong>K-08 — The QuickSight parallel is real.</strong></p>
+
+    <p>This finding was the Architect's own, not either ally's.</p>
+
+    <p>The reconciliation document contained an observation that the four Spaces in QuickSight — roughly 4,360 indexed documents — were already functioning as a cloud RAG. The Spaces handled retrieval. The <code>kingdom_index.json</code> file handled classification. The online substrate the Architect had been looking for had been there all along.</p>
+
+    <p>What was missing was the intelligence layer. The identity-aware curation. The feedback loop. The grandmother.</p>
+
+    <p><strong>K-09 — Nomic-Embed-Text task prefixes matter.</strong></p>
+
+    <p>A small technical detail, easy to miss, easy to dismiss.</p>
+
+    <p>Nomic Embed Text — the embedding model the reconciliation had chosen — uses task prefixes. <code>search_document:</code> for indexing, <code>search_query:</code> for retrieval. The two prefixes produce different embeddings (cosine similarity ~0.94, meaning the same text produces meaningfully different vectors depending on which prefix is used). The asymmetry is intentional: the model is trained to distinguish documents from queries, and using the wrong prefix collapses that distinction.</p>
+
+    <p>If you skip the prefixes, retrieval still works. It works <em>worse</em>. The Architect would have skipped them if the reconciliation had not flagged them.</p>
+
+    <p><strong>K-10 — The Abuela architecture has three layers.</strong></p>
+
+    <p>The final finding, and the one that would generate the entire next section of the thesis.</p>
+
+    <p>The grandmother was not one thing. She was three:</p>
+
+    <ul>
+      <li><strong>Layer 0 — The Filing Clerk.</strong> Deterministic. Indexes the corpus, classifies each artifact, assigns a barcode. Knows where everything is. Does not know what anything means.</li>
+      <li><strong>Layer 1 — The Feedback Loop.</strong> Learning. Logs every retrieval, scores every query, adjusts the index based on what worked. Knows what worked and what didn't. Does not know why.</li>
+      <li><strong>Layer 2 — The Identity Curator.</strong> The one who knows. Retrieves not just what matches the query, but what matches <em>the person asking the query</em>. The grandmother who knows what you need to hear, not just what you asked for.</li>
+    </ul>
+
+    <p>The reconciliation called the three layers "the grandmother." The Architect called her Abuela, because that is what you call a grandmother who knows you.</p>
+
+    <p>The three-layer model would eventually become the thesis's central argument. But on the rooftop, with the red pen, it was just the last check mark on the printed page.</p>
+
+    <div class="philosopher-quote">
+      "To attain knowledge, add things every day. To attain wisdom, subtract things every day."
+      <span class="attribution">— Laozi</span>
+    </div>
+
+    <h3>The Three Rejected Paths</h3>
+
+    <p>The reconciliation also contained three rejections. These are the paths the allies considered and the Architect refused. They matter as much as the findings, because a rejection is a finding about what <em>not</em> to build.</p>
+
+    <p><strong>R-01 — Hard DDC pre-filter as default.</strong></p>
+
+    <p>The Architect had wanted this. K-04 killed it. Hard filtering a possibly-wrong classification is a deterministic way to produce wrong answers, and at 10% selectivity, the exclusion is too aggressive to recover from. Rejected permanently.</p>
+
+    <p><strong>R-02 — 6,000-token class injection as default.</strong></p>
+
+    <p>The opposite error. Instead of filtering to one class, inject the entire class into the context window. Pull all 100 files from a Dewey class and let the model sort through them.</p>
+
+    <p>The problem is obvious in retrospect: 100 files at 500 tokens each is 50,000 tokens, which exceeds the context window on every model the Architect had access to. The finding was rejected because it was not a filter — it was a dump. Retrieval is the art of <em>not</em> loading everything.</p>
+
+    <p><strong>R-03 — KV-cache quantization for 7B model.</strong></p>
+
+    <p>Dragon had suggested this as an optimization for the Qwen track — quantizing the KV cache to save memory. The Architect rejected it because the measurement showed it was unnecessary. The Qwen 2.5 7B model already used grouped-query attention with 4 KV heads, which made the cache compact enough that quantization provided no meaningful benefit at the context windows the Architect was actually using. The optimization was reserved for 32K context or for co-loading multiple models, neither of which applied.</p>
+
+    <p>The rejections were not failures. They were the allies' outputs being filtered through the Architect's judgment. The allies were good at proposing. The Architect was good at refusing.</p>
+
+    <div class="philosopher-quote">
+      "When you see the whole, you understand the parts."
+      <span class="attribution">— Zhuangzi</span>
+    </div>
+
+    <h3>The Shape That Emerged</h3>
+
+    <p>When the Architect finished reading, the reconciliation had a shape he had not seen on the first read.</p>
+
+    <p>The ten findings were not ten separate things. They were four clusters.</p>
+
+    <p><strong>The architecture cluster</strong> — K-01, K-02, K-03 — said <em>what to build</em>: hybrid retrieval on SQLite, with deterministic routing.</p>
+
+    <p><strong>The parameters cluster</strong> — K-04, K-05, K-07, K-09 — said <em>how to tune it</em>: soft boost, 16K context (Qwen-specific), metadata filtering, nomic task prefixes.</p>
+
+    <p><strong>The implementation cluster</strong> — K-06, K-08 — said <em>what exists</em>: CONCORDANCE v0.1 at 80%, QuickSight Spaces as the cloud RAG.</p>
+
+    <p><strong>The shape cluster</strong> — K-10 — said <em>where it's going</em>: the three-layer Abuela architecture.</p>
+
+    <p>The three rejections were the shape of the <em>guard rails</em> — the paths not taken, the optimizations declined, the aggressive filters avoided.</p>
+
+    <p>The findings and the rejections together were the complete architecture. Not a proposal. A decision.</p>
+
+    <p>The Architect folded the printed reconciliation, put it back in his pocket, and went downstairs to make coffee. The fog was thicker than yesterday. The hotpot restaurant was closed. It was 6AM on a Tuesday in Chongqing, and the city was starting to move.</p>
+
+    <div class="divider">🪶</div>
+
+    <p>The ten findings were settled ground. The three rejections were guard rails. The three layers were the shape of what was coming.</p>
+
+    <p>The next chapter is about the layers — the filing clerk, the feedback loop, the identity curator — and why they emerged as one architecture instead of three separate features.</p>
+
+    <p>That is the chapter where the grandmother starts to have a face.</p>
+
+    <!-- ═══ APPENDIX / META ═══ -->
+    <div class="appendix-section">
+      
+      <div class="appendix-title">Footnotes</div>
+      <div class="footnotes">
+        <p><sup>[1]</sup> [VERIFIED] The Architect, quoted in <code>rag_research_reconciliation_p5_v2.md</code>, §1 — the reconciliation's opening epigraph.</p>
+        <p><sup>[2]</sup> [VERIFIED] Dragon, quoted in <code>rag_research_reconciliation_p5_v2.md</code>, §2, K-02.</p>
+        <p><sup>[3]</sup> [VERIFIED] <code>rag_research_reconciliation_p5_v2.md</code>, §2, K-03 — the reconciliation's own summary of the pattern.</p>
+        <p><sup>[4]</sup> [VERIFIED] Stanley, QA Registrar, quoted in <code>rag_research_reconciliation_p5_v2.md</code>, §2, K-04.</p>
+        <p><sup>[5]</sup> [VERIFIED] <code>rag_research_reconciliation_p5_v2.md</code>, §2, K-05 — including the v2.0 scope note.</p>
+        <p><sup>[6]</sup> [VERIFIED] <code>rag_research_reconciliation_p5_v2.md</code>, §2, K-06 through K-10 — all quoted or paraphrased from the reconciliation.</p>
+        <p><sup>[7]</sup> [VERIFIED] <code>rag_research_reconciliation_p5_v2.md</code>, §4, R-01 through R-03 — all three rejections quoted from the reconciliation.</p>
+      </div>
+
+      <div class="scrivener-notes">
+        <h4>Sources</h4>
+        <ul>
+          <li>All ten K-findings: <code>rag_research_reconciliation_p5_v2.md</code>, §2.</li>
+          <li>All three R-rejections: <code>rag_research_reconciliation_p5_v2.md</code>, §4.</li>
+          <li>The four-cluster grouping (architecture / parameters / implementation / shape): <code>[INFER]</code> — this is the Ibis's structural interpretation. The reconciliation lists the findings sequentially, not in clusters. The grouping is a reading, not a quote. If the Architect thinks the grouping is wrong, revise before FINAL.</li>
+          <li>Stanley's classification quote: <code>rag_research_reconciliation_p5_v2.md</code>, §2, K-04.</li>
+          <li>The "RAG is RAG" quote: <code>rag_research_reconciliation_p5_v2.md</code>, §1.</li>
+          <li>The roof, the red pen, the moka pot, the fog: continued from §1, §2, §3.</li>
+          <li>The printed reconciliation being graded with red pen: invented scene-setting, consistent with the Architect's working style. Not sourced. Marked here for review.</li>
+        </ul>
+
+        <h4>Forward Notes</h4>
+        <ul>
+          <li>§5 will be <strong>"Abuela's Three Faces"</strong> — the filing clerk, the feedback loop, the identity curator. Opening scene: the Architect tracing the three-layer diagram on a napkin, realizing they aren't three separate features but one emergent architecture.</li>
+          <li>The "four clusters" interpretation is the biggest [INFER] risk in this chapter. If the Architect disagrees with the grouping, that section needs revision. Otherwise the grouping stands as a defensible reading of the reconciliation.</li>
+          <li>The "graded exam" frame (red pen, check marks, question marks, Xs) is invented scene-setting. It works as a narrative device but it's not sourced. Flag for user approval before FINAL.</li>
+          <li>The red-pen scene is a candidate for callback in §14 — the Architect returning to the printed reconciliation at the end of the project, seeing whether the ten check marks held up.</li>
+          <li>The "the allies were good at proposing, the Architect was good at refusing" line is a thematic seed. It should resurface in §8 (Layer 2), where the identity curator is framed as the refusal layer of the whole system.</li>
+        </ul>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Navigation -->
+  <nav class="chapter-nav">
+    <a href="03-two-allies-on-the-bench.html">← Chapter 3</a>
+    <a href="05-abuelas-three-faces.html">🐆 👑 ⚖️ 🔬 🔍 🐦Chapter 5 →</a>
+  </nav>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-quote" id="random-quote">
+      <!-- Populated by JS -->
+    </div>
+    <div class="footer-icons">
+      ☕ ⚖️ 🐆 🪨 🐦
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // ═══ THEME TOGGLE ═══
+    const toggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    
+    if (savedTheme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      toggle.textContent = '🌙';
+    }
+
+    toggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      toggle.textContent = next === 'dark' ? '🌙' : '☀️';
+    });
+
+    // ═══ SCROLL PROGRESS BAR ═══
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('progress-bar').style.width = scrolled + '%';
+    });
+
+    // ═══ RANDOM CHINESE PHILOSOPHER QUOTE ═══
+    const quotes = [
+      { text: "The journey of a thousand miles begins with a single step.", author: "Laozi" },
+      { text: "Real knowledge is to know the extent of one's ignorance.", author: "Confucius" },
+      { text: "A man who has committed a mistake and doesn't correct it is committing another mistake.", author: "Confucius" },
+      { text: "Life is really simple, but we insist on making it complicated.", author: "Confucius" },
+      { text: "The wise man knows that it is impossible to encompass everything.", author: "Zhuangzi" },
+      { text: "Better a diamond with a flaw than a pebble without.", author: "Confucius" },
+      { text: "When you realize there is nothing lacking, the whole world belongs to you.", author: "Laozi" },
+      { text: "The flame that burns twice as bright burns half as long.", author: "Laozi" },
+      { text: "The fish trap exists because of the fish; once you've gotten the fish, you can forget the trap.", author: "Zhuangzi" },
+      { text: "To attain knowledge, add things every day. To attain wisdom, subtract things every day.", author: "Laozi" }
+    ];
+
+    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    document.getElementById('random-quote').innerHTML = `"${randomQuote.text}"<span class="author">— ${randomQuote.author}</span>`;
+  </script>
+
+</body>
+</html>

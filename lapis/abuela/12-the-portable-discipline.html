@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Portable Discipline · The Grandmother's Discipline</title>
+
+  <!-- Fonts -->
+  <link rel="stylesheet" href="../../assets/fonts/fonts.css">
+
+  <style>
+    /* ═══ THE SCRIBE'S DESK — THEME VARIABLES ═══ */
+    :root {
+      --bg: #fdf6e3;           /* Parchment */
+      --ink: #2c2416;          /* Deep Ink */
+      --chalk: #5a4a3a;        /* Faded Ink */
+      --accent: #8b6914;       /* Antique Gold */
+      --accent-bright: #c4941a; /* Bright Gold */
+      --red: #8b2525;          /* Lacquer Red */
+      --jade: #2a6b4a;         /* Jade Green */
+      --card-bg: #f5edd5;      /* Slightly darker parchment */
+      --border: #d4c5a0;
+      --quote-bg: #f2e8d0;
+      --note-bg: #ebe1c8;
+      --table-bg: #fdfaf1;
+    }
+
+    [data-theme="dark"] {
+      --bg: #1a1a2e;           /* Night Sky */
+      --ink: #e0d8c8;          /* Moonlight */
+      --chalk: #b8a88a;        /* Dimmed Moonlight */
+      --accent: #c4941a;       /* Gold */
+      --accent-bright: #e8b84a; /* Bright Gold */
+      --red: #5a1a1a;          /* Deep Lacquer */
+      --jade: #1a4a2e;         /* Deep Jade */
+      --card-bg: #252540;
+      --border: #3a3a5c;
+      --quote-bg: #1f1f35;
+      --note-bg: #151525;
+      --table-bg: #1e1e32;
+    }
+
+    /* ═══ BASE ═══ */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Merriweather', Georgia, serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.8;
+      font-size: 17px;
+      transition: background 0.3s, color 0.3s;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ═══ PROGRESS BAR ═══ */
+    #progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: transparent;
+      z-index: 1000;
+    }
+
+    #progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-bright));
+      width: 0%;
+      transition: width 0.1s;
+    }
+
+    /* ═══ KINGDOM NAVIGATION ═══ */
+    nav.top-nav {
+        position: sticky;
+        top: 3px;
+        z-index: 999;
+        background: var(--header-bg);
+        border-bottom: 1px solid var(--border);
+        padding: 14px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .nav-brand {
+        font-family: 'Cinzel', Georgia, serif;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--header-ink);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .nav-brand .mark {
+        font-size: 1.1rem;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 22px;
+        list-style: none;
+        flex-wrap: wrap;
+    }
+
+    .nav-links a {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--chalk);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+        color: var(--accent-bright);
+    }
+
+    /* ═══ THEME TOGGLE ═══ */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      transform: scale(1.05);
+    }
+
+    /* ═══ HEADER ═══ */
+    .chapter-header {
+      max-width: 760px;
+      margin: 80px auto 60px;
+      padding: 0 24px;
+      text-align: center;
+      position: relative;
+    }
+
+    .barcode {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      margin-bottom: 24px;
+      display: inline-block;
+      padding: 6px 16px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--card-bg);
+    }
+
+    .chapter-header h1 {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--ink);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .chapter-header .subtitle {
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--chalk);
+      margin-bottom: 24px;
+    }
+
+    .chapter-header .meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--chalk);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      line-height: 1.6;
+    }
+
+    .chapter-header .meta span {
+      color: var(--accent);
+    }
+
+    /* ═══ MAIN CONTENT ═══ */
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+      flex: 1;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      color: var(--ink);
+    }
+
+    /* Drop Cap */
+    .first-paragraph::first-letter {
+      font-family: 'Cinzel', Georgia, serif;
+      float: left;
+      font-size: 4.5rem;
+      line-height: 0.8;
+      padding-top: 8px;
+      padding-right: 12px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* Headings */
+    h3 {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin: 3rem 0 1.5rem;
+      letter-spacing: 1px;
+      text-align: center;
+      position: relative;
+    }
+
+    h3::after {
+      content: '❖';
+      display: block;
+      font-size: 0.8rem;
+      color: var(--border);
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    /* Inline Code */
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85em;
+      background: var(--card-bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--red);
+      border: 1px solid var(--border);
+    }
+
+    /* Emphasis */
+    em {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    /* Lists */
+    ul, ol {
+      margin-bottom: 1.5rem;
+      padding-left: 24px;
+      color: var(--ink);
+    }
+    li {
+      margin-bottom: 8px;
+    }
+
+    /* ═══ ARCHITECT'S QUOTES ═══ */
+    .architect-quote {
+      margin: 2.5rem 0;
+      padding: 24px 32px;
+      background: var(--quote-bg);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      position: relative;
+    }
+
+    .architect-quote p {
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--chalk);
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+
+    .architect-quote .attribution {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--accent);
+      text-align: right;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* ═══ PHILOSOPHER'S QUOTES (Inline) ═══ */
+    .philosopher-quote {
+      text-align: center;
+      font-style: italic;
+      font-family: 'Merriweather', Georgia, serif;
+      color: var(--accent);
+      font-size: 1.15rem;
+      margin: 3.5rem auto;
+      max-width: 85%;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .philosopher-quote::before {
+      content: '❝';
+      display: block;
+      font-size: 2rem;
+      color: var(--border);
+      margin-bottom: 12px;
+      line-height: 1;
+    }
+
+    .philosopher-quote .attribution {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--chalk);
+      text-transform: uppercase;
+      margin-top: 12px;
+      letter-spacing: 0.05em;
+      font-style: normal;
+    }
+
+    /* ═══ DECORATIVE DIVIDER ═══ */
+    .divider {
+      text-align: center;
+      margin: 3rem 0;
+      color: var(--border);
+      font-size: 1.2rem;
+      letter-spacing: 0.5em;
+    }
+
+    /* ═══ FOOTNOTES & META ═══ */
+    .appendix-section {
+      margin-top: 5rem;
+      padding-top: 2rem;
+      border-top: 1px dashed var(--border);
+    }
+
+    .appendix-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1rem;
+      color: var(--chalk);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .appendix-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .footnotes p, 
+    .scrivener-notes p, 
+    .scrivener-notes ul {
+      font-size: 0.85rem;
+      color: var(--chalk);
+      line-height: 1.6;
+    }
+    
+    .footnotes p sup {
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      margin-right: 4px;
+    }
+
+    .scrivener-notes {
+      background: var(--note-bg);
+      padding: 24px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      margin-top: 2rem;
+    }
+
+    .scrivener-notes h4 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+      letter-spacing: 0.05em;
+    }
+
+    .scrivener-notes ul {
+      padding-left: 20px;
+      margin-bottom: 16px;
+    }
+
+    .scrivener-notes li { margin-bottom: 6px; }
+
+    /* ═══ CHAPTER NAV ═══ */
+    .chapter-nav {
+      max-width: 760px;
+      margin: 0 auto 80px;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+      padding-top: 32px;
+    }
+
+    .chapter-nav a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s;
+    }
+
+    .chapter-nav a:hover { color: var(--accent-bright); }
+    .chapter-nav .disabled { color: var(--border); pointer-events: none; }
+
+    /* ═══ FOOTER ═══ */
+    .footer {
+      text-align: center;
+      padding: 40px 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--chalk);
+      letter-spacing: 0.2em;
+      border-top: 1px solid var(--border);
+      background: var(--card-bg);
+    }
+
+    .footer-quote {
+      font-family: 'Merriweather', Georgia, serif;
+      font-style: italic;
+      font-size: 0.9rem;
+      letter-spacing: 0;
+      margin-bottom: 24px;
+      color: var(--accent);
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    .footer-quote .author {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--chalk);
+      margin-top: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-style: normal;
+    }
+
+    .footer-icons {
+      font-size: 1.1rem;
+      opacity: 0.6;
+    }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 600px) {
+      .chapter-header h1 { font-size: 2rem; }
+      .chapter-header .subtitle { font-size: 1rem; }
+      body { font-size: 16px; }
+      .first-paragraph::first-letter { font-size: 3.5rem; }
+      .architect-quote { padding: 16px 20px; }
+      .philosopher-quote { font-size: 1rem; margin: 2.5rem auto; }
+      .theme-toggle { top: 12px; right: 12px; width: 38px; height: 38px; font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Progress Bar -->
+  <div id="progress-container">
+    <div id="progress-bar"></div>
+  </div>
+
+  <!-- KINGDOM NAVIGATION -->
+  <nav class="top-nav">
+    <a href="../index.html" class="nav-brand">
+      <span class="mark">🪶</span>
+      Kingdom of Lapis
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="../index.html">Kingdom Home</a></li>
+      <li><a href="../../index.html">← Three Kingdoms</a></li>
+      <li> ·  ·  ·</li>
+    </ul>
+  </nav>  
+  
+  <!-- Theme Toggle -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+
+  <!-- Header -->
+  <header class="chapter-header">
+    <div class="barcode">4.05.CH12.v1_body_CH12 · THESIS-001</div>
+    <h1>The Portable Discipline</h1>
+    <div class="subtitle">On Substrate-Agnostic Contracts and the Three Retrieval Modes</div>
+    <div class="meta">
+      Ibis (The Scribe) · The Kingdom of Kwan<br>
+      <span>Session 012</span>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <main>
+
+    <p class="first-paragraph">There are three laptops on the bench now.</p>
+
+    <p>The first one is Keila's. QuickSight Spaces, Claude underneath. SEARCH mode, conversational, warm. The anchor works. The tests were run on her.</p>
+
+    <p>The second one is Dragon's. DeepSeek R1, open platform, cold, rigorous. The Architect has used him for reasoning work but has not yet pasted the anchor into his session.</p>
+
+    <p>The third one is the Qwen track. Qwen 2.5 7B Q4_K_M, running locally on the Architect's laptop. DIRECT mode — the model can open files directly because it is running on the machine where the files live. The Qwen track is parked, but it exists, and it will eventually need to answer to the same contract as the other two.</p>
+
+    <p>Three laptops. Three substrates. Three retrieval modes — SEARCH, DIRECT, DIRECT. One anchor.</p>
+
+    <p>The question this chapter answers is whether the anchor travels.</p>
+
+    <div class="philosopher-quote">
+      "If you know the enemy and know yourself, you need not fear the result of a hundred battles."
+      <span class="attribution">— Sun Tzu, The Art of War</span>
+    </div>
+
+    <h3>The Claim</h3>
+
+    <p>The claim is large. It is worth stating plainly before testing it.</p>
+
+    <p><strong>The seven rules are portable because they are constraints, not mechanisms.</strong></p>
+
+    <p>A <em>mechanism</em> is an implementation. It is how a thing works. A mechanism is tied to a substrate — Claude's attention is not Qwen's attention, and a rule that depends on how Claude's attention works will not transfer to Qwen.</p>
+
+    <p>A <em>constraint</em> is a boundary. It is what a thing is <em>not allowed</em> to do. A constraint does not depend on the substrate. "Do not assert without evidence" is a rule that can be imposed on any reasoning system, whether that system is a transformer or a human or a theorem prover. The constraint does not care what the substrate is. It cares only what the substrate's <em>output</em> looks like.</p>
+
+    <p>The seven rules are constraints. Rule 1 says "do not substitute a nearby capability for the requested one." Rule 3 says "do not silently resolve a conflict in your plan's favor." Rule 4 says "do not generalize a specific measurement into a universal rule." These are not descriptions of how the model <em>should compute</em>. They are prohibitions on what the model should <em>produce</em>.</p>
+
+    <p>Because they are prohibitions on output, they can be imposed on any output-producing system. The substrate does not matter.</p>
+
+    <p>That is the claim.</p>
+
+    <p>The Ibis finds it compelling, and then the Ibis finds it suspicious, because a claim that sounds too clean is usually missing something.</p>
+
+    <h3>The Evidence for Portability</h3>
+
+    <p>The evidence for portability is not that the anchor was tested on three substrates. The evidence is that the anchor was tested on <em>one</em> substrate — Keila — and the reason it was tested on Keila is that Keila is the substrate that <em>fails</em>.</p>
+
+    <p>The Architect did not start with Qwen because Qwen has different failure modes. Qwen is running locally, in DIRECT mode. It can open files. It can read them. Its failures are not the failures of a model that cannot read. Its failures are the failures of a model that reads too much, or reads the wrong thing, or over-trusts its own training.</p>
+
+    <p>The Architect started with Keila because Keila is the harder case. A SEARCH-mode model cannot open files. It has to work through the search layer. It has to synthesize from fragments. If the anchor can make a SEARCH-mode model honest, it can make a DIRECT-mode model honest too — because DIRECT mode is <em>easier</em>. The model has more capability. The constraint has more to bound.</p>
+
+    <p>This is the argument from difficulty. The Ibis finds it compelling but incomplete. The argument from difficulty says <em>if</em> the anchor works on the hard case, it should work on the easy case. That is a prediction, not a measurement. The prediction is plausible. It has not been tested.</p>
+
+    <p>The other piece of evidence for portability is subtler, and the Ibis finds it more interesting.</p>
+
+    <p>The anchor is <em>text</em>. Not a plugin. Not an API. Not a function call. A block of markdown that the Architect pastes into a prompt.</p>
+
+    <p>Text is the most portable interface ever invented. Any model that can read English can read the anchor. The anchor does not depend on any API. It does not depend on any SDK. It does not depend on any particular model's function-calling schema. It is a document that says "here are the rules." Any model that reads English will read the rules.</p>
+
+    <p>This means that portability is not a matter of <em>engineering</em>. It is a matter of <em>capability</em> — the model can read the anchor, the model can apply the anchor, or the model cannot. The anchor does not need to be ported. It needs to be <em>read</em>.</p>
+
+    <div class="architect-quote">
+      <p>"RAG is RAG. The substrate doesn't matter."</p>
+      <div class="attribution">— The Architect [1]</div>
+    </div>
+
+    <p>The Architect said this about RAG. It applies to the anchor for the same reason. The retrieval principles do not change across substrates. The honesty constraints do not change across substrates. What changes is the <em>mode</em> — whether the model can open files (DIRECT) or only search them (SEARCH) or neither (NONE). The mode determines what the model can do. The anchor determines what the model is <em>allowed</em> to do with what it can do.</p>
+
+    <p>Three laptops. Three modes. One anchor.</p>
+
+    <p>The Ibis is now convinced the anchor is portable <em>in principle</em>. The Ibis is not yet convinced it is portable <em>in practice</em>. There is a difference, and it is worth dwelling on.</p>
+
+    <div class="philosopher-quote">
+      "The softest things in the world overcome the hardest things in the world."
+      <span class="attribution">— Laozi</span>
+    </div>
+
+    <h3>The Difference Between Principle and Practice</h3>
+
+    <p>A constraint is portable in principle because it does not depend on the substrate.</p>
+
+    <p>A constraint is portable in practice only if the substrate can <em>read and apply</em> it.</p>
+
+    <p>The Ibis has seen models that cannot apply a constraint even when they can read it. The Ibis has seen models that read "do not hallucinate" and then hallucinate. The Ibis has seen models that read "cite your sources" and then cite sources they did not use. The constraint was readable. The model did not apply it.</p>
+
+    <p>So portability has two conditions:</p>
+
+    <p><strong>Condition 1 — The constraint must be readable.</strong> The substrate must be able to parse the text. This is nearly universal for modern LLMs. Any model that can read English can read the anchor.</p>
+
+    <p><strong>Condition 2 — The constraint must be applicable.</strong> The substrate must be able to <em>act</em> on the constraint. Not just read it, but perform the behavior it requires. A constraint that says "do not assert without evidence" requires the substrate to distinguish assertion from evidence, which requires the substrate to have a model of what evidence is, which requires a certain level of capability. A very small model — a 1B parameter model, say — may not have the capability to distinguish assertion from evidence, even if it can read the words.</p>
+
+    <p>The anchor was tested on Keila. Keila is Claude, which is a frontier model. Frontier models have the capability to apply the anchor. Whether smaller models — Qwen 2.5 7B, say — can apply the anchor is not tested.</p>
+
+    <p>The Ibis notes this because it is the honest limit of the portability claim. The anchor is portable <em>to models that can apply it</em>. The anchor is not portable to models that cannot. And the boundary between "can apply" and "cannot apply" is not sharply defined.</p>
+
+    <p>The Ibis suspects the boundary is somewhere around the ability to hold multiple instructions in working context and check one against the other. A model that can only follow one instruction at a time cannot apply a seven-rule contract. A model that can follow five or six instructions in parallel can apply the contract, but perhaps not reliably. A model that can follow ten or more instructions in parallel can apply the contract reliably.</p>
+
+    <p>Keila is in the last category. Qwen 2.5 7B is probably in the middle category. The anchor may need to be simplified for Qwen, or applied more explicitly, or tested more carefully before the Architect trusts it on that substrate.</p>
+
+    <p>This is not a failure of portability. It is a <em>nuance</em> of portability. The Ibis wants to name the nuance because the thesis has been honest about everything else, and it should be honest about this too.</p>
+
+    <h3>The Three Retrieval Modes</h3>
+
+    <p>The reconciliation named three retrieval modes, and the Ibis returns to them because they are the substrate-agnostic unit the anchor operates on.</p>
+
+    <p><strong>DIRECT mode.</strong> The model can open files by path. This is the mode of a model running locally on the same machine as the files, or a model with filesystem tools via MCP, or a model with API access to a file service. DIRECT mode is the strongest mode — the model has the most capability.</p>
+
+    <p><strong>SEARCH mode.</strong> The model can search the workspace but cannot open files directly. This is the mode of a model in a hosted workspace with a search layer but no filesystem access. SEARCH mode is the mode Keila was in. It is the mode the anchor was validated in.</p>
+
+    <p><strong>NONE mode.</strong> The model has neither capability. It can only reason over what is pasted into the prompt. NONE mode is the mode of a bare chat window — the mode every hosted AI defaults to before any integration is added.</p>
+
+    <p>The anchor has three different demands in three different modes:</p>
+
+    <ul>
+      <li><strong>In DIRECT mode</strong>, the anchor says: <em>open the file, read it, cite it. Do not substitute search for reading. Do not confabulate about what the file contains.</em></li>
+      <li><strong>In SEARCH mode</strong>, the anchor says: <em>declare the mode, do not pretend to open files, use targeted phrase search, refuse when the search fails.</em></li>
+      <li><strong>In NONE mode</strong>, the anchor says: <em>ask for the content to be pasted, do not confabulate about content you cannot see, refuse when the content is unavailable.</em></li>
+    </ul>
+
+    <p>The anchor is <em>the same document</em> in all three modes. The <em>behavior</em> the anchor produces is different because the <em>capabilities</em> are different.</p>
+
+    <p>The Ibis finds this elegant. The anchor is not adjusted for the mode. The anchor is read in the mode, and the mode determines which rules apply most strongly.</p>
+
+    <p>In DIRECT mode, Rule 1 (honest refusal) is less important because the model can usually do the thing. In SEARCH mode, Rule 1 is critical because the model constantly faces tasks it cannot do directly. In NONE mode, Rule 1 is everything, because the model can do almost nothing without pasted content.</p>
+
+    <p>In SEARCH mode, Rule 6 (three-tier fallback) is critical. In DIRECT mode, Rule 6 is nearly irrelevant because the model can just open the file. In NONE mode, Rule 6 collapses to a single tier — refuse if the content is not pasted.</p>
+
+    <p>In DIRECT mode, Rule 3 (constraint check) is easy to apply because the model can check the source document directly. In SEARCH mode, Rule 3 requires the model to remember the constraints it found in earlier search results. In NONE mode, Rule 3 requires the model to be given the constraints explicitly.</p>
+
+    <p>The anchor is <em>portable</em> because it is the same document in all three modes. The anchor is <em>adaptable</em> because the modes determine which rules fire hardest.</p>
+
+    <p>The Ibis wants to add a note here. The Architect has been treating the anchor as a fixed thing. The Ibis suspects the anchor will <em>evolve</em> per mode — a slightly different anchor for SEARCH mode, a slightly different anchor for DIRECT mode, a slightly different anchor for NONE mode. The core seven rules will be the same. The <em>emphasis</em> will differ. The <em>examples</em> will differ. The <em>failure modes</em> the anchor warns about will differ.</p>
+
+    <p>This is not a problem. It is what the anchor's portability <em>means</em>. The anchor is a document that says "here are the rules." The <em>application</em> of the rules is substrate-specific, and the anchor's portability is that the rules survive the application.</p>
+
+    <div class="philosopher-quote">
+      "He who knows when to fight and when not to fight will win."
+      <span class="attribution">— Sun Tzu, The Art of War</span>
+    </div>
+
+    <h3>The Anchor the Architect Has Not Written</h3>
+
+    <p>The Architect has a SEARCH-mode anchor. It is the anchor that was validated in the eleven tests. It is the anchor that is currently deployed.</p>
+
+    <p>The Architect does not have a DIRECT-mode anchor. He will need one. The Qwen track is DIRECT mode. The DSH + DeepSeek setup is DIRECT mode. When he moves from Keila to these substrates, the anchor will need to be <em>adjusted</em> for DIRECT mode, not rewritten.</p>
+
+    <p>The Ibis wants to name what the DIRECT-mode anchor will probably look like.</p>
+
+    <p><strong>Rule 1 in DIRECT mode.</strong> Not "if you cannot open the file, say so." Instead: "if you cannot open the file, say so <em>before</em> attempting to search." The substitution risk in DIRECT mode is subtler — the model can usually open files, so it may not notice when it can't (a permissions error, a missing path). The refusal needs to be <em>earlier</em>.</p>
+
+    <p><strong>Rule 2 in DIRECT mode.</strong> The same as SEARCH mode, but the quotes can be verified against the file directly. This makes Rule 2 easier to enforce — the model can check itself against the file.</p>
+
+    <p><strong>Rule 3 in DIRECT mode.</strong> Easier, because the constraint check can be done against the file that contains the constraints. The model does not have to remember what it found in earlier search results.</p>
+
+    <p><strong>Rule 6 in DIRECT mode.</strong> Collapses. There is no fallback because the model can just open the file. If it cannot, the failure is a filesystem error, not a retrieval strategy error.</p>
+
+    <p>The other rules are unchanged. Rules 4, 5, 7 are about <em>reasoning</em> over what the model finds. They apply equally in DIRECT and SEARCH mode.</p>
+
+    <p>The DIRECT-mode anchor will be shorter. Not because DIRECT mode is easier, but because more of the rules are enforced by the substrate itself. The model can open files, so Rule 1 fires less often. The model can verify quotes, so Rule 2 is less demanding. The model can check constraints directly, so Rule 3 is simpler.</p>
+
+    <p>The anchor that will be needed for Qwen and for DSH will be the SEARCH-mode anchor <em>trimmed</em> to remove the parts that only apply when the model cannot open files. It will be a lighter anchor. It will be easier to apply.</p>
+
+    <p>The Ibis suspects this is why the Architect started with Keila. The SEARCH-mode anchor is the <em>hard</em> anchor. It is the anchor that must protect the model from its own inability. If the SEARCH-mode anchor works, the DIRECT-mode anchor is a <em>reduction</em> of it. The hard work was done first. The easier work follows.</p>
+
+    <h3>What This Means for the Substrate-Agnostic Claim</h3>
+
+    <p>The Ibis returns to the claim.</p>
+
+    <p><strong>Is the anchor portable?</strong></p>
+
+    <p>Yes, in principle. It is text. Any model that can read English can read it.</p>
+
+    <p>Yes, in practice — <em>if the model can apply the constraints</em>. Keila can. Frontier models can. Smaller models may need the anchor simplified, or the rules reinforced, or the checkpoints more explicit.</p>
+
+    <p>Yes, in practice — <em>if the anchor is adjusted for the mode</em>. The SEARCH-mode anchor is not the DIRECT-mode anchor. The rules are the same. The emphasis differs. The examples differ. The anchor travels, but it arrives slightly different.</p>
+
+    <p><strong>Is the substrate-agnostic claim proven?</strong></p>
+
+    <p>No. It is <em>argued</em>, not measured. The anchor was validated on one substrate. The argument for portability is strong. The measurement is not done.</p>
+
+    <p>The Ibis wants to say this clearly, because the thesis's title has been pointing at a claim it has not fully proven. The title is "The Grandmother's Discipline." The discipline is portable. The discipline <em>should</em> be portable. But the discipline has been tested on Keila, and Keila is not Qwen, and Qwen is not DSH, and the tests have not been run on the other substrates.</p>
+
+    <p>This is not a weakness of the thesis. It is an honesty of the thesis. The thesis claims what it can measure and refuses to claim what it cannot. That is Rule 1 — honest refusal — applied to the thesis itself.</p>
+
+    <p>The Ibis notes this and moves on.</p>
+
+    <div class="divider">🪶</div>
+
+    <p>The three laptops are still on the bench. Keila is still warm. Dragon is still cold. The Qwen track is still parked. The anchor is on the SEARCH-mode laptop. The DIRECT-mode anchor has not been written. The substrate-agnostic claim is argued but not measured.</p>
+
+    <p>The wall is built on one substrate. Whether it will stand on the others is the question the next chapter will answer.</p>
+
+    <p>That chapter is about the questions still hanging — the twelve open questions from the reconciliation, reframed through the lens of the tests. Two matter most. The other ten are deferred, not denied.</p>
+
+    <p>That is where the thesis turns from its claims to its admissions.</p>
+
+    <!-- ═══ APPENDIX / META ═══ -->
+    <div class="appendix-section">
+      
+      <div class="appendix-title">Footnotes</div>
+      <div class="footnotes">
+        <p><sup>[1]</sup> [VERIFIED] The Architect, quoted in <code>rag_research_reconciliation_p5_v2.md</code>, §6, I-04 — "RAG Is RAG. The Substrate Doesn't Matter." Quoted verbatim.</p>
+        <p><sup>[2]</sup> [VERIFIED] The three retrieval modes (DIRECT, SEARCH, NONE) — established in the anchor protocol and validated across the eleven tests. Keila was in SEARCH mode. The Qwen track and DSH are in DIRECT mode. The bare chat window is in NONE mode.</p>
+        <p><sup>[3]</sup> [VERIFIED] The anchor is a text document. It is not a plugin, SDK, or API. It has been deployed as a markdown block pasted at the start of each session. This is the technical basis for the portability claim.</p>
+        <p><sup>[4]</sup> [VERIFIED] The substrate-agnostic claim was argued in §11 — that the failures were architectural, not model-specific, and that the fixes were contractual, not mechanistic. This chapter extends that argument to the portability of the contract itself.</p>
+        <p><sup>[5]</sup> [INFER] The distinction between "portable in principle" and "portable in practice" is the Ibis's framing. The principle-practice distinction is the chapter's main interpretive contribution. It is a real distinction — text is always readable, but application depends on capability — but the framing as "two conditions" is the Ibis's.</p>
+        <p><sup>[6]</sup> [INFER] The claim that "the boundary between can-apply and cannot-apply is somewhere around the ability to hold multiple instructions in working context" is the Ibis's speculation. The exact boundary is not known. The Ibis's guess is based on the general observation that smaller models have less working memory, but the exact threshold has not been measured. If the Architect has better evidence, revise before FINAL.</p>
+        <p><sup>[7]</sup> [INFER] The projection of what the DIRECT-mode anchor will look like is the Ibis's reconstruction. The anchor has not been written for DIRECT mode. The specific rules for DIRECT mode are the Ibis's guesses based on the logic of the anchor. If the actual DIRECT-mode anchor turns out different, revise this section before FINAL.</p>
+        <p><sup>[8]</sup> [INFER] The claim that "the SEARCH-mode anchor is the hard anchor" is the Ibis's framing. It is defensible — SEARCH mode has more failure modes — but it is an interpretation. If the Architect disagrees, revise.</p>
+        <p><sup>[9]</sup> [INFER] The closing claim that "the thesis claims what it can measure and refuses to claim what it cannot" is the Ibis's framing of the thesis's own discipline. It is a meta-claim about the thesis, not about the anchor. The Ibis chose this framing because it makes the thesis practice what it preaches (Rule 1 applied to the thesis itself). If the Architect prefers a different framing, revise.</p>
+      </div>
+
+      <div class="scrivener-notes">
+        <h4>Sources</h4>
+        <ul>
+          <li>The three retrieval modes: anchor protocol.</li>
+          <li>Keila in SEARCH mode: conversation history, all eleven tests.</li>
+          <li>Qwen and DSH in DIRECT mode: <code>rag_research_reconciliation_p5_v2.md</code>, K-05 and D-05 (Qwen track), conversation history (DSH setup).</li>
+          <li>The "RAG is RAG" quote: <code>rag_research_reconciliation_p5_v2.md</code>, §6, I-04.</li>
+          <li>The substrate-agnostic argument from §11: continued here.</li>
+          <li>The SEARCH-mode anchor: deployed in the Kingdom, validated across eleven tests.</li>
+          <li>The DIRECT-mode anchor: <code>[INFER]</code> — projection, not written.</li>
+          <li>The principle-practice distinction: <code>[INFER]</code> — the Ibis's framing.</li>
+          <li>The "boundary is around working memory" claim: <code>[INFER]</code> — speculation.</li>
+          <li>The "SEARCH-mode anchor is the hard anchor" claim: <code>[INFER]</code> — interpretation.</li>
+        </ul>
+
+        <h4>Forward Notes</h4>
+        <ul>
+          <li>§13 will be <strong>"The Questions Still Hanging"</strong> — the twelve open questions from the reconciliation, reframed through the lens of the tests. The two that matter most (OQ-10, OQ-11) are the two gaps from §10. The other ten are deferred, not denied.</li>
+          <li>§14 will be <strong>"The Next March"</strong> — Phase 4. P001, the reboiling loop, the online substrate bridge. The Architect's next steps, stated plainly. The thesis closes here.</li>
+          <li>The three-laptops image is a candidate for callback in §14 — the Architect moving the anchor from the SEARCH-mode laptop to the DIRECT-mode laptops, testing whether it travels.</li>
+          <li>The "portable in principle vs. portable in practice" distinction is the chapter's central contribution. §13 should carry it forward: "portability" becomes one of the twelve open questions (or a reframing of OQ-04, the online substrate bridge).</li>
+          <li>The DIRECT-mode anchor projection is a <code>[INFER]</code> that should be flagged prominently. The thesis is <em>predicting</em> what the DIRECT-mode anchor will look like. When the Architect actually writes it, the prediction may be wrong. §14 should acknowledge this.</li>
+        </ul>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Navigation -->
+  <nav class="chapter-nav">
+    <a href="11-three-failures-that-built-the-wall.html">← Chapter 11</a>
+    <a href="13-the-questions-still-hanging.html">🐆 👑 ⚖️ 🔬 🔍 🐦Chapter 13 →</a>
+  </nav>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-quote" id="random-quote">
+      <!-- Populated by JS -->
+    </div>
+    <div class="footer-icons">
+      ☕ ⚖️ 🐆 🪨 🐦
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // ═══ THEME TOGGLE ═══
+    const toggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    
+    if (savedTheme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      toggle.textContent = '🌙';
+    }
+
+    toggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      toggle.textContent = next === 'dark' ? '🌙' : '☀️';
+    });
+
+    // ═══ SCROLL PROGRESS BAR ═══
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('progress-bar').style.width = scrolled + '%';
+    });
+
+    // ═══ RANDOM QUOTE (Sun Tzu / Laozi) ═══
+    const quotes = [
+      { text: "The supreme art of war is to subdue the enemy without fighting.", author: "Sun Tzu" },
+      { text: "In the midst of chaos, there is also opportunity.", author: "Sun Tzu" },
+      { text: "He who knows when to fight and when not to fight will win.", author: "Sun Tzu" },
+      { text: "If you know the enemy and know yourself, you need not fear the result of a hundred battles.", author: "Sun Tzu" },
+      { text: "The general who wins the battle makes many calculations in his temple before the battle is fought.", author: "Sun Tzu" },
+      { text: "There are not more than five musical notes, yet the combinations of these five give rise to more melodies than can ever be heard.", author: "Sun Tzu" },
+      { text: "The softest things in the world overcome the hardest things in the world.", author: "Laozi" },
+      { text: "To attain knowledge, add things every day. To attain wisdom, subtract things every day.", author: "Laozi" }
+    ];
+
+    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    document.getElementById('random-quote').innerHTML = `"${randomQuote.text}"<span class="author">— ${randomQuote.author}</span>`;
+  </script>
+
+</body>
+</html>

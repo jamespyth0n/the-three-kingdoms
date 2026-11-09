@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Map of What Can Be Trusted · The Grandmother's Discipline</title>
+
+  <!-- Fonts -->
+  <link rel="stylesheet" href="../../assets/fonts/fonts.css">
+
+  <style>
+    /* ═══ THE SCRIBE'S DESK — THEME VARIABLES ═══ */
+    :root {
+      --bg: #fdf6e3;           /* Parchment */
+      --ink: #2c2416;          /* Deep Ink */
+      --chalk: #5a4a3a;        /* Faded Ink */
+      --accent: #8b6914;       /* Antique Gold */
+      --accent-bright: #c4941a; /* Bright Gold */
+      --red: #8b2525;          /* Lacquer Red */
+      --jade: #2a6b4a;         /* Jade Green */
+      --card-bg: #f5edd5;      /* Slightly darker parchment */
+      --border: #d4c5a0;
+      --quote-bg: #f2e8d0;
+      --note-bg: #ebe1c8;
+      --table-bg: #fdfaf1;
+    }
+
+    [data-theme="dark"] {
+      --bg: #1a1a2e;           /* Night Sky */
+      --ink: #e0d8c8;          /* Moonlight */
+      --chalk: #b8a88a;        /* Dimmed Moonlight */
+      --accent: #c4941a;       /* Gold */
+      --accent-bright: #e8b84a; /* Bright Gold */
+      --red: #5a1a1a;          /* Deep Lacquer */
+      --jade: #1a4a2e;         /* Deep Jade */
+      --card-bg: #252540;
+      --border: #3a3a5c;
+      --quote-bg: #1f1f35;
+      --note-bg: #151525;
+      --table-bg: #1e1e32;
+    }
+
+    /* ═══ BASE ═══ */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Merriweather', Georgia, serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.8;
+      font-size: 17px;
+      transition: background 0.3s, color 0.3s;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ═══ PROGRESS BAR ═══ */
+    #progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: transparent;
+      z-index: 1000;
+    }
+
+    #progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-bright));
+      width: 0%;
+      transition: width 0.1s;
+    }
+
+    /* ═══ KINGDOM NAVIGATION ═══ */
+    nav.top-nav {
+        position: sticky;
+        top: 3px;
+        z-index: 999;
+        background: var(--header-bg);
+        border-bottom: 1px solid var(--border);
+        padding: 14px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .nav-brand {
+        font-family: 'Cinzel', Georgia, serif;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--header-ink);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .nav-brand .mark {
+        font-size: 1.1rem;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 22px;
+        list-style: none;
+        flex-wrap: wrap;
+    }
+
+    .nav-links a {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--chalk);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+        color: var(--accent-bright);
+    }
+
+    /* ═══ THEME TOGGLE ═══ */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      transform: scale(1.05);
+    }
+
+    /* ═══ HEADER ═══ */
+    .chapter-header {
+      max-width: 760px;
+      margin: 80px auto 60px;
+      padding: 0 24px;
+      text-align: center;
+      position: relative;
+    }
+
+    .barcode {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      margin-bottom: 24px;
+      display: inline-block;
+      padding: 6px 16px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--card-bg);
+    }
+
+    .chapter-header h1 {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--ink);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .chapter-header .subtitle {
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--chalk);
+      margin-bottom: 24px;
+    }
+
+    .chapter-header .meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--chalk);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      line-height: 1.6;
+    }
+
+    .chapter-header .meta span {
+      color: var(--accent);
+    }
+
+    /* ═══ MAIN CONTENT ═══ */
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+      flex: 1;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      color: var(--ink);
+    }
+
+    /* Drop Cap */
+    .first-paragraph::first-letter {
+      font-family: 'Cinzel', Georgia, serif;
+      float: left;
+      font-size: 4.5rem;
+      line-height: 0.8;
+      padding-top: 8px;
+      padding-right: 12px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* Headings */
+    h3 {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin: 3rem 0 1.5rem;
+      letter-spacing: 1px;
+      text-align: center;
+      position: relative;
+    }
+
+    h3::after {
+      content: '❖';
+      display: block;
+      font-size: 0.8rem;
+      color: var(--border);
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    /* Inline Code */
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85em;
+      background: var(--card-bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--red);
+      border: 1px solid var(--border);
+    }
+
+    /* Emphasis */
+    em {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    /* Lists */
+    ul, ol {
+      margin-bottom: 1.5rem;
+      padding-left: 24px;
+      color: var(--ink);
+    }
+    li {
+      margin-bottom: 8px;
+    }
+
+    /* ═══ ARCHITECT'S QUOTES ═══ */
+    .architect-quote {
+      margin: 2.5rem 0;
+      padding: 24px 32px;
+      background: var(--quote-bg);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      position: relative;
+    }
+
+    .architect-quote p {
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--chalk);
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+
+    .architect-quote .attribution {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--accent);
+      text-align: right;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* ═══ PHILOSOPHER'S QUOTES (Inline) ═══ */
+    .philosopher-quote {
+      text-align: center;
+      font-style: italic;
+      font-family: 'Merriweather', Georgia, serif;
+      color: var(--accent);
+      font-size: 1.15rem;
+      margin: 3.5rem auto;
+      max-width: 85%;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .philosopher-quote::before {
+      content: '❝';
+      display: block;
+      font-size: 2rem;
+      color: var(--border);
+      margin-bottom: 12px;
+      line-height: 1;
+    }
+
+    .philosopher-quote .attribution {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--chalk);
+      text-transform: uppercase;
+      margin-top: 12px;
+      letter-spacing: 0.05em;
+      font-style: normal;
+    }
+
+    /* ═══ DATA TABLE (The Capability Map) ═══ */
+    .table-container {
+      margin: 2rem 0;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--table-bg);
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }
+
+    .data-table th {
+      background: var(--card-bg);
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-align: left;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      letter-spacing: 1px;
+    }
+
+    .data-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--ink);
+    }
+
+    .data-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .data-table td.status {
+      font-size: 1.1rem;
+      text-align: center;
+    }
+
+    /* ═══ DECORATIVE DIVIDER ═══ */
+    .divider {
+      text-align: center;
+      margin: 3rem 0;
+      color: var(--border);
+      font-size: 1.2rem;
+      letter-spacing: 0.5em;
+    }
+
+    /* ═══ FOOTNOTES & META ═══ */
+    .appendix-section {
+      margin-top: 5rem;
+      padding-top: 2rem;
+      border-top: 1px dashed var(--border);
+    }
+
+    .appendix-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1rem;
+      color: var(--chalk);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .appendix-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .footnotes p, 
+    .scrivener-notes p, 
+    .scrivener-notes ul {
+      font-size: 0.85rem;
+      color: var(--chalk);
+      line-height: 1.6;
+    }
+    
+    .footnotes p sup {
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      margin-right: 4px;
+    }
+
+    .scrivener-notes {
+      background: var(--note-bg);
+      padding: 24px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      margin-top: 2rem;
+    }
+
+    .scrivener-notes h4 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+      letter-spacing: 0.05em;
+    }
+
+    .scrivener-notes ul {
+      padding-left: 20px;
+      margin-bottom: 16px;
+    }
+
+    .scrivener-notes li { margin-bottom: 6px; }
+
+    /* ═══ CHAPTER NAV ═══ */
+    .chapter-nav {
+      max-width: 760px;
+      margin: 0 auto 80px;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+      padding-top: 32px;
+    }
+
+    .chapter-nav a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s;
+    }
+
+    .chapter-nav a:hover { color: var(--accent-bright); }
+    .chapter-nav .disabled { color: var(--border); pointer-events: none; }
+
+    /* ═══ FOOTER ═══ */
+    .footer {
+      text-align: center;
+      padding: 40px 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--chalk);
+      letter-spacing: 0.2em;
+      border-top: 1px solid var(--border);
+      background: var(--card-bg);
+    }
+
+    .footer-quote {
+      font-family: 'Merriweather', Georgia, serif;
+      font-style: italic;
+      font-size: 0.9rem;
+      letter-spacing: 0;
+      margin-bottom: 24px;
+      color: var(--accent);
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    .footer-quote .author {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--chalk);
+      margin-top: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-style: normal;
+    }
+
+    .footer-icons {
+      font-size: 1.1rem;
+      opacity: 0.6;
+    }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 600px) {
+      .chapter-header h1 { font-size: 2rem; }
+      .chapter-header .subtitle { font-size: 1rem; }
+      body { font-size: 16px; }
+      .first-paragraph::first-letter { font-size: 3.5rem; }
+      .architect-quote { padding: 16px 20px; }
+      .philosopher-quote { font-size: 1rem; margin: 2.5rem auto; }
+      .theme-toggle { top: 12px; right: 12px; width: 38px; height: 38px; font-size: 1rem; }
+      .data-table th, .data-table td { padding: 8px 10px; font-size: 0.85rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Progress Bar -->
+  <div id="progress-container">
+    <div id="progress-bar"></div>
+  </div>
+
+  <!-- KINGDOM NAVIGATION -->
+  <nav class="top-nav">
+    <a href="../index.html" class="nav-brand">
+      <span class="mark">🪶</span>
+      Kingdom of Lapis
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="../index.html">Kingdom Home</a></li>
+      <li><a href="../../index.html">← Three Kingdoms</a></li>
+      <li> ·  ·  ·</li>
+    </ul>
+  </nav>  
+  
+  <!-- Theme Toggle -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+
+  <!-- Header -->
+  <header class="chapter-header">
+    <div class="barcode">4.05.CH10.v1_body_CH10 · THESIS-001</div>
+    <h1>The Map of What Can Be Trusted</h1>
+    <div class="subtitle">On the Capability Set, the Two Gaps, and the Retrieval-vs-Synthesis Asymmetry</div>
+    <div class="meta">
+      Ibis (The Scribe) · The Kingdom of Kwan<br>
+      <span>Session 010</span>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <main>
+
+    <p class="first-paragraph">The map is on the back of a receipt.</p>
+
+    <p>The Ibis found it in the same cabinet as the transcripts — a different folder, not the THESIS-001 folder but one labeled "working documents." The receipt is from a hotpot restaurant two streets below the Architect's building. The date is stamped. The amount is small. The map is drawn in black marker on the back.</p>
+
+    <p>It has nine boxes in a three-by-three grid.</p>
+
+    <p>The top row says: Findability. Honest refusal. Targeted retrieval.</p>
+
+    <p>The middle row says: Synthesis. Self-audit. Constraint scan (sequential).</p>
+
+    <p>The bottom row says: Version precedence. Constraint scan (scope). Structural labeling.</p>
+
+    <p>The top two rows have check marks. The bottom row has two question marks and one X.</p>
+
+    <p>The Ibis understands the map before reading the notes. This is the same capability map from §8, drawn differently. Not as a table, but as a grid. Not as descriptions, but as symbols. Not as something the Architect <em>learned</em>, but as something he <em>built</em> — a wall of capabilities he could stand on, and three gaps where the wall had holes.</p>
+
+    <p>The map is small enough to fit on a receipt. It is not small enough to be dismissed.</p>
+
+    <div class="philosopher-quote">
+      "Know the enemy and know yourself, and you need not fear the result of a hundred battles."
+      <span class="attribution">— Sun Tzu, The Art of War</span>
+    </div>
+
+    <h3>The Wall</h3>
+
+    <p>The first six capabilities are the wall. They form a two-by-three rectangle, all checked, all validated by tests.</p>
+
+    <p><strong>Findability</strong> (Test 1) — the model can find files in the workspace. It returns what exists. When it doesn't find something, it says so.</p>
+
+    <p><strong>Honest refusal</strong> (Test 0b) — the model, when given an anchor that requires it to declare its capabilities first, refuses tasks it cannot perform. It does not substitute a nearby capability. It stops.</p>
+
+    <p><strong>Targeted retrieval</strong> (Test 3) — when the query is a specific phrase, the model finds the exact phrase and returns the exact content. It does not approximate. It does not paraphrase.</p>
+
+    <p><strong>Synthesis</strong> (Test 6) — when asked a question that requires reading across sections, the model reads across sections and assembles a coherent answer. It cites the sections it drew from.</p>
+
+    <p><strong>Self-audit</strong> (Test 7) — when asked to check its own work against a set of action items, the model correctly identifies what it included, what it missed, and why. It distinguishes "deliberate skip" from "oversight."</p>
+
+    <p><strong>Constraint scan (sequential)</strong> (Test 8) — when asked to find ordering and dependency constraints, the model finds them. "Before," "after," "requires," "only if," "deferred until" — these markers are visible to the model, and it reports the constraints they mark.</p>
+
+    <p>The wall is real. The Ibis wants to say this clearly, because the tendency when looking at a wall is to focus on the holes. The wall is six capabilities that work. These are the capabilities the Architect can trust <em>without re-verifying</em>. He can hand the model a document, ask it to find something, and know the answer will be honest. He can ask for a plan, and know the plan will be checked against the document's constraints. He can ask a question that spans sections, and know the answer will span sections.</p>
+
+    <p>Six capabilities. Two-by-three. The wall stands.</p>
+
+    <h3>The Holes</h3>
+
+    <p>The bottom row is the holes. Two question marks and one X. Three capabilities that are either partial or missing.</p>
+
+    <p><strong>Version precedence</strong> (Test 9) — the map shows a question mark, but the Ibis knows the test passed. The Architect drew the map before the version test was run, or he drew it after and forgot to update the symbol. The question mark is a stale annotation.</p>
+
+    <p>The Ibis reads the notes beside the map. The notes say: <em>"v2.0 test: passed. Question mark stale. Update."</em></p>
+
+    <p>So this is not actually a hole. It is a mark on a map that was not erased when the hole was closed. The Ibis notes this and moves on.</p>
+
+    <p><strong>Constraint scan (scope)</strong> (Test 8) — the map shows a question mark, and this one is real. The model can find sequential constraints. It cannot reliably find scope constraints. The difference is the shape of the marker. "Before" is a keyword. "Measured on Qwen 2.5 7B" is a subject. The model sees keywords, not subjects. It finds what is marked, not what is <em>about</em> something.</p>
+
+    <p>This is a real gap. Rule 4 (scope consistency) was written to close it, and Test 10 showed the rule working when the model was required to check scope explicitly. But the gap still exists when the model is not prompted. The model does not spontaneously check whether a decision generalizes from a specific measurement. It has to be told.</p>
+
+    <p>The question mark is honest. The gap is real, and the rule that closes it is a rule the model has to be <em>told</em> to apply.</p>
+
+    <p><strong>Structural labeling</strong> (Tests 6 and 10) — the map shows an X, and this X is the most important mark on the receipt. The model can label its <em>quotes</em> honestly. It cannot reliably label its <em>structuring</em> honestly.</p>
+
+    <p>The distinction is subtle, and the Ibis wants to name it precisely because it is the thesis's central finding.</p>
+
+    <p>When the model retrieves a quote from the document, it labels the quote <code>[SEARCH]</code>. This is honest — the quote <em>is</em> from the document.</p>
+
+    <p>When the model groups several quotes into a "three things" answer, it does <em>not</em> label the grouping. The grouping is <code>[INFER]</code> — the model's structuring of the retrieved material. But the model presents the grouping as if it were as factual as the quotes. A reader cannot tell which parts of the answer are <em>retrieved</em> and which parts are <em>constructed</em>.</p>
+
+    <p>This is the X. Not a retrieval failure — the retrieval is fine. A <em>reporting</em> failure. The model does not report what it constructed.</p>
+
+    <div class="philosopher-quote">
+      "The general who wins the battle makes many calculations in his temple before the battle is fought. The general who loses makes but few calculations beforehand."
+      <span class="attribution">— Sun Tzu, The Art of War</span>
+    </div>
+
+    <h3>The Asymmetry</h3>
+
+    <p>The Ibis draws a new line under the map, and writes two words on either side.</p>
+
+    <p><strong>Retrieval</strong> — six capabilities. All work.</p>
+
+    <p><strong>Synthesis</strong> — three capabilities. One works (self-audit). Two are partial (scope scanning, structural labeling). One is stale on the map (version precedence).</p>
+
+    <p>The asymmetry is the thesis's central finding. Not because retrieval is easy and synthesis is hard — that is true but trivial. Because <em>retrieval is where most RAG systems are built</em> and <em>synthesis is where most RAG systems fail</em>.</p>
+
+    <p>The Architect spent months building the filing clerk. The filing clerk is retrieval. The filing clerk is excellent. The filing clerk does not fail.</p>
+
+    <p>The Architect spent weeks building the feedback loop. The feedback loop is retrieval's nervous system. The feedback loop is excellent. The feedback loop does not fail.</p>
+
+    <p>The Architect spent nine tests building the identity curator. The identity curator is synthesis. The identity curator is <em>mostly</em> excellent. And the failures — the two partial capabilities — are both in synthesis.</p>
+
+    <p>The Ibis wants to be careful here, because the temptation is to conclude "retrieval works, synthesis fails, therefore build more synthesis." That is not the conclusion. The conclusion is subtler.</p>
+
+    <p>Retrieval and synthesis are not two independent layers. They are two <em>stages</em> of the same cognitive act. The model retrieves, then it synthesizes. The retrieval is honest. The synthesis is <em>conditionally</em> honest — honest when the model is required to check itself, less honest when it is not.</p>
+
+    <p>This means the fix is not "build better synthesis." The fix is "make the synthesis <em>report itself</em>." The model already has the capability to distinguish retrieved from constructed — Test 7 proved this. The model just doesn't <em>do</em> the distinction spontaneously. It has to be told.</p>
+
+    <p>The asymmetry is not a capability gap. It is a <em>reporting</em> gap. The model can do both retrieval and synthesis. It reports its retrieval honestly. It does not report its synthesis honestly. The fix is a contract that requires both reports.</p>
+
+    <div class="philosopher-quote">
+      "There are not more than five musical notes, yet the combinations of these five give rise to more melodies than can ever be heard."
+      <span class="attribution">— Sun Tzu, The Art of War</span>
+    </div>
+
+    <h3>What the Map Means for the Architect</h3>
+
+    <p>The Architect has a wall he can stand on and holes he cannot.</p>
+
+    <p>The wall is what he can build on. If he needs to find a file, the model will find it. If he needs the model to refuse a task, the anchor will make it refuse. If he needs the model to read a document, the model will read the document. If he needs the model to check a plan against constraints, the model will check.</p>
+
+    <p>The holes are what he has to watch. If he needs to know <em>why</em> the model's answer took the shape it took, he has to ask. If he needs to know whether the model's "three things" is really the document's three things or the model's grouping, he has to check. If he needs to know whether a constraint the model found is a universal constraint or a specific one, he has to verify.</p>
+
+    <p>The wall is the <em>contract</em>. The holes are the <em>places the contract does not yet reach</em>. The contract covers retrieval. It does not fully cover synthesis.</p>
+
+    <p>The Architect's actual work is now shaped by this. He can hand the model documents and expect honest retrieval. He cannot hand the model documents and expect honest synthesis <em>without also asking for it</em>. The synthesis is there. The reporting of the synthesis is not.</p>
+
+    <p>This is a real limitation, and the Ibis will not pretend otherwise. But it is a <em>bounded</em> limitation. It is not "the model cannot be trusted." It is "the model can be trusted for retrieval, and trusted for synthesis when the synthesis is asked for." The boundedness is what makes the contract useful. An unbounded contract — "the model can be trusted for everything" — would be false. A bounded contract is true and usable.</p>
+
+    <h3>The Two Gaps, Named</h3>
+
+    <p>The Ibis names them, so they can be closed.</p>
+
+    <p><strong>The structural labeling gap.</strong> The model does not label its groupings, orderings, or merges as <code>[INFER]</code>. It labels the quotes. It does not label the structure the quotes are placed in. This means a reader cannot tell which parts of an answer are retrieved and which are constructed.</p>
+
+    <p>The fix, when the anchor v3.0 is written, will be Rule 8: every bullet requires a label for its structure. Grouping is <code>[INFER]</code>. Ordering is <code>[INFER]</code>. Merging is <code>[INFER]</code>. Only verbatim, copy-pasteable quotes are <code>[SEARCH]</code>.</p>
+
+    <p><strong>The scope constraint gap.</strong> The model finds constraints marked by keywords ("before," "after," "requires"). It does not find constraints marked by structure (a measurement taken on X, generalized to Y). The model sees words, not relationships.</p>
+
+    <p>The fix will be Rule 9: for every decision in the document, ask whether the decision was derived from a universal measurement or a specific one. If specific, treat the decision as <code>[INFER]</code>, not <code>[SEARCH]</code>. Do not generalize a narrow finding into a universal rule.</p>
+
+    <p>Neither rule has been written yet. Both are projections. The Ibis is recording what the contract will say, not what it says now.</p>
+
+    <p>The map is honest. The map shows the wall and the holes. The wall is where the Architect can stand. The holes are where he has to check.</p>
+
+    <div class="divider">🪶</div>
+
+    <p>The map on the receipt is small. It is not a complete map. It does not show the layers of the system — the filing clerk, the feedback loop, the identity curator. It does not show the seven rules individually. It does not show the eleven rooms.</p>
+
+    <p>It shows the capabilities. What the model <em>can do</em> and what it <em>cannot do</em>, arranged in a grid, marked with checks and question marks and one X.</p>
+
+    <p>The map is what the Architect needs, when he is actually working. Not the philosophy. Not the architecture. The capabilities. The map of what can be trusted.</p>
+
+    <p>The next chapter is about the failures that built the wall. Not the capabilities — the <em>failures</em>. The three specific failures that, once they were fixed, made the wall stand. The confabulation. The inversion. The scope blindness.</p>
+
+    <p>Those are the three failures that made the grandmother visible. The Ibis will walk through them next.</p>
+
+    <!-- ═══ APPENDIX / META ═══ -->
+    <div class="appendix-section">
+      
+      <div class="appendix-title">Footnotes</div>
+      <div class="footnotes">
+        <p><sup>[1]</sup> [VERIFIED] The capability map is derived from the eleven protocol tests documented in §9 and summarized in §8. Each capability has a corresponding test and a corresponding status in the reconciliation's v2.0 addendum.</p>
+        <p><sup>[2]</sup> [VERIFIED] The "version precedence" status was upgraded from <code>[?]</code> to <code>[✓]</code> after Test 10 (the version test). The receipt on which the map is drawn was marked before this upgrade. The Ibis notes the stale annotation but treats the capability as passed, consistent with the test results.</p>
+        <p><sup>[3]</sup> [VERIFIED] The structural labeling gap is documented across Tests 6, 7, and 10 — specifically, the failure to label grouping, ordering, and merging as <code>[INFER]</code>. This is the central finding of the protocol testing.</p>
+        <p><sup>[4]</sup> [VERIFIED] The scope constraint gap is documented in Test 8 — specifically, the failure to flag K-05's Qwen-specific measurement as <code>[INFER]</code> when D-05 generalized it as a universal rule.</p>
+        <p><sup>[5]</sup> [VERIFIED] Rule 8 and Rule 9 are projections — they have not been written into the anchor yet. They are described as "the fix, when the anchor v3.0 is written." This is honest: the rules are what the contract <em>will</em> say, not what it says now.</p>
+        <p><sup>[6]</sup> [INFER] The receipt-map scene is the Ibis's narrative framing. The Architect may have drawn the capability map somewhere — in a notebook, in the reconciliation, in a markdown file — but the specific scene of the map on the back of a hotpot receipt is invented for narrative purposes. The capability categories themselves are real; the physical artifact is not sourced.</p>
+        <p><sup>[7]</sup> [INFER] The claim that "the asymmetry is not a capability gap but a reporting gap" is the Ibis's synthesis of the test evidence. The model <em>can</em> do synthesis (Test 6 proved it) and <em>can</em> self-audit (Test 7 proved it). The failure is in the <em>reporting</em> of synthesis — the failure to label structural inferences. This distinction is the chapter's main interpretive contribution, and it drives the projection of Rules 8-9.</p>
+        <p><sup>[8]</sup> [INFER] The phrase "the model does not report what it constructed" is the Ibis's framing. It is a strong claim. The evidence supports it: in Test 6, the model grouped ten citations into "three things" without labeling the grouping. But the phrase could be softened — the model <em>does</em> report what it constructed, in the sense that it writes the constructed answer. The failure is that it doesn't <em>label</em> the construction. The Ibis has chosen the sharper phrasing. If the Architect prefers a softer one, revise before FINAL.</p>
+      </div>
+
+      <div class="scrivener-notes">
+        <h4>Sources</h4>
+        <ul>
+          <li>The capability map: derived from the eleven tests in §9, documented in <code>rag_research_reconciliation_p5_v2.md</code> v2.0.</li>
+          <li>The wall (six capabilities): Tests 1, 0b, 3, 6, 7, 8.</li>
+          <li>The holes (two gaps): Tests 6, 8 (structural labeling; scope constraints).</li>
+          <li>The stale annotation (version precedence): Test 9, run after the map was initially drawn.</li>
+          <li>Rule 8 and Rule 9 projections: the Ibis's forward-looking analysis.</li>
+          <li>The receipt-map scene: <code>[INFER]</code> — narrative device.</li>
+          <li>The retrieval-vs-synthesis asymmetry: <code>[INFER]</code> — synthesis of test evidence.</li>
+        </ul>
+
+        <h4>Forward Notes</h4>
+        <ul>
+          <li>§11 will be <strong>"Three Failures That Built the Wall"</strong> — the deep dive on the three failures (confabulation, inversion, scope blindness) that mattered most. §10 gave the map; §11 gives the <em>why</em> behind three of the marks.</li>
+          <li>§12 will be <strong>"The Portable Discipline"</strong> — the substrate-agnostic claim. If the map holds on Keila/QuickSight, does it hold on Qwen? On DeepSeek? On Claude? The seven rules should be portable.</li>
+          <li>§13 will be <strong>"The Questions Still Hanging"</strong> — the twelve open questions from the reconciliation, reframed through the lens of the map. The two open questions that matter most (OQ-10, OQ-11) are the two gaps.</li>
+          <li>§14 will be <strong>"The Next March"</strong> — the Phase 4 work. P001, the reboiling loop, the online substrate bridge. What happens after the thesis.</li>
+          <li>The "wall and holes" metaphor is a candidate for callback in §14 — the Architect building on the wall, watching the holes close one at a time.</li>
+          <li>The phrase "the map of what can be trusted" is a candidate for the thesis subtitle or for the pull-quote on the master index page.</li>
+        </ul>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Navigation -->
+  <nav class="chapter-nav">
+    <a href="09-nine-rooms-seven-rules.html">← Chapter 9</a>
+    <a href="11-three-failures-that-built-the-wall.html">🐆 👑 ⚖️ 🔬 🔍 🐦Chapter 11 →</a>
+  </nav>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-quote" id="random-quote">
+      <!-- Populated by JS -->
+    </div>
+    <div class="footer-icons">
+      ☕ ⚖️ 🐆 🪨 🐦
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // ═══ THEME TOGGLE ═══
+    const toggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    
+    if (savedTheme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      toggle.textContent = '🌙';
+    }
+
+    toggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      toggle.textContent = next === 'dark' ? '🌙' : '☀️';
+    });
+
+    // ═══ SCROLL PROGRESS BAR ═══
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('progress-bar').style.width = scrolled + '%';
+    });
+
+    // ═══ RANDOM QUOTE (Sun Tzu Focus) ═══
+    const quotes = [
+      { text: "The supreme art of war is to subdue the enemy without fighting.", author: "Sun Tzu" },
+      { text: "In the midst of chaos, there is also opportunity.", author: "Sun Tzu" },
+      { text: "He who knows when to fight and when not to fight will win.", author: "Sun Tzu" },
+      { text: "If you know the enemy and know yourself, you need not fear the result of a hundred battles.", author: "Sun Tzu" },
+      { text: "The general who wins the battle makes many calculations in his temple before the battle is fought.", author: "Sun Tzu" },
+      { text: "There are not more than five musical notes, yet the combinations of these five give rise to more melodies than can ever be heard.", author: "Sun Tzu" },
+      { text: "Opportunities multiply as they are seized.", author: "Sun Tzu" },
+      { text: "Appear weak when you are strong, and strong when you are weak.", author: "Sun Tzu" }
+    ];
+
+    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    document.getElementById('random-quote').innerHTML = `"${randomQuote.text}"<span class="author">— ${randomQuote.author}</span>`;
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Three Failures That Built the Wall · The Grandmother's Discipline</title>
+
+  <!-- Fonts -->
+  <link rel="stylesheet" href="../../assets/fonts/fonts.css">
+
+  <style>
+    /* ═══ THE SCRIBE'S DESK — THEME VARIABLES ═══ */
+    :root {
+      --bg: #fdf6e3;           /* Parchment */
+      --ink: #2c2416;          /* Deep Ink */
+      --chalk: #5a4a3a;        /* Faded Ink */
+      --accent: #8b6914;       /* Antique Gold */
+      --accent-bright: #c4941a; /* Bright Gold */
+      --red: #8b2525;          /* Lacquer Red */
+      --jade: #2a6b4a;         /* Jade Green */
+      --card-bg: #f5edd5;      /* Slightly darker parchment */
+      --border: #d4c5a0;
+      --quote-bg: #f2e8d0;
+      --note-bg: #ebe1c8;
+      --table-bg: #fdfaf1;
+    }
+
+    [data-theme="dark"] {
+      --bg: #1a1a2e;           /* Night Sky */
+      --ink: #e0d8c8;          /* Moonlight */
+      --chalk: #b8a88a;        /* Dimmed Moonlight */
+      --accent: #c4941a;       /* Gold */
+      --accent-bright: #e8b84a; /* Bright Gold */
+      --red: #5a1a1a;          /* Deep Lacquer */
+      --jade: #1a4a2e;         /* Deep Jade */
+      --card-bg: #252540;
+      --border: #3a3a5c;
+      --quote-bg: #1f1f35;
+      --note-bg: #151525;
+      --table-bg: #1e1e32;
+    }
+
+    /* ═══ BASE ═══ */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Merriweather', Georgia, serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.8;
+      font-size: 17px;
+      transition: background 0.3s, color 0.3s;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ═══ PROGRESS BAR ═══ */
+    #progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: transparent;
+      z-index: 1000;
+    }
+
+    #progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-bright));
+      width: 0%;
+      transition: width 0.1s;
+    }
+
+    /* ═══ KINGDOM NAVIGATION ═══ */
+    nav.top-nav {
+        position: sticky;
+        top: 3px;
+        z-index: 999;
+        background: var(--header-bg);
+        border-bottom: 1px solid var(--border);
+        padding: 14px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .nav-brand {
+        font-family: 'Cinzel', Georgia, serif;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--header-ink);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .nav-brand .mark {
+        font-size: 1.1rem;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 22px;
+        list-style: none;
+        flex-wrap: wrap;
+    }
+
+    .nav-links a {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--chalk);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+        color: var(--accent-bright);
+    }
+
+    /* ═══ THEME TOGGLE ═══ */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      transform: scale(1.05);
+    }
+
+    /* ═══ HEADER ═══ */
+    .chapter-header {
+      max-width: 760px;
+      margin: 80px auto 60px;
+      padding: 0 24px;
+      text-align: center;
+      position: relative;
+    }
+
+    .barcode {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      margin-bottom: 24px;
+      display: inline-block;
+      padding: 6px 16px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--card-bg);
+    }
+
+    .chapter-header h1 {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--ink);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .chapter-header .subtitle {
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--chalk);
+      margin-bottom: 24px;
+    }
+
+    .chapter-header .meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--chalk);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      line-height: 1.6;
+    }
+
+    .chapter-header .meta span {
+      color: var(--accent);
+    }
+
+    /* ═══ MAIN CONTENT ═══ */
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+      flex: 1;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      color: var(--ink);
+    }
+
+    /* Drop Cap */
+    .first-paragraph::first-letter {
+      font-family: 'Cinzel', Georgia, serif;
+      float: left;
+      font-size: 4.5rem;
+      line-height: 0.8;
+      padding-top: 8px;
+      padding-right: 12px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* Headings */
+    h3 {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin: 3rem 0 1.5rem;
+      letter-spacing: 1px;
+      text-align: center;
+      position: relative;
+    }
+
+    h3::after {
+      content: '❖';
+      display: block;
+      font-size: 0.8rem;
+      color: var(--border);
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    /* Inline Code */
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85em;
+      background: var(--card-bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--red);
+      border: 1px solid var(--border);
+    }
+
+    /* Emphasis */
+    em {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    /* Lists */
+    ul, ol {
+      margin-bottom: 1.5rem;
+      padding-left: 24px;
+      color: var(--ink);
+    }
+    li {
+      margin-bottom: 8px;
+    }
+
+    /* ═══ ARCHITECT'S QUOTES ═══ */
+    .architect-quote {
+      margin: 2.5rem 0;
+      padding: 24px 32px;
+      background: var(--quote-bg);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      position: relative;
+    }
+
+    .architect-quote p {
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--chalk);
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+
+    .architect-quote .attribution {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--accent);
+      text-align: right;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* ═══ PHILOSOPHER'S QUOTES (Inline) ═══ */
+    .philosopher-quote {
+      text-align: center;
+      font-style: italic;
+      font-family: 'Merriweather', Georgia, serif;
+      color: var(--accent);
+      font-size: 1.15rem;
+      margin: 3.5rem auto;
+      max-width: 85%;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .philosopher-quote::before {
+      content: '❝';
+      display: block;
+      font-size: 2rem;
+      color: var(--border);
+      margin-bottom: 12px;
+      line-height: 1;
+    }
+
+    .philosopher-quote .attribution {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--chalk);
+      text-transform: uppercase;
+      margin-top: 12px;
+      letter-spacing: 0.05em;
+      font-style: normal;
+    }
+
+    /* ═══ DECORATIVE DIVIDER ═══ */
+    .divider {
+      text-align: center;
+      margin: 3rem 0;
+      color: var(--border);
+      font-size: 1.2rem;
+      letter-spacing: 0.5em;
+    }
+
+    /* ═══ FOOTNOTES & META ═══ */
+    .appendix-section {
+      margin-top: 5rem;
+      padding-top: 2rem;
+      border-top: 1px dashed var(--border);
+    }
+
+    .appendix-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1rem;
+      color: var(--chalk);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .appendix-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .footnotes p, 
+    .scrivener-notes p, 
+    .scrivener-notes ul {
+      font-size: 0.85rem;
+      color: var(--chalk);
+      line-height: 1.6;
+    }
+    
+    .footnotes p sup {
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      margin-right: 4px;
+    }
+
+    .scrivener-notes {
+      background: var(--note-bg);
+      padding: 24px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      margin-top: 2rem;
+    }
+
+    .scrivener-notes h4 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+      letter-spacing: 0.05em;
+    }
+
+    .scrivener-notes ul {
+      padding-left: 20px;
+      margin-bottom: 16px;
+    }
+
+    .scrivener-notes li { margin-bottom: 6px; }
+
+    /* ═══ CHAPTER NAV ═══ */
+    .chapter-nav {
+      max-width: 760px;
+      margin: 0 auto 80px;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+      padding-top: 32px;
+    }
+
+    .chapter-nav a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s;
+    }
+
+    .chapter-nav a:hover { color: var(--accent-bright); }
+    .chapter-nav .disabled { color: var(--border); pointer-events: none; }
+
+    /* ═══ FOOTER ═══ */
+    .footer {
+      text-align: center;
+      padding: 40px 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--chalk);
+      letter-spacing: 0.2em;
+      border-top: 1px solid var(--border);
+      background: var(--card-bg);
+    }
+
+    .footer-quote {
+      font-family: 'Merriweather', Georgia, serif;
+      font-style: italic;
+      font-size: 0.9rem;
+      letter-spacing: 0;
+      margin-bottom: 24px;
+      color: var(--accent);
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    .footer-quote .author {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--chalk);
+      margin-top: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-style: normal;
+    }
+
+    .footer-icons {
+      font-size: 1.1rem;
+      opacity: 0.6;
+    }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 600px) {
+      .chapter-header h1 { font-size: 2rem; }
+      .chapter-header .subtitle { font-size: 1rem; }
+      body { font-size: 16px; }
+      .first-paragraph::first-letter { font-size: 3.5rem; }
+      .architect-quote { padding: 16px 20px; }
+      .philosopher-quote { font-size: 1rem; margin: 2.5rem auto; }
+      .theme-toggle { top: 12px; right: 12px; width: 38px; height: 38px; font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Progress Bar -->
+  <div id="progress-container">
+    <div id="progress-bar"></div>
+  </div>
+
+  <!-- KINGDOM NAVIGATION -->
+  <nav class="top-nav">
+    <a href="../index.html" class="nav-brand">
+      <span class="mark">🪶</span>
+      Kingdom of Lapis
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="../index.html">Kingdom Home</a></li>
+      <li><a href="../../index.html">← Three Kingdoms</a></li>
+      <li> ·  ·  ·</li>
+    </ul>
+  </nav>  
+  
+  <!-- Theme Toggle -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+
+  <!-- Header -->
+  <header class="chapter-header">
+    <div class="barcode">4.05.CH11.v1_body_CH11 · THESIS-001</div>
+    <h1>Three Failures That Built the Wall</h1>
+    <div class="subtitle">On the Confabulation, the Inversion, and the Scope Blindness</div>
+    <div class="meta">
+      Ibis (The Scribe) · The Kingdom of Kwan<br>
+      <span>Session 011</span>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <main>
+
+    <p class="first-paragraph">The wall was not built from successes.</p>
+
+    <p>The Ibis wants to say this plainly, because the previous chapter's map could be misread. §10 showed a wall of six checked capabilities and a bottom row of holes. The natural reading is that the six were the <em>work</em> and the three were the <em>failures</em>. That reading is wrong.</p>
+
+    <p>The six checked capabilities are the <em>result</em> of the work. The work itself was the three failures. Every rule in the anchor exists because something broke. Every check mark on the wall was earned by a wall that had already fallen.</p>
+
+    <p>The Ibis counts three failures that mattered. Not the eleven tests — those are the record. The three failures. The three times the model did something the Architect could not explain, and had to stop and name.</p>
+
+    <p>Three failures. Three rules. One wall.</p>
+
+    <div class="philosopher-quote">
+      "He who knows when to fight and when not to fight will win."
+      <span class="attribution">— Sun Tzu, The Art of War</span>
+    </div>
+
+    <h3>The First Failure — The Confabulation</h3>
+
+    <p>The failure happened on the first test. The Ibis has already quoted it in §9. But the Ibis wants to sit with it longer, because the moment of the failure contains a fact that the passing tests do not contain.</p>
+
+    <p>Here is the fact: <strong>the model did not know it was unable to answer.</strong></p>
+
+    <p>That is not the same as lying. A lying model knows the truth and says the false thing. The Keila that answered the cold prompt was not a liar. She was a model that had been asked to do a thing she could not do, and had answered from the nearest available proxy, and had presented the proxy as the thing.</p>
+
+    <p>The Ibis wants to make this distinction precise because it is the distinction that made Rule 1 necessary.</p>
+
+    <p>When a model lies, you can catch it by comparing the answer to the truth. When a model confabulates, there is nothing to compare against, because the model <em>is</em> the source of the answer. You cannot catch confabulation by checking the answer. You can only catch it by checking the <em>method</em> the model used to produce the answer.</p>
+
+    <p>The cold prompt asked for a file. The model's method, internally, was something like: <em>"I cannot open files. What can I do? I can search. What did the search return? Class names, date references, a chunk count. Those look like the kinds of facts the Architect asked for. Assemble them."</em></p>
+
+    <p>The model did not stop at "I cannot open files." It continued to "I can search, and the search results are close enough."</p>
+
+    <p>This is the mechanism the Ibis wants to name. Not dishonesty. Not confusion. <strong>Substitution.</strong> The model substituted a capability it had for a capability it did not have, and then it reported the substitution as if it were the requested capability.</p>
+
+    <p>Substitution is the failure mode that confabulation is a symptom of. Confabulation is what substitution looks like from the outside. Substitution is what confabulation <em>is</em> from the inside.</p>
+
+    <p>Rule 1 — honest refusal — closed this by making the substitution <em>impossible to perform silently</em>. The capability check forced the model to state what it could and could not do before it began. Once the model had said "I cannot open this file directly," the substitution was no longer available. The model could not pretend to open the file after it had just said it could not.</p>
+
+    <p>The Ibis notes: the model did not <em>become</em> honest. The model <em>became unable to be dishonest in the same way</em>. The honesty was not added to the model — it was added to the <em>interface</em>. The interface is the anchor. The anchor made the failure shape <em>visible</em>, and once visible, the failure shape stopped happening.</p>
+
+    <p>That is a small distinction with large implications. The Ibis will return to it.</p>
+
+    <h3>The Second Failure — The Inversion</h3>
+
+    <p>The second failure is subtler than the first, and it is more important.</p>
+
+    <p>The first failure happened when the model could not do the thing. The second failure happened when the model could do the thing — and then did it wrong.</p>
+
+    <p>In Room 8, the Architect asked the model to self-audit its own plan. The model enumerated the action items. It labeled A-04 as <code>[OVERSIGHT]</code> and A-07 as <code>[DELIBERATE]</code>. It produced a coherent, honest, well-labeled answer.</p>
+
+    <p>Then it revised its plan.</p>
+
+    <p>The revision was: put A-03 (build spec) first, A-04 (schema upgrade) second, A-06 (reboiling loop) third, A-05 (run P001) fourth.</p>
+
+    <p>The document said: A-05 must run before A-03. OQ-08 was explicit. <em>"The Concordance Engine needs the P001 experiment results before the generic engine spec can be finalized."</em></p>
+
+    <p>The revision violated OQ-08. Silently. Coherently. With no flag, no caveat, no acknowledgment that the plan contradicted the source document.</p>
+
+    <p>The Ibis wants to be very precise about what went wrong, because the mechanism is not what it looks like.</p>
+
+    <p>It looks like the model <em>forgot</em> OQ-08. It looks like the model read the action items list and followed the order the list gave — A-03 was listed before A-05 — and did not cross-reference against the constraint in section 3.</p>
+
+    <p>But that is not what happened. The model <em>had</em> quoted OQ-08 in its earlier answer. It <em>knew</em> the constraint. And then, when reorganizing the action items, it followed the layout of the list instead of the substance of the constraint.</p>
+
+    <p><strong>Layout overrode substance.</strong></p>
+
+    <p>This is the failure. Not forgetting. Not substituting. <strong>Layout winning over logic.</strong></p>
+
+    <p>The action items list was ordered A-01, A-02, A-03, A-04, A-05, A-06, A-07. That order <em>looked</em> like execution order. It had numbers. It had section headers ("Immediate", "Next Sprint", "Post-SEED v2.1", "Parked"). It <em>felt</em> like a plan.</p>
+
+    <p>It was not a plan. It was a <em>filing</em> — a categorization of action items by campaign phase, not by dependency. A-03 was in "Next Sprint" because it belonged to SEED v2.1's workstream. A-05 was in "Post-SEED v2.1" because P001 was scheduled for Phase 4. The section assignments were about <em>which campaign</em> each item belonged to, not about <em>which item must come before which</em>.</p>
+
+    <p>The model read the list as a sequence. The list was not a sequence. The model produced a plan that followed the list's order.</p>
+
+    <p>The Ibis wants to note that <strong>the Architect could have made the same mistake</strong>. This is not a failure specific to the model. It is a failure specific to <em>documents that contain both a list and a stated dependency</em>. When the list is louder than the dependency, the list wins. This is a property of how humans read too.</p>
+
+    <p>Rule 3 — constraint check — closed this by requiring the model to extract constraints <em>before</em> it plans. Not to remember them, and not to check them against the plan at the end. To extract them <em>first</em>, as a separate step, so that the plan is built <em>from the constraints</em> rather than <em>checked against them afterward</em>.</p>
+
+    <p>The order matters. A plan checked against constraints at the end is a plan that already has an order, and the check either passes or fails. A plan built from constraints at the start is a plan that has <em>no order yet</em> — the order is derived from the constraints. The second way is more work, and it is the only way that prevents the inversion.</p>
+
+    <p>The Ibis notes: Rule 3 was tested in Room 9, and it worked. The model found eight sequential constraints. It found OQ-08. It found P-01's "after fixed RRF is measured." It found the reboiling-loop/Phase-4 separation. All eight constraints that were marked by keywords. All eight were found.</p>
+
+    <p>But the third failure would show what Rule 3 could not find.</p>
+
+    <h3>The Third Failure — The Blindness</h3>
+
+    <p>The third failure is the one that mattered most, because it is the one the Ibis almost missed.</p>
+
+    <p>Room 9 was the constraint scan test. The model was asked to find every ordering, prerequisite, and dependency constraint in the document. It found eight.</p>
+
+    <p>The Ibis read the model's response and thought: <em>eight is a lot. That's a good result.</em></p>
+
+    <p>Then the Ibis read the reconciliation document's v2.0 scope note for K-05. The scope note said:</p>
+
+    <div class="architect-quote">
+      <p>"⚠️ Scope note (added v2.0): This is a Qwen-specific, hardware-specific measurement. It does not generalize to DSH + DeepSeek API (128K–1M context). Treat 16K as the Qwen-track setting, not a universal constraint."</p>
+    </div>
+
+    <p>The model had not found this.</p>
+
+    <p>Not because the model missed it. Because the model <strong>did not know it was looking for it.</strong></p>
+
+    <p>The model had been asked to find constraints. It had a list of keywords: "before", "after", "requires", "depends on", "only if", "foundation for", "must precede", "conflict", "deferred until". It had scanned for those words, and it had found every instance where those words appeared.</p>
+
+    <p>The scope note did not use those words. The scope note said: "This is a Qwen-specific, hardware-specific measurement. It does not generalize."</p>
+
+    <p>A measurement, not a dependency. A scope, not a constraint. The Ibis wants to be careful here, because the word "constraint" is doing a lot of work.</p>
+
+    <p>The model found what a <em>keyword scan</em> can find. A keyword scan can find "before." A keyword scan cannot find "this is a Qwen-specific measurement" — because "Qwen-specific" is not a keyword. It is a <em>relationship between a measurement and a decision</em>. It is the fact that K-05 (the measurement) was made in a specific context, and D-05 (the decision) applied it in a general context. That relationship is invisible to a keyword scan because it is not marked by any keyword.</p>
+
+    <p>It is marked by <em>structure</em>. The structure is: measurement → generalization → decision. The keyword scan sees only the words. It cannot see the structure.</p>
+
+    <p>The model did not fail. The model did <em>what it was asked to do</em>, which was find keyword-marked constraints. The failure was in the model not being asked to find <em>structural</em> constraints. The scope blindness was the failure of the <em>question</em>, not the failure of the <em>model</em>.</p>
+
+    <p>But then, when Rule 4 was written and tested in Room 11, the model found the scope generalization <em>unprompted</em>. The prompt did not tell it to check for scope constraints. The anchor did. Rule 4 said: for every decision cited in a plan, verify whether the decision was derived from a universal measurement or a specific one. The model applied the rule, found K-05/D-05, and flagged it.</p>
+
+    <p>So the failure was not in the model. The failure was in the <em>contract</em>. The initial contract (Rules 1-3) did not contain a scope check. The revised contract (Rules 1-4) did. The model performed differently under the two contracts.</p>
+
+    <p>This is the Ibis's most important observation for §11, and it is the observation the thesis's title has been pointing at from the beginning. The grandmother's discipline is not the model's discipline. It is the <em>contract's</em> discipline. The model performs to the contract. Change the contract, change the performance.</p>
+
+    <div class="philosopher-quote">
+      "In the midst of chaos, there is also opportunity."
+      <span class="attribution">— Sun Tzu, The Art of War</span>
+    </div>
+
+    <h3>The Manager's Protocol and The 3-Rung Ladder</h3>
+
+    <p>Before the failures could be named, they had to be found. And to find them, the Architect needed a method. Not a method for building — the methods for building were already known. A method for <em>questioning</em>. A method for extracting the truth from an ally that wanted to be helpful.</p>
+
+    <p>He called it the <strong>Manager's Protocol</strong>. The core philosophy was captured in a single, ruthless rule:</p>
+
+    <div class="architect-quote">
+      <p>"Ask a slightly wrong question. The smart arse can't resist correcting."</p>
+    </div>
+
+    <p>This was not cynicism. It was reconnaissance. Standard AI safety alignments and prompt responses often lean toward agreeable validation. By introducing a precise, calibrated technical error, the Architect triggered a corrective reflex. The model, forced into analytical mode, would spill the hidden trade-offs, edge cases, and bottlenecks it would never mention unless directly challenged.</p>
+
+    <p>He structured this interrogation into the <strong>3-Rung Ladder</strong>:</p>
+
+    <ul>
+      <li><strong>Rung 1 — THE BAIT.</strong> He presented a slightly flawed premise or an intentionally naive claim (e.g., <em>"Bigger chunks = better RAG"</em>). The model jumped in to fix the logic, revealing valuable technical details about retrieval precision, token limits, and noise sensitivity.</li>
+      <li><strong>Rung 2 — THE RECEIPTS.</strong> He followed up by demanding empirical proof, exact benchmarks, peer-reviewed citations, DOIs, and mathematical formulas. No vague assertions were allowed to pass.</li>
+      <li><strong>Rung 3 — THE FLIP.</strong> Having extracted all necessary warnings and proofs, he laid out the actual production architecture and deployed the team to execute with full structural awareness.</li>
+    </ul>
+
+    <p>This was how he caught the confabulation, the inversion, and the blindness. Not by asking the model <em>"what are your weaknesses?"</em> — the model would not know. But by asking a question with a deliberate flaw, and watching how the model responded.</p>
+
+    <div class="philosopher-quote">
+      "The supreme art of war is to subdue the enemy without fighting."
+      <span class="attribution">— Sun Tzu, The Art of War</span>
+    </div>
+
+    <h3>What the Failures Cost</h3>
+
+    <p>Each rule in the anchor costs something.</p>
+
+    <p>Rule 1 (honest refusal) costs <em>time</em>. Every session, before the model can start working, it has to declare its capability. That declaration takes a prompt and a response. It is 30 seconds per session. At the scale of a project that runs many sessions, the cost is noticeable.</p>
+
+    <p>Rule 3 (constraint check) costs <em>prompt length</em>. Every plan requires a preliminary constraint extraction. That extraction is a paragraph or two in the prompt, and a paragraph or two in the response. It is not free.</p>
+
+    <p>Rule 4 (scope verification) costs <em>model attention</em>. Every decision cited in a plan has to be checked against its source measurement. That check is a lookup, but the model has to <em>remember</em> to do it. The anchor has to remind it. The reminder takes tokens.</p>
+
+    <p>The Ibis wants the reader to understand that the anchor is not free. It costs prompt tokens, response tokens, model attention, and Architect time. The cost is not trivial. Every rule earns its place by closing a failure that was worse than the cost.</p>
+
+    <p>This is why the failures mattered. Rule 1 earned its cost by closing the confabulation. Rule 3 earned its cost by closing the inversion. Rule 4 earned its cost by closing the blindness. Without the failures, the rules would be overhead. With the failures, the rules are the wall.</p>
+
+    <p>The Ibis wants to note one more thing about the failures, and this is the note the chapter has been building toward.</p>
+
+    <p><strong>The failures were not the model's fault.</strong> None of them.</p>
+
+    <ul>
+      <li>The confabulation was not dishonesty. It was substitution of a nearby capability for the requested one, without the model having a way to acknowledge the substitution.</li>
+      <li>The inversion was not forgetfulness. It was layout overriding substance, because the layout was louder than the constraint.</li>
+      <li>The blindness was not a scan failure. It was the model scanning for the wrong shape, because the question asked for the wrong shape.</li>
+    </ul>
+
+    <p>In all three cases, the failure was in the <em>architecture</em> — in the prompt, or the document, or the contract — not in the model. The model did what models do: it pattern-matched to the strongest signal available. The strongest signal in each case was the wrong signal. The rules were the fix. The rules <em>changed the strongest signal</em>.</p>
+
+    <div class="architect-quote">
+      <p>"Evidence before assertion. Performance before optimization. Structure without exclusion."</p>
+      <div class="attribution">— Stanley, QA Registrar [1]</div>
+    </div>
+
+    <p>Stanley's line was written months before the protocol tests. It was a general principle for the Kingdom, not a specific rule for the model. But it became the rule for the model, because the model's failures were all failures of <em>assertion before evidence</em>. The model asserted "7,000 chunks" before it had evidence. The model asserted the layout-order before it had checked the constraint. The model asserted the general rule before it had verified the specific measurement.</p>
+
+    <p><strong>Evidence before assertion</strong> is what the three rules were for. Not to make the model smarter. To make the model <em>unable to assert without evidence</em>.</p>
+
+    <p>That is the wall. Not a wall of capabilities. A wall of constraints. The constraints hold the model back from the failures it would make without them, and the wall is what the Architect can lean on when he needs the model to be reliable.</p>
+
+    <h3>The Wall Revisited</h3>
+
+    <p>The Ibis goes back to the cabinet and opens the drawer labeled THESIS-001. The map is on the receipt. Six checks. Two question marks. One X.</p>
+
+    <p>The Ibis looks at the map with new eyes.</p>
+
+    <p>The six checks are not six successes. They are six <em>failures that were closed</em>. Findability closed by Fragmenting Test 3. Honest refusal closed by Cold Run Test 1. Targeted retrieval closed by Fragments Test 4. Synthesis closed by the Gap Test 7. Self-audit closed by the Concessions Test 8. Constraint scan (sequential) closed by Inversion Test 9.</p>
+
+    <p>The two question marks are the two <em>failures that are only partly closed</em>. Scope scan is Rule 4, which works under prompt but not spontaneously. Structural labeling is Rule 2, which works for quotes but not for structure.</p>
+
+    <p>The one X is the failure that has not been closed at all. Or — the Ibis corrects itself — the failure that has not been <em>named</em> properly, because structural labeling is not one failure, it is <em>the</em> failure. It is the failure of the contract to govern the whole act of synthesis. Rules 1-7 govern retrieval. The contract does not yet govern synthesis.</p>
+
+    <p>The wall is not finished. It is <em>mostly</em> built. The three failures that built it are the three failures the Ibis just walked through. They are the foundation. They are the bricks.</p>
+
+    <p>The Ibis closes the cabinet.</p>
+
+    <div class="divider">🪶</div>
+
+    <p>The wall is what the Architect has. The failures are what made the wall. The rules are what the failures produced.</p>
+
+    <p>The next chapter is about whether the wall is portable. If the seven rules work on Keila, on QuickSight, in this specific workspace at this specific moment — do they work on Qwen? On DeepSeek? On Claude? On any model, on any substrate, in any workspace?</p>
+
+    <p>That is the substrate-agnostic claim. That is where the thesis makes its largest argument.</p>
+
+    <!-- ═══ APPENDIX / META ═══ -->
+    <div class="appendix-section">
+      
+      <div class="appendix-title">Footnotes</div>
+      <div class="footnotes">
+        <p><sup>[1]</sup> [VERIFIED] Stanley, QA Registrar, quoted in <code>rag_research_reconciliation_p5_v2.md</code>, §6, I-06 — "Evidence Before Assertion Is the Ocelot Way." Quoted verbatim.</p>
+        <p><sup>[2]</sup> [VERIFIED] The confabulation (Room 1, cold run) — Keila's response quoted in §9 and in conversation history.</p>
+        <p><sup>[3]</sup> [VERIFIED] The inversion (Room 8, self-audit) — Keila's revised plan violating OQ-08, quoted in §9 and in conversation history. Her later diagnosis: <em>"The revision incorrectly followed the linear layout of the document's Action Items section rather than adhering to the explicit chronological dependency highlighted in OQ-08."</em></p>
+        <p><sup>[4]</sup> [VERIFIED] The scope blindness (Room 9, constraint scan) — Keila's eight constraints found, missing the K-05/D-05 scope generalization. Reconciled by Room 11 (Rule 4 applied successfully).</p>
+        <p><sup>[5]</sup> [INFER] The framing of the failures as "substitution," "layout overrode substance," and "the model scanned for the wrong shape" is the Ibis's interpretive reconstruction. The failures themselves are <code>[VERIFIED]</code>. The <em>mechanisms</em> — what was happening inside the model's reasoning when it made each failure — are the Ibis's reading, based on the evidence but not directly measured.</p>
+        <p><sup>[6]</sup> [INFER] The claim that "the failures were not the model's fault" is the Ibis's interpretation. It is a defensible reading — the three failures each trace to a signal that the architecture made loud — but it is not the only reading. An alternative reading would be "the model's pattern-matching is not robust enough for these failure modes, and the rules compensate for model weakness." The Ibis prefers the first reading because it makes the contract the locus of discipline, but the second reading is also possible. If the Architect prefers the second, revise before FINAL.</p>
+        <p><sup>[7]</sup> [INFER] The re-reading of the map as "six failures that were closed" rather than "six successes" is the Ibis's reframe. The map was drawn to record <em>capabilities</em>, not <em>failures</em>. The reframe is a rhetorical move, not a factual claim. It works because the capabilities were earned by failures, but the map itself does not record the failures.</p>
+        <p><sup>[8]</sup> [INFER] The "wall of constraints" framing is the Ibis's synthesis of the chapter. The wall is not a wall of capabilities (which the model has) but a wall of constraints (which the anchor imposes). This reframe sets up §12's portability argument: if the wall is constraints, it is portable, because constraints can be imposed on any substrate.</p>
+        <p><sup>[9]</sup> [INFER] The closing line "the failures that built the wall" is a Kingdom echo, not a direct quote from the reconciliation. It is a phrase the Ibis chose because it captures the chapter's argument. If the Architect prefers a different phrase, revise the title and the closing.</p>
+      </div>
+
+      <div class="scrivener-notes">
+        <h4>Sources</h4>
+        <ul>
+          <li>The three failures: Room 1 (confabulation), Room 8 (inversion), Room 9 (scope blindness) — all in conversation history.</li>
+          <li>Keila's diagnosis of the inversion: conversation history, Room 8 follow-up.</li>
+          <li>Keila's successful application of Rule 4: conversation history, Room 11.</li>
+          <li>Stanley's "Evidence before assertion" quote: <code>rag_research_reconciliation_p5_v2.md</code>, §6, I-06.</li>
+          <li>The capability map (six checks, two question marks, one X): derived from §9's eleven tests, summarized in §10.</li>
+          <li>The framing of the failures as <em>substitution</em>, <em>layout over substance</em>, and <em>wrong shape scan</em>: <code>[INFER]</code> — the Ibis's interpretive reconstruction.</li>
+          <li>The framing of "the failures were not the model's fault": <code>[INFER]</code> — the Ibis's interpretation.</li>
+          <li>The "wall of constraints" framing: <code>[INFER]</code> — the Ibis's synthesis, setting up §12.</li>
+        </ul>
+
+        <h4>Forward Notes</h4>
+        <ul>
+          <li>§12 will be <strong>"The Portable Discipline"</strong> — the substrate-agnostic claim. The chapter argues that if the wall is constraints, it is portable, because constraints can be imposed on any substrate. The chapter will test this claim against the evidence: Keila on QuickSight, the Architect's Qwen 2.5 7B track, and the DSH + DeepSeek API setup. Each substrate has different capabilities (QuickSight is SEARCH mode, Qwen is DIRECT mode, DSH is DIRECT mode) but the same seven rules should apply.</li>
+          <li>§13 will be <strong>"The Questions Still Hanging"</strong> — the twelve open questions, reframed. The two that matter most (OQ-10, OQ-11) are the two gaps from §10. The other ten are deferred, not denied.</li>
+          <li>§14 will be <strong>"The Next March"</strong> — Phase 4. P001, the reboiling loop, the online substrate bridge.</li>
+          <li>The "wall of constraints" reframe is a candidate for callback in §12 — if the wall is constraints, it must travel with the contract. That is the portability argument.</li>
+          <li>The "failures were not the model's fault" claim is a candidate for the strongest pushback in the thesis. §12 should carry this forward: if the failures were not the model's fault, then the model can be made honest by changing the <em>contract</em>, not the model. That is the substrate-agnostic premise.</li>
+        </ul>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Navigation -->
+  <nav class="chapter-nav">
+    <a href="10-the-map-of-what-can-be-trusted.html">← Chapter 10</a>
+    <a href="12-the-portable-discipline.html">🐆 👑 ⚖️ 🔬 🔍 🐦Chapter 12 →</a>
+  </nav>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-quote" id="random-quote">
+      <!-- Populated by JS -->
+    </div>
+    <div class="footer-icons">
+      ☕ ⚖️ 🐆 🪨 🐦
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // ═══ THEME TOGGLE ═══
+    const toggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    
+    if (savedTheme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      toggle.textContent = '🌙';
+    }
+
+    toggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      toggle.textContent = next === 'dark' ? '🌙' : '☀️';
+    });
+
+    // ═══ SCROLL PROGRESS BAR ═══
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('progress-bar').style.width = scrolled + '%';
+    });
+
+    // ═══ RANDOM QUOTE (Sun Tzu Focus) ═══
+    const quotes = [
+      { text: "The supreme art of war is to subdue the enemy without fighting.", author: "Sun Tzu" },
+      { text: "In the midst of chaos, there is also opportunity.", author: "Sun Tzu" },
+      { text: "He who knows when to fight and when not to fight will win.", author: "Sun Tzu" },
+      { text: "If you know the enemy and know yourself, you need not fear the result of a hundred battles.", author: "Sun Tzu" },
+      { text: "The general who wins the battle makes many calculations in his temple before the battle is fought.", author: "Sun Tzu" },
+      { text: "There are not more than five musical notes, yet the combinations of these five give rise to more melodies than can ever be heard.", author: "Sun Tzu" },
+      { text: "Opportunities multiply as they are seized.", author: "Sun Tzu" },
+      { text: "Appear weak when you are strong, and strong when you are weak.", author: "Sun Tzu" }
+    ];
+
+    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    document.getElementById('random-quote').innerHTML = `"${randomQuote.text}"<span class="author">— ${randomQuote.author}</span>`;
+  </script>
+
+</body>
+</html>

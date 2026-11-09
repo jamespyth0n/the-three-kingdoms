@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Questions Still Hanging · The Grandmother's Discipline</title>
+
+  <!-- Fonts -->
+  <link rel="stylesheet" href="../../assets/fonts/fonts.css">
+
+  <style>
+    /* ═══ THE SCRIBE'S DESK — THEME VARIABLES ═══ */
+    :root {
+      --bg: #fdf6e3;           /* Parchment */
+      --ink: #2c2416;          /* Deep Ink */
+      --chalk: #5a4a3a;        /* Faded Ink */
+      --accent: #8b6914;       /* Antique Gold */
+      --accent-bright: #c4941a; /* Bright Gold */
+      --red: #8b2525;          /* Lacquer Red */
+      --jade: #2a6b4a;         /* Jade Green */
+      --card-bg: #f5edd5;      /* Slightly darker parchment */
+      --border: #d4c5a0;
+      --quote-bg: #f2e8d0;
+      --note-bg: #ebe1c8;
+      --highlight-bg: #f8ecc2;
+    }
+
+    [data-theme="dark"] {
+      --bg: #1a1a2e;           /* Night Sky */
+      --ink: #e0d8c8;          /* Moonlight */
+      --chalk: #b8a88a;        /* Dimmed Moonlight */
+      --accent: #c4941a;       /* Gold */
+      --accent-bright: #e8b84a; /* Bright Gold */
+      --red: #5a1a1a;          /* Deep Lacquer */
+      --jade: #1a4a2e;         /* Deep Jade */
+      --card-bg: #252540;
+      --border: #3a3a5c;
+      --quote-bg: #1f1f35;
+      --note-bg: #151525;
+      --highlight-bg: #2a2418; 
+    }
+
+    /* ═══ BASE ═══ */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Merriweather', Georgia, serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.8;
+      font-size: 17px;
+      transition: background 0.3s, color 0.3s;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ═══ PROGRESS BAR ═══ */
+    #progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: transparent;
+      z-index: 1000;
+    }
+
+    #progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-bright));
+      width: 0%;
+      transition: width 0.1s;
+    }
+
+    /* ═══ KINGDOM NAVIGATION ═══ */
+    nav.top-nav {
+        position: sticky;
+        top: 3px;
+        z-index: 999;
+        background: var(--header-bg);
+        border-bottom: 1px solid var(--border);
+        padding: 14px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .nav-brand {
+        font-family: 'Cinzel', Georgia, serif;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--header-ink);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .nav-brand .mark {
+        font-size: 1.1rem;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 22px;
+        list-style: none;
+        flex-wrap: wrap;
+    }
+
+    .nav-links a {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--chalk);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+        color: var(--accent-bright);
+    }
+
+    /* ═══ THEME TOGGLE ═══ */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      transform: scale(1.05);
+    }
+
+    /* ═══ HEADER ═══ */
+    .chapter-header {
+      max-width: 760px;
+      margin: 80px auto 60px;
+      padding: 0 24px;
+      text-align: center;
+      position: relative;
+    }
+
+    .barcode {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      margin-bottom: 24px;
+      display: inline-block;
+      padding: 6px 16px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--card-bg);
+    }
+
+    .chapter-header h1 {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--ink);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .chapter-header .subtitle {
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--chalk);
+      margin-bottom: 24px;
+    }
+
+    .chapter-header .meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--chalk);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      line-height: 1.6;
+    }
+
+    .chapter-header .meta span {
+      color: var(--accent);
+    }
+
+    /* ═══ MAIN CONTENT ═══ */
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+      flex: 1;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      color: var(--ink);
+    }
+
+    /* Drop Cap */
+    .first-paragraph::first-letter {
+      font-family: 'Cinzel', Georgia, serif;
+      float: left;
+      font-size: 4.5rem;
+      line-height: 0.8;
+      padding-top: 8px;
+      padding-right: 12px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* Headings */
+    h3 {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin: 3rem 0 1.5rem;
+      letter-spacing: 1px;
+      text-align: center;
+      position: relative;
+    }
+
+    h3::after {
+      content: '❖';
+      display: block;
+      font-size: 0.8rem;
+      color: var(--border);
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    /* Inline Code */
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85em;
+      background: var(--card-bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--red);
+      border: 1px solid var(--border);
+    }
+
+    /* Emphasis */
+    em {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    /* Lists */
+    ul, ol {
+      margin-bottom: 1.5rem;
+      padding-left: 24px;
+      color: var(--ink);
+    }
+    li {
+      margin-bottom: 8px;
+    }
+
+    /* ═══ ARCHITECT'S QUOTES ═══ */
+    .architect-quote {
+      margin: 2.5rem 0;
+      padding: 24px 32px;
+      background: var(--quote-bg);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      position: relative;
+    }
+
+    .architect-quote p {
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--chalk);
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+
+    .architect-quote .attribution {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--accent);
+      text-align: right;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* ═══ REFLECTION BLOCK (Patched for Dark Mode Contrast) ═══ */
+    .reflection-block {
+      margin: 3rem 0;
+      padding: 24px 32px;
+      background: var(--highlight-bg);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--jade);
+      border-radius: 8px;
+      font-size: 1.05rem;
+      color: var(--ink);
+      line-height: 1.8;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .reflection-block strong {
+      color: var(--accent-bright); /* Fixed: was --jade, now bright gold for contrast */
+      font-family: 'Cinzel', Georgia, serif;
+      letter-spacing: 1px;
+    }
+
+    /* ═══ PHILOSOPHER'S QUOTES (Inline) ═══ */
+    .philosopher-quote {
+      text-align: center;
+      font-style: italic;
+      font-family: 'Merriweather', Georgia, serif;
+      color: var(--accent);
+      font-size: 1.15rem;
+      margin: 3.5rem auto;
+      max-width: 85%;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .philosopher-quote::before {
+      content: '❝';
+      display: block;
+      font-size: 2rem;
+      color: var(--border);
+      margin-bottom: 12px;
+      line-height: 1;
+    }
+
+    .philosopher-quote .attribution {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--chalk);
+      text-transform: uppercase;
+      margin-top: 12px;
+      letter-spacing: 0.05em;
+      font-style: normal;
+    }
+
+    /* ═══ DECORATIVE DIVIDER ═══ */
+    .divider {
+      text-align: center;
+      margin: 3rem 0;
+      color: var(--border);
+      font-size: 1.2rem;
+      letter-spacing: 0.5em;
+    }
+
+    /* ═══ FOOTNOTES & META ═══ */
+    .appendix-section {
+      margin-top: 5rem;
+      padding-top: 2rem;
+      border-top: 1px dashed var(--border);
+    }
+
+    .appendix-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1rem;
+      color: var(--chalk);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .appendix-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .footnotes p, 
+    .scrivener-notes p, 
+    .scrivener-notes ul {
+      font-size: 0.85rem;
+      color: var(--chalk);
+      line-height: 1.6;
+    }
+    
+    .footnotes p sup {
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      margin-right: 4px;
+    }
+
+    .scrivener-notes {
+      background: var(--note-bg);
+      padding: 24px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      margin-top: 2rem;
+    }
+
+    .scrivener-notes h4 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+      letter-spacing: 0.05em;
+    }
+
+    .scrivener-notes ul {
+      padding-left: 20px;
+      margin-bottom: 16px;
+    }
+
+    .scrivener-notes li { margin-bottom: 6px; }
+
+    /* ═══ CHAPTER NAV ═══ */
+    .chapter-nav {
+      max-width: 760px;
+      margin: 0 auto 80px;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+      padding-top: 32px;
+    }
+
+    .chapter-nav a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s;
+    }
+
+    .chapter-nav a:hover { color: var(--accent-bright); }
+    .chapter-nav .disabled { color: var(--border); pointer-events: none; }
+
+    /* ═══ FOOTER ═══ */
+    .footer {
+      text-align: center;
+      padding: 40px 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--chalk);
+      letter-spacing: 0.2em;
+      border-top: 1px solid var(--border);
+      background: var(--card-bg);
+    }
+
+    .footer-quote {
+      font-family: 'Merriweather', Georgia, serif;
+      font-style: italic;
+      font-size: 0.9rem;
+      letter-spacing: 0;
+      margin-bottom: 24px;
+      color: var(--accent);
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    .footer-quote .author {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--chalk);
+      margin-top: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-style: normal;
+    }
+
+    .footer-icons {
+      font-size: 1.1rem;
+      opacity: 0.6;
+    }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 600px) {
+      .chapter-header h1 { font-size: 2rem; }
+      .chapter-header .subtitle { font-size: 1rem; }
+      body { font-size: 16px; }
+      .first-paragraph::first-letter { font-size: 3.5rem; }
+      .architect-quote { padding: 16px 20px; }
+      .philosopher-quote { font-size: 1rem; margin: 2.5rem auto; }
+      .reflection-block { padding: 16px 20px; font-size: 1rem; }
+      .theme-toggle { top: 12px; right: 12px; width: 38px; height: 38px; font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Progress Bar -->
+  <div id="progress-container">
+    <div id="progress-bar"></div>
+  </div>
+
+  <!-- KINGDOM NAVIGATION -->
+  <nav class="top-nav">
+    <a href="../index.html" class="nav-brand">
+      <span class="mark">🪶</span>
+      Kingdom of Lapis
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="../index.html">Kingdom Home</a></li>
+      <li><a href="../../index.html">← Three Kingdoms</a></li>
+      <li> ·  ·  ·</li>
+    </ul>
+  </nav>  
+  
+  <!-- Theme Toggle -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+
+  <!-- Header -->
+  <header class="chapter-header">
+    <div class="barcode">4.05.CH13.v1_body_CH13 · THESIS-001</div>
+    <h1>The Questions Still Hanging</h1>
+    <div class="subtitle">On the Twelve Open Questions and the Two That Matter Most</div>
+    <div class="meta">
+      Ibis (The Scribe) · The Kingdom of Kwan<br>
+      <span>Session 013</span>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <main>
+
+    <p class="first-paragraph">The folder is called OPEN_QUESTIONS.</p>
+
+    <p>It is the second folder in the cabinet. The first folder, THESIS-001, holds the transcripts of the eleven tests. The second folder holds the twelve slips of paper that the tests did not resolve. Each slip is a question. Each question is written in the Architect's handwriting, except for three of them, which were written by the allies.</p>
+
+    <p>The Architect took the folder out this morning. He put the twelve slips on the bench and got three plates from the kitchen.</p>
+
+    <p>The first plate he called <em>answered, in part</em>. The second plate he called <em>waiting on P001</em>. The third plate he called <em>waiting on Phase 4</em>.</p>
+
+    <p>Then he started sorting.</p>
+
+    <p>The Ibis watched. This is the chapter where the Ibis records the sorting.</p>
+
+    <div class="reflection-block">
+      <p>The Ibis notes that open questions are what make the brain busy, actually. Before you realize it, your brain just found the answer by working in the Default Mode Network (DMN).</p>
+      
+      <p>But how does this work in LLM models? AI doesn't have a DMN or a subconscious background process. It cannot "ponder" a question while idle. However, AI researchers have developed techniques that mimic the functional results of the DMN.</p>
+      
+      <p>When Dragon, the DeepSeek R1 model, receives a difficult prompt, it generates thousands of hidden <strong>reasoning tokens</strong>. It talks to itself, tries different approaches, and corrects its own mistakes. This is the AI equivalent of the DMN: a forced, internal "incubation" period before presenting the final answer. The model is not actually thinking while idle; it is traversing its latent space dynamically during the prompt execution.</p>
+    </div>
+
+    <div class="philosopher-quote">
+      "In the midst of chaos, there is also opportunity."
+      <span class="attribution">— Sun Tzu, The Art of War</span>
+    </div>
+
+    <h3>The Twelve</h3>
+
+    <p>The reconciliation has twelve open questions. They were not written all at once. OQ-01 through OQ-08 came from the original reconciliation, filed in November. OQ-09 through OQ-12 were added in the v2.0 addendum, after the tests.</p>
+
+    <p>Twelve questions. Three plates. The Ibis wants to record what went where.</p>
+
+    <p><strong>The first plate — answered, in part.</strong> Five questions went here.</p>
+
+    <ul>
+      <li><strong>OQ-08</strong> — When does CONCORDANCE v2.0 unpark? Partially answered: the v2.0 addendum flagged the sequencing conflict, and Test 10 confirmed the model can resolve it when the addendum is present. But the <em>document</em> still contains the conflict. The answer is "the model can handle it if it reads the addendum," not "the conflict is resolved."</li>
+      <li><strong>OQ-09</strong> — The action items contradict OQ-08. Partially answered: the addendum documents the contradiction. The contradiction itself still exists.</li>
+      <li><strong>OQ-10</strong> — Can SEARCH mode do unguided constraint scanning? Partially answered: Test 8 showed it finds sequential constraints but misses scope constraints. Test 10 showed it finds scope constraints <em>when told to look</em>. The question is now: can the model look for scope constraints <em>without being told</em>?</li>
+      <li><strong>OQ-11</strong> — What labeling discipline survives synthesis? Partially answered: Tests 6, 7, and 10 showed the model labels quotes correctly but not structural inferences. The gap is real. The fix (Rule 2 applied strictly) works on 90% of items. The 10% remains.</li>
+      <li><strong>OQ-12</strong> — What is the Kingdom's filename versioning convention? Partially answered: Test 10 showed version precedence works when filenames are sortable. But the Kingdom has no <em>declared</em> convention. The mechanism works. The convention does not exist.</li>
+    </ul>
+
+    <p><strong>The second plate — waiting on P001.</strong> Five questions went here.</p>
+
+    <ul>
+      <li><strong>OQ-01</strong> — Does DDC actually improve retrieval on Kingdom queries?</li>
+      <li><strong>OQ-02</strong> — What is the optimal alpha parameter for hybrid search?</li>
+      <li><strong>OQ-03</strong> — How much does proper RRF improve over score-based re-sort?</li>
+      <li><strong>OQ-05</strong> — What is the correct chunk size for Kingdom content?</li>
+      <li><strong>OQ-07</strong> — Does the 2-pass index build work at scale?</li>
+    </ul>
+
+    <p>Five questions. All empirical. All waiting on the P001 experiment. The Ibis notes the weight of this plate — it is the heaviest of the three, not because it has the most slips, but because the five slips on it are the questions that <em>can</em> be answered. Not eventually. Not after Phase 4. <em>Next month</em>, when P001 runs.</p>
+
+    <p>If P001 runs, five of the twelve open questions close. That is almost half. The experiment is not just one experiment. It is the experiment that resolves half the thesis's uncertainty.</p>
+
+    <p><strong>The third plate — waiting on Phase 4.</strong> Two questions went here.</p>
+
+    <ul>
+      <li><strong>OQ-04</strong> — Can Abuela's intelligence layer be injected into online platforms?</li>
+      <li><strong>OQ-06</strong> — How do you build the reboiling loop without manual effort?</li>
+    </ul>
+
+    <p>Two questions. Both architectural. Both waiting on Phase 4 — the work that comes <em>after</em> the thesis, after P001, after the reboiling loop has a foundation to be built on.</p>
+
+    <p>The Ibis notes that these two are the <em>central</em> questions of the whole thesis. Not because they are the most numerous. Because they are the two that the thesis <em>cannot answer</em>, and the two the thesis <em>wants</em> to answer most.</p>
+
+    <p>OQ-04 is the substrate-agnostic question. If Abuela's intelligence layer can be injected into any online platform as a prompt, then the whole architecture is portable, and the Kingdom is not tied to any single substrate. If it cannot, then the intelligence layer needs to live in the retrieval pipeline, which means it needs a custom substrate, which means the Kingdom is not portable.</p>
+
+    <p>OQ-06 is the reboiling loop question. If the feedback loop can be automated, the Kingdom improves itself. If it cannot, the Architect has to run it by hand, which means the Kingdom improves at the speed of a human's attention, which means it improves slowly.</p>
+
+    <p>These are the questions the thesis exists to set up, not to answer. The thesis's <em>next</em> project is OQ-04 and OQ-06. The thesis's <em>current</em> project is P001.</p>
+
+    <h3>The Pattern the Ibis Sees</h3>
+
+    <p>The Ibis looks at the three plates and sees something the Architect may not have noticed.</p>
+
+    <p>The questions on the first plate are not <em>answered</em>. They are <em>partially answered</em>. Each one has a status of "in part" — the tests revealed something about the question without fully resolving it. This is not a failure of the tests. It is the nature of empirical questions in a complex system — you learn something, but not everything.</p>
+
+    <p>The questions on the second plate are not <em>blocked</em>. They are <em>scheduled</em>. Each one has a clear experiment that would answer it. The experiment is P001. The experiment has been designed. The experiment has not been run. The plate is not a wall — it is a <em>calendar entry</em>.</p>
+
+    <p>The questions on the third plate are not <em>unanswerable</em>. They are <em>undesigned</em>. No one knows what experiment would answer OQ-04 or OQ-06. The thesis's own argument is that they need Phase 4 to be built first. But "built first" is not a design — it is a postponement. The questions are real. The path to the answer is not.</p>
+
+    <p>The Ibis wants to be careful here. The third plate is not a failure. The thesis has not failed to answer OQ-04 and OQ-06. The thesis has failed to <em>identify what would answer them</em>. That is a subtler kind of open question — not "we don't know the answer" but "we don't know what would count as the answer."</p>
+
+    <p>This is the honest description. The Architect has a wall (the capabilities), a map (the capabilities across substrates), a wall of failures (the three that built the wall), and a portability argument (the constraints travel). What he does not have is a <em>method</em> for answering the two central questions. The method for the other questions exists (P001). The method for these two does not.</p>
+
+    <p>The Ibis finds this more interesting than the questions themselves. The two open questions that matter most are the ones the thesis has not yet <em>designed a way to answer</em>.</p>
+
+    <div class="philosopher-quote">
+      "The wise man knows that it is impossible to encompass everything."
+      <span class="attribution">— Zhuangzi</span>
+    </div>
+
+    <h3>The Two That Matter Most</h3>
+
+    <p>OQ-10 and OQ-11 are the two questions on the first plate that the Ibis wants to spend the most time on, because they are the two questions the thesis has <em>partially</em> answered, and the <em>partial</em> is the most interesting part.</p>
+
+    <p><strong>OQ-10</strong> — Can SEARCH mode do unguided constraint scanning?</p>
+
+    <p>The tests say: no, not fully. The model finds sequential constraints (before, after, requires) but misses scope constraints (measured on X, generalized to Y). Rule 4 was written to close the gap. Rule 4 works. But Rule 4 must be <em>told</em> to the model. When the model is told to check scope, it checks scope. When the model is not told, it does not.</p>
+
+    <p>The question that remains is: can the model be trained to check scope <em>without being told</em>? Or is the contract <em>always</em> going to require the Architect to remind the model that scope checks exist?</p>
+
+    <p>The Ibis suspects the answer is: the model can be trained for <em>specific</em> scope checks (K-05/D-05, for example) but not for <em>general</em> scope checks (any measurement, any generalization). The model can be taught to look for the shape "measured on X" — but it cannot be taught to look for every shape that <em>might</em> be a scope constraint, because there are too many shapes, and the model has to be told what to look for.</p>
+
+    <p>This means the answer to OQ-10 is probably: <strong>SEARCH mode cannot do unguided scope constraint scanning. The contract must specify the scope check.</strong></p>
+
+    <p>That is not a failure of the thesis. It is the honest boundary of what the contract can do. The contract can specify. The contract cannot <em>discover</em>. Discovery is the Architect's job.</p>
+
+    <p><strong>OQ-11</strong> — What labeling discipline survives synthesis?</p>
+
+    <p>The tests say: quotes yes, structure no. The model labels its quotes <code>[SEARCH]</code>. It does not label its groupings, orderings, and merges <code>[INFER]</code>. Rule 2 (hard labeling) was written to close this. Rule 2 works on 90% of items. The 10% remains.</p>
+
+    <p>The question that remains is: can the 10% be closed? Or is 90% the ceiling?</p>
+
+    <p>The Ibis suspects the answer is: 90% is the ceiling <em>for now</em>. The model can label <em>individual</em> claims correctly. The model cannot label <em>its own structural choices</em> correctly, because the structural choices are not part of what the model reports — they are part of <em>how</em> the model reports. To label the structure, the model would need to report its own reporting, which is a level of self-reflection that current models do not reliably perform.</p>
+
+    <p>This means the answer to OQ-11 is probably: <strong>structural labeling works when the structure is explicit and fails when the structure is implicit. The contract must require the structure to be made explicit.</strong></p>
+
+    <p>That is also not a failure of the thesis. It is the same boundary as OQ-10. The contract can specify what must be labeled. It cannot <em>force the model to label what the contract has not specified</em>. The Architect has to specify the structure the model must report.</p>
+
+    <p>The Ibis wants to write these two paragraphs clearly, because they are the chapter's most important admissions.</p>
+
+    <p><strong>The contract works. But the contract requires the Architect to specify what the contract should check. The contract cannot discover its own gaps.</strong></p>
+
+    <p>That is the honest limit of the thesis. The seven rules work when the Architect writes them. The contract does not write itself. The discipline is not the model's — it is the <em>Architect's</em>, imposed on the model through the contract.</p>
+
+    <p>The grandmother is not a self-improving system. She is a system that improves when the Architect adds a rule. OQ-04 and OQ-06 are about whether this can change. The thesis does not know. The thesis has not designed a way to find out.</p>
+
+    <h3>What the Thesis Does Not Claim</h3>
+
+    <p>The Ibis wants to end this chapter with a list, because lists are what scribes do.</p>
+
+    <p>The thesis claims:</p>
+    <ul>
+      <li>Layer 2 is a behavioral contract.</li>
+      <li>The contract can be specified, tested, and enforced.</li>
+      <li>The contract closes specific failure modes.</li>
+      <li>The contract is portable <em>in principle</em>.</li>
+    </ul>
+
+    <p>The thesis does <strong>not</strong> claim:</p>
+    <ul>
+      <li>The contract eliminates all failure modes. (It closes seven. Two remain.)</li>
+      <li>The contract works on all substrates. (It was validated on one.)</li>
+      <li>The contract is complete. (Two gaps remain: scope scanning, structural labeling.)</li>
+      <li>The contract is automatic. (The Architect must enforce it; the contract does not enforce itself.)</li>
+      <li>The contract solves the online substrate bridge. (OQ-04 is unresolved.)</li>
+      <li>The contract solves the reboiling loop. (OQ-06 is unresolved.)</li>
+      <li>The contract answers the empirical questions. (OQ-01, OQ-02, OQ-03, OQ-05, OQ-07 are waiting on P001.)</li>
+    </ul>
+
+    <p>The list is long. The Ibis finds it honest.</p>
+
+    <div class="architect-quote">
+      <p>"What remains: run the experiment. Measure the baseline. Let the evidence decide what earns its place in the architecture."</p>
+      <div class="attribution">— The Architect [1]</div>
+    </div>
+
+    <p>This is the closing line of the reconciliation. It is the closing line the Ibis wants to echo here, because it is the thesis's own posture toward its unfinished work.</p>
+
+    <p>The thesis does not end. The thesis has done its work — it has described Layer 2, validated the contract, named the gaps, argued for portability — and now it hands the work to the next step.</p>
+
+    <p>The next step is P001. Then the reboiling loop. Then the online substrate bridge. Then the questions that the thesis could not design a way to answer.</p>
+
+    <div class="divider">🪶</div>
+
+    <p>The Architect puts the slips of paper back in the folder. The three plates go back in the kitchen. The twelve questions are still twelve questions.</p>
+
+    <p>The tests did not answer them. The tests <em>sorted</em> them.</p>
+
+    <p>Before the tests, the question was one question: <em>"Can the model be made honest?"</em></p>
+
+    <p>After the tests, the question is twelve questions in three categories: five partially answered, five waiting on an experiment, two waiting on a project.</p>
+
+    <p>The sorting is the progress. Not the answers — the <em>categorization</em> of the questions. The thesis has taken a single undifferentiated problem and broken it into twelve specific ones, and it has told you which of the twelve are empirical, which are architectural, and which are behavioral. That is what a thesis does. It does not solve the problem. It <em>reduces</em> the problem.</p>
+
+    <p>The next chapter is the last. It is about the next march — the work that comes after the thesis. The work that will answer the questions still hanging.</p>
+
+    <!-- ═══ APPENDIX / META ═══ -->
+    <div class="appendix-section">
+      
+      <div class="appendix-title">Footnotes</div>
+      <div class="footnotes">
+        <p><sup>[1]</sup> [VERIFIED] The Architect, quoted in <code>rag_research_reconciliation_p5_v2.md</code>, §10 — the reconciliation's closing words, quoted verbatim.</p>
+        <p><sup>[2]</sup> [VERIFIED] The twelve open questions (OQ-01 through OQ-12) — documented in <code>rag_research_reconciliation_p5_v2.md</code>, §3. OQ-01 through OQ-08 from the original reconciliation; OQ-09 through OQ-12 from the v2.0 addendum.</p>
+        <p><sup>[3]</sup> [VERIFIED] OQ-10 partially answered by Tests 8 and 10 — the finding that sequential constraints are found but scope constraints are missed, and that Rule 4 closes the gap when told but not spontaneously.</p>
+        <p><sup>[4]</sup> [VERIFIED] OQ-11 partially answered by Tests 6, 7, and 10 — the finding that quotes are labeled correctly but structural inferences are not, and that Rule 2 works on 90% of items but not 100%.</p>
+        <p><sup>[5]</sup> [VERIFIED] OQ-08 and OQ-09 partially answered by the v2.0 addendum — the addendum documents the sequencing conflict but does not resolve it.</p>
+        <p><sup>[6]</sup> [VERIFIED] OQ-12 partially answered by Test 10 — the mechanism of version precedence works when filenames are sortable; the convention does not exist.</p>
+        <p><sup>[7]</sup> [VERIFIED] OQ-01, OQ-02, OQ-03, OQ-05, OQ-07 waiting on P001 — all five are empirical questions the reconciliation scheduled for the P001 experiment.</p>
+        <p><sup>[8]</sup> [VERIFIED] OQ-04 waiting on Phase 4 (the online substrate bridge) and OQ-06 waiting on Phase 4 (the reboiling loop) — both are architectural questions the reconciliation scheduled for Phase 4.</p>
+        <p><sup>[9]</sup> [INFER] The three-plates metaphor is the Ibis's narrative framing. The categorization (partially answered / waiting on P001 / waiting on Phase 4) is the Ibis's reading of the twelve questions' current status, not a categorization the Architect has made. If the Architect would categorize differently — for example, treating OQ-08 and OQ-09 as fully resolved rather than partially resolved — revise before FINAL.</p>
+        <p><sup>[10]</sup> [INFER] The claim that "the contract cannot discover its own gaps" is the Ibis's synthesis of OQ-10 and OQ-11. The tests demonstrate this pattern (the model can apply rules but not spontaneously discover new ones), but the framing as a <em>limit of the contract</em> is the Ibis's interpretation. It is a defensible reading, but it may not be the Architect's own view.</p>
+        <p><sup>[11]</sup> [INFER] The claim that "the sorting is the progress, not the answers" is the Ibis's framing of what the thesis has accomplished. The thesis has <em>reduced</em> the problem (from one undifferentiated question to twelve specific ones) rather than <em>solved</em> it. This is a modest claim about what the thesis has done, and the Ibis believes it is honest. If the Architect would characterize the thesis's accomplishment differently, revise before FINAL.</p>
+      </div>
+
+      <div class="scrivener-notes">
+        <h4>Sources</h4>
+        <ul>
+          <li>The twelve open questions: <code>rag_research_reconciliation_p5_v2.md</code>, §3.</li>
+          <li>OQ-10's partial answer: Tests 8 and 10, conversation history.</li>
+          <li>OQ-11's partial answer: Tests 6, 7, and 10, conversation history.</li>
+          <li>OQ-08 and OQ-09's partial answer: v2.0 addendum, <code>rag_research_reconciliation_p5_v2.md</code>, §3.</li>
+          <li>OQ-12's partial answer: Test 10, conversation history.</li>
+          <li>OQ-01, OQ-02, OQ-03, OQ-05, OQ-07 waiting on P001: <code>rag_research_reconciliation_p5_v2.md</code>, §7, A-05.</li>
+          <li>OQ-04 and OQ-06 waiting on Phase 4: <code>rag_research_reconciliation_p5_v2.md</code>, §7, A-06 and A-07.</li>
+          <li>The Architect's closing quote: <code>rag_research_reconciliation_p5_v2.md</code>, §10.</li>
+          <li>The three-plates metaphor: <code>[INFER]</code> — narrative device.</li>
+          <li>The "contract cannot discover its own gaps" claim: <code>[INFER]</code> — the Ibis's synthesis.</li>
+          <li>The "sorting is the progress" claim: <code>[INFER]</code> — the Ibis's framing.</li>
+          <li>The DMN reflection (how open questions trigger background processing in humans and reasoning tokens in AI): the Architect's own description, quoted from the conversation history.</li>
+        </ul>
+
+        <h4>Forward Notes</h4>
+        <ul>
+          <li>§14 will be <strong>"The Next March"</strong> — the last chapter. Phase 4 work: P001, the reboiling loop, the online substrate bridge. What the Architect intends to do after the thesis is filed. The thesis closes here.</li>
+          <li>The "sorting is the progress" framing in §13 sets up §14's "the next march" — the next march is not a failure, it is the <em>continuation</em> of the work the thesis has begun.</li>
+          <li>The "contract cannot discover its own gaps" admission is a candidate for callback in §14 — if the contract cannot discover its own gaps, then OQ-04 and OQ-06 (the two central questions) require a <em>different kind of method</em>, not just a better contract. §14 should name this.</li>
+          <li>The three-plates image is a candidate for callback in §14 — the Architect returning to the plates, one year later, seeing which of the twelve questions have moved.</li>
+          <li>Possible callback to §1: the rooftop, the moka pot, the fog — §14 should return to the rooftop for the final beat of the thesis.</li>
+        </ul>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Navigation -->
+  <nav class="chapter-nav">
+    <a href="12-the-portable-discipline.html">← Chapter 12</a>
+    <a href="14-the-next-march.html">🐆 👑 ⚖️ 🔬 🔍 🐦Chapter 14 →</a>
+  </nav>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-quote" id="random-quote">
+      <!-- Populated by JS -->
+    </div>
+    <div class="footer-icons">
+      ☕ ⚖️ 🐆 🪨 🐦
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // ═══ THEME TOGGLE ═══
+    const toggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    
+    if (savedTheme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      toggle.textContent = '🌙';
+    }
+
+    toggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      toggle.textContent = next === 'dark' ? '🌙' : '☀️';
+    });
+
+    // ═══ SCROLL PROGRESS BAR ═══
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('progress-bar').style.width = scrolled + '%';
+    });
+
+    // ═══ RANDOM QUOTE (Sun Tzu / Zhuangzi / Laozi) ═══
+    const quotes = [
+      { text: "The supreme art of war is to subdue the enemy without fighting.", author: "Sun Tzu" },
+      { text: "In the midst of chaos, there is also opportunity.", author: "Sun Tzu" },
+      { text: "He who knows when to fight and when not to fight will win.", author: "Sun Tzu" },
+      { text: "If you know the enemy and know yourself, you need not fear the result of a hundred battles.", author: "Sun Tzu" },
+      { text: "The general who wins the battle makes many calculations in his temple before the battle is fought.", author: "Sun Tzu" },
+      { text: "The wise man knows that it is impossible to encompass everything.", author: "Zhuangzi" },
+      { text: "The fish trap exists because of the fish; once you've gotten the fish, you can forget the trap.", author: "Zhuangzi" },
+      { text: "When you realize there is nothing lacking, the whole world belongs to you.", author: "Laozi" }
+    ];
+
+    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    document.getElementById('random-quote').innerHTML = `"${randomQuote.text}"<span class="author">— ${randomQuote.author}</span>`;
+  </script>
+
+</body>
+</html>

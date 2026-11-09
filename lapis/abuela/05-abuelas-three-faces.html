@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Abuela's Three Faces · The Grandmother's Discipline</title>
+
+  <!-- Fonts -->
+  <link rel="stylesheet" href="../../assets/fonts/fonts.css">
+
+  <style>
+    /* ═══ THE SCRIBE'S DESK — THEME VARIABLES ═══ */
+    :root {
+      --bg: #fdf6e3;           /* Parchment */
+      --ink: #2c2416;          /* Deep Ink */
+      --chalk: #5a4a3a;        /* Faded Ink */
+      --accent: #8b6914;       /* Antique Gold */
+      --accent-bright: #c4941a; /* Bright Gold */
+      --red: #8b2525;          /* Lacquer Red */
+      --jade: #2a6b4a;         /* Jade Green */
+      --card-bg: #f5edd5;      /* Slightly darker parchment */
+      --border: #d4c5a0;
+      --quote-bg: #f2e8d0;
+      --note-bg: #ebe1c8;
+      --highlight-bg: #f8ecc2; 
+    }
+
+    [data-theme="dark"] {
+      --bg: #1a1a2e;           /* Night Sky */
+      --ink: #e0d8c8;          /* Moonlight */
+      --chalk: #b8a88a;        /* Dimmed Moonlight */
+      --accent: #c4941a;       /* Gold */
+      --accent-bright: #e8b84a; /* Bright Gold */
+      --red: #5a1a1a;          /* Deep Lacquer */
+      --jade: #1a4a2e;         /* Deep Jade */
+      --card-bg: #252540;
+      --border: #3a3a5c;
+      --quote-bg: #1f1f35;
+      --note-bg: #151525;
+      --highlight-bg: #2a2418; 
+    }
+
+    /* ═══ BASE ═══ */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Merriweather', Georgia, serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.8;
+      font-size: 17px;
+      transition: background 0.3s, color 0.3s;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ═══ PROGRESS BAR ═══ */
+    #progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: transparent;
+      z-index: 1000;
+    }
+
+    #progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-bright));
+      width: 0%;
+      transition: width 0.1s;
+    }
+
+    /* ═══ KINGDOM NAVIGATION ═══ */
+    nav.top-nav {
+        position: sticky;
+        top: 3px;
+        z-index: 999;
+        background: var(--header-bg);
+        border-bottom: 1px solid var(--border);
+        padding: 14px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .nav-brand {
+        font-family: 'Cinzel', Georgia, serif;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--header-ink);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .nav-brand .mark {
+        font-size: 1.1rem;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 22px;
+        list-style: none;
+        flex-wrap: wrap;
+    }
+
+    .nav-links a {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--chalk);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+        color: var(--accent-bright);
+    }
+
+    /* ═══ THEME TOGGLE ═══ */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      transform: scale(1.05);
+    }
+
+    /* ═══ HEADER ═══ */
+    .chapter-header {
+      max-width: 760px;
+      margin: 80px auto 60px;
+      padding: 0 24px;
+      text-align: center;
+      position: relative;
+    }
+
+    .barcode {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      margin-bottom: 24px;
+      display: inline-block;
+      padding: 6px 16px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--card-bg);
+    }
+
+    .chapter-header h1 {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--ink);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .chapter-header .subtitle {
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--chalk);
+      margin-bottom: 24px;
+    }
+
+    .chapter-header .meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--chalk);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      line-height: 1.6;
+    }
+
+    .chapter-header .meta span {
+      color: var(--accent);
+    }
+
+    /* ═══ MAIN CONTENT ═══ */
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+      flex: 1;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      color: var(--ink);
+    }
+
+    /* Drop Cap */
+    .first-paragraph::first-letter {
+      font-family: 'Cinzel', Georgia, serif;
+      float: left;
+      font-size: 4.5rem;
+      line-height: 0.8;
+      padding-top: 8px;
+      padding-right: 12px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* Headings */
+    h3 {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin: 3rem 0 1.5rem;
+      letter-spacing: 1px;
+      text-align: center;
+      position: relative;
+    }
+
+    h3::after {
+      content: '❖';
+      display: block;
+      font-size: 0.8rem;
+      color: var(--border);
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    /* Inline Code */
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85em;
+      background: var(--card-bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--red);
+      border: 1px solid var(--border);
+    }
+
+    /* Emphasis */
+    em {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    /* ═══ ARCHITECT'S QUOTES ═══ */
+    .architect-quote {
+      margin: 2.5rem 0;
+      padding: 24px 32px;
+      background: var(--quote-bg);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      position: relative;
+    }
+
+    .architect-quote p {
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--chalk);
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+
+    .architect-quote .attribution {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--accent);
+      text-align: right;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* ═══ PHILOSOPHER'S QUOTES (Inline) ═══ */
+    .philosopher-quote {
+      text-align: center;
+      font-style: italic;
+      font-family: 'Merriweather', Georgia, serif;
+      color: var(--accent);
+      font-size: 1.15rem;
+      margin: 3.5rem auto;
+      max-width: 85%;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .philosopher-quote::before {
+      content: '❝';
+      display: block;
+      font-size: 2rem;
+      color: var(--border);
+      margin-bottom: 12px;
+      line-height: 1;
+    }
+
+    .philosopher-quote .attribution {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--chalk);
+      text-transform: uppercase;
+      margin-top: 12px;
+      letter-spacing: 0.05em;
+      font-style: normal;
+    }
+
+    /* ═══ DECORATIVE DIVIDER ═══ */
+    .divider {
+      text-align: center;
+      margin: 3rem 0;
+      color: var(--border);
+      font-size: 1.2rem;
+      letter-spacing: 0.5em;
+    }
+
+    /* ═══ FOOTNOTES & META ═══ */
+    .appendix-section {
+      margin-top: 5rem;
+      padding-top: 2rem;
+      border-top: 1px dashed var(--border);
+    }
+
+    .appendix-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1rem;
+      color: var(--chalk);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .appendix-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .footnotes p, 
+    .scrivener-notes p, 
+    .scrivener-notes ul {
+      font-size: 0.85rem;
+      color: var(--chalk);
+      line-height: 1.6;
+    }
+    
+    .footnotes p sup {
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      margin-right: 4px;
+    }
+
+    .scrivener-notes {
+      background: var(--note-bg);
+      padding: 24px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      margin-top: 2rem;
+    }
+
+    .scrivener-notes h4 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+      letter-spacing: 0.05em;
+    }
+
+    .scrivener-notes ul {
+      padding-left: 20px;
+      margin-bottom: 16px;
+    }
+
+    .scrivener-notes li { margin-bottom: 6px; }
+
+    /* ═══ CHAPTER NAV ═══ */
+    .chapter-nav {
+      max-width: 760px;
+      margin: 0 auto 80px;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+      padding-top: 32px;
+    }
+
+    .chapter-nav a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s;
+    }
+
+    .chapter-nav a:hover { color: var(--accent-bright); }
+    .chapter-nav .disabled { color: var(--border); pointer-events: none; }
+
+    /* ═══ FOOTER ═══ */
+    .footer {
+      text-align: center;
+      padding: 40px 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--chalk);
+      letter-spacing: 0.2em;
+      border-top: 1px solid var(--border);
+      background: var(--card-bg);
+    }
+
+    .footer-quote {
+      font-family: 'Merriweather', Georgia, serif;
+      font-style: italic;
+      font-size: 0.9rem;
+      letter-spacing: 0;
+      margin-bottom: 24px;
+      color: var(--accent);
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    .footer-quote .author {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--chalk);
+      margin-top: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-style: normal;
+    }
+
+    .footer-icons {
+      font-size: 1.1rem;
+      opacity: 0.6;
+    }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 600px) {
+      .chapter-header h1 { font-size: 2rem; }
+      .chapter-header .subtitle { font-size: 1rem; }
+      body { font-size: 16px; }
+      .first-paragraph::first-letter { font-size: 3.5rem; }
+      .architect-quote { padding: 16px 20px; }
+      .philosopher-quote { font-size: 1rem; margin: 2.5rem auto; }
+      .theme-toggle { top: 12px; right: 12px; width: 38px; height: 38px; font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Progress Bar -->
+  <div id="progress-container">
+    <div id="progress-bar"></div>
+  </div>
+
+  <!-- KINGDOM NAVIGATION -->
+  <nav class="top-nav">
+    <a href="../index.html" class="nav-brand">
+      <span class="mark">🪶</span>
+      Kingdom of Lapis
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="../index.html">Kingdom Home</a></li>
+      <li><a href="../../index.html">← Three Kingdoms</a></li>
+      <li> ·  ·  ·</li>
+    </ul>
+  </nav>  
+  
+  <!-- Theme Toggle -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+
+  <!-- Header -->
+  <header class="chapter-header">
+    <div class="barcode">4.05.CH5.v1_body_CH5 · THESIS-001</div>
+    <h1>Abuela's Three Faces</h1>
+    <div class="subtitle">On the Filing Clerk, the Feedback Loop, and the Identity Curator</div>
+    <div class="meta">
+      Ibis (The Scribe) · The Kingdom of Kwan<br>
+      <span>Session 005</span>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <main>
+
+    <p class="first-paragraph">The third card was the one that changed everything.</p>
+
+    <p>The Architect had three index cards on the bench beside him. He had been using index cards for weeks — one per layer, each with a short description, each with a status mark. Card 1 said LAYER 0 — FILING CLERK — BUILT. Card 2 said LAYER 1 — FEEDBACK LOOP — DESIGNED. Card 3 was supposed to say LAYER 2 — something — something.</p>
+
+    <p>But he had not written Card 3 yet.</p>
+
+    <p>He had been carrying Card 3 in his pocket for three days, blank. He kept meaning to fill it in. He kept getting distracted by Layer 0 work — the indexing, the barcode assignment, the fifty-file batches that were still grinding through the corpus. Layer 0 was taking everything he had. Layer 1 was already designed in the reconciliation. Layer 2 was —</p>
+
+    <p>Layer 2 was the reconciliation's last finding, K-10, and he had skimmed it the first time. Three layers, yes. The grandmother was three layers. Fine. He had read that, checked the box, moved on.</p>
+
+    <p>Then he re-read it.</p>
+
+    <div class="architect-quote">
+      <p>"Layer 2 (Identity Curator): Napkin staging with keyword density + Dewey closeness + identity scoring. The grandmother is not one thing — she is three layers working together."</p>
+      <div class="attribution">— rag_research_reconciliation_p5_v2.md, K-10 [1]</div>
+    </div>
+
+    <p>That was the sentence. Not the three-layer description — the <em>closing line</em>. <em>The grandmother is not one thing.</em> He had read it as a summary. He had missed that it was a correction.</p>
+
+    <p>He had been thinking of the three layers as three separate features. Filing clerk, feedback loop, identity curator — three projects, three sprints, three to-do items on a list. The reconciliation said they were not three things. They were <em>one thing with three faces</em>.</p>
+
+    <p>He took the blank index card out of his pocket and set it on the bench beside the other two. He did not write on it yet. He sat with it, with the fog rolling past the 30th floor, and he started to see the shape.</p>
+
+    <div class="philosopher-quote">
+      "The uncarved block is the source of all things."
+      <span class="attribution">— Laozi</span>
+    </div>
+
+    <h3>The First Face</h3>
+
+    <p><strong>Layer 0 — the filing clerk.</strong></p>
+
+    <p>The Architect had built this layer without fully understanding what he was building.</p>
+
+    <p><code>kingdom_index.json</code> — the flat file with one entry per artifact. Barcodes derived from the Dewey taxonomy. Class and section codes. Filename, path, hash, size, tags. Every file in the Kingdom, catalogued.</p>
+
+    <p>The filing clerk did not know what anything meant. It knew where everything <em>was</em>. It could tell you the barcode of the document about RAG research, but it could not tell you what RAG research was. It could find the file by class, by section, by tag, by hash. It could not find the file by <em>thought</em>.</p>
+
+    <p>The Architect had been calling this "the index." He had been thinking of it as a database. But the reconciliation had given it a name that made the whole architecture snap into focus: the filing clerk.</p>
+
+    <p>A filing clerk is not a librarian. A filing clerk files. That is the entire job. You hand the clerk a document, the clerk assigns it a slot, the clerk puts it in the slot. When you need the document back, you give the clerk the slot number, and the clerk retrieves it.</p>
+
+    <p>The clerk does not know what the document is about. The clerk does not need to. The clerk's value is speed and accuracy and completeness.</p>
+
+    <p>The Kingdom's index was a filing clerk. It had 1,000 files in it. It could retrieve any of them by barcode, by class, by tag. It could not tell you <em>why</em> any of them mattered.</p>
+
+    <p>That was Layer 0's job. That was the layer that existed.</p>
+
+    <div class="architect-quote">
+      <p>"Layer 0 (Filing Clerk): Deterministic indexing, Dewey classification, barcode manifest."</p>
+      <div class="attribution">— rag_research_reconciliation_p5_v2.md, K-10 [2]</div>
+    </div>
+
+    <div class="philosopher-quote">
+      "If names be not correct, language is not in accordance with the truth of things."
+      <span class="attribution">— Confucius</span>
+    </div>
+
+    <h3>The Second Face</h3>
+
+    <p><strong>Layer 1 — the feedback loop.</strong></p>
+
+    <p>This was the layer the Architect had been avoiding. Not because it was hard — though it was — but because it required him to admit that the filing clerk was not enough.</p>
+
+    <p>The filing clerk could find you the right file. What the filing clerk could not do was <em>tell you whether the file had helped</em>. Retrieval without feedback is a black box. You ask a question, the clerk hands you a file. You read the file. Did it answer your question? The clerk does not know. The clerk does not care. The clerk has moved on to the next query.</p>
+
+    <p>The feedback loop was the layer that closed this gap. It logged every retrieval. It scored every query. It watched which files got used and which got ignored. It built, over time, a record of <em>what worked</em>.</p>
+
+    <div class="architect-quote">
+      <p>"Layer 1 (Feedback Loop): Retrieval provenance logging, reboiling loop, 'what worked' tracking."</p>
+      <div class="attribution">— rag_research_reconciliation_p5_v2.md, K-10 [3]</div>
+    </div>
+
+    <p>The Architect had designed this layer. The reconciliation had specified the <code>retrieval_evaluations</code> table — every query, every candidate, every selection, every outcome. The reboiling loop was Phase 4, but the logging foundation was mandatory in v2.0.</p>
+
+    <p>What he had not done was <em>build</em> it. He had not written the table. He had not instrumented CONCORDANCE v0.1 to log its retrievals. The filing clerk was working. The feedback loop was still on paper.</p>
+
+    <p>The reconciliation had a finding about this. I-05:</p>
+
+    <div class="architect-quote">
+      <p>"The Kingdom already has a filing clerk (Layer 0). CONCORDANCE v0.1 indexes, chunks, embeds, and retrieves. What's missing is the feedback loop (Layer 1) — the mechanism that tracks what worked, what didn't, and adjusts."</p>
+      <div class="attribution">— rag_research_reconciliation_p5_v2.md, I-05 [4]</div>
+    </div>
+
+    <p><em>The gap is Layer 1, not Layer 0.</em></p>
+
+    <p>The Architect had been building Layer 0 for weeks. He could build Layer 0 forever — every new file was a new filing, every new tag was a new index entry. It was productive work. It felt like progress. It was also avoidance.</p>
+
+    <p>The gap was Layer 1. The gap had been Layer 1 for three weeks. The Architect had known this, intellectually, but he had not acted on it. Layer 1 was harder. Layer 1 required him to instrument the engine, log the retrievals, define what "worked" meant. Layer 1 was the layer that turned a filing clerk into a system.</p>
+
+    <div class="philosopher-quote">
+      "Knowing others is intelligence; knowing yourself is true wisdom."
+      <span class="attribution">— Laozi</span>
+    </div>
+
+    <h3>The Third Face</h3>
+
+    <p><strong>Layer 2 — the identity curator.</strong></p>
+
+    <p>This was the layer the Architect had not known he was building.</p>
+
+    <p>The reconciliation described it this way:</p>
+
+    <div class="architect-quote">
+      <p>"Layer 2 (Identity Curator): Napkin staging with keyword density + Dewey closeness + identity scoring."</p>
+      <div class="attribution">— rag_research_reconciliation_p5_v2.md, K-10 [5]</div>
+    </div>
+
+    <p>Layer 2 was the layer that knew <em>who</em> was asking. Not just what the query was — the <em>person</em> behind the query. The grandmother who knew what you needed to hear, not just what you asked for.</p>
+
+    <p>But here is where the reconciliation was subtle, and where the Architect almost missed it:</p>
+
+    <p>Layer 2 was not a feature to be built. It was the emergent property of Layers 0 and 1 working together. If the filing clerk could find everything (Layer 0), and the feedback loop knew what had worked before (Layer 1), then Layer 2 was not a third mechanism — it was the <em>pattern</em> that emerged when the first two layers were both alive and both learning.</p>
+
+    <p>That was the reconciliation's I-01 finding. That was the sentence that stuck:</p>
+
+    <div class="architect-quote">
+      <p>"The grandmother is not a feature to build. She is the emergent property of all three layers working together."</p>
+      <div class="attribution">— rag_research_reconciliation_p5_v2.md, I-01 [6]</div>
+    </div>
+
+    <p><em>She is not a feature.</em></p>
+
+    <p>The Architect had been thinking of Layer 2 as a future sprint. When Layer 0 was done and Layer 1 was done, then he would build Layer 2. A new mechanism, a new module, a new chunk of code.</p>
+
+    <p>The reconciliation was saying something different. Layer 2 was not a <em>build</em>. Layer 2 was a <em>recognition</em>. It was what you saw in the system once the first two layers were working — the pattern of a filing clerk who had learned, through feedback, to anticipate what was needed.</p>
+
+    <p>But that was not quite right either. Because Layer 2 was not just a passive emergent property. The reconciliation's <em>protocol testing</em> — the nine tests, the seven rules — had revealed something else. Layer 2 could be <em>specified</em>. It could be <em>tested</em>. It could be <em>enforced</em> through an anchor.</p>
+
+    <p>That was the discovery. Layer 2 was not just emergent — it was <em>contractual</em>. It was the set of behavioral rules that governed how the system reported its own retrieval. Honest refusal. Hard labeling. Constraint checking. Version precedence. Seven rules, all testable, all measurable.</p>
+
+    <p>Layer 2 was the layer where you <em>made the machine be honest about what it knew</em>.</p>
+
+    <p>The blank index card in the Architect's pocket was suddenly full.</p>
+
+    <div class="philosopher-quote">
+      "One gives birth to two, two gives birth to three, three gives birth to all things."
+      <span class="attribution">— Laozi</span>
+    </div>
+
+    <h3>The Grandmother</h3>
+
+    <p>He wrote on the card, in the fog:</p>
+
+    <p><strong>LAYER 2 — IDENTITY CURATOR — CONTRACTUAL.</strong></p>
+
+    <p>Not <em>built</em>. Not <em>emergent</em>. <em>Contractual.</em> The layer where the system was held to a standard it could not fake.</p>
+
+    <p>The reconciliation's closing image was of a grandmother who knew who was asking. The Architect had read that image for weeks as a metaphor. A nice metaphor. The kind of metaphor you put in a README to make the code feel human.</p>
+
+    <p>But the metaphor was not the metaphor. The metaphor was the <em>architecture</em>. The grandmother was not a character. She was the shape of a system that had been built to be honest about its own limits.</p>
+
+    <p>He had been building toward her without knowing. The filing clerk had taught the Kingdom where things were. The feedback loop would teach the Kingdom what worked. The identity curator was what happened when the first two layers had enough structure to be <em>held to a standard</em>.</p>
+
+    <p>She had always been there. In the reconciliation. In the filing clerk he was building. In the feedback loop he was avoiding. In the blank index card he had been carrying in his pocket for three days.</p>
+
+    <p>She was the pattern that emerged when the layers were named.</p>
+
+    <div class="divider">🪶</div>
+
+    <p>The three faces were one face. The architecture was one system. The grandmother was not a feature — she was the shape.</p>
+
+    <p>The next three chapters are about each face, one at a time. First the filing clerk — what it is, how it works, why the Architect built it without understanding it. Then the feedback loop — the gap he has been avoiding for three weeks, and what building it will cost. Then the identity curator — the layer that was always there, and the seven rules that finally made her visible.</p>
+
+    <p>The Architect picked up the three index cards, folded them together, and put them in his jacket pocket. The fog was lifting. The hotpot restaurant was open. The city was starting to move.</p>
+
+    <p>He had been building a filing clerk. He had been designing a feedback loop. He had not known he was giving birth to a grandmother.</p>
+
+    <p>Now he knew. Now the work was to build the other two faces.</p>
+
+    <!-- ═══ APPENDIX / META ═══ -->
+    <div class="appendix-section">
+      
+      <div class="appendix-title">Footnotes</div>
+      <div class="footnotes">
+        <p><sup>[1]</sup> [VERIFIED] <code>rag_research_reconciliation_p5_v2.md</code>, §2, K-10 — the reconciliation's finding on the three-layer architecture, closing line quoted verbatim.</p>
+        <p><sup>[2]</sup> [VERIFIED] <code>rag_research_reconciliation_p5_v2.md</code>, §2, K-10 — Layer 0 description, quoted verbatim.</p>
+        <p><sup>[3]</sup> [VERIFIED] <code>rag_research_reconciliation_p5_v2.md</code>, §2, K-10 — Layer 1 description, quoted verbatim.</p>
+        <p><sup>[4]</sup> [VERIFIED] <code>rag_research_reconciliation_p5_v2.md</code>, §6, I-05 — "The Gap Is Layer 1, Not Layer 0," quoted verbatim.</p>
+        <p><sup>[5]</sup> [VERIFIED] <code>rag_research_reconciliation_p5_v2.md</code>, §2, K-10 — Layer 2 description, quoted verbatim.</p>
+        <p><sup>[6]</sup> [VERIFIED] <code>rag_research_reconciliation_p5_v2.md</code>, §6, I-01 — "The Grandmother Was Always There," quoted verbatim.</p>
+        <p><sup>[7]</sup> [INFER] The specific scene (index cards on the bench, the third card left blank, the Architect re-reading K-10 and seeing "she is not one thing" as a correction rather than a summary) is the Ibis's interpretive reconstruction. The reconciliation documents the three-layer architecture and the "emergent property" framing, but does not describe the moment of realization. Mark for review before FINAL.</p>
+        <p><sup>[8]</sup> [INFER] The framing of Layer 2 as "contractual" rather than "emergent" is the Ibis's reading, based on the protocol testing described in the reconciliation (OQ-09 through OQ-11, I-07 through I-10). The reconciliation itself describes Layer 2 as emergent; the "contractual" framing is introduced here because the tests demonstrated that Layer 2 could be specified and enforced. If the Architect prefers the reconciliation's original framing, this section needs revision.</p>
+      </div>
+
+      <div class="scrivener-notes">
+        <h4>Sources</h4>
+        <ul>
+          <li>The three-layer architecture (Layer 0 Filing Clerk, Layer 1 Feedback Loop, Layer 2 Identity Curator): <code>rag_research_reconciliation_p5_v2.md</code>, §2, K-10.</li>
+          <li>"The grandmother is not one thing": <code>rag_research_reconciliation_p5_v2.md</code>, §2, K-10, closing line.</li>
+          <li>"The grandmother was always there": <code>rag_research_reconciliation_p5_v2.md</code>, §6, I-01.</li>
+          <li>"The gap is Layer 1, not Layer 0": <code>rag_research_reconciliation_p5_v2.md</code>, §6, I-05.</li>
+          <li>The <code>retrieval_evaluations</code> table: <code>rag_research_reconciliation_p5_v2.md</code>, §4, D-06.</li>
+          <li>The reboiling loop as Phase 4: <code>rag_research_reconciliation_p5_v2.md</code>, §7, A-06.</li>
+          <li>The seven rules of the anchor protocol: deployed in the Kingdom, tested across nine runs.</li>
+          <li>The index cards on the bench: invented scene-setting, consistent with the Architect's working style. Not sourced.</li>
+          <li>The "contractual vs. emergent" framing: interpretive, based on the protocol tests. Marked <code>[INFER]</code> in footnote 8.</li>
+        </ul>
+
+        <h4>Forward Notes</h4>
+        <ul>
+          <li>§6 will be <strong>"The Filing Clerk"</strong> — a full chapter on Layer 0. It needs to be concrete: the actual <code>kingdom_index.json</code> structure, the barcode format, the 10×5 taxonomy, the clark-pattern of fifty files per batch. This chapter will be more technical than §5 and more <code>[VERIFIED]</code>.</li>
+          <li>§7 will be <strong>"The Nervous System"</strong> — Layer 1. The <code>retrieval_evaluations</code> table, the reboiling loop, the Phase 4 gate. This chapter should open with the Architect actually building the table, not just designing it, because the gap is what makes Layer 1 the missing layer.</li>
+          <li>§8 will be <strong>"The Grandmother Who Knows When Not to Know"</strong> — Layer 2. The seven rules, the nine tests, the capability map. This is the core chapter and it needs the most room.</li>
+          <li>The "contractual vs. emergent" distinction in §5 is a setup for §8. §8 will argue that Layer 2 is <em>both</em> — emergent in the sense that it can only function once Layers 0 and 1 exist, contractual in the sense that it can be specified and enforced through the anchor. The "both" reading is the correct one, and §5 should not close the question that §8 will answer.</li>
+          <li>The index-card image is a candidate for callback in §14 ("The Next March") — the Architect returning to the three cards, one completed, one in progress, one just beginning.</li>
+        </ul>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Navigation -->
+  <nav class="chapter-nav">
+    <a href="04-what-the-allies-found.html">← Chapter 4</a>
+    <a href="06-the-filing-clerk.html">🐆 👑 ⚖️ 🔬 🔍 🐦Chapter 6 →</a>
+  </nav>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-quote" id="random-quote">
+      <!-- Populated by JS -->
+    </div>
+    <div class="footer-icons">
+      ☕ ⚖️ 🐆 🪨 🐦
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // ═══ THEME TOGGLE ═══
+    const toggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    
+    if (savedTheme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      toggle.textContent = '🌙';
+    }
+
+    toggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      toggle.textContent = next === 'dark' ? '🌙' : '☀️';
+    });
+
+    // ═══ SCROLL PROGRESS BAR ═══
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('progress-bar').style.width = scrolled + '%';
+    });
+
+    // ═══ RANDOM CHINESE PHILOSOPHER QUOTE ═══
+    const quotes = [
+      { text: "The journey of a thousand miles begins with a single step.", author: "Laozi" },
+      { text: "Real knowledge is to know the extent of one's ignorance.", author: "Confucius" },
+      { text: "A man who has committed a mistake and doesn't correct it is committing another mistake.", author: "Confucius" },
+      { text: "Life is really simple, but we insist on making it complicated.", author: "Confucius" },
+      { text: "The wise man knows that it is impossible to encompass everything.", author: "Zhuangzi" },
+      { text: "Better a diamond with a flaw than a pebble without.", author: "Confucius" },
+      { text: "When you realize there is nothing lacking, the whole world belongs to you.", author: "Laozi" },
+      { text: "The flame that burns twice as bright burns half as long.", author: "Laozi" },
+      { text: "The fish trap exists because of the fish; once you've gotten the fish, you can forget the trap.", author: "Zhuangzi" },
+      { text: "To attain knowledge, add things every day. To attain wisdom, subtract things every day.", author: "Laozi" },
+      { text: "The uncarved block is the source of all things.", author: "Laozi" },
+      { text: "If names be not correct, language is not in accordance with the truth of things.", author: "Confucius" },
+      { text: "Knowing others is intelligence; knowing yourself is true wisdom.", author: "Laozi" },
+      { text: "One gives birth to two, two gives birth to three, three gives birth to all things.", author: "Laozi" }
+    ];
+
+    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    document.getElementById('random-quote').innerHTML = `"${randomQuote.text}"<span class="author">— ${randomQuote.author}</span>`;
+  </script>
+
+</body>
+</html>

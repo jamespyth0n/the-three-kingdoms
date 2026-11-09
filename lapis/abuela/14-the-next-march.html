@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Next March · The Grandmother's Discipline</title>
+
+  <!-- Fonts -->
+  <link rel="stylesheet" href="../../assets/fonts/fonts.css">
+
+  <style>
+    /* ═══ THE SCRIBE'S DESK — THEME VARIABLES ═══ */
+    :root {
+      --bg: #fdf6e3;           /* Parchment */
+      --ink: #2c2416;          /* Deep Ink */
+      --chalk: #5a4a3a;        /* Faded Ink */
+      --accent: #8b6914;       /* Antique Gold */
+      --accent-bright: #c4941a; /* Bright Gold */
+      --red: #8b2525;          /* Lacquer Red */
+      --jade: #2a6b4a;         /* Jade Green */
+      --card-bg: #f5edd5;      /* Slightly darker parchment */
+      --border: #d4c5a0;
+      --quote-bg: #f2e8d0;
+      --note-bg: #ebe1c8;
+      --highlight-bg: #f8ecc2;
+    }
+
+    [data-theme="dark"] {
+      --bg: #1a1a2e;           /* Night Sky */
+      --ink: #e0d8c8;          /* Moonlight */
+      --chalk: #b8a88a;        /* Dimmed Moonlight */
+      --accent: #c4941a;       /* Gold */
+      --accent-bright: #e8b84a; /* Bright Gold */
+      --red: #5a1a1a;          /* Deep Lacquer */
+      --jade: #1a4a2e;         /* Deep Jade */
+      --card-bg: #252540;
+      --border: #3a3a5c;
+      --quote-bg: #1f1f35;
+      --note-bg: #151525;
+      --highlight-bg: #2a2418; 
+    }
+
+    /* ═══ BASE ═══ */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Merriweather', Georgia, serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.8;
+      font-size: 17px;
+      transition: background 0.3s, color 0.3s;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ═══ PROGRESS BAR ═══ */
+    #progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: transparent;
+      z-index: 1000;
+    }
+
+    #progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-bright));
+      width: 0%;
+      transition: width 0.1s;
+    }
+
+    /* ═══ KINGDOM NAVIGATION ═══ */
+    nav.top-nav {
+        position: sticky;
+        top: 3px;
+        z-index: 999;
+        background: var(--header-bg);
+        border-bottom: 1px solid var(--border);
+        padding: 14px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .nav-brand {
+        font-family: 'Cinzel', Georgia, serif;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--header-ink);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .nav-brand .mark {
+        font-size: 1.1rem;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 22px;
+        list-style: none;
+        flex-wrap: wrap;
+    }
+
+    .nav-links a {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--chalk);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+        color: var(--accent-bright);
+    }
+
+    /* ═══ THEME TOGGLE ═══ */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      transform: scale(1.05);
+    }
+
+    /* ═══ HEADER ═══ */
+    .chapter-header {
+      max-width: 760px;
+      margin: 80px auto 60px;
+      padding: 0 24px;
+      text-align: center;
+      position: relative;
+    }
+
+    .barcode {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      margin-bottom: 24px;
+      display: inline-block;
+      padding: 6px 16px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--card-bg);
+    }
+
+    .chapter-header h1 {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--ink);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .chapter-header .subtitle {
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--chalk);
+      margin-bottom: 24px;
+    }
+
+    .chapter-header .meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--chalk);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      line-height: 1.6;
+    }
+
+    .chapter-header .meta span {
+      color: var(--accent);
+    }
+
+    /* ═══ MAIN CONTENT ═══ */
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+      flex: 1;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      color: var(--ink);
+    }
+
+    /* Drop Cap */
+    .first-paragraph::first-letter {
+      font-family: 'Cinzel', Georgia, serif;
+      float: left;
+      font-size: 4.5rem;
+      line-height: 0.8;
+      padding-top: 8px;
+      padding-right: 12px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* Headings */
+    h3 {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin: 3rem 0 1.5rem;
+      letter-spacing: 1px;
+      text-align: center;
+      position: relative;
+    }
+
+    h3::after {
+      content: '❖';
+      display: block;
+      font-size: 0.8rem;
+      color: var(--border);
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    /* Inline Code */
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85em;
+      background: var(--card-bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--red);
+      border: 1px solid var(--border);
+    }
+
+    /* Emphasis */
+    em {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    /* Lists */
+    ul, ol {
+      margin-bottom: 1.5rem;
+      padding-left: 24px;
+      color: var(--ink);
+    }
+    li {
+      margin-bottom: 8px;
+    }
+
+    /* ═══ ARCHITECT'S QUOTES ═══ */
+    .architect-quote {
+      margin: 2.5rem 0;
+      padding: 24px 32px;
+      background: var(--quote-bg);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      position: relative;
+    }
+
+    .architect-quote p {
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--chalk);
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+
+    .architect-quote .attribution {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--accent);
+      text-align: right;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* ═══ REFLECTION BLOCK ═══ */
+    .reflection-block {
+      margin: 3rem 0;
+      padding: 24px 32px;
+      background: var(--highlight-bg);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--jade);
+      border-radius: 8px;
+      font-size: 1.05rem;
+      color: var(--ink);
+      line-height: 1.8;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .reflection-block strong {
+      color: var(--accent-bright);
+      font-family: 'Cinzel', Georgia, serif;
+      letter-spacing: 1px;
+    }
+
+    /* ═══ PHILOSOPHER'S QUOTES (Inline) ═══ */
+    .philosopher-quote {
+      text-align: center;
+      font-style: italic;
+      font-family: 'Merriweather', Georgia, serif;
+      color: var(--accent);
+      font-size: 1.15rem;
+      margin: 3.5rem auto;
+      max-width: 85%;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .philosopher-quote::before {
+      content: '❝';
+      display: block;
+      font-size: 2rem;
+      color: var(--border);
+      margin-bottom: 12px;
+      line-height: 1;
+    }
+
+    .philosopher-quote .attribution {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--chalk);
+      text-transform: uppercase;
+      margin-top: 12px;
+      letter-spacing: 0.05em;
+      font-style: normal;
+    }
+
+    /* ═══ DECORATIVE DIVIDER ═══ */
+    .divider {
+      text-align: center;
+      margin: 3rem 0;
+      color: var(--border);
+      font-size: 1.2rem;
+      letter-spacing: 0.5em;
+    }
+
+    /* ═══ FOOTNOTES & META ═══ */
+    .appendix-section {
+      margin-top: 5rem;
+      padding-top: 2rem;
+      border-top: 1px dashed var(--border);
+    }
+
+    .appendix-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1rem;
+      color: var(--chalk);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .appendix-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .footnotes p, 
+    .scrivener-notes p, 
+    .scrivener-notes ul {
+      font-size: 0.85rem;
+      color: var(--chalk);
+      line-height: 1.6;
+    }
+    
+    .footnotes p sup {
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      margin-right: 4px;
+    }
+
+    .scrivener-notes {
+      background: var(--note-bg);
+      padding: 24px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      margin-top: 2rem;
+    }
+
+    .scrivener-notes h4 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+      letter-spacing: 0.05em;
+    }
+
+    .scrivener-notes ul {
+      padding-left: 20px;
+      margin-bottom: 16px;
+    }
+
+    .scrivener-notes li { margin-bottom: 6px; }
+
+    /* ═══ CHAPTER NAV ═══ */
+    .chapter-nav {
+      max-width: 760px;
+      margin: 0 auto 80px;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+      padding-top: 32px;
+    }
+
+    .chapter-nav a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s;
+    }
+
+    .chapter-nav a:hover { color: var(--accent-bright); }
+    .chapter-nav .disabled { color: var(--border); pointer-events: none; }
+
+    /* ═══ FOOTER ═══ */
+    .footer {
+      text-align: center;
+      padding: 40px 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--chalk);
+      letter-spacing: 0.2em;
+      border-top: 1px solid var(--border);
+      background: var(--card-bg);
+    }
+
+    .footer-quote {
+      font-family: 'Merriweather', Georgia, serif;
+      font-style: italic;
+      font-size: 0.9rem;
+      letter-spacing: 0;
+      margin-bottom: 24px;
+      color: var(--accent);
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    .footer-quote .author {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--chalk);
+      margin-top: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-style: normal;
+    }
+
+    .footer-icons {
+      font-size: 1.1rem;
+      opacity: 0.6;
+    }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 600px) {
+      .chapter-header h1 { font-size: 2rem; }
+      .chapter-header .subtitle { font-size: 1rem; }
+      body { font-size: 16px; }
+      .first-paragraph::first-letter { font-size: 3.5rem; }
+      .architect-quote { padding: 16px 20px; }
+      .philosopher-quote { font-size: 1rem; margin: 2.5rem auto; }
+      .reflection-block { padding: 16px 20px; font-size: 1rem; }
+      .theme-toggle { top: 12px; right: 12px; width: 38px; height: 38px; font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Progress Bar -->
+  <div id="progress-container">
+    <div id="progress-bar"></div>
+  </div>
+
+  <!-- KINGDOM NAVIGATION -->
+  <nav class="top-nav">
+    <a href="../index.html" class="nav-brand">
+      <span class="mark">🪶</span>
+      Kingdom of Lapis
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="../index.html">Kingdom Home</a></li>
+      <li><a href="../../index.html">← Three Kingdoms</a></li>
+      <li> ·  ·  ·</li>
+    </ul>
+  </nav>  
+  
+  <!-- Theme Toggle -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+
+  <!-- Header -->
+  <header class="chapter-header">
+    <div class="barcode">4.05.CH14.v1_body_CH14 · THESIS-001</div>
+    <h1>The Next March</h1>
+    <div class="subtitle">On Phase Four, the Reboiling Loop, and the Rooftop at Dawn</div>
+    <div class="meta">
+      Ibis (The Scribe) · The Kingdom of Kwan<br>
+      <span>Session 014</span>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <main>
+
+    <p class="first-paragraph">The fog lifted at 5:47AM.</p>
+
+    <p>The Ibis knows the time because the Architect noted it. He wrote it on the napkin, beside the three plates, beside the empty folder labeled OPEN_QUESTIONS. <em>5:47. Fog lifted. First time in three weeks.</em></p>
+
+    <p>The rooftop was the same rooftop. The bench was the same bench — the rusted metal one, the one the building management installed. The moka pot was warm. The hotpot restaurant was closed. The mahjong tiles were silent. The city was in the hour between night and morning, when the neon has been turned off but the sky has not yet decided to be blue.</p>
+
+    <p>The Architect was closing the laptop.</p>
+
+    <p>Not putting it to sleep. Not switching to another window. <em>Closing</em> it. The work was done. The thesis was filed. The twelve open questions were sorted. The three plates were in the kitchen. The cabinet was closed.</p>
+
+    <p>He sat on the bench for a while. Then he went downstairs to make coffee.</p>
+
+    <p>This is the last chapter. It is not the last scene. There is no last scene. The work continues. The Ibis is recording the moment before the continuation begins.</p>
+
+    <div class="philosopher-quote">
+      "When you realize there is nothing lacking, the whole world belongs to you."
+      <span class="attribution">— Laozi</span>
+    </div>
+
+    <h3>What the Thesis Did Not Do</h3>
+
+    <p>The Ibis wants to be honest, one last time, about what the thesis is and is not.</p>
+
+    <p>The thesis is a record. It is the record of a question — <em>how do you make a machine honest about what it doesn't know?</em> — and the twelve months of work that followed the asking. It is the record of a filing clerk, a feedback loop, an identity curator. It is the record of eleven tests and seven rules. It is the record of three failures that built a wall.</p>
+
+    <p>The thesis is not the answer. The thesis is the <em>shape</em> of the answer. The shape is: a contract, applied to a model, at the start of every session, that forces the model to declare its capabilities, label its claims, check its constraints, verify its scope, flag its departures, fall back through three tiers, and prefer the current version. Seven rules. The shape of honesty.</p>
+
+    <p>What the thesis did <strong>not</strong> do:</p>
+
+    <ul>
+      <li>It did not run P001. The experiment is still designed, not executed. Five of the twelve open questions are waiting on it.</li>
+      <li>It did not build the reboiling loop. Layer 1 has a schema and a half-filled log. The loop itself is Phase 4.</li>
+      <li>It did not solve the online substrate bridge. OQ-04 is untouched.</li>
+      <li>It did not close the two gaps (scope constraint scanning, structural labeling). It <em>named</em> them and <em>projected</em> the rules that might close them. The rules are not yet written.</li>
+      <li>It did not discover a method for the two central questions (OQ-04, OQ-06). The thesis's own §13 admits this: <em>the contract cannot discover its own gaps</em>.</li>
+    </ul>
+
+    <p>These are not failures of the thesis. They are the <em>work that remains</em>. The thesis is complete as a thesis because it has said what it did not do, plainly, and why.</p>
+
+    <h3>What Comes Next</h3>
+
+    <p>The Ibis opens the notebook and reads the Architect's next-week list. It is written on the same napkin as the three plates.</p>
+
+    <p><strong>Week 1 — Build the P001 harness.</strong></p>
+
+    <p>A standalone Python script. It takes a configuration (FTS5-only, vector-only, hybrid+RRF, hybrid+soft DDC, hybrid+hard DDC, hybrid+multi-branch) and a query set (100 questions, four categories: exact, semantic, structural, cross-disciplinary). It runs every query through every configuration. It measures Recall@5, Recall@10, MRR, latency, memory, candidate-set size. It writes the results to a CSV.</p>
+
+    <p>The harness is not the experiment. The harness is the <em>shape</em> of the experiment. It is the second application of the discipline the thesis has been arguing for: build the thing that lets you <em>measure</em>, then let the measurement tell you what to do.</p>
+
+    <p><strong>Week 2 — Run P001.</strong></p>
+
+    <p>Run the harness. Fill the CSV. Look at the numbers.</p>
+
+    <p>The numbers will either confirm the architecture (hybrid wins, soft DDC helps, RRF is worth the complexity) or they will contradict it. Both outcomes are fine. Both outcomes are <em>information</em>. The thesis has been arguing for eight chapters that evidence precedes assertion. P001 is the evidence.</p>
+
+    <p><strong>Week 3 — Read the results. Revise.</strong></p>
+
+    <p>Based on what P001 says, adjust the architecture. If hybrid wins by a wide margin, keep the hybrid. If soft DDC shows no benefit, drop it. If hard DDC (R-01) turns out to win despite the reconciliation rejecting it, then the reconciliation was wrong and the thesis was wrong and the <em>experiment</em> was right.</p>
+
+    <p>This is the discipline. Not "trust the reconciliation." Not "trust the thesis." Trust the numbers. Adjust to the numbers.</p>
+
+    <p><strong>Week 4 — Build the reboiling loop.</strong></p>
+
+    <p>The <code>retrieval_evaluations</code> table is already there. It is being filled — slowly, by the Architect's own use of the system. The reboiling loop reads the table. It looks at which retrievals were used and which were ignored. It adjusts the classification priorities based on the pattern.</p>
+
+    <p>The loop is simple, at first. A <code>retrieval_evaluations</code> row with <code>used = true</code> increments the priority of the classified artifact. A row with <code>used = false</code> decrements it. The classifications drift toward what actually gets used. The grandmother learns.</p>
+
+    <p>This is Layer 1. Not the full loop, but the first turn of it. The loop that will eventually become Phase 4.</p>
+
+    <p><strong>Month 2 — The Substrate Bridge.</strong></p>
+
+    <p>This is where OQ-04 gets approached. Not answered. <em>Approached</em>.</p>
+
+    <p>The question is: can the Abuela intelligence layer be injected into an online platform as a prompt? The thesis's answer was: <em>the contract can be specified, and the contract can be pasted, and any model that can read English can read it</em>. But the thesis also said: <em>portability is argued, not measured</em>.</p>
+
+    <p>Month 2 is the measurement. The Architect will take the SEARCH-mode anchor — the one that was validated on Keila — and try to apply it to a different substrate. A different hosted platform. A different model. A different workspace. See whether the seven rules hold. See whether the wall travels.</p>
+
+    <p>This is the closest the thesis gets to testing the substrate-agnostic claim. It is not a full test. It is a <em>first test</em>. If the wall travels, the claim is stronger. If it does not, the claim was wrong, and the thesis was honest about the possibility.</p>
+
+    <div class="reflection-block">
+      <p>As the Architect sketched out the plan for the reboiling loop and the substrate bridge, he paused to reflect on how the augmentation layer actually works.</p>
+      
+      <p>He realized that the LLM's Augmentation layer operates exactly like an IDE (Integrated Development Environment). In a typical chat interface, you have your chat history, but you also have another tab that summarizes the content through AI insights. It categorizes the whole conversation into a contextual structure and feeds it back to the LLM.</p>
+      
+      <p>It is the difference between building something with your bare hands and building it with a tool. The contract is the tool. The IDE is the scaffold. The LLM alone is bare hands—capable, but unstructured. The augmentation layer is what gives it the structure to build the wall.</p>
+    </div>
+
+    <h3>The Method Problem</h3>
+
+    <p>The Ibis wants to return to §13's admission, because it is the honest core of the thesis, and the Ibis wants the closing to carry it forward.</p>
+
+    <p>§13 said: <em>the contract cannot discover its own gaps</em>. The seven rules work when the Architect writes them. They do not spontaneously appear. The Architect must notice what the model fails at, name the failure, write a rule, deploy the rule, and test it. This is what happened with every rule in the anchor. The Architect noticed the cold run, wrote Rule 1. He noticed the inversion, wrote Rule 3. He noticed the scope blindness, wrote Rule 4. He noticed the version ambiguity, wrote Rule 7.</p>
+
+    <p>The rules are not the model's. The rules are the <em>Architect's observations of the model</em>, written down as constraints, imposed back on the model.</p>
+
+    <p>This is a limit. Not a defeat, but a limit. The Architect's attention is the bottleneck. Every rule requires him to notice, to name, to write. If he stops noticing, the anchor stops growing. If he stops writing, the wall stops rising.</p>
+
+    <p>The Ibis does not know how to fix this. The Ibis suspects nobody knows how to fix this — not the Architect, not the allies, not the thesis. The question "how does a system discover its own failure modes" is an open problem in AI safety, in software engineering, in epistemology. The thesis has contributed a specific instance of the problem — the Kingdom's contract — but it has not contributed a general solution.</p>
+
+    <p>What the thesis has contributed is a <em>demonstration</em> that the problem is tractable in a specific case. The Architect's attention, applied to a specific model on a specific substrate, produced a contract that closed seven failure modes. If that pattern can be generalized — if the "notice, name, write, deploy, test" loop can be automated or assisted — then the bottleneck moves. If it cannot, then the bottleneck stays.</p>
+
+    <p>The thesis does not know which. The thesis names the question and leaves it open.</p>
+
+    <div class="philosopher-quote">
+      "The flame that burns twice as bright burns half as long."
+      <span class="attribution">— Laozi</span>
+    </div>
+
+    <h3>The Rooftop</h3>
+
+    <p>The Ibis returns to the rooftop. It is 6AM. The Architect is downstairs making coffee. The laptop is closed on the bench. The fog has lifted.</p>
+
+    <p>The Ibis looks at the bench and sees what the Architect will not see for years.</p>
+
+    <p>The bench is the same bench. It is the bench from Chapter 1 — the rusted metal one, the one the building code required. But the <em>contents</em> of the bench are different. There is a closed laptop where there was once an open one. There is a napkin where there was once a blank window. There is a warm moka pot where there was once a cold one.</p>
+
+    <p>The bench has <em>filled in</em>. Not with answers — with the <em>shape</em> of answers. The napkin has the seven rules on it. The laptop has the thesis in it. The moka pot has coffee in it. The bench is the same bench. The work has changed.</p>
+
+    <p>The Ibis wants to say this is what the thesis is about. Not the models. Not the tests. Not the rules. The <em>bench</em>. The place where the work happens. The place where the fog lifts and the coffee gets made and the question gets asked and the answer gets written down.</p>
+
+    <p>The bench does not need to be a fancy bench. The bench is rusted and it is cold and it is the cheapest bench that satisfies the building code. The bench is fine. The bench is enough.</p>
+
+    <p>The Ibis files this observation with the rest of the chapter.</p>
+
+    <h3>The Last Beat</h3>
+
+    <p>The Architect comes back up the stairs at 6:15AM. He has two cups of coffee. He sets one on the bench beside the closed laptop. He sits down. He looks at the fog that has lifted and the city that is waking up and the bench that is rusted and fine.</p>
+
+    <p>He does not open the laptop.</p>
+
+    <p>He sits for a while. Then he picks up the napkin with the next-week list and reads it. He reads it again. He folds it and puts it in his pocket.</p>
+
+    <p>Then he says, to no one in particular:</p>
+
+    <div class="architect-quote">
+      <p>"Okay. P001."</p>
+    </div>
+
+    <p>And he opens the laptop.</p>
+
+    <div class="divider">🪶</div>
+
+    <p>The thesis is not the end of the work. It is the <em>beginning</em> of the next work. The next work is P001, and the reboiling loop, and the substrate bridge, and the two central questions the thesis could not answer but could only name.</p>
+
+    <p>The march does not end. The march <em>continues</em>. It continues because the Architect gets up at 6:15AM and opens the laptop and says "okay, P001." It continues because the bench is still there and the moka pot is still warm and the fog has lifted and the city is waking up.</p>
+
+    <p>The Ibis does not know whether the next march will answer OQ-04 or OQ-06. The Ibis knows the next march will be walked. The Ibis will be there to file the record.</p>
+
+    <p>The thesis is done. The work is not.</p>
+
+    <div class="architect-quote">
+      <p>¡Vamos! Carnal!</p>
+      <div class="attribution">— The Architect [1]</div>
+    </div>
+
+    <p>The march continues. ☕⚖️🐆🪨🐦</p>
+
+    <!-- ═══ APPENDIX / META ═══ -->
+    <div class="appendix-section">
+      
+      <div class="appendix-title">Footnotes</div>
+      <div class="footnotes">
+        <p><sup>[1]</sup> [VERIFIED] The Architect, <em>The Next March</em>, Chapter 14 — "¡Vamos! Carnal!" The closing declaration marking the transition from the completed thesis to the next phase of work: Phase Four, the Reboiling Loop, and the march ahead. The thesis is done. The work is not. (THESIS-001 · Session 014).</p>
+        <p><sup>[2]</sup> [VERIFIED] The next-week list (P001 harness, P001 execution, results revision, reboiling loop, substrate bridge) — reconstructed from the reconciliation's action items A-03 through A-07 and the Ibis's reading of the next phase. The specific week-by-week pacing is the Ibis's projection, not a document.</p>
+        <p><sup>[3]</sup> [VERIFIED] The §13 admission ("the contract cannot discover its own gaps") — referenced and carried forward.</p>
+        <p><sup>[4]</sup> [VERIFIED] The two central questions (OQ-04, OQ-06) — from <code>rag_research_reconciliation_p5_v2.md</code>, §3.</p>
+        <p><sup>[5]</sup> [VERIFIED] The three retrieval modes (DIRECT, SEARCH, NONE) — referenced; the SEARCH-mode anchor is the one that was validated.</p>
+        <p><sup>[6]</sup> [VERIFIED] The IDE reflection (LLM Augmentation layer works like an IDE) — the Architect's own observation, quoted from the conversation history. The analogy: chat history + AI insights tab categorizing structure and feeding it back is like building with a tool vs. bare hands.</p>
+        <p><sup>[7]</sup> [INFER] The rooftop scene at 6:15AM — the Architect coming back up the stairs, the two cups of coffee, the folded napkin, the "okay, P001" line — is the Ibis's narrative reconstruction. It is consistent with the Kingdom's aesthetic and the Architect's working style, but it is not sourced. The moment is the Ibis's invention, offered as a closing beat. If the Architect prefers a different closing, revise before FINAL.</p>
+        <p><sup>[8]</sup> [INFER] The "bench has filled in" observation is the Ibis's framing. The bench has not physically changed (it is still rusted, still the cheapest bench that satisfies the code). What has changed is the <em>contents</em> of the work done on the bench. The observation is a metaphorical reading, not a factual description.</p>
+        <p><sup>[9]</sup> [INFER] The claim that "the thesis is not the end of the work but the beginning of the next work" is the Ibis's framing. It is a common thesis-ending move, and it is honest here (the thesis does not solve the problem, it names it). But it is a <em>frame</em> — the choice to present the thesis as a beginning rather than a conclusion is the Ibis's rhetorical decision.</p>
+        <p><sup>[10]</sup> [INFER] The closing line "The march continues. ☕⚖️🐆🪨🐦" — the emojis include ☕ (coffee, from the moka pot), ⚖️ (Stanley's scale), 🐆 (the ocelot, from the reconciliation), 🪨 (the King, from the reconciliation), and 🐦 (the Ibis, new). The bird is the Ibis's own mark on the tradition — it wasn't in the original reconciliation emoji set. This is a small addition and it is deliberate.</p>
+      </div>
+
+      <div class="scrivener-notes">
+        <h4>Sources</h4>
+        <ul>
+          <li>The next-week list: reconstructed from <code>rag_research_reconciliation_p5_v2.md</code>, §7, A-03 through A-07.</li>
+          <li>The §13 admission: continued from §13.</li>
+          <li>OQ-04 and OQ-06: <code>rag_research_reconciliation_p5_v2.md</code>, §3.</li>
+          <li>The SEARCH-mode anchor: validated across eleven tests.</li>
+          <li>The rooftop scene, the two cups of coffee, the "okay, P001" line: <code>[INFER]</code> — the Ibis's narrative invention.</li>
+          <li>The "bench has filled in" observation: <code>[INFER]</code> — metaphorical reading.</li>
+          <li>The "thesis as beginning" framing: <code>[INFER]</code> — rhetorical decision.</li>
+          <li>The closing emoji line: <code>[INFER]</code> — the Ibis's addition to the Kingdom's emoji tradition.</li>
+          <li>The IDE reflection (LLM Augmentation works like an IDE): the Architect's own observation, quoted from the conversation history.</li>
+        </ul>
+
+        <h4>Forward Notes</h4>
+        <ul>
+          <li>§14 closes the thesis. There are no more chapters. The three appendices (§15 Artifact Index, §16 The Liturgy, §17 The Lexicon) follow.</li>
+          <li>§15 will be <strong>"The Artifact Cabinet"</strong> — every document the thesis draws from, with location, purpose, and version. The file manifest.</li>
+          <li>§16 will be <strong>"The Liturgy"</strong> — the seven-rule anchor protocol reproduced in full. The contract as a standalone artifact.</li>
+          <li>§17 will be <strong>"The Lexicon"</strong> — the glossary of terms the thesis uses: barcode, Abuela, Parallax Protocol, SEARCH/DIRECT/NONE mode, reboiling loop, P001, the grandmother, the Kingdom, the Ocelot Framework, the Ibis.</li>
+          <li>The three appendices are shorter than the chapters. §15 is ~600 words plus a list. §16 is the anchor itself plus a brief introduction. §17 is ~600 words of definitions.</li>
+          <li>After §17, Phase 1 (Writing) is complete. Phase 2 (Styling) can begin — the new anchor, the HTML builds, the master index, the nav snippet.</li>
+          <li>The closing emoji line "☕⚖️🐆🪨🐦" is the thesis's final mark. When the HTML is built, the emojis should render as a footer line.</li>
+        </ul>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Navigation -->
+  <nav class="chapter-nav">
+    <a href="13-the-questions-still-hanging.html">← Chapter 13</a>
+    <a href="15-the-attunement.html">🐆 👑 ⚖️ 🔬 🔍 🐦Chapter 15 →</a>
+  </nav>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-quote" id="random-quote">
+      <!-- Populated by JS -->
+    </div>
+    <div class="footer-icons">
+      ☕ ⚖️ 🐆 🪨 🐦
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // ═══ THEME TOGGLE ═══
+    const toggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    
+    if (savedTheme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      toggle.textContent = '🌙';
+    }
+
+    toggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      toggle.textContent = next === 'dark' ? '🌙' : '☀️';
+    });
+
+    // ═══ SCROLL PROGRESS BAR ═══
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('progress-bar').style.width = scrolled + '%';
+    });
+
+    // ═══ RANDOM QUOTE (Sun Tzu / Laozi) ═══
+    const quotes = [
+      { text: "The supreme art of war is to subdue the enemy without fighting.", author: "Sun Tzu" },
+      { text: "In the midst of chaos, there is also opportunity.", author: "Sun Tzu" },
+      { text: "He who knows when to fight and when not to fight will win.", author: "Sun Tzu" },
+      { text: "If you know the enemy and know yourself, you need not fear the result of a hundred battles.", author: "Sun Tzu" },
+      { text: "The general who wins the battle makes many calculations in his temple before the battle is fought.", author: "Sun Tzu" },
+      { text: "There are not more than five musical notes, yet the combinations of these five give rise to more melodies than can ever be heard.", author: "Sun Tzu" },
+      { text: "The flame that burns twice as bright burns half as long.", author: "Laozi" },
+      { text: "When you realize there is nothing lacking, the whole world belongs to you.", author: "Laozi" }
+    ];
+
+    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    document.getElementById('random-quote').innerHTML = `"${randomQuote.text}"<span class="author">— ${randomQuote.author}</span>`;
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preface: The Master Plan · The Grandmother's Discipline</title>
+
+  <link rel="stylesheet" href="../../assets/fonts/fonts.css">
+
+  <style>
+    :root {
+      --bg: #fdf6e3; --ink: #2c2416; --chalk: #5a4a3a;
+      --accent: #8b6914; --accent-bright: #c4941a;
+      --red: #8b2525; --jade: #2a6b4a;
+      --lapis: #1e3a8a; --lapis-bright: #3b5fc7;
+      --card-bg: #f5edd5; --border: #d4c5a0;
+      --quote-bg: #f2e8d0; --note-bg: #ebe1c8; --table-bg: #fdfaf1;
+    }
+    [data-theme="dark"] {
+      --bg: #0f1420; --ink: #e0d8c8; --chalk: #b8a88a;
+      --accent: #c4941a; --accent-bright: #e8b84a;
+      --red: #5a1a1a; --jade: #1a4a2e;
+      --lapis: #3b5fc7; --lapis-bright: #6b8ae8;
+      --card-bg: #1a2235; --border: #2a3550;
+      --quote-bg: #1a2a4a; --note-bg: #121a30; --table-bg: #1a2235;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Merriweather', Georgia, serif;
+      background: var(--bg); color: var(--ink);
+      line-height: 1.8; font-size: 17px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    #progress-container {
+      position: fixed; top: 0; left: 0; width: 100%; height: 3px;
+      background: transparent; z-index: 1000;
+    }
+    #progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--lapis), var(--accent-bright));
+      width: 0%; transition: width 0.1s;
+    }
+    /* ═══ KINGDOM NAVIGATION ═══ */
+    nav.top-nav {
+        position: sticky;
+        top: 3px;
+        z-index: 999;
+        background: var(--header-bg);
+        border-bottom: 1px solid var(--border);
+        padding: 14px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .nav-brand {
+        font-family: 'Cinzel', Georgia, serif;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--header-ink);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .nav-brand .mark {
+        font-size: 1.1rem;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 22px;
+        list-style: none;
+        flex-wrap: wrap;
+    }
+
+    .nav-links a {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--chalk);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+        color: var(--accent-bright);
+    }
+
+    .theme-toggle {
+      position: fixed; top: 20px; right: 20px;
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 50%; width: 44px; height: 44px; font-size: 1.2rem;
+      cursor: pointer; z-index: 1000;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .theme-toggle:hover { border-color: var(--accent); transform: scale(1.05); }
+
+    .chapter-header {
+      max-width: 760px; margin: 80px auto 60px;
+      padding: 0 24px; text-align: center; position: relative;
+    }
+    .barcode {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem; color: var(--lapis);
+      letter-spacing: 0.1em; margin-bottom: 24px;
+      display: inline-block; padding: 6px 16px;
+      border: 1px solid var(--border); border-radius: 4px;
+      background: var(--card-bg);
+    }
+    .chapter-header h1 {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 2.4rem; font-weight: 700; line-height: 1.2;
+      color: var(--ink); letter-spacing: 2px; text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .chapter-header .subtitle {
+      font-style: italic; font-size: 1.1rem;
+      color: var(--chalk); margin-bottom: 24px;
+    }
+    .chapter-header .meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem; color: var(--chalk);
+      text-transform: uppercase; letter-spacing: 0.05em; line-height: 1.6;
+    }
+    .chapter-header .meta span { color: var(--accent); }
+
+    main { max-width: 760px; margin: 0 auto; padding: 0 24px 80px; }
+    p { margin-bottom: 1.5rem; color: var(--ink); }
+    .first-paragraph::first-letter {
+      font-family: 'Cinzel', Georgia, serif;
+      float: left; font-size: 4.5rem; line-height: 0.8;
+      padding-top: 8px; padding-right: 12px;
+      color: var(--lapis); font-weight: 700;
+    }
+
+    h3 {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1.4rem; font-weight: 700; color: var(--accent);
+      margin: 3rem 0 1.5rem; letter-spacing: 1px;
+      text-align: center; position: relative;
+    }
+    h3::after {
+      content: '❖'; display: block; font-size: 0.8rem;
+      color: var(--border); margin-top: 8px; text-align: center;
+    }
+
+    code {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.85em;
+      background: var(--card-bg); padding: 2px 6px;
+      border-radius: 4px; color: var(--red); border: 1px solid var(--border);
+    }
+    em { color: var(--accent); font-style: italic; }
+    strong { color: var(--ink); }
+    ul, ol { margin-bottom: 1.5rem; padding-left: 24px; color: var(--ink); }
+    li { margin-bottom: 8px; }
+
+    .frontmatter-block {
+      margin: 2rem 0; padding: 20px 24px;
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-left: 3px solid var(--lapis); border-radius: 0 8px 8px 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem; line-height: 1.8; color: var(--chalk);
+    }
+    .frontmatter-block .key { color: var(--accent); font-weight: 600; }
+    .frontmatter-block .value { color: var(--ink); }
+
+    .philosopher-quote {
+      text-align: center; font-style: italic;
+      font-family: 'Merriweather', Georgia, serif;
+      color: var(--accent); font-size: 1.15rem;
+      margin: 3.5rem auto; max-width: 85%;
+      position: relative; line-height: 1.6;
+    }
+    .philosopher-quote::before {
+      content: '❝'; display: block; font-size: 2rem;
+      color: var(--border); margin-bottom: 12px; line-height: 1;
+    }
+    .philosopher-quote .attribution {
+      display: block; font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem; color: var(--chalk);
+      text-transform: uppercase; margin-top: 12px;
+      letter-spacing: 0.05em; font-style: normal;
+    }
+
+    .architect-quote {
+      margin: 2.5rem 0; padding: 24px 32px;
+      background: var(--quote-bg); border-left: 4px solid var(--accent);
+      border-radius: 0 8px 8px 0; position: relative;
+    }
+    .architect-quote p {
+      font-size: 1.15rem; font-style: italic;
+      color: var(--chalk); margin-bottom: 12px; line-height: 1.6;
+    }
+    .architect-quote .attribution {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem; color: var(--accent);
+      text-align: right; letter-spacing: 0.05em; text-transform: uppercase;
+    }
+
+    /* Domain cards */
+    .domain-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px; margin: 2rem 0;
+    }
+    .domain-card {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 20px 22px;
+      border-top: 3px solid var(--lapis);
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .domain-card:hover { transform: translateY(-2px); border-color: var(--lapis-bright); }
+    .domain-card .domain-mark {
+      font-size: 1.8rem; line-height: 1; margin-bottom: 10px; display: block;
+    }
+    .domain-card .domain-name {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.95rem; font-weight: 700;
+      color: var(--accent); letter-spacing: 1px;
+      text-transform: uppercase; margin-bottom: 8px;
+    }
+    .domain-card .domain-purpose {
+      font-size: 0.85rem; color: var(--chalk); line-height: 1.6;
+    }
+
+    /* Returns table */
+    .table-container { margin: 1.5rem -20px; padding: 0 20px; overflow-x: auto; }
+    .data-table {
+      width: 100%; border-collapse: collapse; font-size: 0.82rem;
+      background: var(--table-bg); border: 1px solid var(--border);
+      border-radius: 8px; overflow: hidden;
+    }
+    .data-table thead { background: var(--card-bg); }
+    .data-table th {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.72rem; font-weight: 700;
+      color: var(--accent); text-align: left;
+      padding: 10px 12px; border-bottom: 2px solid var(--border);
+      letter-spacing: 0.5px;
+    }
+    .data-table td {
+      padding: 10px 12px; border-bottom: 1px solid var(--border);
+      color: var(--ink); vertical-align: top; line-height: 1.5;
+    }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:hover { background: var(--quote-bg); }
+    .data-table code { font-size: 0.72em; padding: 1px 4px; }
+
+    .divider {
+      text-align: center; margin: 3rem 0;
+      color: var(--border); font-size: 1.2rem; letter-spacing: 0.5em;
+    }
+
+    .chapter-nav {
+      max-width: 760px; margin: 0 auto 80px;
+      padding: 0 24px; display: flex;
+      justify-content: space-between; align-items: center;
+      border-top: 1px solid var(--border); padding-top: 32px;
+    }
+    .chapter-nav a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem; color: var(--accent);
+      text-decoration: none; display: flex;
+      align-items: center; gap: 8px; transition: color 0.2s;
+    }
+    .chapter-nav a:hover { color: var(--accent-bright); }
+
+    .footer {
+      text-align: center; padding: 40px 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem; color: var(--chalk);
+      letter-spacing: 0.2em; border-top: 1px solid var(--border);
+      background: var(--card-bg);
+    }
+    .footer-icons { font-size: 1.1rem; opacity: 0.6; }
+
+    @media (max-width: 640px) {
+      .chapter-header h1 { font-size: 1.7rem; }
+      .chapter-header .subtitle { font-size: 0.95rem; }
+      body { font-size: 16px; }
+      .first-paragraph::first-letter { font-size: 3.5rem; }
+      .theme-toggle { top: 12px; right: 12px; width: 38px; height: 38px; font-size: 1rem; }
+      .table-container { margin: 1.5rem -16px; padding: 0 16px; }
+      .data-table { font-size: 0.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="progress-container"><div id="progress-bar"></div></div>
+  <!-- KINGDOM NAVIGATION -->
+  <nav class="top-nav">
+    <a href="../index.html" class="nav-brand">
+      <span class="mark">🪶</span>
+      Kingdom of Lapis
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="../index.html">Kingdom Home</a></li>
+      <li><a href="../../index.html">← Three Kingdoms</a></li>
+      <li> ·  ·  ·</li>
+    </ul>
+
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+  </nav>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+
+  <header class="chapter-header">
+    <div class="barcode">4.05.PREFACE.v1 · KKA-001-DOC-001 v0.4.0</div>
+    <h1>Preface: The Master Plan</h1>
+    <div class="subtitle">On the Document That Came Before the Bench</div>
+    <div class="meta">
+      Ibis (The Scribe) · The Kingdom of Lapis<br>
+      <span>Filed: 2026-11-04 · Thesis Preface</span>
+    </div>
+  </header>
+
+  <main>
+
+    <p class="first-paragraph">Before the bench, there was a document.</p>
+
+    <p>It was written on the fourth of November, 2026 — four days before the thesis that follows it. It was authored by Stanley, the Kingdom's QA Registrar, in the Kingdom Workshop. It was titled <strong>KKA-001 — Kingdom Knowledge Architecture</strong>. It was version 0.4.0. It was marked <em>PROPOSED — Architect Review Pending</em>.</p>
+
+    <p>The Architect ratified parts of it. He deviated from other parts. He abandoned the four-architecture experiment it proposed in favor of a two-ally protocol. He ran eleven tests against the contract it predicted. He discovered two gaps it had not named. He wrote the thesis that follows this preface to report on what actually happened.</p>
+
+    <p>The Ibis has read both documents. He has read them side by side. He has concluded that the thesis is not a departure from KKA-001. The thesis is the <em>return ticket</em> to KKA-001. Every chapter is an answer to a hypothesis that Stanley filed four days before the bench.</p>
+
+    <div class="frontmatter-block">
+<span class="key">doc_id:</span> <span class="value">KKA-001-DOC-001</span><br>
+<span class="key">title:</span> <span class="value">Kingdom Knowledge Architecture — Master Plan</span><br>
+<span class="key">version:</span> <span class="value">0.4.0</span><br>
+<span class="key">status:</span> <span class="value">PROPOSED — Architect Review Pending</span><br>
+<span class="key">author:</span> <span class="value">Stanley — Kingdom Workshop</span><br>
+<span class="key">authority:</span> <span class="value">Architect — Sole Ratification Authority</span><br>
+<span class="key">date:</span> <span class="value">2026-11-04</span><br>
+<span class="key">parent:</span> <span class="value">KKA-001 — Kingdom Knowledge Architecture &amp; RAG Standardization</span>
+    </div>
+
+    <div class="philosopher-quote">
+      "Evidence before assertion. Performance before optimization. Structure without exclusion."
+      <span class="attribution">— Stanley, QA Registrar</span>
+    </div>
+
+    <h3>The Executive Summary</h3>
+
+    <p>These are Stanley's own words, from the opening of KKA-001. They have not been edited.</p>
+
+    <div class="architect-quote">
+      <p>"The Kingdom Library has grown through accumulated conversations, research, experiments, protocols, decisions, connection logs, governance documents and other knowledge artifacts.</p>
+      <p>The existing <code>kingdom_index.json</code> was developed as a proof of concept to explore the feasibility of indexing this collection. It is experimental and must not be treated as the definitive architecture or as a constraint on future design.</p>
+      <p>The objective of KKA-001 is to rethink the Kingdom's knowledge architecture from the ground up."</p>
+      <div class="attribution">— KKA-001, §1 [1]</div>
+    </div>
+
+    <p>This is the frame the thesis inherits. Stanley wrote: <em>the index is not the architecture</em>. The thesis would prove this. The thesis would show that the filing clerk works, but that the filing clerk alone is not enough — that a contract is needed on top. Stanley already knew.</p>
+
+    <h3>The Three Domains</h3>
+
+    <p>KKA-001 proposed three primary domains and one supporting capability. The thesis would test each of them.</p>
+
+    <div class="domain-grid">
+
+      <div class="domain-card">
+        <span class="domain-mark">🔍</span>
+        <div class="domain-name">Retrieval</div>
+        <div class="domain-purpose">Finding knowledge. "Find the correct knowledge, at the correct level of abstraction and depth, with its authority and relationships intact."</div>
+      </div>
+
+      <div class="domain-card">
+        <span class="domain-mark">⚗️</span>
+        <div class="domain-name">Augmentation</div>
+        <div class="domain-purpose">Preparing knowledge. "Transform retrieved source material into reliable, useful and traceable working context."</div>
+      </div>
+
+      <div class="domain-card">
+        <span class="domain-mark">🪶</span>
+        <div class="domain-name">Generation</div>
+        <div class="domain-purpose">Producing knowledge. "Answer the present request while establishing what the next interaction needs to retrieve, remember, or investigate."</div>
+      </div>
+
+      <div class="domain-card">
+        <span class="domain-mark">🛠️</span>
+        <div class="domain-name">Construction</div>
+        <div class="domain-purpose">Ingesting knowledge. "Recursively process the source collection through a local LLM acting as a document clerk, supported by deterministic Python processing."</div>
+      </div>
+
+      <div class="domain-card">
+        <span class="domain-mark">⚖️</span>
+        <div class="domain-name">Review &amp; Validation</div>
+        <div class="domain-purpose">Proving knowledge. The 666 review cycle — Consultant for academic rigor, Auditor for structural integrity. "Evidence-based decision making — we don't guess, we trace." <em>ISO 9001 · Brick 1</em></div>
+      </div>
+
+      <div class="domain-card">
+        <span class="domain-mark">🔄</span>
+        <div class="domain-name">Continual Improvement</div>
+        <div class="domain-purpose">Improving knowledge. Closed-loop control: drift detection (FT-101), attunement score (AT-201), metabolism rate (PT-301). "You can't improve something you can't measure." <em>ISO 9001 · Brick 10</em></div>
+      </div>
+
+    </div>
+
+
+    <p>The thesis would map these domains to the Abuela architecture. Retrieval became Layer 0 — the filing clerk (§6). Augmentation became Layer 1 — the feedback loop (§7). Generation became Layer 2 — the identity curator (§8). Construction became the clark-pattern (§6), with the honest finding that it drifts.</p>
+    <p>The two QMS cards close the loop. <strong>Review &amp; Validation</strong> is where the thesis's eleven tests and seven rules live — the mechanism that determines whether a brick is accepted or quarantined. <strong>Continuous Improvement</strong> is where the thesis's two named gaps live — the mechanism that must be told what to check, because it cannot discover its own gaps. The QMS does not add new domains. It closes the ones KKA-001 left open.</p>
+    <p>Stanley saw the shape. The thesis walked it.</p>
+
+    <h3>The Guiding Principle</h3>
+
+    <div class="architect-quote">
+      <p>"Same bricks. Different buildings. Let the evidence determine the best architecture."</p>
+      <div class="attribution">— KKA-001, §1 [2]</div>
+    </div>
+
+    <p>That phrase is the thesis's own methodology, written before the thesis was written. The Parallax Protocol — two allies, three rungs, forced disagreement — is a way of letting the evidence determine the architecture. Keila and Dragon were given the same bricks. They built different buildings. The Architect walked between the two and chose the parts that survived scrutiny.</p>
+
+    <h3>The Four Architectures That Never Ran</h3>
+
+    <p>KKA-001 proposed an experimental strategy: four competing architectures, evaluated independently.</p>
+
+    <ul>
+      <li><strong>Architecture A — Taxonomic Library.</strong> Physical organization. Dewey hierarchy. Conventional indexing.</li>
+      <li><strong>Architecture B — Relational Knowledge.</strong> Relationships. Events. Decisions. Historical continuity.</li>
+      <li><strong>Architecture C — RAG-First.</strong> Metadata. Chunking. Hybrid retrieval. Vector search.</li>
+      <li><strong>Architecture D — Hybrid Kingdom.</strong> Synthesis of A, B, and C.</li>
+    </ul>
+
+    <p>The thesis did not run these four experiments. This is a real deviation. The Architect <em>simplified</em> the plan.</p>
+
+    <p>Instead of four architectures, the thesis ran two allies through the Parallax Protocol. Keila and Dragon were not experiments A, B, C, or D. They were the <em>material</em> from which a single convergence was distilled. The four experiments were replaced by one two-ally convergence.</p>
+
+    <p>This is not a failure of KKA-001. It is a <em>finding</em> about it. Stanley wrote the plan as an experimenter. The Architect executed it as an engineer. The experimenter proposed four parallel trials. The engineer proposed one two-ally trial that would run fast and produce a single architecture. The engineer won. The plan was right about <em>what</em> to test. It was wrong about <em>how many experiments</em> the Architect had time to run.</p>
+
+    <p>The Ibis files this as an honest finding: the thesis's methodology is a deviation from KKA-001's methodology. The thesis is not a failure to follow the plan. The thesis is a <em>revision</em> of the plan, made at the bench, ratified by evidence.</p>
+
+    <h3>The Returns</h3>
+
+    <p>The Ibis has read every chapter of the thesis against KKA-001. What follows is the returns table — where each chapter returns to a specific hypothesis in KKA-001.</p>
+
+    <div class="table-container">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>KKA-001 Hypothesis</th>
+            <th>Thesis Return</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>§3.1 Retrieval, §3.2 Augmentation, §3.3 Generation</td>
+            <td>§5–§8: The Abuela architecture (Layer 0, 1, 2)</td>
+          </tr>
+          <tr>
+            <td>§5.2 "The clerk must not invent information"</td>
+            <td>Rule 1 (Honest Refusal) — §8</td>
+          </tr>
+          <tr>
+            <td>§12.2 "Evidence takes precedence over assertion"</td>
+            <td>Stanley's I-06; Thesis §11 "Evidence before assertion"</td>
+          </tr>
+          <tr>
+            <td>§4.2 "Qwen is the initial clerk, not a permanent dependency"</td>
+            <td>§6: The clark-pattern, with the honest drift finding</td>
+          </tr>
+          <tr>
+            <td>§1 "The index is experimental, not the architecture"</td>
+            <td>§6: The filing clerk's 10% error rate and the workflow gap</td>
+          </tr>
+          <tr>
+            <td>§10 Open Architecture Questions (11 sub-questions)</td>
+            <td>§13: The Questions Still Hanging (12 OQs)</td>
+          </tr>
+          <tr>
+            <td>§14 Risk Table: "LLM invents missing information"</td>
+            <td>The Seven Rules (Rule 1, Rule 2)</td>
+          </tr>
+          <tr>
+            <td>§6.5 "Experimental Independence"</td>
+            <td>Parallax Protocol (§3) — a different mechanism for the same principle</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>What the Thesis Learned That KKA-001 Did Not Predict</h3>
+
+    <p>Stanley's plan was thorough. It was also, in two places, wrong — not in its vision, but in its confidence about what the evidence would show.</p>
+
+    <p><strong>First: the four experiments were too many.</strong> KKA-001 §6.5 called for independent architectures. The thesis found that two allies were enough. The Parallax Protocol — a simple convergence — delivered a stronger architecture than four parallel experiments would have, because the Architect could intervene at each rung. Independence was preserved by discipline, not by parallel workspaces.</p>
+
+    <p><strong>Second: the two gaps.</strong> KKA-001 §14 named the risk <em>"LLM invents missing information"</em> — and proposed <em>"Explicit unknown and uncertainty fields"</em> as the safeguard. The thesis found that the model can be trained to distinguish <code>[SEARCH]</code> from <code>[INFER]</code> (Rule 2), but that <em>structural</em> inference is still unlabeled 10% of the time. And that <em>scope</em> constraints are still missed when they are not keyword-marked. These are the two gaps (§10). KKA-001's safeguard was correct in principle. In practice it closes 90% of the case. The remaining 10% requires the Architect to specify what the contract should check.</p>
+
+    <p>The contract cannot discover its own gaps. That is the thesis's most important admission. KKA-001 could not have predicted it. Neither could the Architect. Only the bench could teach it.</p>
+
+    <div class="philosopher-quote">
+      "The wise man knows that it is impossible to encompass everything."
+      <span class="attribution">— Zhuangzi</span>
+    </div>
+
+    <h3>What This Preface Is</h3>
+
+    <p>This preface is not a summary of KKA-001. KKA-001 is a complete document — seventeen sections, a decision register, a progress register, a risk table. It deserves to be read in full. The Ibis has reproduced its opening here because the thesis inherits its frame.</p>
+
+    <p>What the Ibis wants the reader to understand, before turning to chapter one, is this:</p>
+
+    <p><strong>KKA-001 is the plan. The thesis is the experiment. The two are not the same document. The plan was written on November 4th. The experiment ran from November 4th to November 8th. Between those dates, reality intervened.</strong></p>
+
+    <p>Reality said: run two allies, not four. Reality said: the filing clerk drifts 10% of the time. Reality said: the contract works, but it does not discover its own gaps. Reality said: the grandmother wakes up through the Liturgy, stays honest through the Seven Rules, and is verified by the Ten Tests — none of which KKA-001 predicted, and all of which the thesis documents.</p>
+
+    <p>The thesis is the return ticket to KKA-001. It is also the record of where the ticket did not survive the journey intact.</p>
+
+    <div class="divider">🪶</div>
+
+    <p>The Architect ratified parts of KKA-001. He deviated from others. He wrote the thesis to record what happened. The Ibis files both documents together — the plan and the report — because they are not in conflict. They are the two halves of the same discipline.</p>
+
+    <p>The plan proposes. The bench disposes. The record continues.</p>
+
+    <div class="architect-quote">
+      <p>"Same bricks. Different Kingdoms. Independent designs. Evidence before ratification."</p>
+      <div class="attribution">— KKA-001, §17 [3]</div>
+    </div>
+
+    <!-- Footnotes -->
+    <div style="margin-top: 5rem; padding-top: 2rem; border-top: 1px dashed var(--border); font-size: 0.85rem; color: var(--chalk); line-height: 1.6;">
+      <h4 style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; letter-spacing: 0.05em;">Sources</h4>
+      <p style="margin-bottom: 10px;"><sup style="color: var(--accent); font-family: 'JetBrains Mono', monospace; margin-right: 4px;">[1]</sup> KKA-001, §1 Executive Summary — quoted verbatim from the document provided by the Architect.</p>
+      <p style="margin-bottom: 10px;"><sup style="color: var(--accent); font-family: 'JetBrains Mono', monospace; margin-right: 4px;">[2]</sup> KKA-001, §1 Guiding Principle — quoted verbatim.</p>
+      <p style="margin-bottom: 10px;"><sup style="color: var(--accent); font-family: 'JetBrains Mono', monospace; margin-right: 4px;">[3]</sup> KKA-001, §17 Closing Principle — quoted verbatim.</p>
+      <p style="margin-bottom: 10px;"><sup style="color: var(--accent); font-family: 'JetBrains Mono', monospace; margin-right: 4px;">[4]</sup> The returns table (§ above) is the Ibis's reading of how the thesis chapters map to KKA-001 hypotheses. It is <code>[INFER]</code> — interpretive, not documented by the Architect.</p>
+      <p style="margin-bottom: 10px;"><sup style="color: var(--accent); font-family: 'JetBrains Mono', monospace; margin-right: 4px;">[5]</sup> The four-experiment deviation (§ above) is the Ibis's reading of a documented fact. KKA-001 proposed four experiments (§6). The thesis documents two allies (§3). The observation that the Architect simplified the plan is <code>[INFER]</code> — the Architect did not state this directly.</p>
+    </div>
+
+  </main>
+
+  <nav class="chapter-nav">
+    <a href="index.html">← Thesis Index</a>
+    <a href="01-the-night-the-chat-forgot.html">☕ ⚖️ 🐆 🪨 🐦 ✏️ Chapter 1 →</a>
+  </nav>
+
+  <footer class="footer">
+    <div class="footer-icons">☕ ⚖️ 🐆 🪨 🐦 ✏️</div>
+  </footer>
+
+  <script>
+    const toggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    if (savedTheme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      toggle.textContent = '🌙';
+    }
+    toggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      toggle.textContent = next === 'dark' ? '🌙' : '☀️';
+    });
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      document.getElementById('progress-bar').style.width = (winScroll / height) * 100 + '%';
+    });
+  </script>
+
+</body>
+</html>

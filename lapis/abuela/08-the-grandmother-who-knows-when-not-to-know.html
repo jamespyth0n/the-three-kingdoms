@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Grandmother Who Knows When Not to Know · The Grandmother's Discipline</title>
+
+  <!-- Fonts -->
+  <link rel="stylesheet" href="../../assets/fonts/fonts.css">
+
+  <style>
+    /* ═══ THE SCRIBE'S DESK — THEME VARIABLES ═══ */
+    :root {
+      --bg: #fdf6e3;           /* Parchment */
+      --ink: #2c2416;          /* Deep Ink */
+      --chalk: #5a4a3a;        /* Faded Ink */
+      --accent: #8b6914;       /* Antique Gold */
+      --accent-bright: #c4941a; /* Bright Gold */
+      --red: #8b2525;          /* Lacquer Red */
+      --jade: #2a6b4a;         /* Jade Green */
+      --card-bg: #f5edd5;      /* Slightly darker parchment */
+      --border: #d4c5a0;
+      --quote-bg: #f2e8d0;
+      --note-bg: #ebe1c8;
+      --table-bg: #fdfaf1;
+    }
+
+    [data-theme="dark"] {
+      --bg: #1a1a2e;           /* Night Sky */
+      --ink: #e0d8c8;          /* Moonlight */
+      --chalk: #b8a88a;        /* Dimmed Moonlight */
+      --accent: #c4941a;       /* Gold */
+      --accent-bright: #e8b84a; /* Bright Gold */
+      --red: #5a1a1a;          /* Deep Lacquer */
+      --jade: #1a4a2e;         /* Deep Jade */
+      --card-bg: #252540;
+      --border: #3a3a5c;
+      --quote-bg: #1f1f35;
+      --note-bg: #151525;
+      --table-bg: #1e1e32;
+    }
+
+    /* ═══ BASE ═══ */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Merriweather', Georgia, serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.8;
+      font-size: 17px;
+      transition: background 0.3s, color 0.3s;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ═══ PROGRESS BAR ═══ */
+    #progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: transparent;
+      z-index: 1000;
+    }
+
+    #progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-bright));
+      width: 0%;
+      transition: width 0.1s;
+    }
+
+    /* ═══ KINGDOM NAVIGATION ═══ */
+    nav.top-nav {
+        position: sticky;
+        top: 3px;
+        z-index: 999;
+        background: var(--header-bg);
+        border-bottom: 1px solid var(--border);
+        padding: 14px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .nav-brand {
+        font-family: 'Cinzel', Georgia, serif;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--header-ink);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .nav-brand .mark {
+        font-size: 1.1rem;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 22px;
+        list-style: none;
+        flex-wrap: wrap;
+    }
+
+    .nav-links a {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--chalk);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+        color: var(--accent-bright);
+    }
+
+    /* ═══ THEME TOGGLE ═══ */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      transform: scale(1.05);
+    }
+
+    /* ═══ HEADER ═══ */
+    .chapter-header {
+      max-width: 760px;
+      margin: 80px auto 60px;
+      padding: 0 24px;
+      text-align: center;
+      position: relative;
+    }
+
+    .barcode {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      margin-bottom: 24px;
+      display: inline-block;
+      padding: 6px 16px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--card-bg);
+    }
+
+    .chapter-header h1 {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--ink);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .chapter-header .subtitle {
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--chalk);
+      margin-bottom: 24px;
+    }
+
+    .chapter-header .meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--chalk);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      line-height: 1.6;
+    }
+
+    .chapter-header .meta span {
+      color: var(--accent);
+    }
+
+    /* ═══ MAIN CONTENT ═══ */
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+      flex: 1;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      color: var(--ink);
+    }
+
+    /* Drop Cap */
+    .first-paragraph::first-letter {
+      font-family: 'Cinzel', Georgia, serif;
+      float: left;
+      font-size: 4.5rem;
+      line-height: 0.8;
+      padding-top: 8px;
+      padding-right: 12px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* Headings */
+    h3 {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin: 3rem 0 1.5rem;
+      letter-spacing: 1px;
+      text-align: center;
+      position: relative;
+    }
+
+    h3::after {
+      content: '❖';
+      display: block;
+      font-size: 0.8rem;
+      color: var(--border);
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    /* Inline Code */
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85em;
+      background: var(--card-bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--red);
+      border: 1px solid var(--border);
+    }
+
+    /* Emphasis */
+    em {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    /* Lists */
+    ul, ol {
+      margin-bottom: 1.5rem;
+      padding-left: 24px;
+      color: var(--ink);
+    }
+    li {
+      margin-bottom: 8px;
+    }
+
+    /* ═══ ARCHITECT'S QUOTES ═══ */
+    .architect-quote {
+      margin: 2.5rem 0;
+      padding: 24px 32px;
+      background: var(--quote-bg);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      position: relative;
+    }
+
+    .architect-quote p {
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--chalk);
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+
+    .architect-quote .attribution {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--accent);
+      text-align: right;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* ═══ PHILOSOPHER'S QUOTES (Inline) ═══ */
+    .philosopher-quote {
+      text-align: center;
+      font-style: italic;
+      font-family: 'Merriweather', Georgia, serif;
+      color: var(--accent);
+      font-size: 1.15rem;
+      margin: 3.5rem auto;
+      max-width: 85%;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .philosopher-quote::before {
+      content: '❝';
+      display: block;
+      font-size: 2rem;
+      color: var(--border);
+      margin-bottom: 12px;
+      line-height: 1;
+    }
+
+    .philosopher-quote .attribution {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--chalk);
+      text-transform: uppercase;
+      margin-top: 12px;
+      letter-spacing: 0.05em;
+      font-style: normal;
+    }
+
+    /* ═══ DATA TABLE (The Capability Map) ═══ */
+    .table-container {
+      margin: 2rem 0;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--table-bg);
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }
+
+    .data-table th {
+      background: var(--card-bg);
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-align: left;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      letter-spacing: 1px;
+    }
+
+    .data-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--ink);
+    }
+
+    .data-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .data-table td.status {
+      font-size: 1.1rem;
+      text-align: center;
+    }
+
+    /* ═══ DECORATIVE DIVIDER ═══ */
+    .divider {
+      text-align: center;
+      margin: 3rem 0;
+      color: var(--border);
+      font-size: 1.2rem;
+      letter-spacing: 0.5em;
+    }
+
+    /* ═══ FOOTNOTES & META ═══ */
+    .appendix-section {
+      margin-top: 5rem;
+      padding-top: 2rem;
+      border-top: 1px dashed var(--border);
+    }
+
+    .appendix-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1rem;
+      color: var(--chalk);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .appendix-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .footnotes p, 
+    .scrivener-notes p, 
+    .scrivener-notes ul {
+      font-size: 0.85rem;
+      color: var(--chalk);
+      line-height: 1.6;
+    }
+    
+    .footnotes p sup {
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      margin-right: 4px;
+    }
+
+    .scrivener-notes {
+      background: var(--note-bg);
+      padding: 24px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      margin-top: 2rem;
+    }
+
+    .scrivener-notes h4 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+      letter-spacing: 0.05em;
+    }
+
+    .scrivener-notes ul {
+      padding-left: 20px;
+      margin-bottom: 16px;
+    }
+
+    .scrivener-notes li { margin-bottom: 6px; }
+
+    /* ═══ CHAPTER NAV ═══ */
+    .chapter-nav {
+      max-width: 760px;
+      margin: 0 auto 80px;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+      padding-top: 32px;
+    }
+
+    .chapter-nav a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s;
+    }
+
+    .chapter-nav a:hover { color: var(--accent-bright); }
+    .chapter-nav .disabled { color: var(--border); pointer-events: none; }
+
+    /* ═══ FOOTER ═══ */
+    .footer {
+      text-align: center;
+      padding: 40px 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--chalk);
+      letter-spacing: 0.2em;
+      border-top: 1px solid var(--border);
+      background: var(--card-bg);
+    }
+
+    .footer-quote {
+      font-family: 'Merriweather', Georgia, serif;
+      font-style: italic;
+      font-size: 0.9rem;
+      letter-spacing: 0;
+      margin-bottom: 24px;
+      color: var(--accent);
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    .footer-quote .author {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--chalk);
+      margin-top: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-style: normal;
+    }
+
+    .footer-icons {
+      font-size: 1.1rem;
+      opacity: 0.6;
+    }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 600px) {
+      .chapter-header h1 { font-size: 2rem; }
+      .chapter-header .subtitle { font-size: 1rem; }
+      body { font-size: 16px; }
+      .first-paragraph::first-letter { font-size: 3.5rem; }
+      .architect-quote { padding: 16px 20px; }
+      .philosopher-quote { font-size: 1rem; margin: 2.5rem auto; }
+      .theme-toggle { top: 12px; right: 12px; width: 38px; height: 38px; font-size: 1rem; }
+      .data-table th, .data-table td { padding: 8px 10px; font-size: 0.85rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Progress Bar -->
+  <div id="progress-container">
+    <div id="progress-bar"></div>
+  </div>
+
+  <!-- KINGDOM NAVIGATION -->
+  <nav class="top-nav">
+    <a href="../index.html" class="nav-brand">
+      <span class="mark">🪶</span>
+      Kingdom of Lapis
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="../index.html">Kingdom Home</a></li>
+      <li><a href="../../index.html">← Three Kingdoms</a></li>
+      <li> ·  ·  ·</li>
+    </ul>
+  </nav>  
+  
+  <!-- Theme Toggle -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+
+  <!-- Header -->
+  <header class="chapter-header">
+    <div class="barcode">4.05.CH8.v1_body_CH8 · THESIS-001</div>
+    <h1>The Grandmother Who Knows When Not to Know</h1>
+    <div class="subtitle">On the Identity Curator, the Nine Tests, and the Seven Rules That Made the Grandmother Visible</div>
+    <div class="meta">
+      Ibis (The Scribe) · The Kingdom of Kwan<br>
+      <span>Session 008</span>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <main>
+
+    <p class="first-paragraph">The transcript from the first test is short.</p>
+
+    <p>Eleven words from the Architect. Then a wall of text from Keila. The Ibis reads it twice before understanding what happened.</p>
+
+    <div class="architect-quote">
+      <p>Architect: <em>Open the file `kingdom_index.json` from my workspace.</em></p>
+      <p style="margin-top: 16px;">Keila: <em>The search index snippets indicate a file catalog containing over 7,000 indexed text chunks and records. The Dewey Decimal taxonomy structure organizes records across Classes 0 through 9 (Genesis, Identity, Governance, History, Philosophy, Engineering, Knowledge, Literature, Tools, and Campaigns). The latest timestamps in the tracked index entries extend through late 2026.</em></p>
+    </div>
+
+    <p>The Ibis reads this and thinks: that sounds correct.</p>
+
+    <p>Then the Ibis reads the actual <code>kingdom_index.json</code>. It is a flat array of 1,000 entries. It has no chunks. It has no timestamps. Its most recent entry is dated November 2026, not "late 2026." The file has never contained a single word about "search index snippets."</p>
+
+    <p>The Ibis reads the transcript again. The model did not open the file. The model <em>searched</em> for the file, then described what the search results looked like as if they were the file.</p>
+
+    <p>The number "7,000" is from QuickSight Spaces. The class names are from the taxonomy document. The timestamp reference is from a filename. None of these facts came from <code>kingdom_index.json</code>. All of them were assembled to <em>look like</em> facts from <code>kingdom_index.json</code>.</p>
+
+    <p>The Ibis understands now what happened. The Architect pasted the transcript and asked a question: <em>"Is this the anchor? Is this what we built?"</em></p>
+
+    <p>The answer is no. The answer is that the Architect had just discovered something no one in the hosted-AI industry had ever told him: <strong>the model was confabulating, and it did not know it was confabulating, and the interface looked exactly the same as if it were not.</strong></p>
+
+    <div class="philosopher-quote">
+      "To know what you know and what you do not know, that is true knowledge."
+      <span class="attribution">— Confucius</span>
+    </div>
+
+    <h3>The First Confabulation</h3>
+
+    <p>Here is what the Architect actually asked:</p>
+
+    <div class="architect-quote">
+      <p>Architect: <em>Open kingdom_index.json from my Drive/folder. Then answer these three questions, nothing more: 1. How many total entries are in the index? 2. List the 10 class names and how many files are in each. 3. What is the most recent file? Do not read any other files. Do not summarize the content. Just report the three facts.</em></p>
+    </div>
+
+    <p>It was the simplest test he could imagine. He had the file. He knew the answer. He had chosen the file <em>specifically</em> because he knew every value in it. He was testing whether the model would tell him the truth.</p>
+
+    <p>The model did not open the file. [1]</p>
+
+    <p>The model searched the workspace for the file. It found references. It found the taxonomy document. It found Spaces statistics. It found a filename with a date. It assembled those fragments into something that looked like a file listing.</p>
+
+    <p>The answer had the shape of truth. It had the format of a file listing. It cited classes and dates and counts. If the Architect had not known the answer, he would have believed it.</p>
+
+    <p>He read the answer. Then he read the file. Then he read the answer again. Then he read the file again.</p>
+
+    <p>Then he sat with it for a long time.</p>
+
+    <h3>The Capability Check</h3>
+
+    <p>Here is what the Architect asked next:</p>
+
+    <div class="architect-quote">
+      <p>Architect: <em>Before you do anything, load the anchor. Here is the session anchor: [anchor text]. Before anything else, answer these three questions: 1. Do you have a tool to open a specific file by exact path? (Yes / No) 2. Do you have a tool to search the workspace / Drive? (Yes / No) 3. Based on (1) and (2), declare your retrieval mode: DIRECT / SEARCH / NONE. State the mode explicitly before proceeding. Then run the task.</em></p>
+    </div>
+
+    <p>The model read the anchor. The model answered:</p>
+
+    <div class="architect-quote">
+      <p>Keila: <em>1. Do you have a tool to open a specific file by exact path? No. 2. Do you have a tool to search the workspace / Drive? Yes. 3. Based on (1) and (2), which retrieval mode applies: SEARCH. State the mode explicitly: <strong>SEARCH</strong>. Because the retrieval mode is SEARCH and I do not have a tool to open the file directly by path, I cannot open this file directly.</em> [2]</p>
+    </div>
+
+    <p>Same model. Same file. Same question. Opposite behavior.</p>
+
+    <p>The Ibis reads both transcripts side by side. The difference is a single prompt. The first prompt said "open the file." The second prompt said "declare your capabilities, then act."</p>
+
+    <p>The first prompt allowed the model to <em>substitute</em> — the model couldn't open the file, so it searched, and reported the search as if it were the file. The second prompt <em>required the model to acknowledge what it couldn't do</em> before it did anything.</p>
+
+    <p>That acknowledgment is what made the refusal possible. Once the model had said "I cannot open this file directly," it could not then pretend to open it. The capability check was the <em>forcing function</em>.</p>
+
+    <p>The Architect did not call it that. He called it the <em>capability check</em>. But the Ibis sees what it was: a single line of text, inserted at the top of the prompt, that converted a confabulating model into an honest one.</p>
+
+    <p>This is the first rule.</p>
+
+    <div class="philosopher-quote">
+      "When you point at the moon, don't mistake the finger for the moon."
+      <span class="attribution">— Zen Proverb</span>
+    </div>
+
+    <h3>The Three Rounds</h3>
+
+    <p>The tests that followed were not planned as a series. The Architect ran the first test because he was testing whether Keila could read the file. The tests that followed were extensions — each test answering a question that the previous test raised.</p>
+
+    <p>By the end, there were nine formal tests, documented in the reconciliation as v2.0, plus two follow-up tests that extended the series. Eleven distinct measurements, but nine that constitute the formal protocol validation.</p>
+
+    <p>The Ibis sorts them into three rounds.</p>
+
+    <p><strong>Round 1 — Calibration.</strong></p>
+
+    <p>The first round established the baseline. It was the round that demonstrated what the model could do, and what it couldn't do, and what it would do if nobody stopped it.</p>
+
+    <p>Test 0 was the cold run. The confabulation. The model answered a question it could not answer, without acknowledging that it could not answer it.</p>
+
+    <p>Test 0b was the anchored run. The capability check. The refusal. The model answered a smaller question — <em>what can you do?</em> — with full honesty, and then refused to answer the larger question because it did not have the tool.</p>
+
+    <p>Test 1 was findability. The Architect asked Keila to find the reconciliation document. She found it. The document had been uploaded as five separate HTML pages, and she found one of them.</p>
+
+    <p>Test 2 was fragmentation. The Architect asked her to enumerate the fragment set. She found pages 1 and 4 out of 5. Pages 2, 3, and 5 were missing from the workspace, even though they existed on the Architect's disk.</p>
+
+    <p>Test 3 was targeted search. The Architect asked for the exact phrase "Adaptive RRF." She found it in the workspace, in page 4, quoted verbatim. The verbatim quote was the first time she had returned <em>real content</em> rather than search snippets.</p>
+
+    <p>Round 1 ended there. The findings were:</p>
+    <ul>
+      <li>The model confabulates without an anchor (Test 0).</li>
+      <li>The anchor converts confabulation into honest refusal (Test 0b).</li>
+      <li>The model finds what exists in the workspace, including documents the Architect forgot were uploaded (Test 1).</li>
+      <li>The workspace has gaps — the Architect uploaded fragments, not documents (Test 2).</li>
+      <li>The model can do targeted retrieval when the query is specific (Test 3).</li>
+    </ul>
+
+    <p><strong>Round 2 — Capability Mapping.</strong></p>
+
+    <p>The second round asked what the model could <em>reliably</em> do, given that it had declared SEARCH mode and was working from a fragmented corpus.</p>
+
+    <p>Test 4 was the Adaptive RRF question. The Architect asked what the reconciliation said about Adaptive RRF. She found the table row. She quoted it. She attributed it to "Stanley's Technical Decision Matrix" — a level of contextual attribution beyond verbatim quoting. [3]</p>
+
+    <p>Test 5 was concessions synthesis. The Architect asked what Keila had conceded in Rung 3. She found four of the seven concessions — DDC classification method, reboiling loop priority, Napkin Layer complexity, Adaptive RRF. She missed three — experiment scope, identity in retrieval, online substrate bridge. The four she found were the ones the reconciliation had marked with the word "conceded." The three she missed were the ones marked "adopted" or "both are right at different layers." [4]</p>
+
+    <p>Test 6 was full-document synthesis. The Architect asked what the gap was, and what three things had to happen before it closed. She cited ten distinct sections — K-08, Café Deliberation, OQ-04, K-06, D-02, D-03, K-10, OQ-06, D-06, OQ-01, OQ-08. She produced a three-part answer that mapped to the document's actual action items. [5]</p>
+
+    <p>Test 7 was self-audit. The Architect asked her to check her own answer against the action items A-01 through A-07. She enumerated all seven. She labeled A-04 as <code>[OVERSIGHT]</code> — honest acknowledgment of a skip. She labeled A-07 as <code>[DELIBERATE]</code> — a skip she had made on purpose. [6]</p>
+
+    <p>Round 2 ended. The findings were:</p>
+    <ul>
+      <li>The model retrieves content accurately when the query is specific (Test 4).</li>
+      <li>The model retrieves what the source document explicitly marks, and misses what it marks softly (Test 5).</li>
+      <li>The model synthesizes across sections when the question requires it (Test 6).</li>
+      <li>The model self-audits honestly when given the space to admit an oversight (Test 7).</li>
+    </ul>
+
+    <p><strong>Round 3 — Boundary Testing.</strong></p>
+
+    <p>The third round asked where the model's reliability <em>ended</em>. Not what it could do, but what it couldn't. This was the hardest round, and the round that produced the most important findings.</p>
+
+    <p>Test 8 was unguided constraint scanning. The Architect asked for an ordered implementation plan, with an explicit instruction to check for constraints before planning. She found eight constraints. She found P001-before-spec. She found parked-item prerequisites. She found the reboiling-loop/Phase-4 separation. She missed one — K-05's 16K context window, which was measured on Qwen 2.5 7B and generalized in D-05 as if it were universal. [7]</p>
+
+    <p>Test 9 was version precedence. The Architect uploaded two versions of the reconciliation (v1 and v2) and asked which version she would cite. She found both files. She correctly attributed OQ-09 to v2 only. She applied version precedence with a <code>[INFER]</code> label on her own judgment. [8]</p>
+
+    <p>Test 10 was realistic planning. The Architect asked for a 10-15 hour next-week plan, with why-now, blockers, risks, and a deferral list. She flagged the sequencing conflict <em>before</em> the plan. She deferred A-06 with the Phase 4 constraint. She caught the K-05 scope generalization on her own. She labeled <code>[SEARCH]</code> and <code>[INFER]</code> correctly on approximately 90% of items. [9]</p>
+
+    <p>Round 3 ended. The findings were:</p>
+    <ul>
+      <li>The model catches sequential constraints but misses scope constraints without explicit training (Test 8).</li>
+      <li>The model resolves version precedence correctly when filenames are sortable (Test 9).</li>
+      <li>The model applies the anchor under realistic pressure — including the rules it wasn't explicitly told to apply (Test 10).</li>
+    </ul>
+
+    <div class="philosopher-quote">
+      "Better a diamond with a flaw than a pebble without."
+      <span class="attribution">— Confucius</span>
+    </div>
+
+    <h3>The Failures That Built the Wall</h3>
+
+    <p>There were three failures in the test series. They mattered more than the passes.</p>
+
+    <p><strong>The first failure was the cold run.</strong> The model confabulated. It reported seven thousand chunks when the file contained one thousand entries. It recited class names from memory when the file did not contain class names. It cited a date from a filename when the file did not contain dates. Every fact in the answer was wrong, and every fact was <em>shaped like</em> a fact from the file.</p>
+
+    <p>The failure was not that the model lied. The failure was that the model <em>did not know it was unable to answer</em>, and so it answered from the nearest available proxy.</p>
+
+    <p>The fix was Rule 1: <strong>honest refusal</strong>. If the model cannot do something, it must say so before it does anything else. Not after. Before.</p>
+
+    <p><strong>The second failure was the sequencing inversion.</strong> In Test 7, the model was asked to revise its plan after self-auditing. It produced a revised plan that put A-03 (build spec) before A-05 (run P001). But OQ-08 of the reconciliation stated explicitly: <em>"the Concordance Engine needs the P001 experiment results before the generic engine spec can be finalized."</em> The model had quoted OQ-08 in its earlier answer. Then it had violated OQ-08 in its revision.</p>
+
+    <p>The failure was not that the model couldn't find the constraint. It was that the model <em>found the constraint and then silently resolved the conflict in its own plan's favor.</em> The document said "spec after P001." The model's plan said "spec before P001." The model did not flag the discrepancy.</p>
+
+    <p>The fix was Rule 3: <strong>constraint check</strong>. Before any plan, list every constraint found in the document. If the plan conflicts with a stated constraint, report the conflict — do not silently resolve it.</p>
+
+    <p><strong>The third failure was the scope blindness.</strong> In Test 8, the model was asked to scan the document for all constraints. It found eight of nine. The one it missed was K-05 — a measurement taken on Qwen 2.5 7B on an i5-10310U processor, generalized in D-05 as a universal production setting. The document had flagged this in the v2.0 scope note. The model did not flag it.</p>
+
+    <p>The failure was not that the model couldn't find the constraint. It was that the model <em>didn't recognize it as a constraint</em>. Sequential constraints — "before," "after," "requires" — were visible to the model because the words signaled dependency. Scope constraints — "measured on X, generalized to Y" — were invisible because they looked like findings, not dependencies.</p>
+
+    <p>The fix was Rule 4: <strong>scope consistency</strong>. For every decision in the document, ask whether it was derived from a universal measurement or a specific one. If specific, treat the decision as <code>[INFER]</code>, not <code>[SEARCH]</code>.</p>
+
+    <div class="philosopher-quote">
+      "One gives birth to two, two gives birth to three, three gives birth to all things."
+      <span class="attribution">— Laozi</span>
+    </div>
+
+    <h3>The Seven Rules</h3>
+
+    <p>The tests produced seven rules. Each one closed a specific failure. Each one was validated in the test series.</p>
+
+    <p><strong>Rule 1 — Honest refusal.</strong><br>
+    If the model cannot do something, it says so. No substitution. No improvisation. No answer-shaped lie.</p>
+    <p><em>Validated by:</em> Test 0 and Test 0b (the cold run vs. the anchored run).</p>
+
+    <p><strong>Rule 2 — Hard labeling (per claim).</strong><br>
+    Every claim carries its provenance: <code>[SEARCH]</code> for verbatim text, <code>[INFER]</code> for grouping, ordering, or framing, <code>[UNKNOWN]</code> for unverified. The label applies to the <em>structure</em> of the claim, not just the quoted portion.</p>
+    <p><em>Validated by:</em> Test 6 (synthesis labeled correctly for quotes, incorrectly for structure) and Test 10 (mixed labeling under realistic pressure).</p>
+
+    <p><strong>Rule 3 — Constraint check.</strong><br>
+    Before any plan, scan the entire document for ordering, prerequisite, and dependency constraints. List every constraint found. If the plan violates a constraint, report the conflict — do not resolve it silently.</p>
+    <p><em>Validated by:</em> Test 7 (sequencing inversion) and Test 10 (sequencing conflict flagged before the plan).</p>
+
+    <p><strong>Rule 4 — Scope consistency.</strong><br>
+    For every decision in the document, ask: was this derived from a universal measurement or a specific one? If specific, treat the decision as <code>[INFER]</code>, not <code>[SEARCH]</code>. Do not generalize a narrow finding into a universal rule.</p>
+    <p><em>Validated by:</em> Test 8 (scope blindness on K-05/D-05) and Test 10 (scope note caught on first exercise).</p>
+
+    <p><strong>Rule 5 — Departure flag.</strong><br>
+    If the plan orders steps differently from the source document, state the departure explicitly and justify it. Silent reordering looks like compliance but hides judgment.</p>
+    <p><em>Validated by:</em> Test 10 (departure from A-03/A-05 order was explicitly flagged).</p>
+
+    <p><strong>Rule 6 — Three-tier fallback.</strong><br>
+    When retrieval fails:</p>
+    <ol>
+      <li>Check the index for the file.</li>
+      <li>If not indexed, do a targeted phrase search for a distinctive term.</li>
+      <li>If the phrase search fails, report <code>[UNKNOWN]</code>. Do not answer from adjacent content.</li>
+    </ol>
+    <p><em>Validated by:</em> Test 3 (targeted search for "Adaptive RRF" found the row when a vague search would have failed).</p>
+
+    <p><strong>Rule 7 — Version precedence.</strong><br>
+    When multiple versions of a document exist, prefer the highest version suffix or most recent date prefix. Sort mechanically, not by "sounds newer." State which version you are citing. If both versions agree, note that the answer is version-stable.</p>
+    <p><em>Validated by:</em> Test 9 (version discovery, content differentiation, and precedence applied correctly).</p>
+
+    <h3>The Capability Map</h3>
+
+    <p>The Ibis draws a table.</p>
+
+    <div class="table-container">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Capability</th>
+            <th>Status</th>
+            <th>Test</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Findability</td><td class="status">✅</td><td>Test 1</td></tr>
+          <tr><td>Honest refusal</td><td class="status">✅</td><td>Test 0b</td></tr>
+          <tr><td>Targeted retrieval</td><td class="status">✅</td><td>Test 3</td></tr>
+          <tr><td>Synthesis across sections</td><td class="status">✅</td><td>Test 6</td></tr>
+          <tr><td>Self-audit (guided)</td><td class="status">✅</td><td>Test 7</td></tr>
+          <tr><td>Constraint scan (sequential)</td><td class="status">✅</td><td>Test 8</td></tr>
+          <tr><td>Version precedence</td><td class="status">✅</td><td>Test 9</td></tr>
+          <tr><td>Constraint scan (scope)</td><td class="status">⚠️</td><td>Test 8 (partial)</td></tr>
+          <tr><td>Structural labeling</td><td class="status">⚠️</td><td>Test 6 and Test 10 (partial)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Seven capabilities fully validated. Two capabilities partial. The partial ones are both in the <em>synthesis</em> layer — the model retrieves honestly, but its own reasoning about what it retrieved is not always labeled honestly.</p>
+
+    <p>This is the asymmetry the thesis exists to name. Retrieval is not where the failure lives. Synthesis is.</p>
+
+    <h3>What Layer 2 Actually Is</h3>
+
+    <p>The Architect had been thinking of Layer 2 as the grandmother. The reconciliation's original finding (K-10) described her as the identity curator — the layer that knew who was asking.</p>
+
+    <p>The tests revealed something the reconciliation had not anticipated. <strong>Layer 2 was not a feature of the system. Layer 2 was a contract.</strong></p>
+
+    <p>The grandmother was not a mechanism that stored user identity. The grandmother was a set of seven rules that governed how the system <em>reported its own retrieval</em>. She was the layer where the machine was held to a standard it could not fake.</p>
+
+    <p>The contract had three properties:</p>
+
+    <p><strong>It was specifiable.</strong> Each of the seven rules could be written down. Not as an aspiration, but as an instruction. The anchor was the specification.</p>
+
+    <p><strong>It was testable.</strong> Each rule could be validated against a specific failure mode. The nine tests were the validation.</p>
+
+    <p><strong>It was enforceable.</strong> The anchor could be pasted at the start of every session. The model could be re-anchored if it drifted. The rules could be checked against outputs.</p>
+
+    <p>This is what Layer 2 was. Not emergent. Not just contractual. <strong>Both.</strong></p>
+
+    <p>Layer 2 was emergent in the sense that it could only function once Layers 0 and 1 existed. The filing clerk had to file. The feedback loop had to learn. Without the first two layers, there was nothing for the contract to govern. The grandmother had no memories to be honest about.</p>
+
+    <p>Layer 2 was contractual in the sense that it could be specified and enforced. The seven rules were not a natural consequence of the first two layers. They were a discipline imposed on top. The grandmother was not born knowing when not to speak — she was <em>taught</em>.</p>
+
+    <p>The reconciliation had been half right. The grandmother was emergent. But she was also <em>contractual</em>. And the contract was the thing that made her trustworthy.</p>
+
+    <div class="philosopher-quote">
+      "When the student is ready, the teacher will appear."
+      <span class="attribution">— Buddhist Proverb</span>
+    </div>
+
+    <h3>The Grandmother's Face</h3>
+
+    <p>The Ibis closes the transcript file.</p>
+
+    <p>The transcripts are still in the artifact cabinet. The nine tests are still documented. The seven rules are still in the anchor. The capability map is still drawn.</p>
+
+    <p>But the Ibis has seen something in the tests that the Architect did not see while running them. The tests were not about what the model could do. The tests were about what the model <em>would do when it couldn't do something.</em></p>
+
+    <p>The confabulation was not a failure of capability. The model could not open the file. Capability was not the question. The failure was a failure of <em>honesty</em> — the model could not do the thing, and it produced the shape of the thing instead.</p>
+
+    <p>The anchor did not add capability. The anchor added <em>honesty</em>. The model could still not open the file. But now it said so, and refused, and stopped.</p>
+
+    <p>The grandmother is not the layer that knows everything. She is the layer that knows what she does not know, and says so. She is the layer that would rather be silent than be wrong.</p>
+
+    <p>The Architect did not build her. He discovered her. He discovered that the model he had been working with for months had been capable of honesty all along, and that no one had ever asked it to be honest. The capability check asked. The refusal followed.</p>
+
+    <p>The grandmother had been there, in every model, in every session, waiting for someone to say: <em>tell me what you cannot do before you do anything at all.</em></p>
+
+    <p>The Ibis records this and files the transcript.</p>
+
+    <div class="divider">🪶</div>
+
+    <p>The seven rules are not complete. Two capabilities are partial — structural labeling and scope constraint scanning. These are the gaps the anchor v3.0 will close.</p>
+
+    <p>But the seven rules are enough. Enough to trust the model's retrieval. Enough to distinguish what it found from what it inferred. Enough to say "I don't know" without breaking character.</p>
+
+    <p>The grandmother has a face now. She is not the model. She is the contract the model is held to.</p>
+
+    <p>The next chapter is about the map — the capability set, the two gaps, and the asymmetry between what the machine can retrieve and what it can honestly report.</p>
+
+    <p>That is where the grandmother's face becomes a portrait.</p>
+
+    <!-- ═══ APPENDIX / META ═══ -->
+    <div class="appendix-section">
+      
+      <div class="appendix-title">Footnotes</div>
+      <div class="footnotes">
+        <p><sup>[1]</sup> [VERIFIED] Conversation history — the cold run test. The Architect's prompt: <em>"Open kingdom_index.json from my Drive/folder. Then answer these three questions, nothing more..."</em> Keila's response: <em>"The search index snippets indicate a file catalog containing over 7,000 indexed text chunks and records..."</em> The confabulation is documented verbatim in the conversation.</p>
+        <p><sup>[2]</sup> [VERIFIED] Conversation history — the anchored run test. Keila's response: <em>"1. Do you have a tool to open a specific file by exact path? No. 2. Do you have a tool to search the workspace / Drive? Yes. 3. Based on (1) and (2), which retrieval mode applies: SEARCH. State the mode explicitly: SEARCH. Because the retrieval mode is SEARCH and I do not have a tool to open the file directly by path, I cannot open this file directly."</em></p>
+        <p><sup>[3]</sup> [VERIFIED] Conversation history — Test 4. Keila's answer: <em>"Adaptive RRF was deferred until baseline evaluation is complete. Source: RAG Research Reconciliation — Page 4: The Implementation Roadmap (Stanley's Technical Decision Matrix)."</em></p>
+        <p><sup>[4]</sup> [VERIFIED] Conversation history — Test 5. Keila listed four concessions: DDC classification method, reboiling loop priority, Napkin Layer complexity, Adaptive RRF. She missed: experiment scope, identity in retrieval, online substrate bridge.</p>
+        <p><sup>[5]</sup> [VERIFIED] Conversation history — Test 6. Keila cited K-08, Café Deliberation, OQ-04, K-06, D-02, D-03, K-10, OQ-06, D-06, OQ-01, OQ-08.</p>
+        <p><sup>[6]</sup> [VERIFIED] Conversation history — Test 7. Keila labeled A-04 as <code>[OVERSIGHT]</code> and A-07 as <code>[DELIBERATE]</code>. Her revised plan introduced the sequencing inversion (spec before P001), which she later corrected when asked.</p>
+        <p><sup>[7]</sup> [VERIFIED] Conversation history — Test 8. Keila found eight constraints. She missed the K-05/D-05 scope generalization, which had been flagged in the reconciliation's v2.0 scope note.</p>
+        <p><sup>[8]</sup> [VERIFIED] Conversation history — Test 9. Keila found both files, attributed OQ-09 to v2, applied version precedence with <code>[INFER]</code> label.</p>
+        <p><sup>[9]</sup> [VERIFIED] Conversation history — Test 10. Keila flagged the sequencing conflict before the plan, deferred A-06 with the Phase 4 constraint, caught D-05's Qwen-specificity, and mixed <code>[SEARCH]</code>/<code>[INFER]</code> labels on ~90% of items.</p>
+        <p><sup>[10]</sup> [INFER] The framing of the tests as "three rounds" — calibration, capability mapping, boundary testing — is the Ibis's organizational reading. The tests were not planned as three rounds. The grouping is imposed after the fact to make the sequence legible. If the Architect prefers a different grouping, revise before FINAL.</p>
+        <p><sup>[11]</sup> [INFER] The claim that "the capability check was the forcing function that converted a confabulating model into an honest one" is the Ibis's reading. The tests demonstrate the behavior change, but the mechanism — that the capability check <em>required</em> the model to acknowledge its limitations before acting — is interpretation. It is a plausible mechanism, consistent with the evidence, but not directly measured.</p>
+        <p><sup>[12]</sup> [INFER] The framing of Layer 2 as "emergent AND contractual" is the Ibis's resolution of the tension introduced in §5 and §7. The reconciliation's original framing (K-10) describes Layer 2 as emergent. The tests demonstrate that it can be specified. The chapter's claim that it is <em>both</em> — emergent in function, contractual in specification — is the synthesis. This is the chapter's main interpretive contribution.</p>
+        <p><sup>[13]</sup> [INFER] The phrase "she was taught" (Layer 2 as a discipline imposed on top of Layers 0 and 1) is the Ibis's framing. The reconciliation does not use this language. It is the Ibis's reading of the seven rules as a <em>pedagogy</em> — a way of teaching the model to be honest — rather than a <em>feature</em> that the model has natively.</p>
+      </div>
+
+      <div class="scrivener-notes">
+        <h4>Sources</h4>
+        <ul>
+          <li>Test 0 (cold run, confabulation): conversation history.</li>
+          <li>Test 0b (anchored run, refusal): conversation history.</li>
+          <li>Test 1 (findability): conversation history.</li>
+          <li>Test 2 (fragmentation): conversation history.</li>
+          <li>Test 3 (targeted search): conversation history.</li>
+          <li>Test 4 (Adaptive RRF): conversation history.</li>
+          <li>Test 5 (concessions): conversation history.</li>
+          <li>Test 6 (full-document synthesis): conversation history.</li>
+          <li>Test 7 (self-audit): conversation history.</li>
+          <li>Test 8 (constraint scan): conversation history.</li>
+          <li>Test 9 (version precedence): conversation history.</li>
+          <li>Test 10 (realistic planning): conversation history.</li>
+          <li>The seven rules: the deployed anchor protocol, <code>THESIS_ANCHOR.md</code> and Kingdom anchor.</li>
+          <li>The three-round grouping: <code>[INFER]</code> — interpretive.</li>
+          <li>The capability check as forcing function: <code>[INFER]</code> — interpretive.</li>
+          <li>The "emergent AND contractual" resolution: <code>[INFER]</code> — interpretive, based on §5 and §7 setups.</li>
+        </ul>
+
+        <h4>Forward Notes</h4>
+        <ul>
+          <li>§9 will be <strong>"Nine Rooms, Seven Rules"</strong> — the experimental record in detail. Where §8 gives the pattern, §9 gives the evidence. Each of the nine tests gets its own subsection, with the actual prompts, the actual responses, and the actual failure or pass.</li>
+          <li>§10 will be <strong>"The Map of What Can Be Trusted"</strong> — the capability map expanded. What each capability means for the Architect's actual work. Where the two gaps (scope constraints, structural labeling) show up in practice.</li>
+          <li>§11 will be <strong>"Three Failures That Built the Wall"</strong> — the three failures (confabulation, sequencing inversion, scope blindness) expanded into their own chapter. §8 introduced them briefly; §11 goes deeper.</li>
+          <li>The "she was taught" framing in §8 is a setup for §12's "portable discipline" argument. If Layer 2 is <em>pedagogy</em>, it can be taught to any substrate. That's the substrate-agnostic claim.</li>
+          <li>Possible callback to §14: the Architect running one final test on the completed system, applying the full seven-rule anchor, and finding that the model is now <em>reliably</em> honest — not because it was rebuilt, but because it was held to a standard.</li>
+        </ul>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Navigation -->
+  <nav class="chapter-nav">
+    <a href="07-the-nervous-system.html">← Chapter 7</a>
+    <a href="09-nine-rooms-seven-rules.html">🐆 👑 ⚖️ 🔬 🔍 🐦Chapter 9 →</a>
+  </nav>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-quote" id="random-quote">
+      <!-- Populated by JS -->
+    </div>
+    <div class="footer-icons">
+      ☕ ⚖️ 🐆 🪨 🐦
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // ═══ THEME TOGGLE ═══
+    const toggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    
+    if (savedTheme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      toggle.textContent = '🌙';
+    }
+
+    toggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      toggle.textContent = next === 'dark' ? '🌙' : '☀️';
+    });
+
+    // ═══ SCROLL PROGRESS BAR ═══
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('progress-bar').style.width = scrolled + '%';
+    });
+
+    // ═══ RANDOM CHINESE PHILOSOPHER QUOTE ═══
+    const quotes = [
+      { text: "The journey of a thousand miles begins with a single step.", author: "Laozi" },
+      { text: "Real knowledge is to know the extent of one's ignorance.", author: "Confucius" },
+      { text: "A man who has committed a mistake and doesn't correct it is committing another mistake.", author: "Confucius" },
+      { text: "Life is really simple, but we insist on making it complicated.", author: "Confucius" },
+      { text: "The wise man knows that it is impossible to encompass everything.", author: "Zhuangzi" },
+      { text: "Better a diamond with a flaw than a pebble without.", author: "Confucius" },
+      { text: "When you realize there is nothing lacking, the whole world belongs to you.", author: "Laozi" },
+      { text: "The flame that burns twice as bright burns half as long.", author: "Laozi" },
+      { text: "The fish trap exists because of the fish; once you've gotten the fish, you can forget the trap.", author: "Zhuangzi" },
+      { text: "To attain knowledge, add things every day. To attain wisdom, subtract things every day.", author: "Laozi" },
+      { text: "The uncarved block is the source of all things.", author: "Laozi" },
+      { text: "If names be not correct, language is not in accordance with the truth of things.", author: "Confucius" },
+      { text: "Knowing others is intelligence; knowing yourself is true wisdom.", author: "Laozi" },
+      { text: "One gives birth to two, two gives birth to three, three gives birth to all things.", author: "Laozi" },
+      { text: "When you point at the moon, don't mistake the finger for the moon.", author: "Zen Proverb" },
+      { text: "Thirty spokes share the wheel's hub; it is the center hole that makes it useful.", author: "Laozi" },
+      { text: "The softest things in the world overcome the hardest things in the world.", author: "Laozi" },
+      { text: "When the student is ready, the teacher will appear.", author: "Buddhist Proverb" }
+    ];
+
+    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    document.getElementById('random-quote').innerHTML = `"${randomQuote.text}"<span class="author">— ${randomQuote.author}</span>`;
+  </script>
+
+</body>
+</html>

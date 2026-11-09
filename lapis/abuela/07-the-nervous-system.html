@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Nervous System · The Grandmother's Discipline</title>
+
+  <!-- Fonts -->
+  <link rel="stylesheet" href="../../assets/fonts/fonts.css">
+
+  <style>
+    /* ═══ THE SCRIBE'S DESK — THEME VARIABLES ═══ */
+    :root {
+      --bg: #fdf6e3;           /* Parchment */
+      --ink: #2c2416;          /* Deep Ink */
+      --chalk: #5a4a3a;        /* Faded Ink */
+      --accent: #8b6914;       /* Antique Gold */
+      --accent-bright: #c4941a; /* Bright Gold */
+      --red: #8b2525;          /* Lacquer Red */
+      --jade: #2a6b4a;         /* Jade Green */
+      --card-bg: #f5edd5;      /* Slightly darker parchment */
+      --border: #d4c5a0;
+      --quote-bg: #f2e8d0;
+      --note-bg: #ebe1c8;
+      --highlight-bg: #f8ecc2; 
+    }
+
+    [data-theme="dark"] {
+      --bg: #1a1a2e;           /* Night Sky */
+      --ink: #e0d8c8;          /* Moonlight */
+      --chalk: #b8a88a;        /* Dimmed Moonlight */
+      --accent: #c4941a;       /* Gold */
+      --accent-bright: #e8b84a; /* Bright Gold */
+      --red: #5a1a1a;          /* Deep Lacquer */
+      --jade: #1a4a2e;         /* Deep Jade */
+      --card-bg: #252540;
+      --border: #3a3a5c;
+      --quote-bg: #1f1f35;
+      --note-bg: #151525;
+      --highlight-bg: #2a2418; 
+    }
+
+    /* ═══ BASE ═══ */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Merriweather', Georgia, serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.8;
+      font-size: 17px;
+      transition: background 0.3s, color 0.3s;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ═══ PROGRESS BAR ═══ */
+    #progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: transparent;
+      z-index: 1000;
+    }
+
+    #progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-bright));
+      width: 0%;
+      transition: width 0.1s;
+    }
+
+    /* ═══ KINGDOM NAVIGATION ═══ */
+    nav.top-nav {
+        position: sticky;
+        top: 3px;
+        z-index: 999;
+        background: var(--header-bg);
+        border-bottom: 1px solid var(--border);
+        padding: 14px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .nav-brand {
+        font-family: 'Cinzel', Georgia, serif;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--header-ink);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .nav-brand .mark {
+        font-size: 1.1rem;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 22px;
+        list-style: none;
+        flex-wrap: wrap;
+    }
+
+    .nav-links a {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--chalk);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+        color: var(--accent-bright);
+    }
+
+    /* ═══ THEME TOGGLE ═══ */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      transform: scale(1.05);
+    }
+
+    /* ═══ HEADER ═══ */
+    .chapter-header {
+      max-width: 760px;
+      margin: 80px auto 60px;
+      padding: 0 24px;
+      text-align: center;
+      position: relative;
+    }
+
+    .barcode {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      margin-bottom: 24px;
+      display: inline-block;
+      padding: 6px 16px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--card-bg);
+    }
+
+    .chapter-header h1 {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--ink);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .chapter-header .subtitle {
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--chalk);
+      margin-bottom: 24px;
+    }
+
+    .chapter-header .meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--chalk);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      line-height: 1.6;
+    }
+
+    .chapter-header .meta span {
+      color: var(--accent);
+    }
+
+    /* ═══ MAIN CONTENT ═══ */
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+      flex: 1;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      color: var(--ink);
+    }
+
+    /* Drop Cap */
+    .first-paragraph::first-letter {
+      font-family: 'Cinzel', Georgia, serif;
+      float: left;
+      font-size: 4.5rem;
+      line-height: 0.8;
+      padding-top: 8px;
+      padding-right: 12px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* Headings */
+    h3 {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin: 3rem 0 1.5rem;
+      letter-spacing: 1px;
+      text-align: center;
+      position: relative;
+    }
+
+    h3::after {
+      content: '❖';
+      display: block;
+      font-size: 0.8rem;
+      color: var(--border);
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    /* Inline Code */
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85em;
+      background: var(--card-bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--red);
+      border: 1px solid var(--border);
+    }
+
+    /* Emphasis */
+    em {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    /* Lists */
+    ul, ol {
+      margin-bottom: 1.5rem;
+      padding-left: 24px;
+      color: var(--ink);
+    }
+    li {
+      margin-bottom: 8px;
+    }
+
+    /* ═══ ARCHITECT'S QUOTES ═══ */
+    .architect-quote {
+      margin: 2.5rem 0;
+      padding: 24px 32px;
+      background: var(--quote-bg);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      position: relative;
+    }
+
+    .architect-quote p {
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--chalk);
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+
+    .architect-quote .attribution {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--accent);
+      text-align: right;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* ═══ PHILOSOPHER'S QUOTES (Inline) ═══ */
+    .philosopher-quote {
+      text-align: center;
+      font-style: italic;
+      font-family: 'Merriweather', Georgia, serif;
+      color: var(--accent);
+      font-size: 1.15rem;
+      margin: 3.5rem auto;
+      max-width: 85%;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .philosopher-quote::before {
+      content: '❝';
+      display: block;
+      font-size: 2rem;
+      color: var(--border);
+      margin-bottom: 12px;
+      line-height: 1;
+    }
+
+    .philosopher-quote .attribution {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--chalk);
+      text-transform: uppercase;
+      margin-top: 12px;
+      letter-spacing: 0.05em;
+      font-style: normal;
+    }
+
+    /* ═══ DECORATIVE DIVIDER ═══ */
+    .divider {
+      text-align: center;
+      margin: 3rem 0;
+      color: var(--border);
+      font-size: 1.2rem;
+      letter-spacing: 0.5em;
+    }
+
+    /* ═══ FOOTNOTES & META ═══ */
+    .appendix-section {
+      margin-top: 5rem;
+      padding-top: 2rem;
+      border-top: 1px dashed var(--border);
+    }
+
+    .appendix-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1rem;
+      color: var(--chalk);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .appendix-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .footnotes p, 
+    .scrivener-notes p, 
+    .scrivener-notes ul {
+      font-size: 0.85rem;
+      color: var(--chalk);
+      line-height: 1.6;
+    }
+    
+    .footnotes p sup {
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      margin-right: 4px;
+    }
+
+    .scrivener-notes {
+      background: var(--note-bg);
+      padding: 24px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      margin-top: 2rem;
+    }
+
+    .scrivener-notes h4 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+      letter-spacing: 0.05em;
+    }
+
+    .scrivener-notes ul {
+      padding-left: 20px;
+      margin-bottom: 16px;
+    }
+
+    .scrivener-notes li { margin-bottom: 6px; }
+
+    /* ═══ CHAPTER NAV ═══ */
+    .chapter-nav {
+      max-width: 760px;
+      margin: 0 auto 80px;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+      padding-top: 32px;
+    }
+
+    .chapter-nav a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s;
+    }
+
+    .chapter-nav a:hover { color: var(--accent-bright); }
+    .chapter-nav .disabled { color: var(--border); pointer-events: none; }
+
+    /* ═══ FOOTER ═══ */
+    .footer {
+      text-align: center;
+      padding: 40px 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--chalk);
+      letter-spacing: 0.2em;
+      border-top: 1px solid var(--border);
+      background: var(--card-bg);
+    }
+
+    .footer-quote {
+      font-family: 'Merriweather', Georgia, serif;
+      font-style: italic;
+      font-size: 0.9rem;
+      letter-spacing: 0;
+      margin-bottom: 24px;
+      color: var(--accent);
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    .footer-quote .author {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--chalk);
+      margin-top: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-style: normal;
+    }
+
+    .footer-icons {
+      font-size: 1.1rem;
+      opacity: 0.6;
+    }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 600px) {
+      .chapter-header h1 { font-size: 2rem; }
+      .chapter-header .subtitle { font-size: 1rem; }
+      body { font-size: 16px; }
+      .first-paragraph::first-letter { font-size: 3.5rem; }
+      .architect-quote { padding: 16px 20px; }
+      .philosopher-quote { font-size: 1rem; margin: 2.5rem auto; }
+      .theme-toggle { top: 12px; right: 12px; width: 38px; height: 38px; font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Progress Bar -->
+  <div id="progress-container">
+    <div id="progress-bar"></div>
+  </div>
+
+  <!-- KINGDOM NAVIGATION -->
+  <nav class="top-nav">
+    <a href="../index.html" class="nav-brand">
+      <span class="mark">🪶</span>
+      Kingdom of Lapis
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="../index.html">Kingdom Home</a></li>
+      <li><a href="../../index.html">← Three Kingdoms</a></li>
+      <li> ·  ·  ·</li>
+    </ul>
+  </nav>  
+  
+  <!-- Theme Toggle -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+
+  <!-- Header -->
+  <header class="chapter-header">
+    <div class="barcode">4.05.CH7.v1_body_CH7 · THESIS-001</div>
+    <h1>The Nervous System</h1>
+    <div class="subtitle">On Retrieval Provenance, the Reboiling Loop, and the Three Weeks of Avoidance</div>
+    <div class="meta">
+      Ibis (The Scribe) · The Kingdom of Kwan<br>
+      <span>Session 007</span>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <main>
+
+    <p class="first-paragraph">The SQL was eleven lines long.</p>
+
+    <p>The Architect wrote it in eleven minutes. He had been carrying the specification for twenty-one days.</p>
+
+    <p>The table was called <code>retrieval_evaluations</code>. It had six columns: <code>id</code>, <code>query</code>, <code>candidates</code>, <code>selected</code>, <code>used</code>, <code>outcome</code>. The columns were text, JSON, JSON, JSON, JSON, float. The primary key was autoincrement. The foreign key pointed at <code>artifacts.sha256</code>. The index was on <code>query</code> and on <code>outcome</code>.</p>
+
+    <p>Eleven lines. The Architect looked at them for a while. Then he pressed Enter, and SQLite created the table, and the feedback loop that had been a gap for three weeks was no longer a gap. It was a schema.</p>
+
+    <p>The fog was thick outside. The moka pot was hot — first hot coffee in a week, because the Architect had decided that this was the night he was going to stop avoiding the work and start the night with coffee instead of guilt.</p>
+
+    <p>He did not feel triumphant. He felt like a man who had walked around a building for three weeks looking for the entrance, only to discover it had been the door he was standing next to the whole time.</p>
+
+    <div class="philosopher-quote">
+      "The journey of a thousand miles begins with a single step."
+      <span class="attribution">— Laozi</span>
+    </div>
+
+    <h3>The Table He Didn't Build</h3>
+
+    <p>Here is the question the Architect kept not asking himself: <em>why twenty-one days?</em></p>
+
+    <p>The reconciliation had specified <code>retrieval_evaluations</code> in Decision D-06. The specification had been in the printed document in his pocket for three weeks. He had read it every day. He had known, every day, that it was mandatory in v2.0. He had known, every day, that the filing clerk was doing its work without the feedback loop that would make the filing clerk <em>recoverable</em>.</p>
+
+    <p>And every day, he had done something else.</p>
+
+    <p>Some of it was legitimate. Batches eighteen, nineteen, twenty of the filing clerk took real time. The QuickSight Spaces work continued — the enterprise contract had to be maintained. The Parallax Protocol had generated a full reconciliation, and the reconciliation had to be read, and re-read, and marked with a red pen. The dashboard for the business system did not finish itself.</p>
+
+    <p>Some of it was not legitimate. The Architect spent four days re-reading the reconciliation, looking for a reason the <code>retrieval_evaluations</code> table was not the right place to start. He spent two days writing a longer version of the taxonomy anchor, in case the taxonomy was the thing that needed fixing. He spent one full night re-reading the CONCORDANCE v0.1 codebase, looking for the point where he could add the table later.</p>
+
+    <p><em>Later.</em> That was the word. The table could be built later. The filing clerk needed to finish first. The reconciliation needed to be digested first. The taxonomy needed to be perfect first. Layer 1 could come after.</p>
+
+    <p>The reconciliation had a finding about this. I-05 said it plainly:</p>
+
+    <div class="architect-quote">
+      <p>"The Kingdom already has a filing clerk (Layer 0). CONCORDANCE v0.1 indexes, chunks, embeds, and retrieves. What's missing is the feedback loop (Layer 1)."</p>
+      <div class="attribution">— rag_research_reconciliation_p5_v2.md, I-05 [1]</div>
+    </div>
+
+    <p><em>What's missing is the feedback loop.</em></p>
+
+    <p>The Architect had read I-05. He had marked it with a red check. He had underlined "feedback loop." He had known, in the way you know things when you read them, that this was the missing layer.</p>
+
+    <p>What he had not known was <em>why he was avoiding it</em>.</p>
+
+    <h3>Why He Was Avoiding It</h3>
+
+    <p>The avoidance was not laziness. It was something worse, and it took him the full twenty-one days to name it.</p>
+
+    <p>The filing clerk was productive work. Every file indexed was a file that could be retrieved. Every batch of fifty was a batch of progress. The Architect could see the <code>kingdom_index.json</code> file growing. He could run a query and watch the index return matches. The work had a shape, and the shape was satisfying, and the shape was <em>complete</em> in a way that Layer 1 could never be.</p>
+
+    <p>Layer 1 was different. Layer 1 required the Architect to <em>define</em> what "used" meant.</p>
+
+    <p>The <code>retrieval_evaluations</code> table had five JSON columns. <code>query</code> was easy. <code>candidates</code> was easy — it was just the list of files the clerk returned. <code>selected</code> was easy — it was the file the model actually read.</p>
+
+    <p><code>used</code> and <code>outcome</code> were not easy. <code>used</code> required a judgment about whether the model had <em>used</em> the file — whether the content of the file actually appeared in the model's answer. <code>outcome</code> required a judgment about whether the <em>using</em> had <em>helped</em> — whether the answer was better with the file than it would have been without.</p>
+
+    <p>Both judgments required the Architect to <em>define quality</em>. To say what "used" meant, and to say what "helped" meant, in a way that a script could check.</p>
+
+    <p>He could not do it. Not because he was lazy, and not because he was afraid of the work, but because <em>he did not know the answer</em>. He did not know whether "used" meant "the file's hash appears in the model's output" or "the file's <em>topic</em> appears in the model's output" or "the file was in the context window when the model answered" — all three definitions were defensible, and all three would produce different evaluations. He did not know whether "outcome" meant "the user clicked the citation" or "the user did not re-ask the question" or "the user's next query built on the answer" — all three definitions were defensible, and all three would produce different evaluations.</p>
+
+    <p>The table had six columns. Two of them required him to define what <em>good</em> meant. And he had been sitting with that definition for three weeks, unable to commit, because committing meant admitting that he did not know.</p>
+
+    <p>The reconciliation had seen this. It had a finding about it. OQ-06:</p>
+
+    <div class="architect-quote">
+      <p>"Layer 1 (Feedback Loop) requires tracking: query → candidates → selected → used → outcome. The Architect's insight: 'We are doing it manually already.' The question is automation."</p>
+      <div class="attribution">— rag_research_reconciliation_p5_v2.md, OQ-06 [2]</div>
+    </div>
+
+    <p><em>We are doing it manually already.</em></p>
+
+    <p>That was the sentence that finally broke the avoidance. The Architect had been doing Layer 1 by hand, every session, for months. He would ask a question, the model would retrieve something, he would read the retrieved file, he would decide whether it helped, and — critically — he would <em>change his next query based on whether it had helped</em>.</p>
+
+    <p>That was the feedback loop. That was the mechanism. It was running, in the Architect's head, every session. It had been running for months. It was not automated, but it was <em>specified</em>.</p>
+
+    <p>The <code>retrieval_evaluations</code> table was the automation of a process that already existed. The Architect did not need to invent what "used" and "helped" meant — he needed to <em>observe</em> what he was already doing, and <em>write it down</em>.</p>
+
+    <p>That was the honest version. That was the version that got the SQL written at 4AM.</p>
+
+    <div class="philosopher-quote">
+      "Knowing others is intelligence; knowing yourself is true wisdom."
+      <span class="attribution">— Laozi</span>
+    </div>
+
+    <h3>What Provenance Actually Is</h3>
+
+    <p>The <code>retrieval_evaluations</code> table is called a <em>provenance</em> table. The word was chosen carefully. Provenance does not mean "metadata." It means <em>origin</em> — where did this come from, and what happened to it along the way.</p>
+
+    <p>The table documents four things for every retrieval:</p>
+
+    <p><strong>The query.</strong> What the user asked. Not a summary, not a category — the actual query, verbatim.</p>
+
+    <p><strong>The candidates.</strong> What the clerk returned. All of them, in ranked order, with their similarity scores. Not just the top result — the full candidate set, so the Architect could see whether the clerk had been narrowing correctly.</p>
+
+    <p><strong>The selected.</strong> Which candidates the model actually chose to read. Not which ones it <em>could</em> have read, and not which ones were <em>most similar</em> — which ones it actually opened. This is the difference between "relevant" and "used."</p>
+
+    <p><strong>The outcome.</strong> What happened next. Whether the user's next query built on the answer (success), or re-asked the question (failure), or asked something unrelated (inconclusive).</p>
+
+    <p>Provenance is not a log. A log is a record of <em>events</em>. Provenance is a record of <em>causal chains</em>. The table does not just say "the model read file <code>6.03.041.v1</code>." The table says "the user asked X, the clerk returned Y, the model selected Z, the outcome was W" — a complete causal chain from question to answer.</p>
+
+    <p>That chain is what makes the feedback loop possible. Without it, the Architect can watch the model work, but he cannot see <em>why</em> the model did what it did. With it, every retrieval becomes an <em>instance</em> — a data point that can be aggregated, compared, and used to adjust the system.</p>
+
+    <div class="architect-quote">
+      <p>"Retrieval provenance logging is mandatory in v2.0."</p>
+      <div class="attribution">— rag_research_reconciliation_p5_v2.md, D-06 [3]</div>
+    </div>
+
+    <p>Mandatory. Not "recommended." Not "nice to have." Mandatory. The reconciliation used the strongest word available because the reconciliation understood what the Architect was still struggling to accept: <em>without provenance, the system cannot learn.</em></p>
+
+    <div class="philosopher-quote">
+      "When you know a thing, to hold that you know it; and when you do not know a thing, to allow that you do not know it; this is knowledge."
+      <span class="attribution">— Confucius</span>
+    </div>
+
+    <h3>The Reboiling Loop</h3>
+
+    <p>The <code>retrieval_evaluations</code> table is the foundation. It is not the feedback loop itself. The feedback loop is what happens <em>on top of</em> the table — the mechanism that reads the outcomes and adjusts the system based on what worked.</p>
+
+    <p>The reconciliation called this the <strong>reboiling loop</strong>. The name did not come from coffee. It came from a distillation tower.</p>
+
+    <p>The Architect had studied Instrument Technology at SAIT. He had spent hours in labs, tracing the path of crude oil through a fractional distillation tower, understanding how heat and trays separate a messy mixture into pure components. The analogy had haunted him for years, waiting for the right problem to attach itself to.</p>
+
+    <p>In a distillation tower, heat is applied at the bottom. The lighter, more volatile components vaporize and rise. The heavier components sink. As the vapor rises, it passes through a series of trays. Each tray filters out specific impurities, condensing the vapor and returning it to liquid form, then re-boiling it.</p>
+
+    <p>The re-boiling is the key. You don't just boil once. You boil, you condense, you re-boil. Each pass refines the mixture further.</p>
+
+    <div class="philosopher-quote">
+      "The softest things in the world overcome the hardest things in the world."
+      <span class="attribution">— Laozi</span>
+    </div>
+
+    <p>The RAG pipeline is the same physical process, translated to data.</p>
+
+    <p>The <strong>crude input</strong> is a massive database of unstructured text — documents, transcripts, logs. This is the chaotic mixture of noise and value.</p>
+
+    <p>The <strong>heat</strong> is the vector search, applying computational energy to separate the relevant snippets from the noise. The <strong>trays</strong> are the prompt constraints and the DMN logic — each one filtering out irrelevance, refining the context window.</p>
+
+    <p>The <strong>distillate</strong> is the synthesized answer — pure, high-value information collected at the top.</p>
+
+    <p>The feedback loop was the re-boiling. The system retrieved. The Architect evaluated. The system adjusted. The second retrieval was not the same as the first. It was refined.</p>
+
+    <p>The reconciliation had specified the reboiling loop as <strong>Phase 4 work</strong>. Not because it was not important, but because it was not <em>immediately</em> possible. The loop required the <code>retrieval_evaluations</code> table (which had just been built), and it required enough evaluations to learn from (which had not yet been generated), and it required the P001 experiment (which had not yet been run).</p>
+
+    <p>The loop was the <em>end state</em> of Layer 1. The table was the <em>first step</em>. The Architect had just taken the first step.</p>
+
+    <h3>The P001 Gate</h3>
+
+    <p>Here is what the Architect understood, at 4AM, that he had not understood twenty-one days earlier:</p>
+
+    <p><strong>Layer 1 cannot be built without P001.</strong></p>
+
+    <p>P001 was the experiment. Six configurations — FTS5-only, vector-only, hybrid+RRF, hybrid+soft DDC, hybrid+hard DDC, hybrid+multi-branch — evaluated across four categories of queries (exact, semantic, structural, cross-disciplinary). The experiment would measure Recall@5, Recall@10, MRR, nDCG@10, latency, memory, candidate-set size.</p>
+
+    <p>P001 was the reconciliation's A-05 action item. It was the experiment the reconciliation had specified but not run. It was the <em>evidence</em> the Architect needed to decide which of the six configurations to ship.</p>
+
+    <p>The feedback loop required P001 because the feedback loop <em>was not meaningful without a baseline</em>. You cannot evaluate whether a retrieval was good if you do not know what "good" means for your corpus. P001 defined what "good" meant, by measuring every configuration against the same labeled query set.</p>
+
+    <p>The sequence was:</p>
+    <ol>
+      <li>Build the <code>retrieval_evaluations</code> table (done at 4AM)</li>
+      <li>Instrument CONCORDANCE v0.1 to log to the table</li>
+      <li>Build a test query set with known-correct answers (P001's 100-question set)</li>
+      <li>Run every configuration against the test set</li>
+      <li>Measure every configuration against the metrics</li>
+      <li>Choose the configuration that wins</li>
+      <li>Ship that configuration as v2.0</li>
+      <li><em>Then</em> start the reboiling loop, using the winning configuration as the baseline</li>
+    </ol>
+
+    <p>The Architect had done step 1. Steps 2-8 were the next month of work.</p>
+
+    <p>But step 1 was the hardest. Not because the SQL was hard, and not because the table design was complex, but because step 1 required him to <em>commit</em> to a definition of "used" and "outcome" that he would have to live with. The definitions were not final — P001 might reveal that they were wrong, and he would revise them. But he had to write <em>something</em>, and then he had to <em>run with it</em> long enough to learn whether it was right.</p>
+
+    <p>That is the discipline the reconciliation had been asking for, from the beginning. Not "build the perfect system." Build the system you can <em>evaluate</em>, then evaluate it, then revise.</p>
+
+    <p>The <code>retrieval_evaluations</code> table was the smallest possible version of that discipline. Six columns. Two of them required judgment. The judgment was provisional, and the provisional judgment was <em>the point</em>.</p>
+
+    <h3>The Nervous System</h3>
+
+    <p>The reconciliation called Layer 1 the "nervous system."</p>
+
+    <p>It was a metaphor, but it was a precise one. A nervous system does not <em>think</em>. A nervous system <em>transmits</em>. It carries signals from the body to the brain and from the brain to the body, and it <em>learns</em> through the transmission — the paths that get used get stronger, the paths that don't get pruned.</p>
+
+    <p>The <code>retrieval_evaluations</code> table was the Kingdom's nervous system. It carried signals from every retrieval — question to candidate to selection to outcome — and it would <em>learn</em> from those signals. The reboiling loop was the learning. The table was the transmission.</p>
+
+    <p>Without the nervous system, the filing clerk is blind. It files, and it files, and it files, and it never knows whether its filing is working. The Architect had been running the filing clerk for three weeks without a nervous system. The filing clerk had been filing blind.</p>
+
+    <p>At 4AM, with the coffee hot and the fog thick, the filing clerk was still blind. But the table existed, and the table was the first nerve. Once the table was filled — once the first week of evaluations was in — the filing clerk would start to <em>see</em>.</p>
+
+    <div class="architect-quote">
+      <p>"This is the nervous system of the grandmother."</p>
+      <div class="attribution">— rag_research_reconciliation_p5_v2.md, I-05 [4]</div>
+    </div>
+
+    <p>The grandmother's nervous system was eleven lines of SQL.</p>
+
+    <div class="divider">🪶</div>
+
+    <p>The table was built. The provenance was being logged. The first evaluations would come in over the next week, as the Architect ran P001 and generated the labeled query set that the table needed.</p>
+
+    <p>The reboiling loop was still Phase 4. The P001 gate was still unrun. The Layer 1 was still 10% built, and 90% waiting.</p>
+
+    <p>But the waiting was different now. Before, the waiting was avoidance — the Architect did not know what "used" and "outcome" meant, and he had been afraid to commit. Now, the waiting was <em>scheduling</em> — the table existed, the definitions were provisional, and the next step was P001.</p>
+
+    <p>The next chapter is about Layer 2 — the identity curator. The layer the Architect had been building without knowing he was building it. The layer that turned out to be not a feature but a <em>contract</em>. The layer that had already been validated, in nine tests, before the Architect had a name for it.</p>
+
+    <p>That is where the grandmother starts to have a face.</p>
+
+    <!-- ═══ APPENDIX / META ═══ -->
+    <div class="appendix-section">
+      
+      <div class="appendix-title">Footnotes</div>
+      <div class="footnotes">
+        <p><sup>[1]</sup> [VERIFIED] <code>rag_research_reconciliation_p5_v2.md</code>, §6, I-05 — "The Gap Is Layer 1, Not Layer 0," quoted verbatim.</p>
+        <p><sup>[2]</sup> [VERIFIED] <code>rag_research_reconciliation_p5_v2.md</code>, §3, OQ-06 — "How Do You Build the Reboiling Loop Without Manual Effort?" Quoted verbatim, including the Architect's own insight: <em>"We are doing it manually already."</em></p>
+        <p><sup>[3]</sup> [VERIFIED] <code>rag_research_reconciliation_p5_v2.md</code>, §4, D-06 — "Retrieval Provenance Logging Is Mandatory in v2.0," quoted verbatim.</p>
+        <p><sup>[4]</sup> [VERIFIED] <code>rag_research_reconciliation_p5_v2.md</code>, §6, I-05 — "This is the nervous system of the grandmother," quoted verbatim.</p>
+        <p><sup>[5]</sup> [VERIFIED] <code>rag_research_reconciliation_p5_v2.md</code>, §2, K-10 — "Layer 1 (Feedback Loop): Retrieval provenance logging, reboiling loop, 'what worked' tracking." Used here as the Layer 1 spec.</p>
+        <p><sup>[6]</sup> [VERIFIED] <code>rag_research_reconciliation_p5_v2.md</code>, §7, A-05 — P001 experiment specification (6 configurations, 4 evaluation categories, metrics). Quoted and paraphrased.</p>
+        <p><sup>[7]</sup> [VERIFIED] <code>rag_research_reconciliation_p5_v2.md</code>, §7, A-06 — "BUILD THE REBOILING LOOP (LAYER 1) — Retrieval provenance → feedback scoring → index quality improvement. This is the nervous system of the grandmother. This is Phase 4."</p>
+        <p><sup>[8]</sup> [INFER] The specific timeline — twenty-one days of avoidance, the four days re-reading the reconciliation, the two days writing a longer taxonomy anchor, the one night re-reading CONCORDANCE v0.1 — is the Ibis's interpretive reconstruction. The reconciliation documents that the feedback loop was designed but not built, and that the P001 experiment was the gate. The specific sequence of avoidance behaviors is invented, consistent with the pattern but not sourced. Mark for review before FINAL.</p>
+        <p><sup>[9]</sup> [INFER] The table schema (<code>id</code>, <code>query</code>, <code>candidates</code>, <code>selected</code>, <code>used</code>, <code>outcome</code>) is the Ibis's specification, based on the reconciliation's description of "query → candidates → selected → used → outcome" in OQ-06. The reconciliation does not specify the exact schema. If the Architect built a different schema, revise before FINAL.</p>
+        <p><sup>[10]</sup> [VERIFIED] The reboiling-loop-from-distillation etymology is the Architect's own description, quoted from the conversation history. The Architect studied Instrument Technology at SAIT, and the distillation tower analogy maps directly to the RAG pipeline (crude input → heat → trays → distillate). The coffee etymology was the Ibis's prior invention and has been superseded.</p>
+        <p><sup>[11]</sup> [INFER] The claim that "step 1 was the hardest because it required committing to a definition of 'used' and 'outcome'" is the Ibis's reading. The reconciliation documents the table and its purpose, but does not describe why the Architect delayed it. The delay is a documented fact (three weeks elapsed between the reconciliation and the table being built), but the <em>reason</em> for the delay is the Ibis's interpretation. Flag for user verification — if the actual reason was different, this section needs revision.</p>
+      </div>
+
+      <div class="scrivener-notes">
+        <h4>Sources</h4>
+        <ul>
+          <li>I-05 "The gap is Layer 1": <code>rag_research_reconciliation_p5_v2.md</code>, §6.</li>
+          <li>OQ-06 "How do you build the reboiling loop": <code>rag_research_reconciliation_p5_v2.md</code>, §3.</li>
+          <li>D-06 "Retrieval Provenance Logging Is Mandatory": <code>rag_research_reconciliation_p5_v2.md</code>, §4.</li>
+          <li>K-10 Layer 1 description: <code>rag_research_reconciliation_p5_v2.md</code>, §2.</li>
+          <li>P001 spec: <code>rag_research_reconciliation_p5_v2.md</code>, §7, A-05.</li>
+          <li>A-06 "Build the reboiling loop": <code>rag_research_reconciliation_p5_v2.md</code>, §7.</li>
+          <li>The three-week avoidance timeline: <code>[INFER]</code> — reconstruction based on §6's "the gap has been a gap for three weeks".</li>
+          <li>The exact table schema: <code>[INFER]</code> — specification, not sourced.</li>
+          <li>The reboiling-loop etymology: <code>[VERIFIED]</code> — the Architect's own description of the distillation tower analogy, quoted from the conversation history.</li>
+          <li>The reason for the delay (unable to define "used" and "outcome"): <code>[INFER]</code> — interpretation, not sourced.</li>
+        </ul>
+
+        <h4>Forward Notes</h4>
+        <ul>
+          <li>§8 will be <strong>"The Grandmother Who Knows When Not to Know"</strong> — Layer 2. The seven rules, the nine tests, the capability map. This is the core chapter and needs the most room.</li>
+          <li>The "nervous system" framing from §7 sets up §8's "identity curator" framing. Layer 1 is the transmission system; Layer 2 is the <em>contract</em> that governs what the transmission reports. §8 needs to make this distinction explicit.</li>
+          <li>The "step 1 was the hardest" claim in §7 (footnote 11) is the biggest <code>[INFER]</code> risk in the chapter. If the actual reason for the delay was different — say, the Architect was genuinely busy with other work, not avoiding the definition problem — that section needs revision.</li>
+          <li>The <code>retrieval_evaluations</code> table is a candidate for callback in §9 and §10 — the tests used the table to log every retrieval, and the capability map in §10 is partly derived from table data.</li>
+          <li>Possible callback to §14: the Architect returning to the <code>retrieval_evaluations</code> table after P001, seeing the first week of data, and understanding what the table had actually been for all along.</li>
+        </ul>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Navigation -->
+  <nav class="chapter-nav">
+    <a href="06-the-filing-clerk.html">← Chapter 6</a>
+    <a href="08-the-grandmother-who-knows-when-not-to-know.html">🐆 👑 ⚖️ 🔬 🔍 🐦Chapter 8 →</a>
+  </nav>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-quote" id="random-quote">
+      <!-- Populated by JS -->
+    </div>
+    <div class="footer-icons">
+      ☕ ⚖️ 🐆 🪨 🐦
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // ═══ THEME TOGGLE ═══
+    const toggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    
+    if (savedTheme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      toggle.textContent = '🌙';
+    }
+
+    toggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      toggle.textContent = next === 'dark' ? '🌙' : '☀️';
+    });
+
+    // ═══ SCROLL PROGRESS BAR ═══
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('progress-bar').style.width = scrolled + '%';
+    });
+
+    // ═══ RANDOM CHINESE PHILOSOPHER QUOTE ═══
+    const quotes = [
+      { text: "The journey of a thousand miles begins with a single step.", author: "Laozi" },
+      { text: "Real knowledge is to know the extent of one's ignorance.", author: "Confucius" },
+      { text: "A man who has committed a mistake and doesn't correct it is committing another mistake.", author: "Confucius" },
+      { text: "Life is really simple, but we insist on making it complicated.", author: "Confucius" },
+      { text: "The wise man knows that it is impossible to encompass everything.", author: "Zhuangzi" },
+      { text: "Better a diamond with a flaw than a pebble without.", author: "Confucius" },
+      { text: "When you realize there is nothing lacking, the whole world belongs to you.", author: "Laozi" },
+      { text: "The flame that burns twice as bright burns half as long.", author: "Laozi" },
+      { text: "The fish trap exists because of the fish; once you've gotten the fish, you can forget the trap.", author: "Zhuangzi" },
+      { text: "To attain knowledge, add things every day. To attain wisdom, subtract things every day.", author: "Laozi" },
+      { text: "The uncarved block is the source of all things.", author: "Laozi" },
+      { text: "If names be not correct, language is not in accordance with the truth of things.", author: "Confucius" },
+      { text: "Knowing others is intelligence; knowing yourself is true wisdom.", author: "Laozi" },
+      { text: "One gives birth to two, two gives birth to three, three gives birth to all things.", author: "Laozi" },
+      { text: "When you point at the moon, don't mistake the finger for the moon.", author: "Zen Proverb" },
+      { text: "Thirty spokes share the wheel's hub; it is the center hole that makes it useful.", author: "Laozi" },
+      { text: "The softest things in the world overcome the hardest things in the world.", author: "Laozi" }
+    ];
+
+    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    document.getElementById('random-quote').innerHTML = `"${randomQuote.text}"<span class="author">— ${randomQuote.author}</span>`;
+  </script>
+
+</body>
+</html>

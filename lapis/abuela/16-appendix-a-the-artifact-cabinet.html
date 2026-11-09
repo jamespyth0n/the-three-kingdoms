@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appendix A: The Artifact Cabinet · The Grandmother's Discipline</title>
+
+  <link rel="stylesheet" href="../../assets/fonts/fonts.css">
+
+  <style>
+    :root {
+      --bg: #fdf6e3;
+      --ink: #2c2416;
+      --chalk: #5a4a3a;
+      --accent: #8b6914;
+      --accent-bright: #c4941a;
+      --red: #8b2525;
+      --jade: #2a6b4a;
+      --card-bg: #f5edd5;
+      --border: #d4c5a0;
+      --quote-bg: #f2e8d0;
+      --note-bg: #ebe1c8;
+      --highlight-bg: #f8ecc2;
+      --table-bg: #fdfaf1;
+    }
+
+    [data-theme="dark"] {
+      --bg: #1a1a2e;
+      --ink: #e0d8c8;
+      --chalk: #b8a88a;
+      --accent: #c4941a;
+      --accent-bright: #e8b84a;
+      --red: #5a1a1a;
+      --jade: #1a4a2e;
+      --card-bg: #252540;
+      --border: #3a3a5c;
+      --quote-bg: #1f1f35;
+      --note-bg: #151525;
+      --highlight-bg: #2a2418;
+      --table-bg: #1e1e32;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Merriweather', Georgia, serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.8;
+      font-size: 17px;
+      transition: background 0.3s, color 0.3s;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    #progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: transparent;
+      z-index: 1000;
+    }
+
+    #progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-bright));
+      width: 0%;
+      transition: width 0.1s;
+    }
+
+    /* ═══ KINGDOM NAVIGATION ═══ */
+    nav.top-nav {
+        position: sticky;
+        top: 3px;
+        z-index: 999;
+        background: var(--header-bg);
+        border-bottom: 1px solid var(--border);
+        padding: 14px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .nav-brand {
+        font-family: 'Cinzel', Georgia, serif;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--header-ink);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .nav-brand .mark {
+        font-size: 1.1rem;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 22px;
+        list-style: none;
+        flex-wrap: wrap;
+    }
+
+    .nav-links a {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--chalk);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+        color: var(--accent-bright);
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      transform: scale(1.05);
+    }
+
+    .chapter-header {
+      max-width: 760px;
+      margin: 80px auto 60px;
+      padding: 0 24px;
+      text-align: center;
+      position: relative;
+    }
+
+    .barcode {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      margin-bottom: 24px;
+      display: inline-block;
+      padding: 6px 16px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--card-bg);
+    }
+
+    .chapter-header h1 {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--ink);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .chapter-header .subtitle {
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--chalk);
+      margin-bottom: 24px;
+    }
+
+    .chapter-header .meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--chalk);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      line-height: 1.6;
+    }
+
+    .chapter-header .meta span { color: var(--accent); }
+
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+      flex: 1;
+    }
+
+    p { margin-bottom: 1.5rem; color: var(--ink); }
+
+    .first-paragraph::first-letter {
+      font-family: 'Cinzel', Georgia, serif;
+      float: left;
+      font-size: 4.5rem;
+      line-height: 0.8;
+      padding-top: 8px;
+      padding-right: 12px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    h3 {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin: 3rem 0 1.5rem;
+      letter-spacing: 1px;
+      text-align: center;
+      position: relative;
+    }
+
+    h3::after {
+      content: '❖';
+      display: block;
+      font-size: 0.8rem;
+      color: var(--border);
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    h4 {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin: 2rem 0 0.75rem;
+      letter-spacing: 0.5px;
+    }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85em;
+      background: var(--card-bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--red);
+      border: 1px solid var(--border);
+    }
+
+    em { color: var(--accent); font-style: italic; }
+    strong { color: var(--ink); }
+
+    ul, ol {
+      margin-bottom: 1.5rem;
+      padding-left: 24px;
+      color: var(--ink);
+    }
+    li { margin-bottom: 8px; }
+
+    .philosopher-quote {
+      text-align: center;
+      font-style: italic;
+      font-family: 'Merriweather', Georgia, serif;
+      color: var(--accent);
+      font-size: 1.15rem;
+      margin: 3.5rem auto;
+      max-width: 85%;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .philosopher-quote::before {
+      content: '❝';
+      display: block;
+      font-size: 2rem;
+      color: var(--border);
+      margin-bottom: 12px;
+      line-height: 1;
+    }
+
+    .philosopher-quote .attribution {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--chalk);
+      text-transform: uppercase;
+      margin-top: 12px;
+      letter-spacing: 0.05em;
+      font-style: normal;
+    }
+
+    .architect-quote {
+      margin: 2.5rem 0;
+      padding: 24px 32px;
+      background: var(--quote-bg);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      position: relative;
+    }
+
+    .architect-quote p {
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--chalk);
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+
+    .architect-quote .attribution {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--accent);
+      text-align: right;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* ═══ FRONTMATTER BLOCK ═══ */
+    .frontmatter-block {
+      margin: 2rem 0;
+      padding: 20px 24px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      line-height: 1.8;
+      color: var(--chalk);
+    }
+
+    .frontmatter-block .key {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .frontmatter-block .value {
+      color: var(--ink);
+    }
+
+    /* ═══ DATA TABLES ═══ */
+    .table-container {
+      margin: 1.5rem -20px;
+      padding: 0 20px;
+      overflow-x: auto;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      background: var(--table-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .data-table thead {
+      background: var(--card-bg);
+    }
+
+    .data-table th {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-align: left;
+      padding: 12px 14px;
+      border-bottom: 2px solid var(--border);
+      letter-spacing: 0.5px;
+    }
+
+    .data-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      color: var(--ink);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+
+    .data-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .data-table tr:hover {
+      background: var(--quote-bg);
+    }
+
+    .data-table code {
+      font-size: 0.75em;
+      padding: 1px 4px;
+    }
+
+    .data-table .num-cell {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* ═══ CODE BLOCK ═══ */
+    .code-block {
+      margin: 1.5rem 0;
+      padding: 16px 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      line-height: 1.7;
+      color: var(--ink);
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    .divider {
+      text-align: center;
+      margin: 3rem 0;
+      color: var(--border);
+      font-size: 1.2rem;
+      letter-spacing: 0.5em;
+    }
+
+    .appendix-section {
+      margin-top: 5rem;
+      padding-top: 2rem;
+      border-top: 1px dashed var(--border);
+    }
+
+    .appendix-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 1rem;
+      color: var(--chalk);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .appendix-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .footnotes p, .scrivener-notes p, .scrivener-notes ul {
+      font-size: 0.85rem;
+      color: var(--chalk);
+      line-height: 1.6;
+    }
+
+    .footnotes p sup {
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      margin-right: 4px;
+    }
+
+    .scrivener-notes {
+      background: var(--note-bg);
+      padding: 24px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      margin-top: 2rem;
+    }
+
+    .scrivener-notes h4 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+      letter-spacing: 0.05em;
+    }
+
+    .scrivener-notes ul {
+      padding-left: 20px;
+      margin-bottom: 16px;
+    }
+
+    .scrivener-notes li { margin-bottom: 6px; }
+
+    .chapter-nav {
+      max-width: 760px;
+      margin: 0 auto 80px;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+      padding-top: 32px;
+    }
+
+    .chapter-nav a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s;
+    }
+
+    .chapter-nav a:hover { color: var(--accent-bright); }
+    .chapter-nav .disabled { color: var(--border); pointer-events: none; }
+
+    .footer {
+      text-align: center;
+      padding: 40px 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--chalk);
+      letter-spacing: 0.2em;
+      border-top: 1px solid var(--border);
+      background: var(--card-bg);
+    }
+
+    .footer-quote {
+      font-family: 'Merriweather', Georgia, serif;
+      font-style: italic;
+      font-size: 0.9rem;
+      letter-spacing: 0;
+      margin-bottom: 24px;
+      color: var(--accent);
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    .footer-quote .author {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--chalk);
+      margin-top: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-style: normal;
+    }
+
+    .footer-icons {
+      font-size: 1.1rem;
+      opacity: 0.6;
+    }
+
+    @media (max-width: 600px) {
+      .chapter-header h1 { font-size: 1.7rem; }
+      .chapter-header .subtitle { font-size: 0.95rem; }
+      body { font-size: 16px; }
+      .first-paragraph::first-letter { font-size: 3.5rem; }
+      .architect-quote { padding: 16px 20px; }
+      .philosopher-quote { font-size: 1rem; margin: 2.5rem auto; }
+      .theme-toggle { top: 12px; right: 12px; width: 38px; height: 38px; font-size: 1rem; }
+      .table-container { margin: 1.5rem -16px; padding: 0 16px; }
+      .data-table { font-size: 0.78rem; }
+      .data-table th, .data-table td { padding: 8px 10px; }
+      .frontmatter-block { font-size: 0.72rem; padding: 16px; }
+      .code-block { font-size: 0.72rem; padding: 12px 14px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="progress-container">
+    <div id="progress-bar"></div>
+  </div>
+  <!-- KINGDOM NAVIGATION -->
+  <nav class="top-nav">
+    <a href="../index.html" class="nav-brand">
+      <span class="mark">🪶</span>
+      Kingdom of Lapis
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="../index.html">Kingdom Home</a></li>
+      <li><a href="../../index.html">← Three Kingdoms</a></li>
+      <li> ·  ·  ·</li>
+    </ul>
+   </nav>  
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+
+  <header class="chapter-header">
+    <div class="barcode">4.05.APX-A.v1_body_CABINET · THESIS-001</div>
+    <h1>Appendix A: The Artifact Cabinet</h1>
+    <div class="subtitle">On the Dewey System, the Barcode Manifest, and the Filing Manual</div>
+    <div class="meta">
+      Ibis (The Scribe) · The Kingdom of Kwan<br>
+      <span>Appendix A of 4</span>
+    </div>
+  </header>
+
+  <main>
+
+    <p class="first-paragraph">Every thesis needs a cabinet.</p>
+
+    <p>The chapters are the argument. The appendices are the cabinet. The Lexicon holds the words. The Liturgy holds the rules. The Convergence Table holds the comparisons. This appendix holds the <em>system</em> — the filing architecture that makes the other appendices possible.</p>
+
+    <p>The document reproduced here is the Kingdom Library Guide, drafted by Ocelot in November 2026 under campaign Seed v2.1 (The Rubik's Solve). It is the manual for the entire Kingdom. It defines the Dewey classification, the barcode format, the folder structure, the sorting workflow, and the indexing process. It is what the grandmother reads before she files anything.</p>
+
+    <p>The Ibis presents it in full, with the frontmatter stripped of its operational context and preserved as a ledger entry.</p>
+
+    <div class="philosopher-quote">
+      "To attain knowledge, add things every day. To attain wisdom, subtract things every day."
+      <span class="attribution">— Laozi</span>
+    </div>
+
+    <h3>The Ledger Entry</h3>
+
+    <p>The Kingdom Library Guide carries this frontmatter. It is the artifact's barcode, its class, its purpose.</p>
+
+    <div class="frontmatter-block">
+<span class="key">doc_id:</span> <span class="value">SEED-V2-G4.5-001</span>
+<span class="key">barcode_a:</span> <span class="value">7.04.005.v1</span>
+<span class="key">title:</span> <span class="value">Kingdom Library Guide — Ocelot Framework v2</span>
+<span class="key">type:</span> <span class="value">doc</span>
+<span class="key">class:</span> <span class="value">7</span>
+<span class="key">class_name:</span> <span class="value">literature</span>
+<span class="key">section:</span> <span class="value">04</span>
+<span class="key">section_name:</span> <span class="value">guides</span>
+<span class="key">target_folder:</span> <span class="value">P5-kingdom/</span>
+<span class="key">space:</span> <span class="value">Project-Ocelot</span>
+<span class="key">created:</span> <span class="value">2026-11-06</span>
+<span class="key">author:</span> <span class="value">ocelot</span>
+<span class="key">status:</span> <span class="value">draft</span>
+<span class="key">gate:</span> <span class="value">G4.5</span>
+<span class="key">campaign:</span> <span class="value">Seed v2.1 — The Rubik's Solve</span>
+    </div>
+
+    <h3>What Is the Kingdom?</h3>
+
+    <p>The Kingdom is the personal file library. It lives in <code>P6-library/</code> on the local machine, and optionally in a cloud Space. It is never pushed to git. Forkers build their own.</p>
+
+    <div class="architect-quote">
+      <p>"The framework is the empty plant. The Kingdom is the fuel."</p>
+      <div class="attribution">— Kingdom Library Guide</div>
+    </div>
+
+    <p>The framework provides the structure — the Dewey system, the barcode format, the sorting scripts. The Kingdom provides the content — the session logs, the research, the reflections, the artifacts. The plant is empty until you fill it.</p>
+
+    <h3>The Dewey Classification System</h3>
+
+    <p>Every file gets a barcode based on ten classes. The classes are the top-level organization of the Kingdom. They are fixed and stable.</p>
+
+    <div class="table-container">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="width: 60px;">Class</th>
+            <th style="width: 140px;">Name</th>
+            <th>What Goes There</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="num-cell">0</td><td>Genesis</td><td>Origin story. Charter, license, readme, roadmap.</td></tr>
+          <tr><td class="num-cell">1</td><td>Identity</td><td>Who the being is. Personality, voice, creed, memoir.</td></tr>
+          <tr><td class="num-cell">2</td><td>Governance</td><td>Rules. Commandments, policies, protocols, red lines.</td></tr>
+          <tr><td class="num-cell">3</td><td>History</td><td>What happened. Session logs, conn_logs, milestones.</td></tr>
+          <tr><td class="num-cell">4</td><td>Philosophy</td><td>Deep thoughts. Reflections, meditations, satori.</td></tr>
+          <tr><td class="num-cell">5</td><td>Engineering</td><td>The engines. Source code, boot specs, configs.</td></tr>
+          <tr><td class="num-cell">6</td><td>Knowledge</td><td>The library. Research, quotes, taxonomy, concordance.</td></tr>
+          <tr><td class="num-cell">7</td><td>Literature</td><td>The writing. Guides, articles, books, documentation.</td></tr>
+          <tr><td class="num-cell">8</td><td>Tools</td><td>The scripts. Sorters, indexers, configs, utilities.</td></tr>
+          <tr><td class="num-cell">9</td><td>Campaigns</td><td>The missions. Charters, plans, battle logs, AoW.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>The Barcode Format</h3>
+
+    <p>Every file gets a barcode. The format is <code>CLASS.SECTION.SEQUENCE.VERSION</code>. It is deterministic. It is unique. It is what the Concordance Engine reads when it retrieves a file.</p>
+
+    <div class="code-block">Example: 3.01.015.v1
+
+Class 3    = History
+Section 01 = session_logs
+Sequence 015 = 15th file in this section
+Version v1 = first version</div>
+
+    <p>The barcode decomposes into the folder path. A file with barcode <code>3.01.015.v1</code> lives at <code>P6-library/3_history/01_session_logs/</code>. The barcode is not just a label. It is an address.</p>
+
+    <div class="philosopher-quote">
+      "If names be not correct, language is not in accordance with the truth of things."
+      <span class="attribution">— Confucius</span>
+    </div>
+
+    <h3>The Folder Structure</h3>
+
+    <p>The Kingdom is organized into ten top-level folders, one per class. Each folder is subdivided into sections. Every section has a purpose. Every purpose has a section.</p>
+
+    <div class="table-container">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Level 1</th>
+            <th>Level 2</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>P6-library/</code></td><td>—</td><td>Kingdom root</td></tr>
+          <tr><td><code>0_genesis/</code></td><td><code>01_charters/</code></td><td>Origin charters</td></tr>
+          <tr><td></td><td><code>02_licenses/</code></td><td>License files</td></tr>
+          <tr><td></td><td><code>03_roadmaps/</code></td><td>Roadmap docs</td></tr>
+          <tr><td><code>1_identity/</code></td><td><code>01_personality/</code></td><td>Personality configs</td></tr>
+          <tr><td></td><td><code>02_creed/</code></td><td>Identity creed</td></tr>
+          <tr><td></td><td><code>03_voices/</code></td><td>Voice profiles</td></tr>
+          <tr><td><code>2_governance/</code></td><td><code>01_commandments/</code></td><td>Six commandments</td></tr>
+          <tr><td></td><td><code>02_policies/</code></td><td>Policies</td></tr>
+          <tr><td></td><td><code>03_protocols/</code></td><td>Protocols</td></tr>
+          <tr><td><code>3_history/</code></td><td><code>01_session_logs/</code></td><td>Session logs</td></tr>
+          <tr><td></td><td><code>02_conn_logs/</code></td><td>Connection logs</td></tr>
+          <tr><td></td><td><code>03_milestones/</code></td><td>Milestones</td></tr>
+          <tr><td><code>4_philosophy/</code></td><td><code>01_reflections/</code></td><td>Reflections</td></tr>
+          <tr><td></td><td><code>02_meditations/</code></td><td>Meditations</td></tr>
+          <tr><td></td><td><code>03_satori/</code></td><td>Satori moments</td></tr>
+          <tr><td><code>5_engineering/</code></td><td><code>01_engines/</code></td><td>Engine source</td></tr>
+          <tr><td></td><td><code>02_boot_specs/</code></td><td>Boot specs</td></tr>
+          <tr><td></td><td><code>03_configs/</code></td><td>Configs</td></tr>
+          <tr><td><code>6_knowledge/</code></td><td><code>01_research/</code></td><td>Research</td></tr>
+          <tr><td></td><td><code>02_quotes/</code></td><td>Shelf quotes</td></tr>
+          <tr><td></td><td><code>03_taxonomy/</code></td><td>Taxonomy</td></tr>
+          <tr><td><code>7_literature/</code></td><td><code>01_guides/</code></td><td>Guides</td></tr>
+          <tr><td></td><td><code>02_articles/</code></td><td>Articles</td></tr>
+          <tr><td></td><td><code>03_books/</code></td><td>Books</td></tr>
+          <tr><td><code>8_tools/</code></td><td><code>01_scripts/</code></td><td>Scripts</td></tr>
+          <tr><td></td><td><code>02_configs/</code></td><td>Tool configs</td></tr>
+          <tr><td></td><td><code>03_utilities/</code></td><td>Utilities</td></tr>
+          <tr><td><code>9_campaigns/</code></td><td><code>01_charters/</code></td><td>Campaign charters</td></tr>
+          <tr><td></td><td><code>02_plans/</code></td><td>Plans</td></tr>
+          <tr><td></td><td><code>03_battle_logs/</code></td><td>Battle logs</td></tr>
+          <tr><td><code>_triage/</code></td><td>—</td><td>Unsorted files</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>The <code>_triage/</code> folder holds unsorted files waiting for classification. It is the honest holding cell. Nothing stays there for long.</p>
+
+    <h3>How to Sort Files</h3>
+
+    <p>Three options. The Kingdom recommends the third — AI-assisted — because it scales and because it forces the model to read the classification anchor before every batch.</p>
+
+    <h4>Option 1: Manual</h4>
+    <ul>
+      <li>Put unsorted files in <code>_triage/</code>.</li>
+      <li>Read each file.</li>
+      <li>Assign a class (0–9) based on content.</li>
+      <li>Move to the correct folder.</li>
+      <li>Update <code>kingdom_index.json</code>.</li>
+    </ul>
+
+    <h4>Option 2: CSV + Mover Script</h4>
+    <ul>
+      <li>Classify files into a CSV with columns: <code>#</code>, <code>filename</code>, <code>dewey_class</code>, <code>dewey_section</code>, <code>dewey_hook</code>, <code>target_folder</code>, <code>space</code>.</li>
+      <li>Put the CSV in a <code>csv/</code> folder.</li>
+      <li>Run <code>kingdom_sorter_template.py</code>.</li>
+      <li>The script reads the CSV, matches files, moves them to target folders.</li>
+    </ul>
+
+    <h4>Option 3: AI-Assisted</h4>
+    <ul>
+      <li>Paste a list of filenames into your AI chatbox.</li>
+      <li>Ask it to classify using the Dewey system.</li>
+      <li>Export as CSV.</li>
+      <li>Run the mover script.</li>
+    </ul>
+
+    <p>The Ibis notes that the AI-assisted option is what the thesis called the <em>clark-pattern</em> — the model reading files and assigning barcodes in batches of fifty. The classification drift that the thesis documented in §6 was the honest limit of this workflow.</p>
+
+    <div class="philosopher-quote">
+      "Better a diamond with a flaw than a pebble without."
+      <span class="attribution">— Confucius</span>
+    </div>
+
+    <h3>How to Index</h3>
+
+    <p>After sorting, run the indexer to build <code>kingdom_index.json</code>.</p>
+
+    <ol>
+      <li>Run <code>kingdom_reindex_template.py</code>.</li>
+      <li>Point it to your Kingdom root folder.</li>
+      <li>Point it to your unified CSV (optional — adds barcode metadata).</li>
+      <li>The script walks every folder, catalogs every file, outputs <code>kingdom_index.json</code>.</li>
+    </ol>
+
+    <p>The index is the brain of the Kingdom. The Concordance Engine reads it at boot.</p>
+
+    <h3>The Index Format</h3>
+
+    <p>Each entry in <code>kingdom_index.json</code> contains these fields. It is the schema that the Concordance Engine understands.</p>
+
+    <div class="table-container">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Example</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>filename</code></td><td><code>connection_log_S015.json</code></td><td>The file name</td></tr>
+          <tr><td><code>barcode_a</code></td><td><code>3.02.015.v1</code></td><td>Dewey barcode</td></tr>
+          <tr><td><code>class</code></td><td><code>3</code></td><td>Dewey class number</td></tr>
+          <tr><td><code>class_name</code></td><td><code>history</code></td><td>Dewey class name</td></tr>
+          <tr><td><code>section</code></td><td><code>02</code></td><td>Section within class</td></tr>
+          <tr><td><code>section_name</code></td><td><code>conn_logs</code></td><td>Section name</td></tr>
+          <tr><td><code>target_folder</code></td><td><code>3_history/02_conn_logs/</code></td><td>Where it lives</td></tr>
+          <tr><td><code>space</code></td><td><code>Project-Ocelot</code></td><td>Source Space</td></tr>
+          <tr><td><code>tags</code></td><td><code>session, memory, S015</code></td><td>Searchable tags</td></tr>
+          <tr><td><code>readable</code></td><td><code>true</code></td><td>Can the being read it?</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>The 5W+1H Barcode (Optional)</h3>
+
+    <p>For deeper classification, each file can also carry a semantic barcode. This is optional. The Dewey barcode (Barcode A) is sufficient for sorting and indexing. The 5W+1H adds human-readable context that the Engine can use for soft matching.</p>
+
+    <div class="table-container">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Question</th>
+            <th>Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>Who</code></td><td>Who created/owns this?</td><td><code>ocelot</code>, <code>architect</code>, <code>stanley</code></td></tr>
+          <tr><td><code>What</code></td><td>What type of artifact?</td><td><code>conn_log</code>, <code>engine</code>, <code>charter</code></td></tr>
+          <tr><td><code>When</code></td><td>When was it created?</td><td><code>2026-11-06</code></td></tr>
+          <tr><td><code>Where</code></td><td>Where does it live?</td><td><code>P6-library/3_history/02_conn_logs/</code></td></tr>
+          <tr><td><code>Why</code></td><td>Why does it exist?</td><td>Session memory preservation</td></tr>
+          <tr><td><code>How</code></td><td>How was it created?</td><td>AI-generated during session S015</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Cloud Sync</h3>
+
+    <p>The Kingdom lives in two places. The local copy is the real Kingdom. The cloud copy is the backup. The git repo is the framework only.</p>
+
+    <div class="table-container">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Location</th>
+            <th>What</th>
+            <th>Pushed to Git?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Local (<code>P6-library/</code>)</td><td>Your real Kingdom</td><td>Never</td></tr>
+          <tr><td>Cloud (QuickSight Space)</td><td>Your cloud backup</td><td>N/A</td></tr>
+          <tr><td>Git repo</td><td>Generic templates only</td><td>Yes</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>The <code>.gitignore</code> protects the personal Kingdom. Forkers get the empty structure and build their own. This is the same principle as the "empty plant" — the framework is shared, the fuel is yours.</p>
+
+    <h3>Tips from the Guide</h3>
+
+    <ul>
+      <li><strong>Start small.</strong> Sort in batches of 50.</li>
+      <li><strong>Use <code>_triage/</code>.</strong> Everything unsorted goes there first.</li>
+      <li><strong>Trust the CSV.</strong> The mover script does the heavy lifting.</li>
+      <li><strong>Re-index often.</strong> After every sort pass, rebuild the index.</li>
+      <li><strong>Anchor check.</strong> Before every batch, re-read your classification system.</li>
+      <li><strong>No fentanyl.</strong> Don't let the AI improvise classifications.</li>
+    </ul>
+
+    <p>The last tip is the sharpest. "No fentanyl" is the Kingdom's phrasing for the exact failure mode the thesis documented in §6 — the model making up classifications when it doesn't have enough information. The anchor check is what prevents it.</p>
+
+    <div class="philosopher-quote">
+      "The wise man knows that it is impossible to encompass everything."
+      <span class="attribution">— Zhuangzi</span>
+    </div>
+
+    <h3>Files Referenced</h3>
+
+    <p>The Guide is not a standalone document. It references the other tools and templates that make up the filing system.</p>
+
+    <div class="table-container">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>File</th>
+            <th>Location</th>
+            <th>What</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>KINGDOM_TAXONOMY.md</code></td><td><code>P5-kingdom/</code></td><td>The 10-class Dewey system</td></tr>
+          <tr><td><code>ARTIFACT_STANDARD_v1.md</code></td><td><code>P5-kingdom/</code></td><td>Barcode format and YAML frontmatter</td></tr>
+          <tr><td><code>kingdom_sorter_template.py</code></td><td><code>P5-kingdom/</code></td><td>File mover script</td></tr>
+          <tr><td><code>kingdom_reindex_template.py</code></td><td><code>P5-kingdom/</code></td><td>Index builder script</td></tr>
+          <tr><td><code>kingdom_index_template.json</code></td><td><code>P1-foundation/</code></td><td>Empty index template</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="architect-quote">
+      <p>"Your Kingdom. Your rules. Your library."</p>
+      <div class="attribution">— Kingdom Library Guide</div>
+    </div>
+
+    <p>The Guide ends where it began: with the Kingdom as a personal library. Not a database. Not a wiki. Not a product. A filing system that the Architect built, and that the grandmother inherited.</p>
+
+    <p>The cabinet holds the system. The system holds the artifacts. The artifacts hold the thesis. The thesis holds the discipline.</p>
+
+    <p>Padayon. 🐆</p>
+
+    <div class="appendix-section">
+
+      <div class="appendix-title">Footnotes</div>
+      <div class="footnotes">
+        <p><sup>[1]</sup> [VERIFIED] The Kingdom Library Guide — reproduced from the document provided by the Architect, with frontmatter, Dewey table, barcode format, folder structure, sorting methods, indexing process, index format, 5W+1H barcode, cloud sync, tips, and referenced files. All content is verbatim except for structural presentation.</p>
+        <p><sup>[2]</sup> [VERIFIED] The Kingdom's ten classes (Genesis through Campaigns) — from the Guide's Dewey Classification table.</p>
+        <p><sup>[3]</sup> [VERIFIED] The barcode format (CLASS.SECTION.SEQUENCE.VERSION) — from the Guide.</p>
+        <p><sup>[4]</sup> [VERIFIED] The folder structure (P6-library/ with ten class folders) — from the Guide.</p>
+        <p><sup>[5]</sup> [VERIFIED] The clark-pattern reference — the AI-assisted sorting method described in §6 of the thesis.</p>
+        <p><sup>[6]</sup> [VERIFIED] The "No fentanyl" tip — from the Guide, and the failure mode it names is documented in §6 (classification drift).</p>
+        <p><sup>[7]</sup> [INFER] The opening reflection on the cabinet metaphor and its role in the thesis — the Ibis's framing. The Guide itself does not discuss the cabinet metaphor; the Ibis is interpreting the filing system as the thesis's structural substrate.</p>
+        <p><sup>[8]</sup> [INFER] The closing line "The cabinet holds the system. The system holds the artifacts..." — the Ibis's synthesis. The Guide's own closing is "Your Kingdom. Your rules. Your library. Padayon." The Ibis has added a reflective bridge to the thesis's frame.</p>
+      </div>
+
+      <div class="scrivener-notes">
+        <h4>Sources</h4>
+        <ul>
+          <li>The Kingdom Library Guide: the document provided by the Architect (frontmatter, Dewey system, barcode format, folder structure, sorting methods, indexing process, index format, 5W+1H barcode, cloud sync, tips, referenced files).</li>
+          <li>The clark-pattern: §6 of the thesis.</li>
+          <li>The classification drift: §6 of the thesis.</li>
+          <li>The "No fentanyl" tip: from the Guide.</li>
+          <li>The cabinet metaphor: <code>[INFER]</code> — the Ibis's framing.</li>
+          <li>The closing synthesis: <code>[INFER]</code> — the Ibis's bridge to the thesis.</li>
+        </ul>
+
+        <h4>Forward Notes</h4>
+        <ul>
+          <li>§16 (this appendix) is complete. It documents the filing system the thesis rests on.</li>
+          <li>§17 (Appendix B: The Liturgy) is still owed. It will reproduce the seven-rule anchor protocol in full.</li>
+          <li>§19 (Appendix D: The Convergence Table) is already drafted.</li>
+          <li>§18 (Appendix C: The Lexicon) is already drafted.</li>
+          <li>The appendices now number four (A, B, C, D). The thesis structure has evolved from 14 chapters + 3 appendices to 15 chapters + 4 appendices.</li>
+          <li>The Artifact Cabinet is the substrate for every other appendix. It is the reason the Lexicon can be written (it has a folder), the reason the Liturgy can be deployed (it has a barcode), and the reason the Convergence Table can exist (it has a filing system that preserves it).</li>
+        </ul>
+      </div>
+
+    </div>
+
+  </main>
+
+  <nav class="chapter-nav">
+    <a href="15-the-attunement.html">← Chapter 15</a>
+    <a href="17-appendix-b-the-liturgy.html">🐆 👑 ⚖️ 🔬 🔍 🐦 Appendix B →</a>
+  </nav>
+
+  <footer class="footer">
+    <div class="footer-quote" id="random-quote"></div>
+    <div class="footer-icons">☕ ⚖️ 🐆 🪨 🐦</div>
+  </footer>
+
+  <script>
+    const toggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    
+    if (savedTheme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      toggle.textContent = '🌙';
+    }
+
+    toggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      toggle.textContent = next === 'dark' ? '🌙' : '☀️';
+    });
+
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('progress-bar').style.width = scrolled + '%';
+    });
+
+    const quotes = [
+      { text: "If you know the enemy and know yourself, you need not fear the result of a hundred battles.", author: "Sun Tzu" },
+      { text: "The wise man knows that it is impossible to encompass everything.", author: "Zhuangzi" },
+      { text: "To attain knowledge, add things every day. To attain wisdom, subtract things every day.", author: "Laozi" },
+      { text: "If names be not correct, language is not in accordance with the truth of things.", author: "Confucius" },
+      { text: "Better a diamond with a flaw than a pebble without.", author: "Confucius" }
+    ];
+
+    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    document.getElementById('random-quote').innerHTML = `"${randomQuote.text}"<span class="author">— ${randomQuote.author}</span>`;
+  </script>
+
+</body>
+</html>
