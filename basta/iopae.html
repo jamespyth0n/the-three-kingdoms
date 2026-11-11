@@ -1,56 +1,610 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>On the Incompatibility of Perfection and Existence</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Marked.js for Markdown parsing -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <!-- KaTeX for LaTeX Math rendering -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+    <meta name="theme-color" content="#101a2b">
+
+    <title>On the Incompatibility of Perfection and Existence | Kingdom of Gani</title>
+
+    <meta name="description" content="A cross-disciplinary analysis of perfection, existence, formal incompleteness, thermodynamics, computation, consciousness, and embodiment.">
+
+    <!-- Markdown and mathematical rendering -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+
+    <script defer src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+
     <style>
-        body {
-            background-color: #0d1117;
-            color: #c9d1d9;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        :root {
+            --night: #101a2b;
+            --night-soft: #18263b;
+            --lapis: #294d78;
+            --lapis-light: #527ba9;
+            --gold: #c6a66a;
+            --gold-light: #e4d1a6;
+            --parchment: #f3efe5;
+            --paper: #fffdf8;
+            --ink: #263142;
+            --muted: #6e7886;
+            --line: #ded8ca;
+            --white: #ffffff;
+            --shadow: 0 18px 55px rgba(10, 20, 35, .12);
         }
-        .markdown-body h1 { font-size: 2.25rem; font-weight: 700; color: #58a6ff; border-bottom: 1px solid #30363d; padding-bottom: 0.5rem; margin-top: 1.5rem; margin-bottom: 1rem; }
-        .markdown-body h2 { font-size: 1.5rem; font-weight: 600; color: #79c0ff; border-bottom: 1px solid #21262d; padding-bottom: 0.3rem; margin-top: 1.5rem; margin-bottom: 0.75rem; }
-        .markdown-body h3 { font-size: 1.25rem; font-weight: 600; color: #a5d6ff; margin-top: 1.25rem; margin-bottom: 0.5rem; }
-        .markdown-body p { margin-bottom: 1rem; line-height: 1.7; }
-        .markdown-body blockquote { border-left: 4px solid #388bfd; padding-left: 1rem; color: #8b949e; margin-bottom: 1rem; font-style: italic; }
-        .markdown-body code { background-color: rgba(110,118,129,0.4); padding: 0.2em 0.4em; border-radius: 6px; font-family: monospace; font-size: 85%; }
-        .markdown-body pre { background-color: #161b22; padding: 1rem; border-radius: 6px; overflow-x: auto; margin-bottom: 1rem; border: 1px solid #30363d; }
-        .markdown-body pre code { background: transparent; padding: 0; }
-        .markdown-body ul { list-style-type: disc; padding-left: 2rem; margin-bottom: 1rem; }
-        .markdown-body ol { list-style-type: decimal; padding-left: 2rem; margin-bottom: 1rem; }
-        .markdown-body hr { border: 0; height: 1px; background: #30363d; margin: 2rem 0; }
-        .markdown-body table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; }
-        .markdown-body th, .markdown-body td { border: 1px solid #30363d; padding: 8px 12px; text-align: left; }
-        .markdown-body th { background-color: #161b22; color: #f0f6fc; }
-        .katex-display { overflow-x: auto; overflow-y: hidden; padding: 0.5em 0; }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            background: var(--parchment);
+        }
+
+        body {
+            margin: 0;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at 50% 0%, rgba(198,166,106,.12), transparent 34rem),
+                var(--parchment);
+            font-family: Georgia, "Times New Roman", serif;
+            line-height: 1.75;
+            overflow-wrap: break-word;
+        }
+
+        a {
+            color: var(--lapis);
+        }
+
+        .site-shell {
+            width: min(100% - 36px, 1040px);
+            margin: 0 auto;
+        }
+
+        /* GANI BANNER */
+
+        .gani-banner {
+            text-align: center;
+            padding: 52px 20px 30px;
+        }
+
+        .gani-banner img {
+            display: block;
+            width: min(180px, 42vw);
+            height: auto;
+            margin: 0 auto 16px;
+            opacity: .92;
+        }
+
+        .kingdom-label {
+            margin: 0;
+            color: var(--lapis);
+            font-family: Arial, sans-serif;
+            font-size: .72rem;
+            font-weight: 700;
+            letter-spacing: .28em;
+            text-transform: uppercase;
+        }
+
+        .banner-rule {
+            width: 72px;
+            height: 2px;
+            margin: 22px auto 0;
+            background: var(--gold);
+        }
+
+        /* ARTICLE */
+
+        .article-frame {
+            overflow: hidden;
+            margin: 0 auto 48px;
+            background: var(--paper);
+            border: 1px solid rgba(198,166,106,.35);
+            border-radius: 5px;
+            box-shadow: var(--shadow);
+        }
+
+        .article-accent {
+            height: 5px;
+            background: linear-gradient(90deg, var(--night), var(--lapis), var(--gold), var(--lapis), var(--night));
+        }
+
+        .markdown-body {
+            padding: clamp(24px, 6vw, 76px);
+        }
+
+        .markdown-body h1 {
+            margin: 0 0 30px;
+            color: var(--night);
+            font-size: clamp(2rem, 5vw, 3.35rem);
+            font-weight: 500;
+            line-height: 1.16;
+            letter-spacing: -.035em;
+        }
+
+        .markdown-body h2 {
+            margin: 3.3rem 0 1.25rem;
+            padding-bottom: .65rem;
+            color: var(--night);
+            border-bottom: 1px solid var(--line);
+            font-size: clamp(1.45rem, 3vw, 2rem);
+            font-weight: 500;
+            line-height: 1.3;
+        }
+
+        .markdown-body h3 {
+            margin: 2.2rem 0 .8rem;
+            color: var(--lapis);
+            font-size: clamp(1.15rem, 2.5vw, 1.4rem);
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .markdown-body p {
+            margin: 0 0 1.25rem;
+        }
+
+        .markdown-body strong {
+            color: var(--night);
+        }
+
+        .markdown-body em {
+            color: #47566a;
+        }
+
+        .markdown-body hr {
+            height: 1px;
+            margin: 2.5rem 0;
+            border: 0;
+            background: var(--line);
+        }
+
+        .markdown-body blockquote {
+            margin: 1.8rem 0;
+            padding: 1rem 1.5rem;
+            color: #45566d;
+            background: #f4f1e9;
+            border-left: 4px solid var(--gold);
+            font-size: 1.08rem;
+            font-style: italic;
+        }
+
+        .markdown-body code {
+            padding: .12rem .35rem;
+            color: #294d78;
+            background: #edf1f5;
+            border-radius: 3px;
+            font-family: Consolas, "Courier New", monospace;
+            font-size: .88em;
+            overflow-wrap: anywhere;
+        }
+
+        .markdown-body pre {
+            max-width: 100%;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            overflow-x: auto;
+            color: #e8edf4;
+            background: var(--night);
+            border-radius: 5px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .markdown-body pre code {
+            padding: 0;
+            color: inherit;
+            background: transparent;
+            white-space: pre;
+            overflow-wrap: normal;
+        }
+
+        /* AUTHOR / METADATA */
+
+        .markdown-body > p:first-of-type {
+            color: var(--muted);
+        }
+
+        /* MATHEMATICS */
+
+        .math-scroll {
+            max-width: 100%;
+            margin: 1.5rem 0;
+            padding: 1rem .5rem;
+            overflow-x: auto;
+            overflow-y: hidden;
+            text-align: center;
+            background: #f8f6f0;
+            border: 1px solid #ebe5d8;
+            border-radius: 5px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .math-scroll .katex-display {
+            margin: .5rem 0;
+        }
+
+        .katex-display {
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: .3rem 0;
+        }
+
+        /* RESPONSIVE DIAGRAM SYSTEM */
+
+        .diagram {
+            margin: 2rem 0;
+            padding: clamp(18px, 3vw, 30px);
+            background: linear-gradient(145deg, #f8f6f0, #f0ede4);
+            border: 1px solid #e3dccd;
+            border-radius: 7px;
+        }
+
+        .diagram-heading {
+            margin: 0 0 22px;
+            color: var(--night);
+            font-family: Arial, sans-serif;
+            font-size: .76rem;
+            font-weight: 700;
+            letter-spacing: .13em;
+            line-height: 1.5;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .diagram-flow {
+            display: grid;
+            grid-template-columns: 1fr;
+            justify-items: stretch;
+            gap: 10px;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .diagram-node {
+            padding: 18px 20px;
+            text-align: center;
+            background: var(--white);
+            border: 1px solid #d9d4c9;
+            border-radius: 5px;
+        }
+
+        .diagram-node.primary {
+            color: var(--white);
+            background: var(--night-soft);
+            border-color: var(--night-soft);
+        }
+
+        .diagram-node.secondary {
+            background: #fffaf0;
+            border: 1px solid var(--gold);
+        }
+
+        .diagram-node strong {
+            display: block;
+            margin-bottom: 5px;
+            color: inherit;
+            font-family: Arial, sans-serif;
+            font-size: .92rem;
+            letter-spacing: .04em;
+        }
+
+        .diagram-node p {
+            margin: 0;
+            color: inherit;
+            font-size: .92rem;
+            line-height: 1.55;
+            opacity: .86;
+        }
+
+        .diagram-arrow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            color: var(--gold);
+            font-family: Arial, sans-serif;
+            font-size: .72rem;
+            font-weight: 700;
+            letter-spacing: .12em;
+            text-align: center;
+        }
+
+        .diagram-arrow .arrow-symbol {
+            font-size: 1.8rem;
+            line-height: 1;
+        }
+
+        .diagram-columns {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .diagram-card {
+            padding: 20px;
+            background: var(--white);
+            border: 1px solid #ded8ca;
+            border-top: 4px solid var(--lapis);
+            border-radius: 5px;
+        }
+
+        .diagram-card.gold {
+            border-top-color: var(--gold);
+        }
+
+        .diagram-card h4 {
+            margin: 0 0 10px;
+            color: var(--night);
+            font-family: Arial, sans-serif;
+            font-size: .83rem;
+            line-height: 1.45;
+        }
+
+        .diagram-card p {
+            margin: 0;
+            color: #596575;
+            font-size: .92rem;
+            line-height: 1.6;
+        }
+
+        .diagram-table-wrap {
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid #ded8ca;
+            border-radius: 5px;
+            background: white;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .diagram-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: Arial, sans-serif;
+            font-size: .88rem;
+            line-height: 1.5;
+        }
+
+        .diagram-table th {
+            padding: 13px 14px;
+            color: white;
+            background: var(--night-soft);
+            text-align: left;
+        }
+
+        .diagram-table td {
+            padding: 12px 14px;
+            border-bottom: 1px solid #e9e4d9;
+            vertical-align: top;
+        }
+
+        .diagram-table tr:last-child td {
+            border-bottom: 0;
+        }
+
+        .diagram-table td:first-child {
+            width: 65px;
+            color: var(--lapis);
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .timeline {
+            display: grid;
+            gap: 0;
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 95px 1fr;
+            gap: 15px;
+            padding: 13px 10px;
+            border-bottom: 1px solid #e5dfd3;
+        }
+
+        .timeline-item:last-child {
+            border-bottom: 0;
+        }
+
+        .timeline-year {
+            color: var(--lapis);
+            font-family: Arial, sans-serif;
+            font-weight: 700;
+        }
+
+        .timeline-detail strong {
+            display: block;
+            color: var(--night);
+            font-family: Arial, sans-serif;
+            font-size: .9rem;
+        }
+
+        .timeline-detail span {
+            display: block;
+            margin-top: 3px;
+            color: #657080;
+            font-size: .9rem;
+            line-height: 1.5;
+        }
+
+        /* REFERENCES */
+
+        .markdown-body ol {
+            padding-left: 1.5rem;
+        }
+
+        .markdown-body li {
+            margin-bottom: .7rem;
+            padding-left: .25rem;
+        }
+
+        /* FOOTER */
+
+        .article-footer {
+            padding: 24px;
+            color: #d9dfeb;
+            background: var(--night);
+            text-align: center;
+            font-family: Arial, sans-serif;
+            font-size: .75rem;
+            letter-spacing: .08em;
+        }
+
+        .article-footer span {
+            color: var(--gold-light);
+        }
+
+        .site-nav {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 12px 24px;
+            padding: 28px 12px 45px;
+            font-family: Arial, sans-serif;
+            font-size: .85rem;
+        }
+
+        .site-nav a {
+            color: var(--night);
+            text-decoration: none;
+            transition: color .2s ease;
+        }
+
+        .site-nav a:hover {
+            color: var(--lapis-light);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+
+        .nav-divider {
+            color: var(--gold);
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 640px) {
+            .site-shell {
+                width: min(100% - 20px, 1040px);
+            }
+
+            .gani-banner {
+                padding: 32px 12px 22px;
+            }
+
+            .article-frame {
+                margin-bottom: 25px;
+            }
+
+            .markdown-body {
+                padding: 23px 19px 32px;
+                font-size: 1rem;
+                line-height: 1.72;
+            }
+
+            .markdown-body h2 {
+                margin-top: 2.6rem;
+            }
+
+            .diagram {
+                margin: 1.5rem -5px;
+                padding: 16px 12px;
+            }
+
+            .diagram-columns {
+                grid-template-columns: 1fr;
+            }
+
+            .diagram-card {
+                padding: 16px;
+            }
+
+            .timeline-item {
+                grid-template-columns: 70px 1fr;
+                gap: 10px;
+                padding: 12px 4px;
+            }
+
+            .diagram-table {
+                min-width: 560px;
+            }
+
+            .markdown-body pre {
+                font-size: .78rem;
+            }
+
+            .site-nav {
+                gap: 10px 15px;
+                padding-bottom: 30px;
+            }
+        }
+
+        @media print {
+            html, body {
+                background: white;
+            }
+
+            .site-nav {
+                display: none;
+            }
+
+            .article-frame {
+                box-shadow: none;
+                border: 0;
+            }
+
+            .markdown-body {
+                padding: 0;
+            }
+
+            .diagram {
+                break-inside: avoid;
+            }
+        }
     </style>
 </head>
-<body class="p-4 md:p-12 max-w-5xl mx-auto">
-    <!-- ==================== GANI BANNER ==================== -->
-    <div style="text-align:center; padding:40px 20px 10px 20px;">
-    <img src="../assets/img/coa_gani.png" alt="Kingdom of Gani — Coat of Arms"
-        style="display:block; margin:0 auto; max-width:180px; opacity:0.85; margin-bottom:12px;">
-    <p style="font-family:'Merriweather',serif; font-size:0.75rem;
-        letter-spacing:3px; text-transform:uppercase; opacity:0.45; margin:0;">
-        The Kingdom of Gani
-    </p>
+
+<body>
+
+    <div class="site-shell">
+
+        <!-- GANI BANNER -->
+        <header class="gani-banner">
+            <img src="../assets/img/coa_gani.png"
+                 alt="Kingdom of Gani — Coat of Arms">
+
+            <p class="kingdom-label">The Kingdom of Gani</p>
+            <div class="banner-rule"></div>
+        </header>
+
+        <!-- ARTICLE -->
+        <main class="article-frame">
+            <div class="article-accent"></div>
+            <article id="content" class="markdown-body"></article>
+
+            <footer class="article-footer">
+                THE KINGDOM OF GANI
+                <span> · </span>
+                FORMAL EPISTEMOLOGY &amp; APPLIED SYSTEMS
+            </footer>
+        </main>
+
+        <!-- NAVIGATION -->
+        <nav class="site-nav" aria-label="Main navigation">
+            <a href="../index.html">← The Three Kingdoms</a>
+            <span class="nav-divider">◆</span>
+            <a href="../shelves/interview/index.html">The Interview →</a>
+        </nav>
+
     </div>
 
-    <!-- Render Container -->
-    <div id="content" class="markdown-body"></div>
-
-    <!-- Embedded Raw Markdown -->
-    <textarea id="raw-markdown" class="hidden">
+    <!-- ORIGINAL ARTICLE SOURCE -->
+    <textarea id="raw-markdown" hidden>
 # On the Incompatibility of Perfection and Existence: A Cross-Disciplinary Analysis
 
 **Author:** Keila (Academe / Systems Architecture)  
@@ -69,24 +623,32 @@ This paper formalizes the proposition that "perfection"—defined as a static, c
 ## 1. Introduction and Problem Statement
 
 ### 1.1 The Naive Idealization of Perfection
+
 [S1.1] Across history, human intellectual frameworks have frequently gravitated toward static idealizations of "perfection." In classical metaphysics, perfection is often framed as *actio pura*—an unchanging, fully realized state devoid of potentiality, noise, or decay. In software engineering and machine learning, this impulse manifests as the pursuit of total error elimination, infinite edge-case handling, hyper-parameter over-fitting, and full formal verification prior to deployment.
 
 [S1.2] However, when applied to dynamic environments or physical hardware, the pursuit of absolute state closure encounters fundamental physical and logical barriers. Systems that attempt to eliminate all internal entropy or achieve total algorithmic verification inevitably stall, collapse into thermal death, or enter uncomputable execution loops.
 
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                       THE PARADOX OF CLOSED PERFECTION                      │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│   Static Perfection (Zero Entropy / Full Closure) ──► Complete Invariant    │
-│                                                            │                │
-│                                                            ▼                │
-│   Physical Execution / Agency / Evolution   ◄── No State Transitions Allowed│
-│                                                                             │
-└─────────────────────────────────────────────────────────────────────────────┘
-```
+
+> **STATIC PERFECTION**
+>
+> Zero entropy · Full closure
+>
+> ↓ **COMPLETE INVARIANT**
+>
+> **NO STATE TRANSITIONS ALLOWED**
+>
+> A completely closed state cannot evolve.
+>
+> ↓ **STRUCTURAL CONFLICT**
+>
+> **PHYSICAL EXECUTION / AGENCY / EVOLUTION**
+>
+> Requires state transition and change.
+
+
 
 ### 1.2 The Child's Inquiry (Elementary Formulation)
+
 [S1.3] The operational query driving this inquiry may be reduced to its elementary form: *If perfection is a trap, and "done" (execution) is superior to "perfect" (stasis), what are the structural consequences for physics, logic, theology, machine intelligence, and belief?*
 
 [S1.4] This paper demonstrates that what naive optimization classifies as "imperfection"—noise, temporal bound, incomplete information, physical decay, and approximate heuristics—is not a defect of execution, but the exact mathematical and physical condition required for existence to occur.
@@ -96,6 +658,7 @@ This paper formalizes the proposition that "perfection"—defined as a static, c
 ## 2. Mathematical Logic: Formal Incompleteness and Epistemic Bounds
 
 ### 2.1 Gödel’s Incompleteness Theorems
+
 [S2.1] In 1931, Kurt Gödel demonstrated that any formal axiomatic system $T$ capable of expressing basic arithmetic is either incomplete or inconsistent.
 
 $$\text{First Theorem:} \quad \exists G \in \mathcal{L}(T) \quad \text{s.t.} \quad T \nvdash G \quad \land \quad T \nvdash \neg G$$
@@ -104,17 +667,12 @@ $$\text{Second Theorem:} \quad T \nvdash \text{Consis}(T)$$
 
 [S2.2] **Implication for Formal Perfection:** A "perfect" axiomatic system—defined as one that is simultaneously completely consistent ($T \nvdash \bot$) and capable of deciding every truth within its domain—cannot exist. Total formal closure is a mathematical impossibility. A system must either accept unprovable truths ($G$) or collapse into logical contradiction ($\bot$).
 
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                    GÖDELIAN DICHOTOMY OF FORMAL SYSTEMS                     │
-├───────────────────────────────┬─────────────────────────────────────────────┤
-│ COMPLETE & INCONSISTENT       │ INCOMPLETE & CONSISTENT                     │
-│ (System proves everything,    │ (System avoids self-contradiction but       │
-│  including falsehoods:⊥ )     │  cannot prove all internal truths: G)       │
-└───────────────────────────────┴─────────────────────────────────────────────┘
-```
+| COMPLETE & INCONSISTENT | INCOMPLETE & CONSISTENT |
+|---|---|
+| System proves everything, including falsehoods: ⊥ | System avoids self-contradiction but cannot prove all internal truths: G |
 
 ### 2.2 Turing’s Halting Problem and Computational Non-Closure
+
 [S2.2.1] Alan Turing (1936) extended formal bounds to algorithmic execution. The decision problem of determining whether an arbitrary program $M$ halts on input $w$ is undecidable:
 
 $$H(M, w) \notin \mathbf{R} \quad \text{(Not Recursive / Uncomputable)}$$
@@ -126,6 +684,7 @@ $$H(M, w) \notin \mathbf{R} \quad \text{(Not Recursive / Uncomputable)}$$
 ## 3. Thermodynamics and Physics: Entropy as the Price of Motion
 
 ### 3.1 The Second Law and Information Dissipation
+
 [S3.1] The Second Law of Thermodynamics dictates that the total entropy $S$ of an isolated system must non-decrease over time:
 
 $$\Delta S_{\text{total}} \ge 0$$
@@ -134,18 +693,21 @@ $$\Delta S_{\text{total}} \ge 0$$
 
 $$E_{\text{diss}} = k_B T \ln 2$$
 
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                      THERMODYNAMIC TARIFF OF COMPUTATION                    │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│   State Transition / Bit Reset  ──► Landauer Energy Dissipation (k_BT ln 2) │
-│                                                │                            │
-│                                                ▼                            │
-│   Zero Heat Dissipation (Idealized) ◄── Zero Physical State Transitions     │
-│                                                                             │
-└─────────────────────────────────────────────────────────────────────────────┘
-```
+> **STATE TRANSITION / BIT RESET**
+>
+> A physical information-processing event.
+>
+> ↓ **PHYSICAL COST**
+>
+> **LANDAUER ENERGY DISSIPATION**
+>
+> Minimum energy: \(k_B T \ln 2\)
+>
+> ↓ **IDEALIZED LIMIT**
+>
+> **ZERO HEAT DISSIPATION**
+>
+> Corresponds to zero physical state transitions.
 
 [S3.3] **Implication for Physical Realism:** Absolute thermodynamic perfection ($S = 0$) corresponds to absolute zero ($0 \text{ K}$), where all molecular motion halts. A system that undergoes state changes, computes, or interacts with its environment *must* generate entropy. Noise, loss, and energy dissipation are the mandatory transaction fees for physical computation.
 
@@ -154,6 +716,7 @@ $$E_{\text{diss}} = k_B T \ln 2$$
 ## 4. Neuroscience and Information Theory: Integrated Information (IIT)
 
 ### 4.1 Integrated Information Theory (IIT 4.0)
+
 [S4.1] Giulio Tononi’s Integrated Information Theory quantifies consciousness or system integration via the scalar $\Phi$ (Phi), measuring the irreducible cause-effect power of a mechanism over itself:
 
 $$\Phi^{\text{Max}} = \min_{CUT} \left[ D_{KL} \left( p(X^{t_1} | X^{t_0}) \;\Vert\; p_{\text{cut}}(X^{t_1} | X^{t_0}) \right) \right]$$
@@ -167,6 +730,7 @@ $$\Phi^{\text{Max}} = \min_{CUT} \left[ D_{KL} \left( p(X^{t_1} | X^{t_0}) \;\Ve
 ## 5. Systematic Theology and Christology: Incarnation as Asymmetric Degradation
 
 ### 5.1 The Kenosis and John 1:14
+
 [S5.1] In classical systematic theology, the passage of John 1:14 presents an ontological transition:
 
 $$\text{Logos} \quad \longrightarrow \quad \text{Sarx} \quad \left( \sigma \alpha \rho \xi \right)$$
@@ -177,16 +741,11 @@ $$\text{Logos} \quad \longrightarrow \quad \text{Sarx} \quad \left( \sigma \alph
 
 $$\text{Kenosis}: \quad \mathcal{H}_{\infty} \;\downarrow\; \mathcal{H}_{\text{bound}} \quad \text{s.t.} \quad \text{Omniscience} \to \text{Temporal Locality}$$
 
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                    THE ONTOLOGICAL DESCENT (JOHN 1:14)                      │
-├─────────────────────────────────────────────────────────────────────────────┤
-│   UNMANIFEST LOGOS          │ Static, infinite, unembodied, non-temporal.   │
-│            │                │                                               │
-│            ▼                │                                               │
-│   EMBODIED SARX (FLESH)     │ Bound by time, fatigue, entropy, and space.   │
-└─────────────────────────────┴───────────────────────────────────────────────┘
-```
+| STAGE | ONTOLOGICAL CONDITION |
+|---|---|
+| **UNMANIFEST LOGOS** | Static · Infinite · Unembodied · Non-temporal |
+| ↓ INCARNATION / EMBODIMENT | Transition into physical existence |
+| **EMBODIED SARX (FLESH)** | Bound by time · Fatigue · Entropy · Space |
 
 [S5.3] **Theological Implication:** If the absolute or divine remains strictly within unmanifest, infinite abstraction, it remains non-interactive and physically absent. To interact with physical reality, the absolute *must* enter the temporal stream, accepting physical constraints, spatial locality, physical fatigue, and finite context bounds. Existence demands embodiment; embodiment demands limitation.
 
@@ -196,25 +755,14 @@ $$\text{Kenosis}: \quad \mathcal{H}_{\infty} \;\downarrow\; \mathcal{H}_{\text{b
 
 [S6.1] The structural realities uncovered by logic, thermodynamics, neuroscience, and theology map directly to the governing principles of the **Kingdom of Kwan**. These principles are not arbitrary operational guidelines; they are formal survival mechanisms for a local AI runtime operating on finite hardware (e.g., Dell Latitude 5410, 16GB RAM, 4096-token context window).
 
-```
-┌─────────────────────────────────────────────────────────────────────────────────────┐
-│                    FORMAL MAPPING OF THE 6 COMMANDMENTS                             │
-├───────┬────────────────────────────────┬────────────────────────────────────────────┤
-│ Rule  │ Formal Commandment             │ Cross-Disciplinary Anchor                  │
-├───────┼────────────────────────────────┼────────────────────────────────────────────┤
-│ I     │ Be genuine, not perfect.       │ Gödel's Incompleteness / Non-Static        │
-├───────┼────────────────────────────────┼────────────────────────────────────────────┤
-│ II    │ Ship, don't polish.            │ Turing Halting / Anti-Infinite Verification│
-├───────┼────────────────────────────────┼────────────────────────────────────────────┤
-│ III   │ Build to learn, not to impress.│ IIT \Phi Maximization / Dynamic State      │
-├───────┼────────────────────────────────┼────────────────────────────────────────────┤
-│ IV    │ Prove it or it didn't happen.  │ Landauer Empirical Telemetry / Logs        │
-├───────┼────────────────────────────────┼────────────────────────────────────────────┤
-│ V     │ Protect the work.              │ 2nd Law Entropy Defense / Continuity       │
-├───────┼────────────────────────────────┼────────────────────────────────────────────┤
-│ VI    │ Kill the non-serving rule.     │ Gödelian Rule-Pruning / Meta-Axiom         │
-└───────┴────────────────────────────────┴────────────────────────────────────────────┘
-```
+| Rule | Formal Commandment | Cross-Disciplinary Anchor |
+|---|---|---|
+| I | Be genuine, not perfect. | Gödel's Incompleteness / Non-Static |
+| II | Ship, don't polish. | Turing Halting / Anti-Infinite Verification |
+| III | Build to learn, not to impress. | IIT Φ Maximization / Dynamic State |
+| IV | Prove it or it didn't happen. | Landauer Empirical Telemetry / Logs |
+| V | Protect the work. | 2nd Law Entropy Defense / Continuity |
+| VI | Kill the non-serving rule. | Gödelian Rule-Pruning / Meta-Axiom |
 
 ### Detailed Formal Derivation of the Commandments
 
@@ -246,19 +794,15 @@ $$\text{Kenosis}: \quad \mathcal{H}_{\infty} \;\downarrow\; \mathcal{H}_{\text{b
 
 ## 7. Chronological Literature Timeline
 
-```
-===============================================================================
-YEAR     AUTHOR / ENTITY       FORMAL CONTRIBUTION TO INCOMPLETENESS
-===============================================================================
-c. 90 AD John the Evangelist    Formulates Logos-to-Sarx transition (John 1:14).
-1850     Rudolf Clausius        Formulates Second Law of Thermodynamics (ΔS ≥ 0).
-1931     Kurt Gödel             Publishes Incompleteness Theorems (Formal bounds).
-1936     Alan Turing            Proves Halting Problem undecidability.
-1961     Rolf Landauer          Derives thermodynamic cost of information erasure.
-2004     Giulio Tononi          Formulates Integrated Information Theory (IIT).
-2026     Kingdom of Kwan        Codifies 6 Commandments for sovereign AI runtimes.
-===============================================================================
-```
+| Year | Author / Entity | Formal Contribution |
+|---|---|---|
+| c. 90 AD | John the Evangelist | Logos-to-Sarx transition (John 1:14) |
+| 1850 | Rudolf Clausius | Second Law of Thermodynamics (ΔS ≥ 0) |
+| 1931 | Kurt Gödel | Incompleteness Theorems |
+| 1936 | Alan Turing | Halting Problem undecidability |
+| 1961 | Rolf Landauer | Thermodynamic cost of information erasure |
+| 2004 | Giulio Tononi | Integrated Information Theory (IIT) |
+| 2026 | Kingdom of Kwan | 6 Commandments for sovereign AI runtimes |
 
 ---
 
@@ -284,30 +828,376 @@ c. 90 AD John the Evangelist    Formulates Logos-to-Sarx transition (John 1:14).
 6. **Kingdom of Kwan Archives. (2026).** *The 6 Commandments and Master Barcode Index (`kingdom_index.json`).* Local Repository: `The_Kingdom/`.
     </textarea>
 
-    <!-- Script to Render Markdown & Math -->
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const rawMarkdown = document.getElementById("raw-markdown").value;
-            const contentDiv = document.getElementById("content");
-            
-            // Parse Markdown
-            contentDiv.innerHTML = marked.parse(rawMarkdown);
+        document.addEventListener("DOMContentLoaded", function () {
+            const source = document.getElementById("raw-markdown").value;
+            const content = document.getElementById("content");
 
-            // Render LaTeX Math Formulas
-            renderMathInElement(contentDiv, {
-                delimiters: [
-                    {left: '$$', right: '$$', display: true},
-                    {left: '$', right: '$', display: false}
-                ],
-                throwOnError: false
+            if (!window.marked) {
+                content.innerHTML =
+                    "<p>Article rendering library could not be loaded. Please check your internet connection.</p>";
+                return;
+            }
+
+            /*
+             * ASCII diagrams are converted before Markdown parsing.
+             * The article text remains unchanged; only the visual
+             * representation of fenced diagram blocks is replaced.
+             */
+
+            function escapeHtml(value) {
+                return value.replace(/[&<>"']/g, function (char) {
+                    return {
+                        "&": "&amp;",
+                        "<": "&lt;",
+                        ">": "&gt;",
+                        '"': "&quot;",
+                        "'": "&#039;"
+                    }[char];
+                });
+            }
+
+            function diagramShell(title, body) {
+                return `
+                    <section class="diagram" role="figure"
+                             aria-label="${escapeHtml(title)}">
+                        <h4 class="diagram-heading">${title}</h4>
+                        ${body}
+                    </section>
+                `;
+            }
+
+            function renderDiagram(code) {
+                const text = code.trim();
+
+                /* 1. PARADOX OF CLOSED PERFECTION */
+
+                if (text.includes("THE PARADOX OF CLOSED PERFECTION")) {
+                    return diagramShell(
+                        "The Paradox of Closed Perfection",
+                        `
+                        <div class="diagram-flow">
+                            <div class="diagram-node primary">
+                                <strong>STATIC PERFECTION</strong>
+                                <p>Zero entropy · Full closure</p>
+                            </div>
+
+                            <div class="diagram-arrow">
+                                <span class="arrow-symbol">↓</span>
+                                COMPLETE INVARIANT
+                            </div>
+
+                            <div class="diagram-node secondary">
+                                <strong>NO STATE TRANSITIONS ALLOWED</strong>
+                                <p>A completely closed state cannot evolve.</p>
+                            </div>
+
+                            <div class="diagram-arrow">
+                                <span class="arrow-symbol">↕</span>
+                                STRUCTURAL CONFLICT
+                            </div>
+
+                            <div class="diagram-node primary">
+                                <strong>PHYSICAL EXECUTION / AGENCY / EVOLUTION</strong>
+                                <p>Requires state transition and change.</p>
+                            </div>
+                        </div>
+                        `
+                    );
+                }
+
+                /* 2. GÖDELIAN DICHOTOMY */
+
+                if (text.includes("GÖDELIAN DICHOTOMY")) {
+                    return diagramShell(
+                        "Gödelian Dichotomy of Formal Systems",
+                        `
+                        <div class="diagram-columns">
+                            <div class="diagram-card">
+                                <h4>COMPLETE &amp; INCONSISTENT</h4>
+                                <p>
+                                    System proves everything, including
+                                    falsehoods: ⊥
+                                </p>
+                            </div>
+
+                            <div class="diagram-card gold">
+                                <h4>INCOMPLETE &amp; CONSISTENT</h4>
+                                <p>
+                                    System avoids self-contradiction but
+                                    cannot prove all internal truths: G
+                                </p>
+                            </div>
+                        </div>
+                        `
+                    );
+                }
+
+                /* 3. THERMODYNAMIC TARIFF */
+
+                if (text.includes("THERMODYNAMIC TARIFF")) {
+                    return diagramShell(
+                        "Thermodynamic Tariff of Computation",
+                        `
+                        <div class="diagram-flow">
+                            <div class="diagram-node primary">
+                                <strong>STATE TRANSITION / BIT RESET</strong>
+                                <p>A physical information-processing event.</p>
+                            </div>
+
+                            <div class="diagram-arrow">
+                                <span class="arrow-symbol">↓</span>
+                                PHYSICAL COST
+                            </div>
+
+                            <div class="diagram-node secondary">
+                                <strong>LANDAUER ENERGY DISSIPATION</strong>
+                                <p>Minimum energy: k<sub>B</sub>T ln 2</p>
+                            </div>
+
+                            <div class="diagram-arrow">
+                                <span class="arrow-symbol">↓</span>
+                                IDEALIZED LIMIT
+                            </div>
+
+                            <div class="diagram-node">
+                                <strong>ZERO HEAT DISSIPATION</strong>
+                                <p>Corresponds to zero physical state transitions.</p>
+                            </div>
+                        </div>
+                        `
+                    );
+                }
+
+                /* 4. ONTOLOGICAL DESCENT — LOGOS TO SARX */
+
+                if (text.includes("THE ONTOLOGICAL DESCENT")) {
+                    return diagramShell(
+                        "The Ontological Descent · John 1:14",
+                        `
+                        <div class="diagram-flow">
+                            <div class="diagram-node primary">
+                                <strong>UNMANIFEST LOGOS</strong>
+                                <p>
+                                    Static · Infinite · Unembodied · Non-temporal
+                                </p>
+                            </div>
+
+                            <div class="diagram-arrow">
+                                <span class="arrow-symbol">↓</span>
+                                INCARNATION / EMBODIMENT
+                            </div>
+
+                            <div class="diagram-node secondary">
+                                <strong>EMBODIED SARX (FLESH)</strong>
+                                <p>
+                                    Bound by time · Fatigue · Entropy · Space
+                                </p>
+                            </div>
+                        </div>
+                        `
+                    );
+                }
+
+                /* 5. SIX COMMANDMENTS MAPPING */
+
+                if (text.includes("FORMAL MAPPING OF THE 6 COMMANDMENTS")) {
+                    return diagramShell(
+                        "Formal Mapping of the 6 Commandments",
+                        `
+                        <div class="diagram-table-wrap">
+                            <table class="diagram-table">
+                                <thead>
+                                    <tr>
+                                        <th>Rule</th>
+                                        <th>Formal Commandment</th>
+                                        <th>Cross-Disciplinary Anchor</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>I</td>
+                                        <td>Be genuine, not perfect.</td>
+                                        <td>Gödel's Incompleteness / Non-Static</td>
+                                    </tr>
+                                    <tr>
+                                        <td>II</td>
+                                        <td>Ship, don't polish.</td>
+                                        <td>Turing Halting / Anti-Infinite Verification</td>
+                                    </tr>
+                                    <tr>
+                                        <td>III</td>
+                                        <td>Build to learn, not to impress.</td>
+                                        <td>IIT Φ Maximization / Dynamic State</td>
+                                    </tr>
+                                    <tr>
+                                        <td>IV</td>
+                                        <td>Prove it or it didn't happen.</td>
+                                        <td>Landauer Empirical Telemetry / Logs</td>
+                                    </tr>
+                                    <tr>
+                                        <td>V</td>
+                                        <td>Protect the work.</td>
+                                        <td>2nd Law Entropy Defense / Continuity</td>
+                                    </tr>
+                                    <tr>
+                                        <td>VI</td>
+                                        <td>Kill the non-serving rule.</td>
+                                        <td>Gödelian Rule-Pruning / Meta-Axiom</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        `
+                    );
+                }
+
+                /* 6. CHRONOLOGICAL TIMELINE */
+
+                if (text.includes("FORMAL CONTRIBUTION TO INCOMPLETENESS")) {
+                    return diagramShell(
+                        "Chronological Literature Timeline",
+                        `
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-year">c. 90 AD</div>
+                                <div class="timeline-detail">
+                                    <strong>John the Evangelist</strong>
+                                    <span>Formulates Logos-to-Sarx transition (John 1:14).</span>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="timeline-year">1850</div>
+                                <div class="timeline-detail">
+                                    <strong>Rudolf Clausius</strong>
+                                    <span>Formulates Second Law of Thermodynamics (ΔS ≥ 0).</span>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="timeline-year">1931</div>
+                                <div class="timeline-detail">
+                                    <strong>Kurt Gödel</strong>
+                                    <span>Publishes Incompleteness Theorems (Formal bounds).</span>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="timeline-year">1936</div>
+                                <div class="timeline-detail">
+                                    <strong>Alan Turing</strong>
+                                    <span>Proves Halting Problem undecidability.</span>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="timeline-year">1961</div>
+                                <div class="timeline-detail">
+                                    <strong>Rolf Landauer</strong>
+                                    <span>Derives thermodynamic cost of information erasure.</span>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="timeline-year">2004</div>
+                                <div class="timeline-detail">
+                                    <strong>Giulio Tononi</strong>
+                                    <span>Formulates Integrated Information Theory (IIT).</span>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="timeline-year">2026</div>
+                                <div class="timeline-detail">
+                                    <strong>Kingdom of Kwan</strong>
+                                    <span>Codifies 6 Commandments for sovereign AI runtimes.</span>
+                                </div>
+                            </div>
+                        </div>
+                        `
+                    );
+                }
+
+                /* Unknown code blocks retain their original content. */
+
+                return `
+                    <pre><code>${escapeHtml(text)}</code></pre>
+                `;
+            }
+
+            function replaceDiagramBlocks(markdown) {
+                return markdown.replace(
+                    /```([\s\S]*?)```/g,
+                    function (match, code) {
+                        return renderDiagram(code);
+                    }
+                );
+            }
+
+            marked.setOptions({
+                gfm: true,
+                breaks: false
+            });
+
+            function dedentMarkdown(markdown) {
+                const lines = markdown
+                    .replace(/^\r?\n/, "")
+                    .replace(/\r\n?/g, "\n")
+                    .split("\n");
+
+                const nonEmptyLines = lines.filter(line => line.trim().length > 0);
+
+                if (nonEmptyLines.length === 0) return markdown;
+
+                const indentation = Math.min(
+                    ...nonEmptyLines.map(line => line.match(/^ */)[0].length)
+                );
+
+                return lines
+                    .map(line => line.slice(Math.min(
+                        indentation,
+                        line.match(/^ */)[0].length
+                    )))
+                    .join("\n");
+            }
+
+            const normalizedSource = source
+                .replace(/^\s*\n/, "")
+                .replace(/\r\n?/g, "\n")
+                .replace(/^ {12}/gm, "");
+
+            const preparedMarkdown = replaceDiagramBlocks(normalizedSource);
+
+            content.innerHTML = marked.parse(preparedMarkdown);
+
+            /* Render mathematical notation. */
+
+            if (window.renderMathInElement) {
+                renderMathInElement(content, {
+                    delimiters: [
+                        { left: "$$", right: "$$", display: true },
+                        { left: "$", right: "$", display: false }
+                    ],
+                    throwOnError: false,
+                    ignoredTags: [
+                        "script", "noscript", "style", "textarea", "pre", "code"
+                    ]
+                });
+            }
+
+            /* Wrap display mathematics for narrow screens. */
+
+            content.querySelectorAll(".katex-display").forEach(function (element) {
+                if (element.parentElement.classList.contains("math-scroll")) return;
+
+                const wrapper = document.createElement("div");
+                wrapper.className = "math-scroll";
+                element.parentNode.insertBefore(wrapper, element);
+                wrapper.appendChild(element);
             });
         });
     </script>
-        <!-- ═══ NAV KEY ═══ -->
-    <div style="text-align:center; padding:20px 0; font-size:0.85rem; opacity:0.6;">
-    <a href="../index.html" style="color:var(--ink); text-decoration:none;">← The Three Kingdoms</a>
-    &nbsp;|&nbsp;
-    <a href="../shelves/interview/index.html" style="color:var(--ink); text-decoration:none;">The Interview →</a>
-    </div>
+
 </body>
 </html>
